@@ -1,0 +1,13 @@
+.barra_navegacao {
+    background-color: #69B6A8;
+    height: 3rem;
+}
+
+.meses {
+    color: black;
+}
+
+button{
+    border-right: 2px;
+    border-color: black;
+}
