@@ -1,13 +1,21 @@
 .barra_navegacao {
     background-color: #69B6A8;
-    height: 3rem;
+    height: 5rem;
 }
-
-.meses {
-    color: black;
+.barra_navegacao {
+    justify-content: center;
 }
-
-button{
-    border-right: 2px;
+.meses{
+    width: auto;
+    border: 2px;
     border-color: black;
+    font-size: 38px;
+}
+
+.info-1{
+
+}
+
+.info-2{
+    background-color: aliceblue;
 }
