@@ -1,19 +1,23 @@
 .barra_navegacao {
     background-color: #69B6A8;
-    height: 5rem;
+    height: 55px;
 }
 .barra_navegacao {
     justify-content: center;
 }
 .meses{
-    width: auto;
-    border: 2px;
-    border-color: black;
-    font-size: 38px;
+    width: 10%;
+    font-size: 20px;
+    transition: transform 0.3s;
+}
+
+.meses:hover {
+    transform: scale(0.9);
+    cursor: pointer;
 }
 
 .info-1{
-
+   
 }
 
 .info-2{

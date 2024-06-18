@@ -17,9 +17,9 @@ export class Mes {
   nome!: string;
   nomeAbrev!: string;
   valor!: number;
-  constructor(nome: string, valor: number) {
-    this.nome = nome;
-    this.nomeAbrev = nome.substring(0,3);
+  constructor(valor: number) {
+    this.nome = Meses[valor];
+    this.nomeAbrev = this.nome.substring(0,3);
     this.valor = valor;
   }
 }
@@ -28,7 +28,7 @@ export class Ano {
   meses: Mes[] = []
   constructor(){
     for(var i = 1; i <= 12; i++) {
-      var mes: Mes = new Mes(Meses[i].toString(), i)
+      var mes: Mes = new Mes(i)
       this.meses.push(mes);
     }
   }

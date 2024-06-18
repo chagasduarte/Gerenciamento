@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Ano, Meses } from '../../utils/meses';
+import { Ano, Mes, Meses } from '../../utils/meses';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -13,7 +13,7 @@ export class HomeComponent implements OnInit{
   
 
   ano!: Ano;
-  
+  mes = new Mes(new Date().getMonth() + 1);
   constructor(){
     this.ano = new Ano();
   }
@@ -21,5 +21,7 @@ export class HomeComponent implements OnInit{
   ngOnInit(): void {
     
   }
-  
+  mudaMes(mes: Mes){
+    this.mes = mes;
+  }
 }
