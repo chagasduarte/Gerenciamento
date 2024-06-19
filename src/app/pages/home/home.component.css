@@ -1,6 +1,7 @@
 .barra_navegacao {
     background-color: #69B6A8;
     height: 55px;
+    width: 100%;
 }
 .barra_navegacao {
     justify-content: center;
@@ -8,18 +9,114 @@
 .meses{
     width: 10%;
     font-size: 20px;
-    transition: transform 0.3s;
+    margin: 0.5rem;
 }
 
-.meses:hover {
-    transform: scale(0.9);
+.abrev-mes:hover {
+    transform: scale(1.2);
     cursor: pointer;
 }
 
-.info-1{
-   
+.abrev-mes{
+    margin-right: 12px;
+    transition: transform 0.3s;
+
 }
 
-.info-2{
+.info-1{
+   justify-content: center;
+   margin-top: 1rem;
+   margin-bottom: 3rem;
+}
+.data {
+    display: grid;
+    grid-template-areas: 
+    "mes mes"
+    "linha linha"
+    "ano ano";
+    width: 20%;
+    height: 100px;
+}
+
+.mes {
+    grid-area: mes;
+}
+.ano {
+    grid-area: ano;
+    justify-content: center;
+}
+.linha {
+    grid-area: linha;
     background-color: aliceblue;
+    width: 100%;
+    height: 3px;
+    border-radius: 15px;
+}
+
+.grafico {
+    width: 15%;
+    margin-right: 20px;
+    margin-left: 20px;
+}
+
+.barra-grafico {
+    background-color: aliceblue;
+    height: 5px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    border-radius: 15px;
+}
+
+.card {
+    width: 30%;
+    margin: 5px;
+}
+
+.barra {
+    width: 2px;
+    height: 1.5rem;
+    background-color: black;
+    justify-self: end;
+}
+
+.info-2 {
+   width: 100%;
+   height: 300px;
+}
+
+.janela1{
+    grid-area: janela1;
+    background-color: aliceblue;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    width: 8rem;
+    height: 30px;
+}
+.janela2{
+    grid-area: janela2;
+    background-color: rgb(118, 141, 161);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    width: 8rem;
+    height: 30px;
+    margin-left: 5px;
+}
+.janela3{
+    grid-area: janela3;
+    background-color: rgb(118, 141, 161);
+
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    width: 8rem;
+    height: 30px;
+    margin-left: 5px;
+}
+.info{
+    grid-area: info;
+    background-color: rgb(118, 141, 161);
+    border-color: aliceblue;
+    border-style: solid;
+    border-width: 8px;
+    width: 100%;
+    height: 50%;
 }

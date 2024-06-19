@@ -1,8 +1,8 @@
 <nav class="navbar barra_navegacao"> 
   <ul class=" d-flex  justify-content-center">
     <li class="meses d-flex" *ngFor="let mes of ano.meses; let i = index">
-      <div class="container"  (click)="mudaMes(mes)">{{mes.nomeAbrev}}</div>
-      <div *ngIf="i < 11">|</div>
+      <div class="abrev-mes"(click)="mudaMes(mes)">{{mes.nomeAbrev}}</div>
+      <div class="barra" *ngIf="i < 11"></div>
     </li>
   </ul>
 </nav>
@@ -12,9 +12,22 @@
       <div class="mes">
         {{mes.nome}}
       </div>
+      <div class="linha"></div>
+      <div class="ano">
+        2024
+      </div>
     </div>
     <div class="grafico">
-
+       <div class="barra-grafico" style="width: 30px;">
+       </div>
+       <div class="barra-grafico" style="width: 100px;">
+      </div>
+      <div class="barra-grafico" style="width: 50px;">
+      </div>
+      <div class="barra-grafico" style="width: 75px;">
+      </div>
+      <div class="barra-grafico" style="width: 80px;">
+      </div>
     </div>
     <div class="card">
 
@@ -25,5 +38,10 @@
 </div>
 
 <div class="info-2">
-
+  <div class="janelas d-flex">
+    <div class="janela1"></div>
+    <div class="janela2"></div>
+    <div class="janela3"></div>
+  </div>
+ <div class="info"></div>
 </div>
