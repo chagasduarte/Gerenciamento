@@ -1,15 +1,17 @@
 .barra_navegacao {
     background-color: #69B6A8;
     height: 55px;
-    width: 100%;
-}
-.barra_navegacao {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: 2px;
     justify-content: center;
 }
+
 .meses{
     width: 10%;
     font-size: 20px;
     margin: 0.5rem;
+    text-align: top;
 }
 
 .abrev-mes:hover {
@@ -40,15 +42,17 @@
 
 .mes {
     grid-area: mes;
+    font-size: 35px;
 }
 .ano {
     grid-area: ano;
-    justify-content: center;
+    text-align: end;
+    font-size: 30px;
 }
 .linha {
     grid-area: linha;
     background-color: aliceblue;
-    width: 100%;
+    width: 130px;
     height: 3px;
     border-radius: 15px;
 }

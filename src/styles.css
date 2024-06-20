@@ -3,6 +3,22 @@ body {
     background-color: #4D5C82;
     font-family: "karantina";
     color: aliceblue;
-    width: auto;
+    width: 100vw;
+    height: 100vh;
     
 }
+
+
+html::-webkit-scrollbar {
+    width: 10px;
+}
+  
+html::-webkit-scrollbar-thumb {
+  border-radius: 50px;
+  background: #17178b;
+}
+  
+html::-webkit-scrollbar-track {
+  background: #ededed;
+}
+  
