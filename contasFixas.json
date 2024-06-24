@@ -1,0 +1,33 @@
+{
+    "contasFixas":
+    [
+        {
+            "id":1,
+            "nome":"Aluguel",
+            "valor": 1400,
+            "parcelas": 12,
+            "parcelasPagas": 3
+        },
+        {
+            "id":2,
+            "nome":"Financiamento Carro",
+            "valor": 1200,
+            "parcelasTotal": 48,
+            "parcelasPagas": 4
+        },
+        {
+            "id":3,
+            "nome":"Internet",
+            "valor": 100,
+            "parcelas": 48,
+            "parcelasPagas": 3
+        },
+        {
+            "id":4,
+            "nome":"Alura",
+            "valor": 150,
+            "parcelas": 12,
+            "parcelasPagas": 2
+        }
+    ]
+}
