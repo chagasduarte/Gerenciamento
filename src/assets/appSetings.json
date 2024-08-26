@@ -1,0 +1,5 @@
+{
+    "appConfig":{
+        "WebApi": "https://gerenciamentowebapi-production.up.railway.app/api"
+    }
+}
