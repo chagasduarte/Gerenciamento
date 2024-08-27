@@ -27,10 +27,14 @@
     <div class="form-group">
         <label for="dataCompra">Data da Compra</label>
         <input type="date" id="dataCompra" name="dataCompra" required [(ngModel)]="dataCompra">
+        <label for="isFixa">Fixa:</label>
+        <input type="checkbox" name="isFixa" id="isFixa" [(ngModel)]="despesa.isFixa">
     </div>
+
     <div class="form-group">
         <button type="submit">Cadastrar Despesa</button>
     </div>
+    
 </form>
 <div>
     {{despesa.tipoDespesa}}

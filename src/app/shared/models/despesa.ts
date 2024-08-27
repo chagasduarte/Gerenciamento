@@ -7,4 +7,5 @@ export interface Despesa {
     diaCompra: number
     mesCompra: number
     anoCompra: number
+    isFixa: boolean
 }

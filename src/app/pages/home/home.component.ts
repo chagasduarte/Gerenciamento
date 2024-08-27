@@ -6,6 +6,7 @@ import { DespesasService } from '../../shared/services/despesas.service';
 import { ToastrService } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -17,6 +18,7 @@ import { BrowserModule } from '@angular/platform-browser';
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit{
+
   despesas!: Despesa[];
   valorMaximo: number = 0;
   gastoTotalMes: number = 0;
@@ -24,13 +26,14 @@ export class HomeComponent implements OnInit{
   mes = new Mes(new Date().getMonth() + 1);
   constructor(
     private readonly despesaService: DespesasService,
-    private readonly toastService: ToastrService
+    private readonly toastService: ToastrService,
+    private readonly router: Router
   ){
     this.ano = new Ano();
   }
 
   ngOnInit(): void {
-    this.despesaService.GetDespesas().subscribe({
+    this.despesaService.GetDespesasFixas().subscribe({
       next: (success: Despesa[]) => {
         this.gastoTotalMes = 0;
         this.despesas = success;
@@ -48,5 +51,9 @@ export class HomeComponent implements OnInit{
   }
   mudaMes(mes: Mes){
     this.mes = mes;
+  }
+
+  adicionarDespesa() {
+    this.router.navigate(["despesas"]);
   }
 }

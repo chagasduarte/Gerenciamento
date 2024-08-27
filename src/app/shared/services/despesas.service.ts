@@ -19,6 +19,10 @@ export class DespesasService {
     return this.http.get<Despesa[]>(`${this.api}`);
   }
 
+  GetDespesasFixas(): Observable<Despesa[]> {
+    return this.http.get<Despesa[]>(`${this.api}/Fixas`);
+  }
+
   GetDespesasById(id: string): Observable<Despesa[]> {
     return this.http.get<Despesa[]>(`${this.api}/${id}`);
   }
