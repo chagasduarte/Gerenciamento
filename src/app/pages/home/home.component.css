@@ -132,8 +132,9 @@
     position: relative;
     background-color: steelblue;
     color: beige;
-    width: 5rem;
-    height: 2rem;
+    width: 8rem;
+    height: 30px;
+    margin-left: 5px;
     border-radius: 5px;
     border: none;
     justify-self: right;
