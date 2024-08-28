@@ -1,15 +1,10 @@
-.despesaForm {
-    
+.entradasForm {
     max-width: 600px;
     margin: 3rem auto;
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-h1 {
-    text-align: center;
-    margin-bottom: 20px;
 }
 .form-group {
     margin-bottom: 15px;
@@ -38,28 +33,4 @@ h1 {
 }
 .form-group button:hover {
     background-color: #0056b3;
-}
-
-.form-check {
-    display: flex;
-    gap: 1rem;
-    justify-content: start;
-    text-align: start;
-    padding: 0px;
-    margin: 1rem 0;
-}
-
-.parcelado {
-    display: flex;
-    background-color: #6d7da7;
-    margin: 1rem 0;
-    border-radius: 5px;
-    gap: 5px;
-    padding: 5px;
-}
-
-.parcelado input {
-    width: 3rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
 }

@@ -26,8 +26,15 @@ export class DespesasService {
   GetDespesasById(id: string): Observable<Despesa[]> {
     return this.http.get<Despesa[]>(`${this.api}/${id}`);
   }
+
+  GetDespesasByMes(mes: number): Observable<Despesa[]> {
+    return this.http.get<Despesa[]>(`${this.api}/Mes/${mes}`);
+  }
   
   PostDespesa(despesa: Despesa): Observable<Despesa> {
     return this.http.post<Despesa>(`${this.api}`, despesa);
+  }
+  DeleteDespesa(id: number) {
+    return this.http.delete(`${this.api}/${id}`);
   }
 }

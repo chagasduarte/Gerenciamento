@@ -31,7 +31,6 @@
    margin-bottom: 3rem;
    margin-left: 50px;
    width: auto;
-
 }
 .data {
     display: grid;
@@ -76,6 +75,7 @@
 .card {
     width: 300px;
     margin: 5px;
+    height: 120px;
 }
 
 .barra {
@@ -142,4 +142,43 @@
 
 .btn-add-despesa:hover {
     background-color: rgb(79, 151, 151);
+}
+
+.plus-card {
+    text-align: end;
+    align-self: end;
+}
+.plus-card img {
+    padding: 0px;
+    margin-right: 10px;
+    text-align: right;
+}
+
+.card {
+    display: grid;
+    grid-template-areas:
+    "first secound";
+    grid-template-columns: 50% 50%;
+    text-align: center;
+}
+
+.saldoAtual {
+    background-color: #69B6A8;
+    border-radius: 5px;
+    border-right: 10px;
+    font-size: 20px;
+}
+
+.aReceber {
+    font-size: 20px;
+    background-color: aquamarine;
+    border-radius: 5px;
+}
+
+
+input {
+    border: none;
+    width: 100%;
+    border-radius: 5px;
+    background-color: #69b6a800;
 }

@@ -18,19 +18,38 @@
       </div>
     </div>
     <div class="grafico">
-      <div class="d-flex" *ngFor="let despesa of despesas">
+      <div class="d-flex" *ngFor="let despesa of despesas" (click)="parcelas(despesa.id)">
         <span class="text-end"> {{despesa.nome}}: </span>
-        <progress [value]="despesa.valorTotal" [max]="valorMaximo" style="width: 100px; align-self: center;"> {{despesa.valorTotal}} </progress>
+        <progress [value]="despesa.valorPago" [max]="despesa.valorTotal" style="width: 100px; align-self: center;"></progress>
       </div>
-     
+           
     </div>
-    <div class="card">
-       <span>Previstos:</span>
-       <span> {{gastoTotalMes}} </span>
+    <div class="plus-card">
+      <div class="card">
+        <div class="pervistos">
+          <span><b>Previstos:</b></span>
+          <input [value]="gastoTotalMes">
+        </div>
+        <div class="outros">
+           <span><b>Adicionais:</b></span>
+           <input [value]="">
+        </div>
+      </div>
     </div>
-    <div class="card">
+    <div class="plus-card">
+      <img src="/assets/img/plus-coin.svg" alt="" (click)="AdicionaEntrada()">
+      <div class="card">
+          <div class="saldoAtual">
+            <span> <b>Saldo:</b></span>
+            <input [value]="saldoAtual | currency">
+          </div>
+          <div class="aReceber">
+            <span><b>À Receber:</b></span>
+            <input [value]="aReceber | currency"> 
+          </div>
+      </div>
+    </div>
     
-    </div>
 </div>
 
 <div class="info-2">
