@@ -11,5 +11,6 @@ export interface Despesa {
     mesCompra: number
     anoCompra: number
     isFixa: boolean
+    status: boolean
     parcelas: Parcela[]
 }

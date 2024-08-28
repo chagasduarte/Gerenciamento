@@ -24,7 +24,7 @@ import { Conta } from '../../shared/models/conta';
 })
 export class HomeComponent implements OnInit{
 
-  despesas!: Despesa[];
+  despesas: Despesa[] = [];
   entradas!: Entrada[];
   contas!: Conta[];
   
@@ -54,29 +54,44 @@ export class HomeComponent implements OnInit{
 
   calculaGastosDoMes(){
     this.gastoTotalMes = 0;
+    this.gastosAdicionais = 0;
+    let desp: Despesa[] = [];
+
     this.despesaService.GetDespesas().subscribe({
       next: (success: Despesa[]) => {
-        this.despesas = success;
-        this.despesas.map(x => {
-          this.gastoTotalMes += x.valorTotal;
+        success.map( x => {
+          if (!x.status){
+            if (x.isFixa) {
+              desp.push(x);
+            }
+            else {
+              if (x.mesCompra == this.mes.valor){
+                this.gastosAdicionais += x.valorTotal;
+              }
+            }
+          }
+        });
+        this.despesas = desp;
 
-        
+        this.despesas.map(x => {        
           this.parcelasService.GetParcelasById(x.id).subscribe({
             next: (success: Parcela[]) => {
               //zera o valor pago e recalcula baseado no status das parcelas.
               x.valorPago = 0;
               success.map(parc => {
-                if (parc.status == 1){
-                  x.valorPago += parc.valor;
+              switch (parc.status) {
+                case 0: {
+                  if (parc.mesVencimento == this.mes.valor) {
+                    this.gastoTotalMes += parc.valor;
+                  }
+                  break;
                 }
+                case 1: {
+                  x.valorPago += parc.valor;
+                  break;
+                }
+              }
               });
-
-              x.parcelas = success.filter(x => {
-                x.mesVencimento == this.mes.valor
-              });
-              x.parcelas.map( parc => {
-                this.gastoTotalMes += parc.valor;
-              })
             }
           })
         })
@@ -85,7 +100,6 @@ export class HomeComponent implements OnInit{
         this.toastService.error(err.error, "erro", {timeOut: 5000, closeButton: true})
       }
     });
-    
   }
 
   calculaEntradasFuturas(){
@@ -118,6 +132,9 @@ export class HomeComponent implements OnInit{
 
   mudaMes(mes: Mes){
     this.mes = mes;
+    this.calculaGastosDoMes();
+    this.calculaEntradasFuturas();    
+    this.calculaSaldoAtual();
   }
 
   adicionarDespesa() {

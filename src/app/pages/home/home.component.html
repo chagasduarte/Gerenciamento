@@ -26,13 +26,16 @@
     </div>
     <div class="plus-card">
       <div class="card">
-        <div class="pervistos">
+        <div class="previstos">
           <span><b>Previstos:</b></span>
-          <input [value]="gastoTotalMes">
+          <input [value]="gastoTotalMes | currency">
         </div>
         <div class="outros">
-           <span><b>Adicionais:</b></span>
-           <input [value]="">
+          <span><b>Adicionais:</b></span>
+          <div>
+            <input [value]="gastosAdicionais | currency">
+          </div>
+           
         </div>
       </div>
     </div>
@@ -54,9 +57,9 @@
 
 <div class="info-2">
   <div class="janelas d-flex">
-    <div class="janela1"></div>
-    <div class="janela2"></div>
-    <div class="janela3"></div>
+    <div class="janela1">Mensal</div>
+    <div class="janela2">Anual</div>
+    <div class="janela3">Gráficos</div>
     <button class="btn-add-despesa" (click)="adicionarDespesa()">Add</button>
   </div>
  <div class="info"></div>

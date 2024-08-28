@@ -22,7 +22,7 @@ export class DespesasComponent {
   requestParcela: ParcelaRequest; 
 
   dataCompra: Date = new Date();
-  parcelado!: Boolean;
+
   constructor(
     private readonly despesaService: DespesasService,
     private readonly parcelaService: ParcelasService,
@@ -39,10 +39,9 @@ export class DespesasComponent {
     this.despesa.diaCompra = this.dataCompra.getDay();
     this.despesa.mesCompra = this.dataCompra.getMonth() + 1;
     this.despesa.anoCompra = this.dataCompra.getFullYear();
-    this.despesa.isFixa = false;
     this.despesaService.PostDespesa(this.despesa).subscribe({
       next: (success: Despesa) => {
-        if (this.parcelado){
+        if (this.despesa.isFixa){
           this.requestParcela.idDespesa = success.id;
           this.requestParcela.dataCompra = this.dataCompra.toISOString().split("T")[0].toString();
           

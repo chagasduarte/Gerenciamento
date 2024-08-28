@@ -175,10 +175,33 @@
     border-radius: 5px;
 }
 
-
 input {
     border: none;
     width: 100%;
     border-radius: 5px;
     background-color: #69b6a800;
+}
+.d-flex {
+    text-align: center;
+}
+.d-flex progress {
+    transition: transform 0.3s;
+}
+
+.d-flex progress:hover {
+    cursor: pointer;
+    transform: scale(1.2);
+}
+
+.previstos {
+    background-color: #69B6A8;
+    border-radius: 5px;
+    border-right: 10px;
+    font-size: 20px;
+}
+
+.outros {
+    font-size: 20px;
+    background-color: aquamarine;
+    border-radius: 5px;
 }
