@@ -1,6 +1,6 @@
 <button (click)="Voltar()">Voltar</button>
 
-<div class="parcelas">
+<div class="gastos">
     <table class="table">
         <thead class="thead">
           <tr>
@@ -12,14 +12,14 @@
           </tr>
         </thead>
         <tbody class="tbody">
-          <tr  *ngFor="let parcela of parcelas">
+          <tr  *ngFor="let gasto of gastos">
             <td></td>
-            <td> {{parcela.valor | currency}}  </td>
-            <td> {{parcela.diaVencimento}}/{{parcela.mesVencimento}}/{{parcela.anoVencimento}} </td>
-            <td> {{parcela.status}} </td>    
+            <td> {{gasto.valorTotal | currency}}  </td>
+            <td> {{gasto.diaCompra}}/{{gasto.mesCompra}}/{{gasto.anoCompra}} </td>
+            <td> {{gasto.status}} </td>    
             <td> 
-              <button *ngIf="parcela.status == 0" (click)="pagar(parcela)">pagar</button>
-              <span *ngIf="parcela.status == 1">OK</span>
+              <button *ngIf="!gasto.status" (click)="pagar(gasto)">pagar</button>
+              <span *ngIf="gasto.status">OK</span>
             </td>
           </tr>
         </tbody>

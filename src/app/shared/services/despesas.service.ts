@@ -34,6 +34,10 @@ export class DespesasService {
   PostDespesa(despesa: Despesa): Observable<Despesa> {
     return this.http.post<Despesa>(`${this.api}`, despesa);
   }
+
+  PutDespesa(despesa: Despesa): Observable<Despesa> {
+    return this.http.put<Despesa>(`${this.api}/${despesa.id}`, despesa);
+  }
   DeleteDespesa(id: number) {
     return this.http.delete(`${this.api}/${id}`);
   }

@@ -146,5 +146,11 @@ export class HomeComponent implements OnInit{
   parcelas(idDespesa: number) {
     this.router.navigate(["parcelas"], { queryParams: {idDespesa}})
   }
-        
+  gastos() {
+    this.router.navigate(["gastos"]);
+  }
+  receber() {
+    
+  }
+    
 }

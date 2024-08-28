@@ -17,41 +17,49 @@
         2024
       </div>
     </div>
-    <div class="grafico">
-      <div class="d-flex" *ngFor="let despesa of despesas" (click)="parcelas(despesa.id)">
-        <span class="text-end"> {{despesa.nome}}: </span>
-        <progress [value]="despesa.valorPago" [max]="despesa.valorTotal" style="width: 100px; align-self: center;"></progress>
-      </div>
-           
-    </div>
-    <div class="plus-card">
-      <div class="card">
-        <div class="previstos">
-          <span><b>Previstos:</b></span>
-          <input [value]="gastoTotalMes | currency">
+    
+    <div class="cards">
+      <div class="grafico">
+        <div class="d-flex" *ngFor="let despesa of despesas" (click)="parcelas(despesa.id)">
+          <span class="text-end"> {{despesa.nome}}: </span>
+          <progress [value]="despesa.valorPago" [max]="despesa.valorTotal" style="width: 100px; align-self: center;"></progress>
         </div>
-        <div class="outros">
-          <span><b>Adicionais:</b></span>
-          <div>
-            <input [value]="gastosAdicionais | currency">
+             
+      </div>
+      <div class="plus-card">
+        <div class="card">
+          <div class="previstos">
+            <span><b>Previstos:</b></span>
+            <input [value]="gastoTotalMes | currency">
           </div>
-           
+          <div class="outros" (click)="gastos()">
+            <span><b>Adicionais:</b></span>
+            <div>
+              <input [value]="gastosAdicionais | currency">
+            </div>
+             
+          </div>
+        </div>
+      </div>
+      <div class="plus-card">
+        <img src="/assets/img/plus-coin.svg" alt="" (click)="AdicionaEntrada()">
+        <div class="card">
+            <div class="saldoAtual">
+              <span> <b>Saldo:</b></span>
+              <input [value]="saldoAtual | currency">
+            </div>
+            <div class="aReceber">
+              <span><b>À Receber:</b></span>
+              <div class="entrada">
+                <input [value]="aReceber | currency"> 
+                <img src="/assets/img/check.svg" />
+              </div>
+              
+            </div>
         </div>
       </div>
     </div>
-    <div class="plus-card">
-      <img src="/assets/img/plus-coin.svg" alt="" (click)="AdicionaEntrada()">
-      <div class="card">
-          <div class="saldoAtual">
-            <span> <b>Saldo:</b></span>
-            <input [value]="saldoAtual | currency">
-          </div>
-          <div class="aReceber">
-            <span><b>À Receber:</b></span>
-            <input [value]="aReceber | currency"> 
-          </div>
-      </div>
-    </div>
+    
     
 </div>
 
