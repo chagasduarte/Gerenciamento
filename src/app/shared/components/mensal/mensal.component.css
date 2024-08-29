@@ -1,0 +1,7 @@
+.dia {
+    display: flex;
+    width: auto;
+}
+thead {
+    background-color: #29595f;
+}

@@ -1,0 +1,47 @@
+<table>
+    <thead>
+      <tr>
+        <th>Tipo de Gasto</th>
+        <!-- Gerar cabeçalhos para cada mês do ano -->
+        <script>
+          const months = [
+            'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+            'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+          ];
+          const thead = document.querySelector('thead tr');
+          months.forEach(month => {
+            const th = document.createElement('th');
+            th.textContent = month;
+            thead.appendChild(th);
+          });
+        </script>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Gerar linhas para cada tipo de gasto -->
+      <!-- Exemplo com três tipos de gasto: Crédito, Débito e Entradas -->
+      <script>
+        const tbody = document.querySelector('tbody');
+        const rowTypes = ['Crédito', 'Débito', 'Entradas']; // Tipos de gastos
+
+        rowTypes.forEach(type => {
+          const row = document.createElement('tr');
+          const tdType = document.createElement('td');
+          tdType.textContent = type;
+          row.appendChild(tdType);
+
+          months.forEach(() => {
+            const td = document.createElement('td');
+            const input = document.createElement('input');
+            input.type = 'number';
+            input.step = '0.01';
+            input.placeholder = type;
+            td.appendChild(input);
+            row.appendChild(td);
+          });
+
+          tbody.appendChild(row);
+        });
+      </script>
+    </tbody>
+  </table>

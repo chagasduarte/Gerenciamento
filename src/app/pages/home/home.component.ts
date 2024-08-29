@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, Type, ViewChild, ViewContainerRef } from '@angular/core';
 import { Ano, Mes, Meses } from '../../utils/meses';
 import { CommonModule } from '@angular/common';
 import { Despesa } from '../../shared/models/despesa';
@@ -12,18 +12,24 @@ import { EntradasService } from '../../shared/services/entradas.service';
 import { Salario } from '../../utils/functions/salario';
 import { ContasService } from '../../shared/services/contas.service';
 import { Conta } from '../../shared/models/conta';
+import { GastosComponent } from '../gastos/gastos.component';
+import { MensalComponent } from '../../shared/components/mensal/mensal.component';
+import { AnualComponent } from '../../shared/components/anual/anual.component';
+import { GraficosComponent } from '../../shared/components/graficos/graficos.component';
+import { SystemService } from '../../shared/services/system.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
-    CommonModule
+    CommonModule,
+    GastosComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent implements OnInit{
-
+export class HomeComponent implements OnInit, AfterViewInit{
+  @ViewChild('container', { read: ViewContainerRef }) container!: ViewContainerRef;
   despesas: Despesa[] = [];
   entradas!: Entrada[];
   contas!: Conta[];
@@ -34,22 +40,27 @@ export class HomeComponent implements OnInit{
   gastosAdicionais: number = 0;
 
   ano!: Ano;
-  mes = new Mes(new Date().getMonth() + 1);
+
   constructor(
     private readonly despesaService: DespesasService,
     private readonly parcelasService: ParcelasService,
     private readonly entradasService: EntradasService,
     private readonly contasService: ContasService,
     private readonly toastService: ToastrService,
-    private readonly router: Router
+    private readonly router: Router,
+    public systemService: SystemService
   ){
     this.ano = new Ano();
+  }
+  ngAfterViewInit(): void {
+    this.definirContainer(MensalComponent);
   }
 
   ngOnInit(): void {
     this.calculaGastosDoMes();
     this.calculaEntradasFuturas();    
     this.calculaSaldoAtual();
+    
   }
 
   calculaGastosDoMes(){
@@ -65,7 +76,7 @@ export class HomeComponent implements OnInit{
               desp.push(x);
             }
             else {
-              if (x.mesCompra == this.mes.valor){
+              if (x.mesCompra == this.systemService.mes.valor){
                 this.gastosAdicionais += x.valorTotal;
               }
             }
@@ -81,7 +92,7 @@ export class HomeComponent implements OnInit{
               success.map(parc => {
               switch (parc.status) {
                 case 0: {
-                  if (parc.mesVencimento == this.mes.valor) {
+                  if (parc.mesVencimento == this.systemService.mes.valor) {
                     this.gastoTotalMes += parc.valor;
                   }
                   break;
@@ -108,7 +119,7 @@ export class HomeComponent implements OnInit{
     this.entradasService.GetEntradas().subscribe({
       next: (success: Entrada[]) => {
         success.map(x => {
-          if ((x.mesDebito == this.mes.valor 
+          if ((x.mesDebito == this.systemService.mes.valor
                || x.isFixo)
                && x.diaDebito > dataAtual.getDate()) {
             this.aReceber += new Salario().calcularSalarioLiquido(x.valor); 
@@ -131,7 +142,7 @@ export class HomeComponent implements OnInit{
   }
 
   mudaMes(mes: Mes){
-    this.mes = mes;
+    this.systemService.mes = mes;
     this.calculaGastosDoMes();
     this.calculaEntradasFuturas();    
     this.calculaSaldoAtual();
@@ -152,21 +163,31 @@ export class HomeComponent implements OnInit{
   receber() {
     
   }
+  
+  mostrarInfo(comp: string){
 
-  mostrarInfo(tipo: string) {
-    const infoDiv = document.querySelector('.info');
-    switch (tipo) {
-      case 'Mensal':
-        infoDiv!.innerHTML = '<p>Informações Mensais</p>';
+    switch (comp) {
+      case "m": {
+        this.definirContainer(MensalComponent);
         break;
-      case 'Anual':
-        infoDiv!.innerHTML = '<p>Informações Anuais</p>';
+      }
+      case "a": {
+        this.definirContainer(AnualComponent);
         break;
-      case 'Gráficos':
-        infoDiv!.innerHTML = '<p>Gráficos</p>';
-        break;
-      default:
-        infoDiv!.innerHTML = '<p>Selecione uma opção</p>';
+      }
+      case "g": {
+        this.definirContainer(GraficosComponent);
+      }
+    }
+
+  }
+
+  definirContainer(component: Type<any>) {
+    if (this.container) {
+      this.container.clear();
+      this.container.createComponent(component);
+    } else {
+      console.error('Container não foi inicializado corretamente.');
     }
   }
     
