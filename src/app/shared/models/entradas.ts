@@ -7,4 +7,5 @@ export interface Entrada {
     mesDebito: number
     anoDebito: number
     isFixo: boolean
+    status: boolean
 }

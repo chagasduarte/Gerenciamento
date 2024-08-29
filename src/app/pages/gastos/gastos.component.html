@@ -18,7 +18,7 @@
             <td> {{gasto.diaCompra}}/{{gasto.mesCompra}}/{{gasto.anoCompra}} </td>
             <td> {{gasto.status}} </td>    
             <td> 
-              <button *ngIf="!gasto.status" (click)="pagar(gasto)">pagar</button>
+              <button *ngIf="!gasto.status" (click)="pagar(gasto)"><img src="/assets/img/cash-coin.svg" alt=""/></button>
               <span *ngIf="gasto.status">OK</span>
             </td>
           </tr>

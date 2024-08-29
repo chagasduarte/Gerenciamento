@@ -39,7 +39,7 @@ export class MensalComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.despesaService.GetDespesas().subscribe({
+    this.despesaService.GetDespesasByMes(this.systemService.mes.valor).subscribe({
       next: (success: Despesa[]) => {
         success.map( x => {
           this.tabela.map( t => {

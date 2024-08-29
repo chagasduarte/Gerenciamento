@@ -20,9 +20,9 @@
     
     <div class="cards">
       <div class="grafico">
-        <div class="d-flex" *ngFor="let despesa of despesas" (click)="parcelas(despesa.id)">
+        <div class="d-flex" *ngFor="let despesa of despesas">
           <span class="text-end"> {{despesa.nome}}: </span>
-          <progress [value]="despesa.valorPago" [max]="despesa.valorTotal" style="width: 100px; align-self: center;"></progress>
+          <progress [value]="despesa.valorPago" [max]="despesa.valorTotal" style="width: 100px; align-self: center;"  (click)="parcelas(despesa.id)"></progress>
         </div>
              
       </div>

@@ -4,10 +4,10 @@
   overflow-y: auto;
 }
 
-th, td {
+tbody td {
   padding: 8px;
   text-align: left;
-  border: #102124;
+  border: 1px solid rgb(26, 56, 68);
 }
 
 th.sticky-col, td.sticky-col {

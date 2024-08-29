@@ -124,8 +124,7 @@ export class HomeComponent implements OnInit, AfterViewInit{
       next: (success: Entrada[]) => {
         success.map(x => {
           if ((x.mesDebito == this.systemService.mes.valor
-               || x.isFixo)
-               && x.diaDebito > dataAtual.getDate()) {
+               || x.isFixo)) {
             this.aReceber += new Salario().calcularSalarioLiquido(x.valor); 
 
           }
@@ -150,6 +149,7 @@ export class HomeComponent implements OnInit, AfterViewInit{
     this.calculaGastosDoMes();
     this.calculaEntradasFuturas();    
     this.calculaSaldoAtual();
+    this.mostrarInfo("m")
   }
 
   adicionarDespesa() {
