@@ -43,11 +43,11 @@ export class MensalComponent implements OnInit{
       next: (success: Despesa[]) => {
         success.map( x => {
           this.tabela.map( t => {
-            const info = new InfoTabela(x.diaCompra, x.valorTotal, x.descricao);
+            const info = new InfoTabela(x.diaCompra, x.valorTotal, x.nome);
             if (!x.isFixa){
               if (t.Valor == x.tipoDespesa){
                 if(t.Info[x.diaCompra+ 1]) {
-                  t.Info[x.diaCompra+ 1].detalhe += `- ${x.descricao}`
+                  t.Info[x.diaCompra+ 1].detalhe += `- ${x.nome}`
                   t.Info[x.diaCompra+ 1].valor += x.valorTotal;
                 }
                 else {

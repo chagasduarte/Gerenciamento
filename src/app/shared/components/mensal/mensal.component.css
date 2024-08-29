@@ -7,9 +7,11 @@
 th, td {
   padding: 8px;
   text-align: left;
+  border: #102124;
 }
 
 th.sticky-col, td.sticky-col {
+  background-color: #3b666b;
   position: sticky;
   left: 0;
   z-index: 1; /* Garantir que a coluna fixa esteja acima das outras colunas */
