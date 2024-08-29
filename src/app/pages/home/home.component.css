@@ -100,6 +100,11 @@
     border-top-right-radius: 5px;
     width: 8rem;
     height: 30px;
+    transition: transform 0.3s;
+}
+.janela1:hover{
+    cursor: pointer;
+    transform: scale(1.1);
 }
 .janela2{
     grid-area: janela2;
@@ -108,6 +113,11 @@
     width: 8rem;
     height: 30px;
     margin-left: 5px;
+    transition: transform 0.3s;
+}
+.janela2:hover {
+    transform: scale(1.1);
+    cursor:pointer;
 }
 .janela3{
     grid-area: janela3;
@@ -116,6 +126,11 @@
     width: 8rem;
     height: 30px;
     margin-left: 5px;
+    transition: transform 0.3s;
+}
+.janela3:hover {
+    transform: scale(1.1);
+    cursor: pointer;
 }
 .info{
     grid-area: info;
