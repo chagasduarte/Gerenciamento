@@ -14,7 +14,7 @@
             <td *ngFor="let dia of systemService.mes.dias" class="dia"> {{item.Info[dia.diaMes]?.valor | currency}} </td>
           </tr>
           <tr>
-            <td>Total</td>
+            <td class="sticky-col">Total</td>
             <td *ngFor="let dia of systemService.mes.dias"> {{resultados[dia.diaMes] | currency}} </td>
           </tr>
         </tbody>
