@@ -65,9 +65,9 @@
 
 <div class="info-2">
   <div class="janelas d-flex">
-    <div class="janela1" (click)="mostrarInfo('m')">Mensal</div>
-    <div class="janela2" (click)="mostrarInfo('a')">Anual</div>
-    <div class="janela3" (click)="mostrarInfo('g')">Gráficos</div>
+    <div class="janela1" (click)="mostrarInfo('m')" [ngStyle]="{'background-color': colorMensal}">Mensal</div>
+    <div class="janela2" (click)="mostrarInfo('a')" [ngStyle]="{'background-color': colorAnual}">Anual</div>
+    <div class="janela3" (click)="mostrarInfo('g')" [ngStyle]="{'background-color': colorGrafico}">Gráficos</div>
     <button class="btn-add-despesa" (click)="adicionarDespesa()">Add</button>
   </div>
   <div class="info">

@@ -90,10 +90,12 @@
    height: 500px;
    margin-left: 5%;
 }
-
+.janelas {
+    color: black;
+    font-weight: bold;
+}
 .janela1{
     grid-area: janela1;
-    background-color: aliceblue;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     width: 8rem;
@@ -101,7 +103,6 @@
 }
 .janela2{
     grid-area: janela2;
-    background-color: rgb(118, 141, 161);
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     width: 8rem;
@@ -110,8 +111,6 @@
 }
 .janela3{
     grid-area: janela3;
-    background-color: rgb(118, 141, 161);
-
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     width: 8rem;

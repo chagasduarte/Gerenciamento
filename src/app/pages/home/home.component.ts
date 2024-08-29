@@ -17,6 +17,7 @@ import { MensalComponent } from '../../shared/components/mensal/mensal.component
 import { AnualComponent } from '../../shared/components/anual/anual.component';
 import { GraficosComponent } from '../../shared/components/graficos/graficos.component';
 import { SystemService } from '../../shared/services/system.service';
+import { Cor } from '../../utils/cores';
 
 @Component({
   selector: 'app-home',
@@ -40,6 +41,9 @@ export class HomeComponent implements OnInit, AfterViewInit{
   gastosAdicionais: number = 0;
 
   ano!: Ano;
+  colorMensal = new Cor().branca;
+  colorAnual = "#768da1";
+  colorGrafico = "#768da1";
 
   constructor(
     private readonly despesaService: DespesasService,
@@ -169,13 +173,22 @@ export class HomeComponent implements OnInit, AfterViewInit{
     switch (comp) {
       case "m": {
         this.definirContainer(MensalComponent);
+        this.colorMensal = new Cor().branca;
+        this.colorAnual = new Cor().cinza;
+        this.colorGrafico = new Cor().cinza;
         break;
       }
       case "a": {
+        this.colorAnual = new Cor().branca;
+        this.colorMensal = new Cor().cinza;
+        this.colorGrafico = new Cor().cinza;
         this.definirContainer(AnualComponent);
         break;
       }
       case "g": {
+        this.colorGrafico = new Cor().branca;
+        this.colorAnual = new Cor().cinza;
+        this.colorMensal = new Cor().cinza;
         this.definirContainer(GraficosComponent);
       }
     }
