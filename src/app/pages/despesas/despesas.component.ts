@@ -36,7 +36,7 @@ export class DespesasComponent {
 
     this.dataCompra = new Date(this.dataCompra);
     this.despesa.tipoDespesa = parseInt(this.despesa.tipoDespesa.toString());
-    this.despesa.diaCompra = this.dataCompra.getDay();
+    this.despesa.diaCompra = this.dataCompra.getDate();
     this.despesa.mesCompra = this.dataCompra.getMonth() + 1;
     this.despesa.anoCompra = this.dataCompra.getFullYear();
     this.despesaService.PostDespesa(this.despesa).subscribe({

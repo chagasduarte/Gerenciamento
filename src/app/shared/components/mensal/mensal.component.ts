@@ -20,7 +20,7 @@ import { Despesa } from '../../models/despesa';
 export class MensalComponent implements OnInit{
 
   tabela: Despesas[] = [];
-  
+  resultados: number[] = []
   constructor(
     public systemService: SystemService,
     private readonly despesaService: DespesasService
@@ -32,24 +32,33 @@ export class MensalComponent implements OnInit{
       this.tabela.push(tab);
       }
     }
+    this.systemService.mes.dias.forEach(x => {
+      this.resultados[x.diaMes] = 0;
+    })
 
   }
 
   ngOnInit(): void {
-    this.despesaService.GetDespesasByMes(this.systemService.mes.valor).subscribe({
+    this.despesaService.GetDespesas().subscribe({
       next: (success: Despesa[]) => {
         success.map( x => {
-          const info = new InfoTabela(x.diaCompra, x.valorTotal, x.descricao);
           this.tabela.map( t => {
-            if (t.Valor == x.tipoDespesa){
-              t.Info.push(info);
-            }
+            const info = new InfoTabela(x.diaCompra, x.valorTotal, x.descricao);
+            if (!x.isFixa){
+              if (t.Valor == x.tipoDespesa){
+                if(t.Info[x.diaCompra+ 1]) {
+                  t.Info[x.diaCompra+ 1].detalhe += `- ${x.descricao}`
+                  t.Info[x.diaCompra+ 1].valor += x.valorTotal;
+                }
+                else {
+                  t.Info[x.diaCompra+ 1] = info;
+                }
+                this.resultados[x.diaCompra + 1] += x.valorTotal
+              }
+            }         
           });
         });
       },
-      error: (err: any) => {
-        
-      }
     });
   }
 }
