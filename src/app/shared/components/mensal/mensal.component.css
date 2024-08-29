@@ -1,7 +1,31 @@
-.dia {
-    display: flex;
-    width: auto;
+
+.table-container {
+  max-height: 400px; /* Ajuste conforme necessário */
+  overflow-y: auto;
 }
-thead {
-    background-color: #29595f;
+
+th, td {
+  padding: 8px;
+  text-align: left;
+}
+
+th.sticky-col, td.sticky-col {
+  position: sticky;
+  left: 0;
+  z-index: 1; /* Garantir que a coluna fixa esteja acima das outras colunas */
+}
+
+thead th {
+  background-color: #29595f;
+}  
+
+.dia {
+    white-space: nowrap;
+    overflow: hidden; /* Opcional: oculta o texto que excede o contêiner */
+    text-overflow: ellipsis; 
+}
+
+.tabela {
+    border-collapse: collapse;
+    table-layout: fixed;
 }

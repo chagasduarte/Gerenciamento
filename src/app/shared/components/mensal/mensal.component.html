@@ -1,18 +1,23 @@
-<table>
-    <thead>
-      <tr>
-        <th>Tipo de Gasto</th>
-        <!-- Gerar cabeçalhos para cada dia do mês -->
-        <!-- Aqui estou gerando 31 dias como exemplo. Ajuste conforme o número real de dias no mês -->
-        <th *ngFor="let dia of systemService.mes.dias"> {{dia.diaMes}}/ {{dia.diaSemana.substring(0,3)}} </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Crédito</td>
-        <!-- Gerar células para cada dia do mês -->
-        <!-- Aqui estou gerando 31 células como exemplo. Ajuste conforme o número real de dias no mês -->
-        <td *ngFor="let dia of systemService.mes.dias" class="dia"></td>
-      </tr>
-    </tbody>
-</table>
+<div class="tabla-container">
+    <table class="tabela">
+        <thead>
+          <tr>
+            <th class="sticky-col">Tipo de Gasto</th>
+            <!-- Gerar cabeçalhos para cada dia do mês -->
+            <!-- Aqui estou gerando 31 dias como exemplo. Ajuste conforme o número real de dias no mês -->
+            <th *ngFor="let dia of systemService.mes.dias" class="dia"> 
+                <b>{{dia.diaSemana.substring(0,3)}} - {{dia.diaMes}}</b>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="sticky-col">Crédito</td>
+            <!-- Gerar células para cada dia do mês -->
+            <!-- Aqui estou gerando 31 células como exemplo. Ajuste conforme o número real de dias no mês -->
+            <td *ngFor="let dia of systemService.mes.dias" class="dia"></td>
+          </tr>
+        </tbody>
+    </table>
+</div>
+
