@@ -152,5 +152,22 @@ export class HomeComponent implements OnInit{
   receber() {
     
   }
+
+  mostrarInfo(tipo: string) {
+    const infoDiv = document.querySelector('.info');
+    switch (tipo) {
+      case 'Mensal':
+        infoDiv!.innerHTML = '<p>Informações Mensais</p>';
+        break;
+      case 'Anual':
+        infoDiv!.innerHTML = '<p>Informações Anuais</p>';
+        break;
+      case 'Gráficos':
+        infoDiv!.innerHTML = '<p>Gráficos</p>';
+        break;
+      default:
+        infoDiv!.innerHTML = '<p>Selecione uma opção</p>';
+    }
+  }
     
 }

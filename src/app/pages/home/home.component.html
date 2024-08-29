@@ -52,7 +52,7 @@
               <span><b>À Receber:</b></span>
               <div class="entrada">
                 <input [value]="aReceber | currency"> 
-                <img src="/assets/img/check.svg" />
+                <img src="/assets/img/check.svg" (click)="receber()"/>
               </div>
               
             </div>
@@ -65,10 +65,10 @@
 
 <div class="info-2">
   <div class="janelas d-flex">
-    <div class="janela1">Mensal</div>
-    <div class="janela2">Anual</div>
-    <div class="janela3">Gráficos</div>
+    <div class="janela1" (click)="mostrarInfo('Mensal')">Mensal</div>
+    <div class="janela2" (click)="mostrarInfo('Anual')">Anual</div>
+    <div class="janela3" (click)="mostrarInfo('Gráficos')">Gráficos</div>
     <button class="btn-add-despesa" (click)="adicionarDespesa()">Add</button>
   </div>
- <div class="info"></div>
+  <div class="info"></div>
 </div>
