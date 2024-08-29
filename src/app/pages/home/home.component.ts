@@ -89,7 +89,7 @@ export class HomeComponent implements OnInit, AfterViewInit{
         this.despesas = desp;
 
         this.despesas.map(x => {        
-          this.parcelasService.GetParcelasById(x.id).subscribe({
+          this.parcelasService.GetParcelas(x.id).subscribe({
             next: (success: Parcela[]) => {
               //zera o valor pago e recalcula baseado no status das parcelas.
               x.valorPago = 0;

@@ -20,11 +20,12 @@ export class ParcelasService {
   GetParcelas(idDespesa: number) : Observable<Parcela[]>{
     return this.http.get<Parcela[]>(`${this.api}/${idDespesa}`);
   }
+  GetParcelasByMesAndId(idDespesa: number, mes: number) : Observable<Parcela[]>{
+    return this.http.get<Parcela[]>(`${this.api}/Mes/${mes}/${idDespesa}`);
+  }
+
   GetParcelasByMes(mes: number) : Observable<Parcela[]>{
     return this.http.get<Parcela[]>(`${this.api}/Mes/${mes}`);
-  }
-  GetParcelasById(id: number) : Observable<Parcela[]>{
-    return this.http.get<Parcela[]>(`${this.api}/${id}`);
   }
 
   PostParcela(request: ParcelaRequest) : Observable<number[]> {
