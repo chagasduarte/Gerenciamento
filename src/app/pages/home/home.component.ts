@@ -82,7 +82,7 @@ export class HomeComponent implements OnInit, AfterViewInit{
               desp.push(x);
             }
             else {
-              if (x.dataCompra.getMonth() + 1 == this.systemService.mes.valor && x.dataCompra.getFullYear() = 2024){
+              if (x.dataCompra.getMonth() + 1 == this.systemService.mes.valor && x.dataCompra.getFullYear() == 2024){
                 this.gastosAdicionais += x.valorTotal;
               }
             }
