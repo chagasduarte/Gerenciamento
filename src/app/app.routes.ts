@@ -5,6 +5,7 @@ import { EntradasComponent } from './pages/entradas/entradas.component';
 import { ContasComponent } from './pages/contas/contas.component';
 import { ParcelasComponent } from './pages/parcelas/parcelas.component';
 import { GastosComponent } from './pages/gastos/gastos.component';
+import { ContasDetalheComponent } from './pages/contas-detalhe/contas-detalhe.component';
 
 export const routes: Routes = [
     { path:"", component: HomeComponent },
@@ -12,5 +13,6 @@ export const routes: Routes = [
     { path: "entradas", component: EntradasComponent },
     { path: "contas", component: ContasComponent },
     { path: "parcelas", component: ParcelasComponent },
-    { path: "gastos", component: GastosComponent }
+    { path: "gastos", component: GastosComponent },
+    { path: "contas-detalhe", component: ContasDetalheComponent }
 ];

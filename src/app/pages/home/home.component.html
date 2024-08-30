@@ -44,7 +44,7 @@
       <div class="plus-card">
         <img src="/assets/img/plus-coin.svg" alt="" (click)="AdicionaEntrada()">
         <div class="card">
-            <div class="saldoAtual">
+            <div class="saldoAtual" (click)="contasDetalhes()">
               <span> <b>Saldo:</b></span>
               <input [value]="saldoAtual | currency">
             </div>

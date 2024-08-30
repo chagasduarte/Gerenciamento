@@ -30,9 +30,9 @@ export class MensalComponent implements OnInit{
   ){
     for (const key in TipoDespesa){
       if (!isNaN(Number(key))) {
-      const valor = TipoDespesa[key];
-      const tab = {Nome: valor, Valor: parseInt(key), Info: [{}] as InfoTabela[]} as Despesas;
-      this.tabela.push(tab);
+        const valor = TipoDespesa[key];
+        const tab = {Nome: valor, Valor: parseInt(key), Info: [{}] as InfoTabela[]} as Despesas;
+        this.tabela.push(tab);
       }
     }
     this.systemService.mes.dias.forEach(x => {
@@ -74,11 +74,12 @@ export class MensalComponent implements OnInit{
                     if(t.Valor == x.tipoDespesa){
                       if(t.Info[p.diaVencimento]) {
                         t.Info[p.diaVencimento].valor += p.valor;
-                        this.resultados[p.diaVencimento] += p.valor;
+                        t.Info[p.diaVencimento].detalhe += ` | ${x.nome}`
                       }
                       else {
                         t.Info[p.diaVencimento] = info;
                       }                      
+                      this.resultados[p.diaVencimento] += p.valor;
                     }
                   })
                 })

@@ -30,6 +30,7 @@ import { Cor } from '../../utils/cores';
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit, AfterViewInit{
+
   @ViewChild('container', { read: ViewContainerRef }) container!: ViewContainerRef;
   despesas: Despesa[] = [];
   entradas!: Entrada[];
@@ -203,5 +204,7 @@ export class HomeComponent implements OnInit, AfterViewInit{
       console.error('Container não foi inicializado corretamente.');
     }
   }
-    
+  contasDetalhes() {
+    this.router.navigate(["contas-detalhe"])
+  }
 }

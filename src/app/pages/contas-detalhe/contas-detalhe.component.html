@@ -1,0 +1,31 @@
+<div class="cabecalho">
+    <h1>Contas</h1>
+    <button (click)="voltar()">Voltar</button>
+</div>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nome</th>
+      <th>Descrição</th>
+      <th>Crédito</th>
+      <th>Débito</th>
+      <th>Ação</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let conta of contas">
+      <td>{{ conta.id }}</td>
+      <td>{{ conta.nome }}</td>
+      <td>{{ conta.descricao }}</td>
+      <td>{{ conta.credito }}</td>
+      <td>
+        <input
+          type="number"
+          [(ngModel)]="conta.debito"
+        >
+      </td>
+      <td><button (click)="updateDebito(conta)">Salvar</button> </td>
+    </tr>
+  </tbody>
+</table>

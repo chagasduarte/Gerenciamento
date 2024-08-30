@@ -184,6 +184,11 @@
     border-radius: 5px;
     border-right: 10px;
     font-size: 20px;
+    transition: transform 0.3s;
+}
+.saldoAtual:hover{
+    transform: scale(0.97);
+    cursor: pointer;
 }
 
 .aReceber {
@@ -224,7 +229,7 @@ input {
     transition: transform 0.3s;
 }
 .outros:hover {
-    transform: scale(0.9);
+    transform: scale(0.97);
     cursor: pointer;
 }
 .cards {
