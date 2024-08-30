@@ -1,0 +1,24 @@
+<div class="container">
+    <h1>Rendas</h1>
+    <button class="btn btn-sm btn-warning" (click)="voltar()">Voltar</button>
+    <div class="card mb-3"></div>
+    <div class="d-flex">
+        <div class="card card-sm me-2" *ngFor="let entrada of entradas">
+            <div class="card-header">
+               <b>{{entrada.nome}}</b> 
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">Salário:</div>
+                    <div class="col"><input class="form-control form-control-sm" type="number" [(ngModel)]="entrada.valor"></div>
+                    <button class="btn btn-sm btn-primary col" (click)="atualizaSalario(entrada)"> Up </button>
+                </div>
+                <div class="row" *ngFor="let desconto of funcaoSalario.calcularSalarioLiquido(entrada.valor)">
+                    <div class="col"> {{desconto.nome}} </div>
+                    <div class="col">{{desconto.valor | currency}}</div>
+                </div>
+                <button class="btn btn-sm btn-success" (click)="receber(entrada.contaId, funcaoSalario.calcularSalarioLiquido(entrada.valor)[2].valor)">Receber</button>
+            </div>
+        </div>
+    </div>
+</div>

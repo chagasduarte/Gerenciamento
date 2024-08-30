@@ -15,6 +15,9 @@ export class ContasService {
   ) {
     this.api = appSettingService.get().WebApi + "/Contas";
   }
+  GetContaById(id: number) : Observable<Conta> {
+    return this.http.get<Conta>(`${this.api}/${id}`);
+  }
   GetContas(): Observable<Conta[]>{
     return this.http.get<Conta[]>(`${this.api}`)
   }

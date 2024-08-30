@@ -46,15 +46,14 @@
         <div class="card">
             <div class="saldoAtual" (click)="contasDetalhes()">
               <span> <b>Saldo:</b></span>
-              <input [value]="saldoAtual | currency">
+              <div class="money"> {{saldoAtual | currency}} </div>
             </div>
-            <div class="aReceber">
+            <div class="aReceber" (click)="entradaDetalhes()">
               <span><b>À Receber:</b></span>
               <div class="entrada">
-                <input [value]="aReceber | currency"> 
-                <img src="/assets/img/check.svg" (click)="receber()"/>
+                <div class="money"> {{aReceber | currency}} </div>
+                <img src="/assets/img/check.svg"/>
               </div>
-              
             </div>
         </div>
       </div>

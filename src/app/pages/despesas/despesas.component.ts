@@ -6,6 +6,8 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ParcelasService } from '../../shared/services/parcelas.service';
 import { ParcelaRequest } from '../../shared/models/parcela';
+import { ContasService } from '../../shared/services/contas.service';
+import { Conta } from '../../shared/models/conta';
 
 @Component({
   selector: 'app-despesas',
@@ -17,7 +19,7 @@ import { ParcelaRequest } from '../../shared/models/parcela';
   styleUrl: './despesas.component.css'
 })
 export class DespesasComponent {
-
+  contas: Conta[] = []
   despesa: Despesa;
   requestParcela: ParcelaRequest; 
 

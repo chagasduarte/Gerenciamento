@@ -1,17 +1,20 @@
 export class Salario {
-
-    calcularSalarioLiquido(salarioBruto: number): number {
-        const INSS = calcularINSS(salarioBruto);
-        const baseIRRF = salarioBruto - INSS;
-        const IRRF = calcularIRRF(baseIRRF);
-
-        const salarioLiquido = salarioBruto - INSS - IRRF;
-        return salarioLiquido;
+    
+    calcularSalarioLiquido(salarioBruto: number) {
+        let retorno: resultados[] = [];
+        retorno[0] = {nome:"INSS", valor: calcularINSS(salarioBruto)}
+        const baseIRRF = salarioBruto - retorno[0].valor;
+        retorno[1] = { nome: "IRRF", valor:calcularIRRF(baseIRRF)};
+        retorno[2] = {nome: "Liquido", valor: salarioBruto - retorno[0].valor - retorno[1].valor} ;
+        return retorno;
     }
 
 
 }
-
+interface resultados {
+    nome: string
+    valor: number
+}
 function calcularINSS(salarioBruto: number): number {
     const faixasINSS = [
         { limite: 1302.00, aliquota: 0.075 },

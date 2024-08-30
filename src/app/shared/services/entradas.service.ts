@@ -23,4 +23,12 @@ export class EntradasService {
   PostEntrada(entrada: Entrada): Observable<Entrada> {
     return this.http.post<Entrada>(`${this.api}`,entrada);
   }
+
+  PutEntrada(entrada: Entrada) : Observable<Entrada> {
+    return this.http.put<Entrada>(`${this.api}/${entrada.id}`, entrada);
+  }
+
+  DeleteEntrada(id: number) {
+    return this.http.delete(`${this.api}/${id}`)
+  }
 }

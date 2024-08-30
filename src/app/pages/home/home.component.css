@@ -186,7 +186,7 @@
     font-size: 20px;
     transition: transform 0.3s;
 }
-.saldoAtual:hover{
+.outros:hover, .saldoAtual:hover, .aReceber:hover{
     transform: scale(0.97);
     cursor: pointer;
 }
@@ -195,7 +195,9 @@
     font-size: 20px;
     background-color: aquamarine;
     border-radius: 5px;
+    transition: transform 0.3s;
 }
+
 
 input {
     border: none;
@@ -228,10 +230,7 @@ input {
     border-radius: 5px;
     transition: transform 0.3s;
 }
-.outros:hover {
-    transform: scale(0.97);
-    cursor: pointer;
-}
+
 .cards {
     display: flex;
 }

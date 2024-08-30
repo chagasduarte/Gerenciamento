@@ -126,7 +126,7 @@ export class HomeComponent implements OnInit, AfterViewInit{
         success.map(x => {
           if ((x.mesDebito == this.systemService.mes.valor
                || x.isFixo)) {
-            this.aReceber += new Salario().calcularSalarioLiquido(x.valor); 
+            this.aReceber += new Salario().calcularSalarioLiquido(x.valor)[2].valor; 
 
           }
         })
@@ -207,4 +207,9 @@ export class HomeComponent implements OnInit, AfterViewInit{
   contasDetalhes() {
     this.router.navigate(["contas-detalhe"])
   }
+
+  entradaDetalhes() {
+    this.router.navigate(["entradas-detalhe"])
+  }
+    
 }
