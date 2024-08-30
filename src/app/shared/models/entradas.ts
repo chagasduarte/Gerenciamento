@@ -3,9 +3,7 @@ export interface Entrada {
     nome: string
     valor: number
     contaId: number
-    diaDebito: number
-    mesDebito: number
-    anoDebito: number
+    dataDebito: Date
     isFixo: boolean
     status: boolean
 }

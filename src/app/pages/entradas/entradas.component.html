@@ -14,20 +14,8 @@
         </select>
     </div>
     <div class="form-group">
-        <label for="diaDebito">Dia do Débito:</label>
-        <input type="number" id="diaDebito" name="diaDebito" min="1" max="31" required [(ngModel)]="entrada.diaDebito">
-    </div>
-    <div class="form-group">
-        <label for="mesDebito">Mês do Débito:</label>
-        <input type="number" id="mesDebito" name="mesDebito" min="1" max="12" required [(ngModel)]="entrada.mesDebito">
-    </div>
-    <div class="form-group">
-        <label for="anoDebito">Ano do Débito:</label>
-        <input type="number" id="anoDebito" name="anoDebito" min="1900" max="2100" required [(ngModel)]="entrada.anoDebito">
-    </div>
-    <div class="form-group">
-        <label for="isFixo">É Fixo:</label>
-        <input type="checkbox" id="isFixo" name="isFixo" [(ngModel)]="entrada.isFixo">
+        <label for="data">Data Débito:</label>
+        <input type="date" class="form-input" id="data" name="data" [(ngModel)]="dataDebito"/>
     </div>
     <div class="form-group">
         <button type="submit">Enviar</button>

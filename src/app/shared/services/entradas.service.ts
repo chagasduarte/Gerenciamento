@@ -21,7 +21,7 @@ export class EntradasService {
   }
   
   PostEntrada(entrada: Entrada): Observable<Entrada> {
-    return this.http.post<Entrada>(`${this.api}`,entrada);
+    return this.http.post<Entrada>(`${this.api}`, entrada);
   }
 
   PutEntrada(entrada: Entrada) : Observable<Entrada> {

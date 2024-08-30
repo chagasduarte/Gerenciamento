@@ -49,18 +49,19 @@ export class MensalComponent implements OnInit{
     this.despesaService.GetDespesasByMes(this.systemService.mes.valor).subscribe({
       next: (success: Despesa[]) => {
         success.map( x => {
-          if (!x.isFixa){
+          x.dataCompra = new Date(x.dataCompra);
+          if (!x.isParcelada){
             this.tabela.map( t => {
-              const info = new InfoTabela(x.diaCompra, x.valorTotal, x.nome);
+              const info = new InfoTabela(x.dataCompra.getDate(), x.valorTotal, x.nome);
               if (t.Valor == x.tipoDespesa){
-                if(t.Info[x.diaCompra+ 1]) {
-                  t.Info[x.diaCompra+ 1].detalhe += `- ${x.nome}`
-                  t.Info[x.diaCompra+ 1].valor += x.valorTotal;
+                if(t.Info[x.dataCompra.getDate()+ 1]) {
+                  t.Info[x.dataCompra.getDate()+ 1].detalhe += `- ${x.nome}`
+                  t.Info[x.dataCompra.getDate()+ 1].valor += x.valorTotal;
                 }
                 else {
-                  t.Info[x.diaCompra+ 1] = info;
+                  t.Info[x.dataCompra.getDate()+ 1] = info;
                 }
-                this.resultados[x.diaCompra + 1] += x.valorTotal
+                this.resultados[x.dataCompra.getDate() + 1] += x.valorTotal
               }
             });
           }
@@ -68,18 +69,18 @@ export class MensalComponent implements OnInit{
             this.parcelaService.GetParcelasByMesAndId(x.id, this.systemService.mes.valor).subscribe({
               next: (success: Parcela[]) => {
                 success.map(p => {
+                  p.dataVencimento = new Date(p.dataVencimento);
                   this.tabela.map(t => {
-                    const info = new InfoTabela(p.diaVencimento, p.valor, `Parcela: ${x.nome}`);
-                    console.log(info);
+                    const info = new InfoTabela(p.dataVencimento.getDate(), p.valor, `Parcela: ${x.nome}`);
                     if(t.Valor == x.tipoDespesa){
-                      if(t.Info[p.diaVencimento]) {
-                        t.Info[p.diaVencimento].valor += p.valor;
-                        t.Info[p.diaVencimento].detalhe += ` | ${x.nome}`
+                      if(t.Info[p.dataVencimento.getDate()]) {
+                        t.Info[p.dataVencimento.getDate()].valor += p.valor;
+                        t.Info[p.dataVencimento.getDate()].detalhe += ` | ${x.nome}`
                       }
                       else {
-                        t.Info[p.diaVencimento] = info;
+                        t.Info[p.dataVencimento.getDate()] = info;
                       }                      
-                      this.resultados[p.diaVencimento] += p.valor;
+                      this.resultados[p.dataVencimento.getDate()] += p.valor;
                     }
                   })
                 })

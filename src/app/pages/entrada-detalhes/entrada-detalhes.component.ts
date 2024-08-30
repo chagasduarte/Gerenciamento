@@ -35,11 +35,14 @@ export class EntradaDetalhesComponent implements OnInit{
   }
 
 
-  receber(id: number, valor: number) {
-    this.contaService.GetContaById(id).subscribe(x => {
+  receber(entrada: Entrada, valor: number) {
+    this.contaService.GetContaById(entrada.contaId).subscribe(x => {
       x.debito += valor;
       this.contaService.PutConta(x).subscribe(x => {
-        alert("OK");
+        entrada.status = true;
+        this.entradaService.PutEntrada(entrada).subscribe(x => {
+          alert("OK");
+        })
       })
     })
     

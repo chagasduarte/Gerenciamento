@@ -8,6 +8,7 @@ import { ParcelasService } from '../../shared/services/parcelas.service';
 import { ParcelaRequest } from '../../shared/models/parcela';
 import { ContasService } from '../../shared/services/contas.service';
 import { Conta } from '../../shared/models/conta';
+import { FormataDespesa } from '../../utils/functions/despesa';
 
 @Component({
   selector: 'app-despesas',
@@ -34,19 +35,13 @@ export class DespesasComponent {
     this.requestParcela = {} as ParcelaRequest;
   }
   OnSubmit() {
-    
-
-    this.dataCompra = new Date(this.dataCompra);
+    this.despesa.dataCompra = new Date(this.dataCompra);
     this.despesa.tipoDespesa = parseInt(this.despesa.tipoDespesa.toString());
-    this.despesa.diaCompra = this.dataCompra.getDate();
-    this.despesa.mesCompra = this.dataCompra.getMonth() + 1;
-    this.despesa.anoCompra = this.dataCompra.getFullYear();
     this.despesaService.PostDespesa(this.despesa).subscribe({
       next: (success: Despesa) => {
-        if (this.despesa.isFixa){
+        if (this.despesa.isParcelada){
           this.requestParcela.idDespesa = success.id;
-          this.requestParcela.dataCompra = this.dataCompra.toISOString().split("T")[0].toString();
-          
+          this.requestParcela.dataCompra = this.despesa.dataCompra.toISOString()        
           this.parcelaService.PostParcela(this.requestParcela).subscribe({
             next: (success: number[]) => {
               this.route.navigate([""]);

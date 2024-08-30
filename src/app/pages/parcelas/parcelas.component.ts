@@ -42,7 +42,7 @@ export class ParcelasComponent {
   }
 
   pagar(parcela: Parcela) {
-    parcela.status = 1;
+    parcela.isPaga = 1;
     this.parcelasService.PutParcela(parcela).subscribe({
       next: (success: Parcela) => {
         this.buscaParcelas();

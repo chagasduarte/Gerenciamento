@@ -21,6 +21,7 @@ import { Conta } from '../../shared/models/conta';
 export class EntradasComponent {
     entrada: Entrada;
     contas!: Conta[];
+    dataDebito!: Date
     constructor(
         private readonly entradaService: EntradasService,
         private readonly contasService: ContasService,
@@ -35,11 +36,10 @@ export class EntradasComponent {
     }
   
     OnSubmit(){
-
       this.entradaService.PostEntrada(this.entrada).subscribe({
         next: (success: Entrada) => {
            this.router.navigate([""]);
         }
-      })
+      });
     }
 }

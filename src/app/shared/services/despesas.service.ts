@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { AppSettingsService } from './app-settings.service';
 import { Despesa } from '../models/despesa';
 import { Observable } from 'rxjs';
+import { FormataDespesa } from '../../utils/functions/despesa';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +33,8 @@ export class DespesasService {
   }
   
   PostDespesa(despesa: Despesa): Observable<Despesa> {
-    return this.http.post<Despesa>(`${this.api}`, despesa);
+    const desppost = FormataDespesa(despesa);
+    return this.http.post<Despesa>(`${this.api}`, desppost);
   }
 
   PutDespesa(despesa: Despesa): Observable<Despesa> {

@@ -21,7 +21,7 @@ export class ParcelasService {
     return this.http.get<Parcela[]>(`${this.api}/${idDespesa}`);
   }
   GetParcelasByMesAndId(idDespesa: number, mes: number) : Observable<Parcela[]>{
-    return this.http.get<Parcela[]>(`${this.api}/Mes/${mes}/${idDespesa}`);
+    return this.http.get<Parcela[]>(`${this.api}/${idDespesa}/${mes}`);
   }
 
   GetParcelasByMes(mes: number) : Observable<Parcela[]>{

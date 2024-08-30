@@ -76,12 +76,13 @@ export class HomeComponent implements OnInit, AfterViewInit{
     this.despesaService.GetDespesas().subscribe({
       next: (success: Despesa[]) => {
         success.map( x => {
-          if (!x.status){
-            if (x.isFixa) {
+          x.dataCompra = new Date(x.dataCompra)
+          if (!x.isPaga){
+            if (x.isParcelada) {
               desp.push(x);
             }
             else {
-              if (x.mesCompra == this.systemService.mes.valor){
+              if (x.dataCompra.getMonth() + 1 == this.systemService.mes.valor){
                 this.gastosAdicionais += x.valorTotal;
               }
             }
@@ -90,23 +91,24 @@ export class HomeComponent implements OnInit, AfterViewInit{
         this.despesas = desp;
 
         this.despesas.map(x => {        
-          this.parcelasService.GetParcelas(x.id).subscribe({
+          this.parcelasService.GetParcelas(x.id, ).subscribe({
             next: (success: Parcela[]) => {
               //zera o valor pago e recalcula baseado no status das parcelas.
               x.valorPago = 0;
               success.map(parc => {
-              switch (parc.status) {
-                case 0: {
-                  if (parc.mesVencimento == this.systemService.mes.valor) {
-                    this.gastoTotalMes += parc.valor;
+                parc.dataVencimento = new Date(parc.dataVencimento)
+                switch (parc.isPaga) {
+                  case 0: {
+                    if (parc.dataVencimento.getMonth() + 1 == this.systemService.mes.valor) {
+                      this.gastoTotalMes += parc.valor;
+                    }
+                    break;
                   }
-                  break;
+                  case 1: {
+                    x.valorPago += parc.valor;
+                    break;
+                  }
                 }
-                case 1: {
-                  x.valorPago += parc.valor;
-                  break;
-                }
-              }
               });
             }
           })
@@ -124,10 +126,9 @@ export class HomeComponent implements OnInit, AfterViewInit{
     this.entradasService.GetEntradas().subscribe({
       next: (success: Entrada[]) => {
         success.map(x => {
-          if ((x.mesDebito == this.systemService.mes.valor
-               || x.isFixo)) {
+          x.dataDebito = new Date(x.dataDebito)
+          if ((x.dataDebito.getMonth() + 1 == this.systemService.mes.valor && !x.status)) {
             this.aReceber += new Salario().calcularSalarioLiquido(x.valor)[2].valor; 
-
           }
         })
       }

@@ -7,10 +7,8 @@ export interface Despesa {
     tipoDespesa: number
     valorTotal: number
     valorPago: number
-    diaCompra: number
-    mesCompra: number
-    anoCompra: number
-    isFixa: boolean
-    status: boolean
+    dataCompra: Date
+    isParcelada: boolean
+    isPaga: boolean
     parcelas: Parcela[]
 }

@@ -32,9 +32,9 @@
     </div>
     <div class="form-check">
         <label for="parcelado">Parcelado:</label>
-        <input type="checkbox" id="parcelado" name="parcelado" [(ngModel)]="despesa.isFixa">
+        <input type="checkbox" id="parcelado" name="parcelado" [(ngModel)]="despesa.isParcelada">
     </div>
-    <div *ngIf="despesa.isFixa" class="parcelado">
+    <div *ngIf="despesa.isParcelada" class="parcelado">
         <label for="qtdParcelas">N° de Parcelas:</label>
         <input type="number" name="qtdParcelas" id="qtdParcelas" [(ngModel)]="requestParcela.qtdParcelas">
 

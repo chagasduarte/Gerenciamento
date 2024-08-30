@@ -2,10 +2,8 @@ export interface Parcela {
     id: number
     despesaId: number
     valor: number
-    diaVencimento: number
-    mesVencimento: number
-    anoVencimento: number
-    status: number
+    dataVencimento: Date
+    isPaga: number
 }
 
 export interface ParcelaRequest {
