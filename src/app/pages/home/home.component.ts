@@ -82,7 +82,7 @@ export class HomeComponent implements OnInit, AfterViewInit{
               desp.push(x);
             }
             else {
-              if (x.dataCompra.getMonth() + 1 == this.systemService.mes.valor){
+              if (x.dataCompra.getMonth() + 1 == this.systemService.mes.valor && x.dataCompra.getFullYear() = 2024){
                 this.gastosAdicionais += x.valorTotal;
               }
             }
@@ -99,7 +99,7 @@ export class HomeComponent implements OnInit, AfterViewInit{
                 parc.dataVencimento = new Date(parc.dataVencimento)
                 switch (parc.isPaga) {
                   case 0: {
-                    if (parc.dataVencimento.getMonth() + 1 == this.systemService.mes.valor) {
+                    if (parc.dataVencimento.getMonth() + 1 == this.systemService.mes.valor && parc.dataVencimento.getFullYear() == 2024) {
                       this.gastoTotalMes += parc.valor;
                     }
                     break;
