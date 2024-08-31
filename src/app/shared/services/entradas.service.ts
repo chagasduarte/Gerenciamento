@@ -23,6 +23,7 @@ export class EntradasService {
   
   PostEntrada(entrada: Entrada): Observable<Entrada> {
     const entrpost = FormataEntrada(entrada);
+    console.log(entrpost)
     return this.http.post<Entrada>(`${this.api}`, entrpost);
   }
 

@@ -31,7 +31,6 @@ import { Cor } from '../../utils/cores';
 })
 export class HomeComponent implements OnInit, AfterViewInit{
 
-
   @ViewChild('container', { read: ViewContainerRef }) container!: ViewContainerRef;
   despesas: Despesa[] = [];
   entradas!: Entrada[];
@@ -63,17 +62,16 @@ export class HomeComponent implements OnInit, AfterViewInit{
   }
 
   ngOnInit(): void {
+    this.calculaGastosDoMes();
+    this.calculaEntradasFuturas();    
+    this.calculaSaldoAtual();
+  }
+
+  calculaGastosDoMes(){
     for(let i = 1; i <= 12; i++) {
       this.systemService.entradas[i] = 0;
       this.systemService.saidas[i] = 0;
     }
-    this.calculaGastosDoMes();
-    this.calculaEntradasFuturas();    
-    this.calculaSaldoAtual();
-
-  }
-
-  calculaGastosDoMes(){
     this.gastoTotalMes = 0;
     this.gastosAdicionais = 0;
     let desp: Despesa[] = [];
@@ -94,7 +92,6 @@ export class HomeComponent implements OnInit, AfterViewInit{
           }
           if (x.dataCompra.getFullYear() == 2024 && !x.isParcelada){
             this.systemService.saidas[x.dataCompra.getMonth()] += parseInt(x.valorTotal.toString());
-            console.log(x)
           }
         });
         this.despesas = desp;
@@ -143,7 +140,7 @@ export class HomeComponent implements OnInit, AfterViewInit{
           if ((x.dataDebito.getMonth() + 1 == this.systemService.mes.valor && !x.status)) {
             this.aReceber += GetSalarioLiquido(x.valor)[2].valor; 
           }
-          this.systemService.entradas[x.dataDebito.getMonth()] += parseInt(x.valor.toString());
+          this.systemService.entradas[x.dataDebito.getMonth()+1] += parseInt(x.valor.toString());
         })
       }
     })
