@@ -61,7 +61,7 @@ export class GastosComponent {
   }
 
   pagar() {
-    let contaput = this.contas.find(x => x.id = this.idConta);
+    let contaput = this.contas.find(x => x.id == this.idConta);
     if(contaput){
       if(this.listaPagamento.length > 0) {
         this.listaPagamento.map(despesa => {

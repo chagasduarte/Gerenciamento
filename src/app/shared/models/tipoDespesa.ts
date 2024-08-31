@@ -8,6 +8,7 @@ export class InfoTabela {
     dia: number
     valor: number
     detalhe: string
+    cor!: string
     
     constructor(dia: number, valor: number, detalhe: string){
       this.detalhe = detalhe;

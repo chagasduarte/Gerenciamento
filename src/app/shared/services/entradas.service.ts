@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { AppSettingsService } from './app-settings.service';
 import { Entrada } from '../models/entradas';
 import { Observable } from 'rxjs';
+import { FormataEntrada } from '../../utils/functions/entrada';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,8 @@ export class EntradasService {
   }
   
   PostEntrada(entrada: Entrada): Observable<Entrada> {
-    return this.http.post<Entrada>(`${this.api}`, entrada);
+    const entrpost = FormataEntrada(entrada);
+    return this.http.post<Entrada>(`${this.api}`, entrpost);
   }
 
   PutEntrada(entrada: Entrada) : Observable<Entrada> {

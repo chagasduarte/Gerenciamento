@@ -1,5 +1,4 @@
-import { Component, Input, OnInit, Type } from '@angular/core';
-import { Mes } from '../../../utils/meses';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SystemService } from '../../services/system.service';
@@ -54,14 +53,15 @@ export class MensalComponent implements OnInit{
             this.tabela.map( t => {
               const info = new InfoTabela(x.dataCompra.getDate(), x.valorTotal, x.nome);
               if (t.Valor == x.tipoDespesa){
-                if(t.Info[x.dataCompra.getDate()+ 1]) {
-                  t.Info[x.dataCompra.getDate()+ 1].detalhe += `- ${x.nome}`
-                  t.Info[x.dataCompra.getDate()+ 1].valor += x.valorTotal;
+                if(t.Info[x.dataCompra.getDate()]) {
+                  t.Info[x.dataCompra.getDate()].detalhe += `- ${x.nome}`
+                  t.Info[x.dataCompra.getDate()].valor += x.valorTotal;
                 }
                 else {
-                  t.Info[x.dataCompra.getDate()+ 1] = info;
+                  t.Info[x.dataCompra.getDate()] = info;
+                  t.Info[x.dataCompra.getDate()].cor = x.isPaga?"#60b566":"#ffbf33";
                 }
-                this.resultados[x.dataCompra.getDate() + 1] += x.valorTotal
+                this.resultados[x.dataCompra.getDate()] += x.valorTotal
               }
             });
           }
@@ -70,6 +70,9 @@ export class MensalComponent implements OnInit{
               next: (success: Parcela[]) => {
                 success.map(p => {
                   p.dataVencimento = new Date(p.dataVencimento);
+                  if (p.dataVencimento < new Date() && p.isPaga == 0){
+                    p.isPaga = 3;
+                  }
                   this.tabela.map(t => {
                     const info = new InfoTabela(p.dataVencimento.getDate(), p.valor, `Parcela: ${x.nome}`);
                     if(t.Valor == x.tipoDespesa){
@@ -79,6 +82,19 @@ export class MensalComponent implements OnInit{
                       }
                       else {
                         t.Info[p.dataVencimento.getDate()] = info;
+                        let cor:string = "";
+                        switch(p.isPaga){
+                          case 0: 
+                            cor = "#ffbf33";
+                            break;
+                          case 1:
+                            cor = "#60b566";
+                            break;
+                          case 3: 
+                            cor = "#ff4d33";
+                            break;
+                        }
+                        t.Info[p.dataVencimento.getDate()].cor = cor;
                       }                      
                       this.resultados[p.dataVencimento.getDate()] += p.valor;
                     }

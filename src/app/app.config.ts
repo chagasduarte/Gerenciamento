@@ -6,6 +6,7 @@ import { BrowserModule, provideClientHydration } from '@angular/platform-browser
 import { provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http';
 import { provideToastr } from 'ngx-toastr';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideEcharts } from 'ngx-echarts';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }), 
@@ -17,6 +18,7 @@ export const appConfig: ApplicationConfig = {
                 progressBar: true,
                 positionClass: 'toast-bottom-right',
                 preventDuplicates: true}),
-              provideAnimations()
+              provideAnimations(),
+              provideEcharts()
             ]
 };

@@ -22,7 +22,7 @@
       <div class="grafico">
         <div class="d-flex" *ngFor="let despesa of despesas">
           <span class="text-end"> {{despesa.nome}}: </span>
-          <progress [value]="despesa.valorPago" [max]="despesa.valorTotal" style="width: 100px; align-self: center;"  (click)="parcelas(despesa)"></progress>
+          <progress [value]="despesa!.valorPago" [max]="parseInt(despesa.valorTotal)" style="width: 100px; align-self: center;"  (click)="parcelas(despesa)"></progress>
         </div>
              
       </div>

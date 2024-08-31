@@ -4,7 +4,7 @@ import { EntradasService } from '../../shared/services/entradas.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Salario } from '../../utils/functions/salario';
+import { GetSalarioLiquido } from '../../utils/functions/salario';
 import { ContasService } from '../../shared/services/contas.service';
 import { Conta } from '../../shared/models/conta';
 
@@ -36,6 +36,7 @@ export class EntradasComponent {
     }
   
     OnSubmit(){
+      this.entrada.dataDebito = new Date(this.dataDebito);
       this.entradaService.PostEntrada(this.entrada).subscribe({
         next: (success: Entrada) => {
            this.router.navigate([""]);

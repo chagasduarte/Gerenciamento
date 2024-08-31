@@ -1,15 +1,10 @@
-export class Salario {
-    
-    calcularSalarioLiquido(salarioBruto: number) {
+export function GetSalarioLiquido(salarioBruto: number) {
         let retorno: resultados[] = [];
         retorno[0] = {nome:"INSS", valor: calcularINSS(salarioBruto)}
         const baseIRRF = salarioBruto - retorno[0].valor;
         retorno[1] = { nome: "IRRF", valor:calcularIRRF(baseIRRF)};
         retorno[2] = {nome: "Liquido", valor: salarioBruto - retorno[0].valor - retorno[1].valor} ;
         return retorno;
-    }
-
-
 }
 interface resultados {
     nome: string

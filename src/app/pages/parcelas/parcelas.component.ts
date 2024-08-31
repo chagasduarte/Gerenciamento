@@ -6,6 +6,7 @@ import { Parcela } from '../../shared/models/parcela';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Conta } from '../../shared/models/conta';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-parcelas',
@@ -30,7 +31,8 @@ export class ParcelasComponent {
       private readonly parcelasService: ParcelasService,
       private readonly activeRouter: ActivatedRoute,
       private readonly contasService: ContasService,
-      private readonly route: Router
+      private readonly route: Router,
+      private readonly toastr: ToastrService
   ){
     this.buscaParcelas();
     this.buscaContas();
@@ -60,9 +62,17 @@ export class ParcelasComponent {
       if (this.listaPagamento.length > 0){
         this.listaPagamento.map( parcela => {
           cont.debito -= parcela.valor;
-          this.contasService.PutConta(cont).subscribe({});
-          parcela.isPaga = 1;
-          this.parcelasService.PutParcela(parcela).subscribe({});
+          this.contasService.PutConta(cont).subscribe({
+            next: (success: Conta) => {
+              parcela.isPaga = 1;
+              this.parcelasService.PutParcela(parcela).subscribe( x => {
+                this.toastr.success("Sucesso", "Parcela Paga com sucessp.")
+              });
+            },
+            error: (err:any) => {
+              this.toastr.error("Erro", "Não foi possível realizar o pagamento.")
+            }
+          });
         });    
       }
     }

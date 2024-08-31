@@ -9,7 +9,7 @@ import { ParcelasService } from '../../shared/services/parcelas.service';
 import { Parcela } from '../../shared/models/parcela';
 import { Entrada } from '../../shared/models/entradas';
 import { EntradasService } from '../../shared/services/entradas.service';
-import { Salario } from '../../utils/functions/salario';
+import { GetSalarioLiquido } from '../../utils/functions/salario';
 import { ContasService } from '../../shared/services/contas.service';
 import { Conta } from '../../shared/models/conta';
 import { GastosComponent } from '../gastos/gastos.component';
@@ -30,6 +30,7 @@ import { Cor } from '../../utils/cores';
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit, AfterViewInit{
+
 
   @ViewChild('container', { read: ViewContainerRef }) container!: ViewContainerRef;
   despesas: Despesa[] = [];
@@ -58,14 +59,18 @@ export class HomeComponent implements OnInit, AfterViewInit{
     this.ano = new Ano();
   }
   ngAfterViewInit(): void {
-    this.definirContainer(MensalComponent);
+    this.mostrarInfo("m")
   }
 
   ngOnInit(): void {
+    for(let i = 1; i <= 12; i++) {
+      this.systemService.entradas[i] = 0;
+      this.systemService.saidas[i] = 0;
+    }
     this.calculaGastosDoMes();
     this.calculaEntradasFuturas();    
     this.calculaSaldoAtual();
-    
+
   }
 
   calculaGastosDoMes(){
@@ -87,11 +92,15 @@ export class HomeComponent implements OnInit, AfterViewInit{
               }
             }
           }
+          if (x.dataCompra.getFullYear() == 2024 && !x.isParcelada){
+            this.systemService.saidas[x.dataCompra.getMonth()] += parseInt(x.valorTotal.toString());
+            console.log(x)
+          }
         });
         this.despesas = desp;
 
         this.despesas.map(x => {        
-          this.parcelasService.GetParcelas(x.id, ).subscribe({
+          this.parcelasService.GetParcelas(x.id).subscribe({
             next: (success: Parcela[]) => {
               //zera o valor pago e recalcula baseado no status das parcelas.
               x.valorPago = 0;
@@ -109,6 +118,10 @@ export class HomeComponent implements OnInit, AfterViewInit{
                     break;
                   }
                 }
+                if (parc.dataVencimento.getFullYear() == 2024) {
+                  this.systemService.saidas[parc.dataVencimento.getMonth()] += parseInt(parc.valor.toString());
+                }
+
               });
             }
           })
@@ -128,8 +141,9 @@ export class HomeComponent implements OnInit, AfterViewInit{
         success.map(x => {
           x.dataDebito = new Date(x.dataDebito)
           if ((x.dataDebito.getMonth() + 1 == this.systemService.mes.valor && !x.status)) {
-            this.aReceber += new Salario().calcularSalarioLiquido(x.valor)[2].valor; 
+            this.aReceber += GetSalarioLiquido(x.valor)[2].valor; 
           }
+          this.systemService.entradas[x.dataDebito.getMonth()] += parseInt(x.valor.toString());
         })
       }
     })
@@ -181,10 +195,10 @@ export class HomeComponent implements OnInit, AfterViewInit{
         break;
       }
       case "a": {
+        this.definirContainer(AnualComponent);
         this.colorAnual = new Cor().branca;
         this.colorMensal = new Cor().cinza;
         this.colorGrafico = new Cor().cinza;
-        this.definirContainer(AnualComponent);
         break;
       }
       case "g": {
@@ -212,5 +226,7 @@ export class HomeComponent implements OnInit, AfterViewInit{
   entradaDetalhes() {
     this.router.navigate(["entradas-detalhe"])
   }
-    
+  parseInt(valor: number) {
+    return parseInt(valor.toString());
+  }
 }

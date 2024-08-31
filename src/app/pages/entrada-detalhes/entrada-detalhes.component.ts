@@ -3,7 +3,7 @@ import { EntradasService } from '../../shared/services/entradas.service';
 import { Entrada } from '../../shared/models/entradas';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Salario } from '../../utils/functions/salario';
+import { GetSalarioLiquido } from '../../utils/functions/salario';
 import { Router } from '@angular/router';
 import { ContasService } from '../../shared/services/contas.service';
 
@@ -20,9 +20,7 @@ import { ContasService } from '../../shared/services/contas.service';
 export class EntradaDetalhesComponent implements OnInit{
 
 
-
   entradas!: Entrada[]
-  funcaoSalario = new Salario;
 
   constructor(
     private readonly entradaService: EntradasService,
@@ -56,5 +54,8 @@ export class EntradaDetalhesComponent implements OnInit{
 
   voltar() {
     this.router.navigate([""]);
+  }
+  GetSalarioLiquido(salario: number): any {
+    return GetSalarioLiquido(salario);
   }
 }

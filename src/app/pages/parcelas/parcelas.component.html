@@ -35,6 +35,7 @@
           </select>
           <div class="card-body">
             <div class="d-flex" *ngFor="let item of listaPagamento">
+              <div>{{item.dataVencimento | date}}</div>
               <div>{{item.valor | currency}}</div>
             </div>
           </div>
