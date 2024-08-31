@@ -1,26 +1,48 @@
 <div class="container">
-  <h1>Parcelas</h1>
+  <h1>Parcelas {{nomeDespesa}}</h1>
   <button class="btn btn-sm btn-warning" (click)="Voltar()">Voltar</button>
   <div class="card mb-3"></div>
-  <h3>Abertos:</h3>
-  <div class="d-flex  mb-3">
-    <div *ngFor="let parcela of parcelas">
-      <div *ngIf="!parcela.isPaga"  class="card card-sm me-2" >
-        <div class="card-header text-break">
-          <b>{{parcela.dataVencimento | date}}</b> 
+  <div class="d-flex">
+    <div>
+      <h3>Abertos:</h3>
+      <div class="d-flex  mb-3">
+        <div *ngFor="let parcela of parcelas">
+          <div *ngIf="!parcela.isPaga"  class="card card-sm me-2" >
+            <div class="card-header text-break">
+              <b>{{parcela.dataVencimento | date}}</b> 
+            </div>
+            <div class="card-body">
+              <div class="d-flex">
+                <div>Valor:</div>
+                <div>{{parcela.valor | currency}}</div>
+              </div>
+              <div class="row">
+                <button class="btn btn-sm btn-primary" (click)="adicionaLista(parcela)"> Adicionar </button>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="card-body">
-          <div class="d-flex">
-            <div>Valor:</div>
-            <div>{{parcela.valor | currency}}</div>
+        <div class="card me-2"></div>
+      </div>
+    </div>
+     
+    <div>
+      <h3>Área de pagamentos</h3>
+      <div class="div">
+        <div class="card bg-sucess">
+          <select name="conta" id="conta" class="form-select" [(ngModel)]="idConta">
+            <option [value]="conta.id" *ngFor="let conta of contas" class="form-control">{{conta.nome}}</option>
+          </select>
+          <div class="card-body">
+            <div class="d-flex" *ngFor="let item of listaPagamento">
+              <div>{{item.valor | currency}}</div>
+            </div>
           </div>
-          <div class="row">
-            <button class="btn btn-sm btn-primary" (click)="pagar(parcela)"> Pagar </button>
-          </div>
+          <button class="btn btn-sm btn-success" (click)="pagar()">Pagar</button>
         </div>
       </div>
     </div>
-    
+
   </div>
   <div class="card mb-3"></div>
 

@@ -160,8 +160,8 @@ export class HomeComponent implements OnInit, AfterViewInit{
   AdicionaEntrada() {
     this.router.navigate(["entradas"]);
   }
-  parcelas(idDespesa: number) {
-    this.router.navigate(["parcelas"], { queryParams: {idDespesa}})
+  parcelas(despesa: Despesa) {
+    this.router.navigate(["parcelas"], { queryParams: {id: despesa.id, nome: despesa.nome}})
   }
   gastos() {
     this.router.navigate(["gastos"]);
