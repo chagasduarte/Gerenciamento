@@ -91,7 +91,7 @@ export class HomeComponent implements OnInit, AfterViewInit{
             }
           }
           if (x.dataCompra.getFullYear() == 2024 && !x.isParcelada){
-            this.systemService.saidas[x.dataCompra.getMonth()] += parseInt(x.valorTotal.toString());
+            this.systemService.saidas[x.dataCompra.getMonth() + 1] += parseInt(x.valorTotal.toString());
           }
         });
         this.despesas = desp;
@@ -116,7 +116,7 @@ export class HomeComponent implements OnInit, AfterViewInit{
                   }
                 }
                 if (parc.dataVencimento.getFullYear() == 2024) {
-                  this.systemService.saidas[parc.dataVencimento.getMonth()] += parseInt(parc.valor.toString());
+                  this.systemService.saidas[parc.dataVencimento.getMonth()+1] += parseInt(parc.valor.toString());
                 }
 
               });
@@ -140,7 +140,7 @@ export class HomeComponent implements OnInit, AfterViewInit{
           if ((x.dataDebito.getMonth() + 1 == this.systemService.mes.valor && !x.status)) {
             this.aReceber += GetSalarioLiquido(x.valor)[2].valor; 
           }
-          this.systemService.entradas[x.dataDebito.getMonth()+1] += parseInt(x.valor.toString());
+          this.systemService.entradas[x.dataDebito.getMonth()+1] += parseInt(GetSalarioLiquido(x.valor)[2].valor.toString());
         })
       }
     })
