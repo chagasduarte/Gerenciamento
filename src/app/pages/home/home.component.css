@@ -237,6 +237,15 @@ input {
 .entrada {
     display: flex;
 }
+
+.card-grafico {
+    display: grid;
+    grid-template-areas: 
+    "plus-card plus-card"
+    "grafico grafico";
+}
+
+
 @media screen and (max-width: 930px) {
     .cards {
         width: 1fr;

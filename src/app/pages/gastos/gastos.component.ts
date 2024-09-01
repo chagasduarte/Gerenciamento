@@ -45,6 +45,7 @@ export class GastosComponent {
   }
 
   calculaGastosDoMes(){
+    console.log(this.systemsService.mes.nome);
     this.despesaService.GetDespesasByMes(this.systemsService.mes.valor).subscribe({
       next: (success: Despesa[]) => {
         this.gastos = success.filter(x => !x.isParcelada);
@@ -65,13 +66,12 @@ export class GastosComponent {
     if(contaput){
       if(this.listaPagamento.length > 0) {
         this.listaPagamento.map(despesa => {
-          
           contaput.debito -= despesa.valorTotal;
           this.contasService.PutConta(contaput!).subscribe(x => {
             despesa.isPaga = true;
             this.despesaService.PutDespesa(despesa).subscribe({
               next: (success: Despesa) => {
-                 
+                this.toastService.success("Sucesso", "Despesa paga com sucesso");
               },
               error: (err: any) => {
                 this.toastService.error("Erro", "Ocorreu algum erro no processo de atualização.")
@@ -85,7 +85,7 @@ export class GastosComponent {
       }
     }
     else {
-      this.toastService.warning("Aviso", "Selecione uma conta para fazer esse pagamento")
+      this.toastService.warning("Aviso", "Selecione uma conta para fazer esse pagamento");
     }
     
   }

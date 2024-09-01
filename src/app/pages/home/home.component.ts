@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, Type, ViewChild, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, Component, OnChanges, OnInit, SimpleChanges, Type, ViewChild, ViewContainerRef } from '@angular/core';
 import { Ano, Mes, Meses } from '../../utils/meses';
 import { CommonModule } from '@angular/common';
 import { Despesa } from '../../shared/models/despesa';
@@ -29,10 +29,10 @@ import { Cor } from '../../utils/cores';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent implements OnInit, AfterViewInit{
+export class HomeComponent implements OnInit, AfterViewInit, OnChanges{
 
   @ViewChild('container', { read: ViewContainerRef }) container!: ViewContainerRef;
-  despesas: Despesa[] = [];
+  despesasParceladas: Despesa[] = [];
   entradas!: Entrada[];
   contas!: Conta[];
   
@@ -40,7 +40,8 @@ export class HomeComponent implements OnInit, AfterViewInit{
   aReceber: number = 0;
   gastoTotalMes: number = 0;
   gastosAdicionais: number = 0;
-
+  entradaTotalMes: number = 0;
+  saidaTotalMes: number = 0;
   ano!: Ano;
   colorMensal = new Cor().branca;
   colorAnual = "#768da1";
@@ -57,78 +58,91 @@ export class HomeComponent implements OnInit, AfterViewInit{
   ){
     this.ano = new Ano();
   }
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes);
+  }
   ngAfterViewInit(): void {
     this.mostrarInfo("m")
   }
 
   ngOnInit(): void {
-    this.calculaGastosDoMes();
+    // this.calculaGastosDoMes();
+    this.calculaGastosParcelados();
     this.calculaEntradasFuturas();    
     this.calculaSaldoAtual();
   }
 
-  calculaGastosDoMes(){
-    for(let i = 1; i <= 12; i++) {
-      this.systemService.entradas[i] = 0;
-      this.systemService.saidas[i] = 0;
-    }
-    this.gastoTotalMes = 0;
-    this.gastosAdicionais = 0;
-    let desp: Despesa[] = [];
-
-    this.despesaService.GetDespesas().subscribe({
-      next: (success: Despesa[]) => {
-        success.map( x => {
-          x.dataCompra = new Date(x.dataCompra)
-          if (!x.isPaga){
-            if (x.isParcelada) {
-              desp.push(x);
-            }
-            else {
-              if (x.dataCompra.getMonth() + 1 == this.systemService.mes.valor && x.dataCompra.getFullYear() == 2024){
-                this.gastosAdicionais += x.valorTotal;
-              }
-            }
-          }
-          if (x.dataCompra.getFullYear() == 2024 && !x.isParcelada){
-            this.systemService.saidas[x.dataCompra.getMonth() + 1] += parseInt(x.valorTotal.toString());
-          }
-        });
-        this.despesas = desp;
-
-        this.despesas.map(x => {        
-          this.parcelasService.GetParcelas(x.id).subscribe({
-            next: (success: Parcela[]) => {
-              //zera o valor pago e recalcula baseado no status das parcelas.
-              x.valorPago = 0;
-              success.map(parc => {
-                parc.dataVencimento = new Date(parc.dataVencimento)
-                switch (parc.isPaga) {
-                  case 0: {
-                    if (parc.dataVencimento.getMonth() + 1 == this.systemService.mes.valor && parc.dataVencimento.getFullYear() == 2024) {
-                      this.gastoTotalMes += parc.valor;
-                    }
-                    break;
-                  }
-                  case 1: {
-                    x.valorPago += parc.valor;
-                    break;
-                  }
-                }
-                if (parc.dataVencimento.getFullYear() == 2024) {
-                  this.systemService.saidas[parc.dataVencimento.getMonth()+1] += parseInt(parc.valor.toString());
-                }
-
-              });
-            }
-          })
-        })
-      },
-      error: (err: any) => {
-        this.toastService.error(err.error, "erro", {timeOut: 5000, closeButton: true})
-      }
-    });
+  calculaGastosParcelados(){
+    this.despesaService.GetDespesasParceladas().subscribe(x => {
+      this.despesasParceladas = x;
+    })
   }
+
+  // calculaGastosDoMes(){
+  //   for(let i = 0; i < 12; i++) {
+  //     this.systemService.entradas[i] = 0;
+  //     this.systemService.saidas[i] = 0;
+  //   }
+  //   this.gastoTotalMes = 0;
+  //   this.gastosAdicionais = 0;
+  //   let desp: Despesa[] = [];
+
+  //   this.despesaService.GetDespesas().subscribe({
+  //     next: (success: Despesa[]) => {
+  //       success.map( x => {
+  //         x.dataCompra = new Date(x.dataCompra)
+  //         if (x.isParcelada) {
+  //           desp.push(x);
+  //         }
+  //         else {
+  //           if ((x.dataCompra.getMonth() + 1 == this.systemService.mes.valor 
+  //               || (!x.isPaga && x.dataCompra.getMonth() + 1 < this.systemService.mes.valor ))
+  //               && x.dataCompra.getFullYear() == 2024){
+  //             this.gastosAdicionais += x.valorTotal;
+  //           }
+  //           this.entradaTotalMes += x.valorTotal;
+  //         }
+          
+  //         if (x.dataCompra.getFullYear() == 2024 && !x.isParcelada){
+  //           this.systemService.saidas[x.dataCompra.getMonth()] += parseInt(x.valorTotal.toString());
+  //         }
+  //       });
+  //       this.despesas = desp;
+
+  //       this.despesas.map(x => {        
+  //         this.parcelasService.GetParcelas(x.id).subscribe({
+  //           next: (success: Parcela[]) => {
+  //             //zera o valor pago e recalcula baseado no status das parcelas.
+  //             x.valorPago = 0;
+  //             success.map(parc => {
+  //               parc.dataVencimento = new Date(parc.dataVencimento)
+  //               switch (parc.isPaga) {
+  //                 case 0: {
+  //                   if (parc.dataVencimento.getMonth() + 1 == this.systemService.mes.valor && parc.dataVencimento.getFullYear() == 2024) {
+  //                     this.gastoTotalMes += parc.valor;
+  //                   }
+  //                   break;
+  //                 }
+  //                 case 1: {
+  //                   x.valorPago += parc.valor;
+  //                   break;
+  //                 }
+  //               }
+
+  //               if (parc.dataVencimento.getFullYear() == 2024) {
+  //                 this.systemService.saidas[parc.dataVencimento.getMonth()] += parseInt(parc.valor.toString());
+  //               }
+
+  //             });
+  //           }
+  //         })
+  //       })
+  //     },
+  //     error: (err: any) => {
+  //       this.toastService.error(err.error, "erro", {timeOut: 5000, closeButton: true})
+  //     }
+  //   });
+  // }
 
   calculaEntradasFuturas(){
     const dataAtual = new Date()
@@ -140,7 +154,7 @@ export class HomeComponent implements OnInit, AfterViewInit{
           if ((x.dataDebito.getMonth() + 1 == this.systemService.mes.valor && !x.status)) {
             this.aReceber += GetSalarioLiquido(x.valor)[2].valor; 
           }
-          this.systemService.entradas[x.dataDebito.getMonth()+1] += parseInt(GetSalarioLiquido(x.valor)[2].valor.toString());
+          this.systemService.entradas[x.dataDebito.getMonth()] += parseInt(GetSalarioLiquido(x.valor)[2].valor.toString());
         })
       }
     })
@@ -159,7 +173,7 @@ export class HomeComponent implements OnInit, AfterViewInit{
 
   mudaMes(mes: Mes){
     this.systemService.mes = mes;
-    this.calculaGastosDoMes();
+    // this.calculaGastosDoMes();
     this.calculaEntradasFuturas();    
     this.calculaSaldoAtual();
     this.mostrarInfo("m")
@@ -168,9 +182,7 @@ export class HomeComponent implements OnInit, AfterViewInit{
   adicionarDespesa() {
     this.router.navigate(["despesas"]);
   }
-  AdicionaEntrada() {
-    this.router.navigate(["entradas"]);
-  }
+
   parcelas(despesa: Despesa) {
     this.router.navigate(["parcelas"], { queryParams: {id: despesa.id, nome: despesa.nome}})
   }

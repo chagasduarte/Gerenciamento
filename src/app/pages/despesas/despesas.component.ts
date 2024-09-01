@@ -47,11 +47,7 @@ export class DespesasComponent {
               this.route.navigate([""]);
             },
             error: (err: any) => {
-              this.despesaService.DeleteDespesa(success.id).subscribe({
-                next: (success: any) => {
-                  console.log(success);
-                }
-              });
+              this.despesaService.DeleteDespesa(success.id).subscribe();
             }
           });
         }        

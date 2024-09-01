@@ -21,7 +21,8 @@ import { Parcela } from '../../models/parcela';
 export class MensalComponent implements OnInit{
 
   tabela: Despesas[] = [];
-  resultados: number[] = []
+  resultados: number[] = [];
+
   constructor(
     public systemService: SystemService,
     private readonly despesaService: DespesasService,
@@ -45,9 +46,9 @@ export class MensalComponent implements OnInit{
   }
 
   calculaDespesasMes() {
-    this.despesaService.GetDespesasByMes(this.systemService.mes.valor).subscribe({
-      next: (success: Despesa[]) => {
-        success.map( x => {
+    this.despesaService.GetDespesasByMes(this.systemService.mes.valor).subscribe(
+      x => {
+        x.map( x => {
           x.dataCompra = new Date(x.dataCompra);
           if (!x.isParcelada){
             this.tabela.map( t => {
@@ -66,46 +67,48 @@ export class MensalComponent implements OnInit{
             });
           }
           else {
-            this.parcelaService.GetParcelasByMesAndId(x.id, this.systemService.mes.valor).subscribe({
-              next: (success: Parcela[]) => {
-                success.map(p => {
-                  p.dataVencimento = new Date(p.dataVencimento);
-                  if (p.dataVencimento < new Date() && p.isPaga == 0){
-                    p.isPaga = 3;
-                  }
-                  this.tabela.map(t => {
-                    const info = new InfoTabela(p.dataVencimento.getDate(), p.valor, `Parcela: ${x.nome}`);
-                    if(t.Valor == x.tipoDespesa){
-                      if(t.Info[p.dataVencimento.getDate()]) {
-                        t.Info[p.dataVencimento.getDate()].valor += p.valor;
-                        t.Info[p.dataVencimento.getDate()].detalhe += ` | ${x.nome}`
-                      }
-                      else {
-                        t.Info[p.dataVencimento.getDate()] = info;
-                        let cor:string = "";
-                        switch(p.isPaga){
-                          case 0: 
-                            cor = "#ffbf33";
-                            break;
-                          case 1:
-                            cor = "#60b566";
-                            break;
-                          case 3: 
-                            cor = "#ff4d33";
-                            break;
-                        }
-                        t.Info[p.dataVencimento.getDate()].cor = cor;
-                      }                      
-                      this.resultados[p.dataVencimento.getDate()] += p.valor;
-                    }
-                  })
-                })
-              }
-            })
+            this.getParcelasByMesAndId(x);
           }
         });
-      },
-    });
+      })
   }
 
+  getParcelasByMesAndId(x: Despesa){
+    this.parcelaService.GetParcelasByMesAndId(x.id, this.systemService.mes.valor).subscribe({
+      next: (success: Parcela[]) => {
+        success.map(p => {
+          p.dataVencimento = new Date(p.dataVencimento);
+          if (p.dataVencimento < new Date() && p.isPaga == 0){
+            p.isPaga = 3;
+          }
+          this.tabela.map(t => {
+            const info = new InfoTabela(p.dataVencimento.getDate(), p.valor, `Parcela: ${x.nome}`);
+            if(t.Valor == x.tipoDespesa){
+              if(t.Info[p.dataVencimento.getDate()]) {
+                t.Info[p.dataVencimento.getDate()].valor += p.valor;
+                t.Info[p.dataVencimento.getDate()].detalhe += ` | ${x.nome}`
+              }
+              else {
+                t.Info[p.dataVencimento.getDate()] = info;
+                let cor:string = "";
+                switch(p.isPaga){
+                  case 0: 
+                    cor = "#ffbf33";
+                    break;
+                  case 1:
+                    cor = "#60b566";
+                    break;
+                  case 3: 
+                    cor = "#ff4d33";
+                    break;
+                }
+                t.Info[p.dataVencimento.getDate()].cor = cor;
+              }                      
+              this.resultados[p.dataVencimento.getDate()] += p.valor;
+            }
+          });
+        })
+      }
+    })
+  }
 }

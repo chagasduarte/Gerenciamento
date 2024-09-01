@@ -26,7 +26,6 @@ export class ContasComponent {
   }
 
   OnSubmit(){
-    console.log("aqui")
     this.contasService.PostConta(this.conta).subscribe({
       next: (success: Conta) => {
          this.router.navigate([""]);

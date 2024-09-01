@@ -10,7 +10,7 @@ export class SystemService {
   saidas: number[] = [];
 
   constructor() { 
-    for (let i = 1; i <= 12; i++){
+    for (let i = 0; i < 12; i++){
       this.entradas[i] = 0;
       this.saidas[i] = 0;
     }

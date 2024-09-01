@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { GetSalarioLiquido } from '../../utils/functions/salario';
 import { Router } from '@angular/router';
 import { ContasService } from '../../shared/services/contas.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-entrada-detalhes',
@@ -20,16 +21,27 @@ import { ContasService } from '../../shared/services/contas.service';
 export class EntradaDetalhesComponent implements OnInit{
 
 
-  entradas!: Entrada[]
+  entradasFuturas: Entrada[] = [];
+  entradasRecebidas: Entrada[] = [];
 
   constructor(
     private readonly entradaService: EntradasService,
     private readonly contaService: ContasService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly toastrService: ToastrService
   ){
   }
   ngOnInit(): void {
-    this.entradaService.GetEntradas().subscribe( x => this.entradas = x);
+    this.entradaService.GetEntradas().subscribe( x => {
+      x.map(entrada => {
+        if (entrada.status) {
+          this.entradasRecebidas.push(entrada);
+        }
+        else {
+          this.entradasFuturas.push(entrada);
+        }
+      })
+    });
   }
 
 
@@ -39,17 +51,15 @@ export class EntradaDetalhesComponent implements OnInit{
       this.contaService.PutConta(x).subscribe(x => {
         entrada.status = true;
         this.entradaService.PutEntrada(entrada).subscribe(x => {
-          alert("OK");
-        })
+          this.toastrService.success("Ok", "O valor solicitado já está em sua conta");
+        });
       })
     })
     
   }
 
   atualizaSalario(entrada: Entrada) {
-    this.entradaService.PutEntrada(entrada).subscribe(x => {
-       
-    })
+    this.entradaService.PutEntrada(entrada).subscribe(x => this.toastrService.success("Ok", "O valor do salário foi atualizado com sucesso."))
   }
 
   voltar() {
@@ -57,5 +67,8 @@ export class EntradaDetalhesComponent implements OnInit{
   }
   GetSalarioLiquido(salario: number): any {
     return GetSalarioLiquido(salario);
+  }
+  AdicionaEntrada() {
+    this.router.navigate(["entradas"]);
   }
 }

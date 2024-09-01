@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ContasService } from '../../shared/services/contas.service';
 import { ActivatedRoute, Route, Router, RouterLinkActive } from '@angular/router';
 import { ParcelasService } from '../../shared/services/parcelas.service';
@@ -7,6 +7,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Conta } from '../../shared/models/conta';
 import { ToastrService } from 'ngx-toastr';
+import { DespesasService } from '../../shared/services/despesas.service';
+import { Despesa } from '../../shared/models/despesa';
 
 @Component({
   selector: 'app-parcelas',
@@ -18,7 +20,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './parcelas.component.html',
   styleUrl: './parcelas.component.css'
 })
-export class ParcelasComponent {
+export class ParcelasComponent implements OnInit {
 
 
   parcelas!: Parcela[];
@@ -26,14 +28,19 @@ export class ParcelasComponent {
   idConta: number = 1;
   listaPagamento: Parcela[] = [];
   nomeDespesa!: string;
-
+  despesa!: Despesa;
+  
   constructor(
       private readonly parcelasService: ParcelasService,
       private readonly activeRouter: ActivatedRoute,
       private readonly contasService: ContasService,
+      private readonly despesaService: DespesasService,
       private readonly route: Router,
       private readonly toastr: ToastrService
   ){
+    
+  }
+  ngOnInit(): void {
     this.buscaParcelas();
     this.buscaContas();
   }
@@ -42,14 +49,18 @@ export class ParcelasComponent {
     this.activeRouter.queryParams.subscribe({
       next: (success: any) => {
         this.nomeDespesa = success.nome
-        this.parcelasService.GetParcelas(success.id).subscribe({
-            next: (success: Parcela[]) => {
-              this.parcelas = success;
-            }
-          })
+
+        this.despesaService.GetDespesasById(success.id).subscribe(x => {
+          this.despesa = x;
+        });
+        
+        this.parcelasService.GetParcelas(success.id).subscribe(x => {
+          this.parcelas = x;
+        });
       }
     });
   }
+
   buscaContas(){
     this.contasService.GetContas().subscribe(x => {
       this.contas = x;
@@ -66,8 +77,13 @@ export class ParcelasComponent {
             next: (success: Conta) => {
               parcela.isPaga = 1;
               this.parcelasService.PutParcela(parcela).subscribe( x => {
-                this.toastr.success("Sucesso", "Parcela Paga com sucessp.")
+                this.toastr.success("Sucesso", "Parcela Paga com sucesso.");
               });
+              this.despesa.valorPago += parcela.valor;
+              this.despesaService.PutDespesa(this.despesa).subscribe(x => {
+                this.despesa = x;
+                this.toastr.success("Sucesso", "Valor Total da Despesa Atualizado com sucesso.");
+              })
             },
             error: (err:any) => {
               this.toastr.error("Erro", "Não foi possível realizar o pagamento.")

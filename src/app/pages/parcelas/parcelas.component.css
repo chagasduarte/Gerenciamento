@@ -1,8 +1,19 @@
 .parcelas {
-    max-width: 600px;
-    margin: 3rem auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 5px;
+}
+
+.secoes {
+    display: grid;
+    grid-template-areas: 
+    "abertos pagamento";
+    grid-template-columns: 85% 15%;
+    gap: 10px;
+}
+
+@media screen and (max-width: 500px) {
+    .secoes {
+        grid-template-columns: auto auto;
+    }    
 }

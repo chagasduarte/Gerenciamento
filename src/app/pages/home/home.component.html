@@ -8,24 +8,26 @@
 </nav>
 
 <div class="info-1 d-flex">
-    <div class="data">
-      <div class="mes">
-        {{systemService.mes.nome}}
-      </div>
-      <div class="linha"></div>
-      <div class="ano">
-        2024
+  <div class="data">
+    <div class="mes">
+      {{systemService.mes.nome}}
+    </div>
+    <div class="linha"></div>
+    <div class="ano">
+      2024
+    </div>
+  </div>
+    
+  <div class="cards">
+    <!-- Barra de progressão das despesas parcelasdas -->
+    <div class="grafico">
+      <div class="d-flex" *ngFor="let despesa of despesasParceladas">
+        <span class="text-end"> {{despesa.nome}}: </span>
+        <progress [value]="despesa!.valorPago" [max]="parseInt(despesa.valorTotal)" style="width: 100px; align-self: center;"  (click)="parcelas(despesa)"></progress>
       </div>
     </div>
-    
-    <div class="cards">
-      <div class="grafico">
-        <div class="d-flex" *ngFor="let despesa of despesas">
-          <span class="text-end"> {{despesa.nome}}: </span>
-          <progress [value]="despesa!.valorPago" [max]="parseInt(despesa.valorTotal)" style="width: 100px; align-self: center;"  (click)="parcelas(despesa)"></progress>
-        </div>
-             
-      </div>
+
+    <div class="card-grafico">
       <div class="plus-card">
         <div class="card">
           <div class="previstos">
@@ -37,12 +39,11 @@
             <div>
               <input [value]="gastosAdicionais | currency">
             </div>
-             
+              
           </div>
         </div>
       </div>
       <div class="plus-card">
-        <img src="/assets/img/plus-coin.svg" alt="" (click)="AdicionaEntrada()">
         <div class="card">
             <div class="saldoAtual" (click)="contasDetalhes()">
               <span> <b>Saldo:</b></span>
@@ -57,7 +58,12 @@
             </div>
         </div>
       </div>
+      <div class="graficos">
+
+      </div>
     </div>
+    
+  </div>
     
     
 </div>

@@ -2,12 +2,12 @@
   <h1>Parcelas {{nomeDespesa}}</h1>
   <button class="btn btn-sm btn-warning" (click)="Voltar()">Voltar</button>
   <div class="card mb-3"></div>
-  <div class="d-flex">
-    <div>
+  <div class="secoes">
+    <section>
       <h3>Abertos:</h3>
-      <div class="d-flex  mb-3">
+      <div class="parcelas">
         <div *ngFor="let parcela of parcelas">
-          <div *ngIf="!parcela.isPaga"  class="card card-sm me-2" >
+          <div *ngIf="!parcela.isPaga"  class="card card-sm" >
             <div class="card-header text-break">
               <b>{{parcela.dataVencimento | date}}</b> 
             </div>
@@ -24,9 +24,9 @@
         </div>
         <div class="card me-2"></div>
       </div>
-    </div>
+    </section>
      
-    <div>
+    <section>
       <h3>Área de pagamentos</h3>
       <div class="div">
         <div class="card bg-sucess">
@@ -42,7 +42,7 @@
           <button class="btn btn-sm btn-success" (click)="pagar()">Pagar</button>
         </div>
       </div>
-    </div>
+    </section>
 
   </div>
   <div class="card mb-3"></div>
