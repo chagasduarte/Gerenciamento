@@ -254,4 +254,7 @@ input {
     .data {
         display: none;
     }
+    .card-grafico {
+        grid-template-areas: none;
+    }
 }
