@@ -43,19 +43,20 @@ export class ParcelasComponent implements OnInit {
   ngOnInit(): void {
     this.buscaParcelas();
     this.buscaContas();
+
   }
   
   buscaParcelas() {
+    let valorpago = 0;
     this.activeRouter.queryParams.subscribe({
       next: (success: any) => {
         this.nomeDespesa = success.nome
 
         this.despesaService.GetDespesasById(success.id).subscribe(x => {
           this.despesa = x;
-        });
-        
-        this.parcelasService.GetParcelas(success.id).subscribe(x => {
-          this.parcelas = x;
+          this.parcelasService.GetParcelasByDespesa(success.id).subscribe(x => {
+            this.parcelas = x;
+          });
         });
       }
     });

@@ -29,13 +29,13 @@ import { Cor } from '../../utils/cores';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent implements OnInit, AfterViewInit, OnChanges{
+export class HomeComponent implements OnInit, AfterViewInit {
 
   @ViewChild('container', { read: ViewContainerRef }) container!: ViewContainerRef;
   despesasParceladas: Despesa[] = [];
   entradas!: Entrada[];
   contas!: Conta[];
-  
+  idsPrevisto: number[] = [];
   saldoAtual: number = 0;
   aReceber: number = 0;
   gastoTotalMes: number = 0;
@@ -58,9 +58,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnChanges{
   ){
     this.ano = new Ano();
   }
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
-  }
   ngAfterViewInit(): void {
     this.mostrarInfo("m")
   }
@@ -68,21 +65,66 @@ export class HomeComponent implements OnInit, AfterViewInit, OnChanges{
   ngOnInit(): void {
     // this.calculaGastosDoMes();
     this.calculaGastosParcelados();
+    this.cauculaGastosAdicionais();
     this.calculaEntradasFuturas();    
     this.calculaSaldoAtual();
+    this.calculaTodasParcelas();
   }
 
   calculaGastosParcelados(){
     this.despesaService.GetDespesasParceladas().subscribe(x => {
       this.despesasParceladas = x;
-    })
+      this.calculaParcelasdoMes()
+    });
+  }
+  
+  calculaParcelasdoMes(){
+    this.gastoTotalMes = 0;
+    this.idsPrevisto = [];
+    this.parcelasService.GetParcelasByMes(this.systemService.mes.valor).subscribe(x => {
+      x.map(parcela => {
+        parcela.dataVencimento = new Date(parcela.dataVencimento)
+        if(parcela.isPaga == 0 || parcela.isPaga == 3){
+          this.gastoTotalMes += parcela.valor;
+          this.idsPrevisto.push(parcela.id)
+        }
+      });
+    });
   }
 
+  cauculaGastosAdicionais(){
+    this.gastosAdicionais = 0;
+    this.despesaService.GetDespesasAdicionais().subscribe(x => {
+      x.map(gasto => {
+        gasto.dataCompra = new Date(gasto.dataCompra);
+        if(!gasto.isPaga && gasto.dataCompra.getMonth() + 1 <= this.systemService.mes.valor) {
+          this.gastosAdicionais += gasto.valorTotal;
+        }
+        this.systemService.saidas[gasto.dataCompra.getMonth() + 1] += parseInt(gasto.valorTotal.toString());
+      });
+    })
+  } 
+  
+  calculaTodasParcelas(){
+    this.parcelasService.GetParcelas().subscribe(x => {
+      x.map(parcela => {
+        parcela.dataVencimento = new Date(parcela.dataVencimento);
+        if(parcela.dataVencimento.getFullYear() == new Date().getFullYear()){
+          if(this.systemService.saidas[parcela.dataVencimento.getMonth() + 1]){
+            this.systemService.saidas[parcela.dataVencimento.getMonth() + 1] += parcela.valor;
+          }
+          else{
+            this.systemService.saidas[parcela.dataVencimento.getMonth() + 1] = parcela.valor;
+          }
+        }
+      });
+    });
+  }
   // calculaGastosDoMes(){
-  //   for(let i = 0; i < 12; i++) {
-  //     this.systemService.entradas[i] = 0;
-  //     this.systemService.saidas[i] = 0;
-  //   }
+    // for(let i = 0; i < 12; i++) {
+    //   this.systemService.entradas[i] = 0;
+    //   this.systemService.saidas[i] = 0;
+    // }
   //   this.gastoTotalMes = 0;
   //   this.gastosAdicionais = 0;
   //   let desp: Despesa[] = [];
@@ -237,5 +279,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnChanges{
   }
   parseInt(valor: number) {
     return parseInt(valor.toString());
+  }
+  previstos() {
+    this.router.navigate(["previstos"], {queryParams: this.idsPrevisto});
   }
 }

@@ -16,10 +16,18 @@ export class ParcelasService {
   ) {
     this.api = appSettingService.get().WebApi + "/Parcelas";
   }
-  
-  GetParcelas(idDespesa: number) : Observable<Parcela[]>{
-    return this.http.get<Parcela[]>(`${this.api}/${idDespesa}`);
+  GetParcelas() : Observable<Parcela[]>{
+    return this.http.get<Parcela[]>(`${this.api}`);
   }
+
+  GetParcelasByDespesa(idDespesa: number) : Observable<Parcela[]>{
+    return this.http.get<Parcela[]>(`${this.api}/Despesa/${idDespesa}`);
+  }
+  
+  GetParcela(id: number) : Observable<Parcela>{
+    return this.http.get<Parcela>(`${this.api}/${id}`);
+  }
+
   GetParcelasByMesAndId(idDespesa: number, mes: number) : Observable<Parcela[]>{
     return this.http.get<Parcela[]>(`${this.api}/${idDespesa}/${mes}`);
   }

@@ -1,0 +1,27 @@
+<div class="container">
+    <h1>Parcelas</h1>
+    <div class="botoes">
+        <div class="voltar">
+            <button class="btn btn-sm btn-warning" >Voltar</button>
+        </div>
+        <div class="adicionar">
+            <button class="btn btn-sm btn-primary" ><img src="/assets/img/plus-coin.svg" alt=""/></button>
+        </div>
+    </div>
+    <div class="linha"></div>
+    <h3>À Pagar</h3>
+    <div class="grid">
+        <div class="card card-sm" *ngFor="let parcela of parcelas">
+            <div class="card-header">
+                <b>{{parcela.valor}}</b> 
+            </div>
+            <div class="card-body">
+                <div class="salario">
+                    <div class="data">{{parcela.dataVencimento | date}}:</div>
+                    <div class="valor"><input class="form-input" type="number" [value]="parcela.valor"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>

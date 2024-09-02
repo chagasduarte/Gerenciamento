@@ -23,14 +23,14 @@
     <div class="grafico">
       <div class="d-flex" *ngFor="let despesa of despesasParceladas">
         <span class="text-end"> {{despesa.nome}}: </span>
-        <progress [value]="despesa!.valorPago" [max]="parseInt(despesa.valorTotal)" style="width: 100px; align-self: center;"  (click)="parcelas(despesa)"></progress>
+        <progress [value]="despesa.valorPago" [max]="parseInt(despesa.valorTotal)" style="width: 100px; align-self: center;"  (click)="parcelas(despesa)"></progress>
       </div>
     </div>
 
     <div class="card-grafico">
       <div class="plus-card">
         <div class="card">
-          <div class="previstos">
+          <div class="previstos" (click)="previstos()">
             <span><b>Previstos:</b></span>
             <input [value]="gastoTotalMes | currency">
           </div>
