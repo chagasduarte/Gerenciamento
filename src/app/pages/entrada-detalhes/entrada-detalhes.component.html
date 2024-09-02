@@ -17,7 +17,7 @@
             </div>
             <div class="card-body">
                 <div class="salario">
-                    <div class="data">{{entrada.dataDebito | date}}:</div>
+                    <div class="data">{{entrada.dataDebito | date }}:</div>
                     <div class="valor"><input class="form-input" type="number" [(ngModel)]="entrada.valor"></div>
                     <button class="btn btn-sm btn-primary" (click)="atualizaSalario(entrada)"> Up </button>
                 </div>

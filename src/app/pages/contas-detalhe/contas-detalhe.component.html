@@ -16,13 +16,15 @@
             <b>{{conta.nome}}</b> 
           </div>
           <div class="card-body">
-            <div class="row">
-              <div class="col">Crédito:</div>
-              <div class="col">{{conta.credito}}</div>
+            <div class="row mb-2">
+              <label for="" class="col">Crédito:</label>
+              <input type="number" class="col input" [(ngModel)]="conta.credito" (click)="updateDebito(conta)"/>
+              <button class="btn btn-sm btn-success col">Salvar</button>
             </div>
-            <div class="row">
-              <div class="col">Débito:</div>
-              <div class="col">{{conta.debito}}</div>
+            <div class="row ">
+              <label for="debito" class="label col">Débito:</label>
+              <input type="number" class="input col" [(ngModel)]="conta.debito"/>
+              <button class="btn btn-sm btn-success col" (click)="updateDebito(conta)">Salvar</button>
             </div>
           </div>
       </div>

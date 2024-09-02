@@ -45,8 +45,7 @@ export class GastosComponent {
   }
 
   calculaGastosDoMes(){
-    console.log(this.systemsService.mes.nome);
-    this.despesaService.GetDespesasByMes(this.systemsService.mes.valor).subscribe({
+    this.despesaService.GetDespesasByMes(this.systemsService.mes.valor + 1).subscribe({
       next: (success: Despesa[]) => {
         this.gastos = success.filter(x => !x.isParcelada);
       },

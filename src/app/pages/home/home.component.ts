@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Inject, OnChanges, OnInit, SimpleChanges, Type, ViewChild, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, Component, Inject, LOCALE_ID, OnChanges, OnInit, SimpleChanges, Type, ViewChild, ViewContainerRef } from '@angular/core';
 import { Ano, Mes, Meses } from '../../utils/meses';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { Despesa } from '../../shared/models/despesa';
@@ -88,7 +88,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   calculaParcelasdoMes(){
     this.gastoTotalMes = 0;
     this.idsPrevisto = [];
-    this.parcelasService.GetParcelasByMes(this.systemService.mes.valor).subscribe(x => {
+    this.parcelasService.GetParcelasByMes(this.systemService.mes.valor + 1).subscribe(x => {
       x.map(parcela => {
         parcela.dataVencimento = new Date(parcela.dataVencimento)
         if(parcela.isPaga == 0 || parcela.isPaga == 3){
@@ -101,16 +101,16 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   cauculaGastosAdicionais(){
     this.gastosAdicionais = 0;
-    for (let i = 0; i <= 12; i++){
+    for (let i = 0; i < 12; i++){
       this.systemService.saidas[i] = 0;
     }
     this.despesaService.GetDespesasAdicionais().subscribe(x => {
       x.map(gasto => {
         gasto.dataCompra = new Date(gasto.dataCompra);
-        if(!gasto.isPaga && gasto.dataCompra.getMonth() + 1 <= this.systemService.mes.valor) {
+        if(!gasto.isPaga && gasto.dataCompra.getMonth() <= this.systemService.mes.valor) {
           this.gastosAdicionais += gasto.valorTotal;
         }
-        this.systemService.saidas[gasto.dataCompra.getMonth() + 1] += parseInt(gasto.valorTotal.toString());
+        this.systemService.saidas[gasto.dataCompra.getMonth()] += parseInt(gasto.valorTotal.toString());
       });
     })
   } 
@@ -120,11 +120,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
       x.map(parcela => {
         parcela.dataVencimento = new Date(parcela.dataVencimento);
         if(parcela.dataVencimento.getFullYear() == new Date().getFullYear()){
-          if(this.systemService.saidas[parcela.dataVencimento.getMonth() + 1]){
-            this.systemService.saidas[parcela.dataVencimento.getMonth() + 1] += parcela.valor;
+          if(this.systemService.saidas[parcela.dataVencimento.getMonth()]){
+            this.systemService.saidas[parcela.dataVencimento.getMonth()] += parcela.valor;
           }
           else{
-            this.systemService.saidas[parcela.dataVencimento.getMonth() + 1] = parseInt(parcela.valor.toString());
+            this.systemService.saidas[parcela.dataVencimento.getMonth()] = parseInt(parcela.valor.toString());
           }
         }
       });
@@ -134,17 +134,20 @@ export class HomeComponent implements OnInit, AfterViewInit {
   calculaEntradasFuturas(){
     const dataAtual = new Date()
     this.aReceber = 0;
-    for (let i = 0; i <= 12; i++){
+    for (let i = 0; i < 12; i++){
       this.systemService.entradas[i] = 0;
     }
     this.entradasService.GetEntradas().subscribe({
       next: (success: Entrada[]) => {
         success.map(x => {
-          x.dataDebito = new Date(x.dataDebito)
-          if ((x.dataDebito.getMonth() + 1 == this.systemService.mes.valor && !x.status)) {
+          x.dataDebito = new Date(x.dataDebito);
+          console.log(x.dataDebito.getUTCMonth());
+          if ((x.dataDebito.getMonth() == this.systemService.mes.valor && !x.status)) {
             this.aReceber += GetSalarioLiquido(x.valor)[2].valor; 
           }
-          this.systemService.entradas[x.dataDebito.getMonth()] += parseInt(GetSalarioLiquido(x.valor)[2].valor.toString());
+
+          this.systemService.entradas[x.dataDebito.getUTCMonth()] += parseInt(GetSalarioLiquido(x.valor)[2].valor.toString());
+          console.log(this.systemService.entradas)
         })
       }
     })

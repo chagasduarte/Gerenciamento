@@ -27,3 +27,13 @@
     display: flex;
     justify-content: end;
 }
+
+.input {
+    border: none;
+    width: 100px;
+}
+
+.label {
+    width: auto;
+    text-wrap: nowrap;
+}

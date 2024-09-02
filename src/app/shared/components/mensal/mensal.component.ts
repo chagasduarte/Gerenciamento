@@ -46,13 +46,13 @@ export class MensalComponent implements OnInit{
   }
 
   calculaDespesasMes() {
-    this.despesaService.GetDespesasByMes(this.systemService.mes.valor).subscribe(
+    this.despesaService.GetDespesasByMes(this.systemService.mes.valor + 1).subscribe(
       x => {
         x.map( x => {
           x.dataCompra = new Date(x.dataCompra);
           if (!x.isParcelada){
             this.tabela.map( t => {
-              const info = new InfoTabela(x.dataCompra.getDate(), x.valorTotal, x.nome);
+              const info = new InfoTabela(x.dataCompra.getDate()+1, x.valorTotal, x.nome);
               if (t.Valor == x.tipoDespesa){
                 if(t.Info[x.dataCompra.getDate()]) {
                   t.Info[x.dataCompra.getDate()].detalhe += `- ${x.nome}`
@@ -74,7 +74,7 @@ export class MensalComponent implements OnInit{
   }
 
   getParcelasByMesAndId(x: Despesa){
-    this.parcelaService.GetParcelasByMesAndId(x.id, this.systemService.mes.valor).subscribe({
+    this.parcelaService.GetParcelasByMesAndId(x.id, this.systemService.mes.valor+1).subscribe({
       next: (success: Parcela[]) => {
         success.map(p => {
           p.dataVencimento = new Date(p.dataVencimento);

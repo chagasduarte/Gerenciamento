@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { GastosComponent } from '../gastos/gastos.component';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-contas-detalhe',
@@ -22,7 +23,8 @@ export class ContasDetalheComponent {
 
   constructor(
     private contaService: ContasService,
-    private readonly route: Router          
+    private readonly route: Router,
+    private readonly toastrService: ToastrService          
   ) {}
 
   ngOnInit(): void {
@@ -34,9 +36,10 @@ export class ContasDetalheComponent {
   }
 
   updateDebito(conta: Conta): void {
-    this.contaService.PutConta(conta).subscribe(
-      x => this.buscaContas() 
-    );
+    this.contaService.PutConta(conta).subscribe( x => {
+      this.toastrService.success("Conta Atualizada com sucesso", "OK")
+      this.buscaContas() 
+    });
   }
 
   voltar(){
@@ -45,4 +48,5 @@ export class ContasDetalheComponent {
   AdicionaConta() {
     this.route.navigate(["contas"]);
   }
+  
 }

@@ -1,13 +1,13 @@
 <div class="container">
   <h1>Parcelas {{nomeDespesa}}</h1>
   <button class="btn btn-sm btn-warning" (click)="Voltar()">Voltar</button>
-  <div class="card mb-3"></div>
+  <div class="linha"></div>
   <div class="secoes">
     <section>
       <h3>Abertos:</h3>
       <div class="parcelas">
         <div *ngFor="let parcela of parcelas">
-          <div *ngIf="!parcela.isPaga"  class="card card-sm" >
+          <div class="card card-sm" >
             <div class="card-header text-break">
               <b>{{parcela.dataVencimento | date}}</b> 
             </div>
@@ -22,7 +22,6 @@
             </div>
           </div>
         </div>
-        <div class="card me-2"></div>
       </div>
     </section>
      
@@ -45,13 +44,13 @@
     </section>
 
   </div>
-  <div class="card mb-3"></div>
+  <div class="linha"></div>
 
   <h3>Pagos:</h3>
   <div class="d-flex  mb-3">
     
-    <div *ngFor="let parcela of parcelas">
-      <div *ngIf="parcela.isPaga"  class="card card-sm me-2" >
+    <div *ngFor="let parcela of parcelasPagas">
+      <div class="card card-sm me-2" >
         <div class="card-header text-break">
           <b>{{parcela.dataVencimento | date}}</b> 
         </div>

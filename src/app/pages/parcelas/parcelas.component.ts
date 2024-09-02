@@ -24,6 +24,7 @@ export class ParcelasComponent implements OnInit {
 
 
   parcelas!: Parcela[];
+  parcelasPagas!: Parcela[]
   contas!: Conta[];
   idConta: number = 1;
   listaPagamento: Parcela[] = [];
@@ -43,7 +44,6 @@ export class ParcelasComponent implements OnInit {
   ngOnInit(): void {
     this.buscaParcelas();
     this.buscaContas();
-
   }
   
   buscaParcelas() {
@@ -51,11 +51,13 @@ export class ParcelasComponent implements OnInit {
     this.activeRouter.queryParams.subscribe({
       next: (success: any) => {
         this.nomeDespesa = success.nome
-
-        this.despesaService.GetDespesasById(success.id).subscribe(x => {
-          this.despesa = x;
-          this.parcelasService.GetParcelasByDespesa(success.id).subscribe(x => {
-            this.parcelas = x;
+        this.despesaService.GetDespesasById(success.id).subscribe(despesa => {
+          despesa.dataCompra = new Date(despesa.dataCompra);
+          this.despesa = despesa;
+          this.parcelasService.GetParcelasByDespesa(success.id).subscribe(parcelas => {
+            this.parcelas = parcelas.filter(filtradas => !filtradas.isPaga)
+            this.parcelasPagas = parcelas.filter(x => x.isPaga);
+            console.log(this.parcelas)
           });
         });
       }

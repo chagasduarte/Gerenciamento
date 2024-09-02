@@ -1,18 +1,18 @@
 import { GetDiasSemana } from "./functions/diasSemana";
 
 export enum Meses {
-  "Janeiro" = 1,
-  "Fevereiro" = 2,
-  "Março" = 3,
-  "Abril" = 4,
-  "Maio" = 5,
-  "Junho" = 6,
-  "Julho" = 7,
-  "Agosto" = 8,
-  "Setembro" = 9,
-  "Outubro" = 10,
-  "Novembro" = 11, 
-  "Dezembro" = 12
+  "Janeiro" = 0,
+  "Fevereiro" = 1,
+  "Março" = 2,
+  "Abril" = 3,
+  "Maio" = 4,
+  "Junho" = 5,
+  "Julho" = 6,
+  "Agosto" = 7,
+  "Setembro" = 8,
+  "Outubro" = 9,
+  "Novembro" = 10, 
+  "Dezembro" = 11
 } 
 
 export class Dia {
@@ -41,7 +41,7 @@ export class Mes {
 export class Ano {
   meses: Mes[] = []
   constructor(){
-    for(var i = 1; i <= 12; i++) {
+    for(var i = 0; i < 12; i++) {
       var mes: Mes = new Mes(i)
       this.meses.push(mes);
     }

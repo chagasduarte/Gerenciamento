@@ -38,6 +38,8 @@ export class PrevistosComponent implements OnInit {
   buscaParcelas(){
     this.ids.forEach(id => {
       this.parcelasService.GetParcela(id).subscribe(parcela => {
+        parcela.dataVencimento = new Date(parcela.dataVencimento);
+        
         this.despesasService.GetDespesasById(parcela.despesaId).subscribe(despesa => {
           if(parcela.isPaga) {
             this.parcelasPagas.push({parcela: parcela, despesa: despesa});

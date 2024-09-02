@@ -34,6 +34,7 @@ export class EntradaDetalhesComponent implements OnInit{
   ngOnInit(): void {
     this.entradaService.GetEntradas().subscribe( x => {
       x.map(entrada => {
+        entrada.dataDebito = new Date(entrada.dataDebito);
         if (entrada.status) {
           this.entradasRecebidas.push(entrada);
         }
@@ -41,6 +42,7 @@ export class EntradaDetalhesComponent implements OnInit{
           this.entradasFuturas.push(entrada);
         }
       })
+      console.log(this.entradasFuturas);
     });
   }
 
