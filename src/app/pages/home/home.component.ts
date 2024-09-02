@@ -1,6 +1,6 @@
-import { AfterViewInit, Component, OnChanges, OnInit, SimpleChanges, Type, ViewChild, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnChanges, OnInit, SimpleChanges, Type, ViewChild, ViewContainerRef } from '@angular/core';
 import { Ano, Mes, Meses } from '../../utils/meses';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DOCUMENT } from '@angular/common';
 import { Despesa } from '../../shared/models/despesa';
 import { DespesasService } from '../../shared/services/despesas.service';
 import { ToastrService } from 'ngx-toastr';
@@ -18,13 +18,16 @@ import { AnualComponent } from '../../shared/components/anual/anual.component';
 import { GraficosComponent } from '../../shared/components/graficos/graficos.component';
 import { SystemService } from '../../shared/services/system.service';
 import { Cor } from '../../utils/cores';
+import { NgxEchartsDirective } from 'ngx-echarts';
+import { EChartsOption } from 'echarts';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
     CommonModule,
-    GastosComponent
+    GastosComponent,
+    NgxEchartsDirective
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
@@ -46,24 +49,26 @@ export class HomeComponent implements OnInit, AfterViewInit {
   colorMensal = new Cor().branca;
   colorAnual = "#768da1";
   colorGrafico = "#768da1";
+  chartMensalOption!: EChartsOption
 
   constructor(
+    @Inject(DOCUMENT) document:Document,
     private readonly despesaService: DespesasService,
     private readonly parcelasService: ParcelasService,
     private readonly entradasService: EntradasService,
     private readonly contasService: ContasService,
     private readonly toastService: ToastrService,
     private readonly router: Router,
-    public systemService: SystemService
+    public systemService: SystemService,
+    
   ){
     this.ano = new Ano();
   }
   ngAfterViewInit(): void {
-    this.mostrarInfo("m")
+    this.mostrarInfo("m");
   }
 
   ngOnInit(): void {
-    // this.calculaGastosDoMes();
     this.calculaGastosParcelados();
     this.cauculaGastosAdicionais();
     this.calculaEntradasFuturas();    
@@ -120,72 +125,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       });
     });
   }
-  // calculaGastosDoMes(){
-    // for(let i = 0; i < 12; i++) {
-    //   this.systemService.entradas[i] = 0;
-    //   this.systemService.saidas[i] = 0;
-    // }
-  //   this.gastoTotalMes = 0;
-  //   this.gastosAdicionais = 0;
-  //   let desp: Despesa[] = [];
-
-  //   this.despesaService.GetDespesas().subscribe({
-  //     next: (success: Despesa[]) => {
-  //       success.map( x => {
-  //         x.dataCompra = new Date(x.dataCompra)
-  //         if (x.isParcelada) {
-  //           desp.push(x);
-  //         }
-  //         else {
-  //           if ((x.dataCompra.getMonth() + 1 == this.systemService.mes.valor 
-  //               || (!x.isPaga && x.dataCompra.getMonth() + 1 < this.systemService.mes.valor ))
-  //               && x.dataCompra.getFullYear() == 2024){
-  //             this.gastosAdicionais += x.valorTotal;
-  //           }
-  //           this.entradaTotalMes += x.valorTotal;
-  //         }
-          
-  //         if (x.dataCompra.getFullYear() == 2024 && !x.isParcelada){
-  //           this.systemService.saidas[x.dataCompra.getMonth()] += parseInt(x.valorTotal.toString());
-  //         }
-  //       });
-  //       this.despesas = desp;
-
-  //       this.despesas.map(x => {        
-  //         this.parcelasService.GetParcelas(x.id).subscribe({
-  //           next: (success: Parcela[]) => {
-  //             //zera o valor pago e recalcula baseado no status das parcelas.
-  //             x.valorPago = 0;
-  //             success.map(parc => {
-  //               parc.dataVencimento = new Date(parc.dataVencimento)
-  //               switch (parc.isPaga) {
-  //                 case 0: {
-  //                   if (parc.dataVencimento.getMonth() + 1 == this.systemService.mes.valor && parc.dataVencimento.getFullYear() == 2024) {
-  //                     this.gastoTotalMes += parc.valor;
-  //                   }
-  //                   break;
-  //                 }
-  //                 case 1: {
-  //                   x.valorPago += parc.valor;
-  //                   break;
-  //                 }
-  //               }
-
-  //               if (parc.dataVencimento.getFullYear() == 2024) {
-  //                 this.systemService.saidas[parc.dataVencimento.getMonth()] += parseInt(parc.valor.toString());
-  //               }
-
-  //             });
-  //           }
-  //         })
-  //       })
-  //     },
-  //     error: (err: any) => {
-  //       this.toastService.error(err.error, "erro", {timeOut: 5000, closeButton: true})
-  //     }
-  //   });
-  // }
-
+  
   calculaEntradasFuturas(){
     const dataAtual = new Date()
     this.aReceber = 0;
@@ -215,10 +155,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   mudaMes(mes: Mes){
     this.systemService.mes = mes;
-    // this.calculaGastosDoMes();
+    this.calculaGastosParcelados();
+    this.cauculaGastosAdicionais();
     this.calculaEntradasFuturas();    
     this.calculaSaldoAtual();
-    this.mostrarInfo("m")
+    this.calculaTodasParcelas();
   }
 
   adicionarDespesa() {

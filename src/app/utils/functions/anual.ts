@@ -1,6 +1,6 @@
 import { EChartsOption } from "echarts";
 
-export function DefineGraficoOption(entradas: number[], saidas: number[]): EChartsOption{
+export function DefineGraficoAnualOption(entradas: number[], saidas: number[]): EChartsOption{
    return {
     legend: {
         data: ['entradas', 'saidas'],

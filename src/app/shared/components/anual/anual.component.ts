@@ -2,9 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { NgxEchartsDirective } from 'ngx-echarts';
 import {EChartsOption} from 'echarts'
-import { DefineGraficoOption } from '../../../utils/functions/anual';
-import { EntradasService } from '../../services/entradas.service';
-import { DespesasService } from '../../services/despesas.service';
+import { DefineGraficoAnualOption } from '../../../utils/functions/anual';
 import { SystemService } from '../../services/system.service';
 @Component({
   selector: 'app-anual',
@@ -17,13 +15,13 @@ import { SystemService } from '../../services/system.service';
 })
 export class AnualComponent implements OnInit{
 
-  chartOption!: EChartsOption;
+  chartAnualOption!: EChartsOption;
 
   constructor(
     private systemService: SystemService
   ){}
   ngOnInit(): void {
-    this.chartOption = DefineGraficoOption(this.systemService.entradas, this.systemService.saidas);
+    this.chartAnualOption = DefineGraficoAnualOption(this.systemService.entradas, this.systemService.saidas);
   }
    
   
