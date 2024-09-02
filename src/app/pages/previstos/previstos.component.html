@@ -2,26 +2,47 @@
     <h1>Parcelas</h1>
     <div class="botoes">
         <div class="voltar">
-            <button class="btn btn-sm btn-warning" >Voltar</button>
-        </div>
-        <div class="adicionar">
-            <button class="btn btn-sm btn-primary" ><img src="/assets/img/plus-coin.svg" alt=""/></button>
+            <button class="btn btn-sm btn-warning" (click)="voltar()">Voltar</button>
         </div>
     </div>
     <div class="linha"></div>
-    <h3>À Pagar</h3>
-    <div class="grid">
-        <div class="card card-sm" *ngFor="let parcela of parcelas">
-            <div class="card-header">
-                <b>{{parcela.valor}}</b> 
-            </div>
-            <div class="card-body">
-                <div class="salario">
-                    <div class="data">{{parcela.dataVencimento | date}}:</div>
-                    <div class="valor"><input class="form-input" type="number" [value]="parcela.valor"></div>
+    <section>
+        <h3>À Pagar</h3>
+        <div class="grid">
+            <div class="card card-sm" *ngFor="let parcela of parcelas">
+                <div class="card-header">
+                    <b>{{parcela.despesa.nome}}</b> 
+                </div>
+                <div class="card-body">
+                    <div class="salario d-flex">
+                        <div class="data me-2"><b>{{parcela.parcela.dataVencimento| date}}:</b></div>
+                        <div class="valor"><b>{{ parcela.parcela.valor | currency }}</b></div>
+                    </div>
+                    <button class="btn btn-sm btn-success justify-content-end">Pagar</button>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
+    <div class="linha"></div>
+    <section>
+        <h3>Pagas</h3>
+        <div class="grid" *ngIf="parcelasPagas.length > 0">
+            <div class="card card-sm bg-sucess" *ngFor="let parcela of parcelasPagas">
+                <div class="card-header">
+                    <b>{{parcela.despesa.nome}}</b> 
+                </div>
+                <div class="card-body">
+                    <div class="salario">
+                        <div class="data">{{parcela.parcela.dataVencimento| date}}:</div>
+                        <div class="valor"><input class="form-input" type="number" [value]="parcela.parcela.valor"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="!(parcelasPagas.length > 0)" class="justify-content-center text-align-center">
+            Não há nada por aqui
+        </div>
+    </section>
+    
     
 </div>

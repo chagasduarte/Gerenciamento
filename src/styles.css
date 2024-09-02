@@ -21,4 +21,16 @@ html::-webkit-scrollbar-thumb {
 html::-webkit-scrollbar-track {
   background: #ededed;
 }
-  
+.linha{
+  background-color: aliceblue;
+  width: 1fr;
+  height: 2px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
+  gap: 10px;
+}

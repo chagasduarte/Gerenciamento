@@ -32,7 +32,7 @@ export class DespesasService {
     return this.http.get<Despesa[]>(`${this.api}/Fixas`);
   }
 
-  GetDespesasById(id: string): Observable<Despesa> {
+  GetDespesasById(id: number): Observable<Despesa> {
     return this.http.get<Despesa>(`${this.api}/${id}`);
   }
 

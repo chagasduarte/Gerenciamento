@@ -20,6 +20,7 @@ import { SystemService } from '../../shared/services/system.service';
 import { Cor } from '../../utils/cores';
 import { NgxEchartsDirective } from 'ngx-echarts';
 import { EChartsOption } from 'echarts';
+import { NgxSpinnerComponent } from 'ngx-spinner';
 
 @Component({
   selector: 'app-home',
@@ -27,7 +28,8 @@ import { EChartsOption } from 'echarts';
   imports: [
     CommonModule,
     GastosComponent,
-    NgxEchartsDirective
+    NgxEchartsDirective,
+    NgxSpinnerComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
@@ -99,6 +101,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   cauculaGastosAdicionais(){
     this.gastosAdicionais = 0;
+    for (let i = 0; i <= 12; i++){
+      this.systemService.saidas[i] = 0;
+    }
     this.despesaService.GetDespesasAdicionais().subscribe(x => {
       x.map(gasto => {
         gasto.dataCompra = new Date(gasto.dataCompra);
@@ -119,7 +124,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
             this.systemService.saidas[parcela.dataVencimento.getMonth() + 1] += parcela.valor;
           }
           else{
-            this.systemService.saidas[parcela.dataVencimento.getMonth() + 1] = parcela.valor;
+            this.systemService.saidas[parcela.dataVencimento.getMonth() + 1] = parseInt(parcela.valor.toString());
           }
         }
       });
@@ -129,6 +134,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
   calculaEntradasFuturas(){
     const dataAtual = new Date()
     this.aReceber = 0;
+    for (let i = 0; i <= 12; i++){
+      this.systemService.entradas[i] = 0;
+    }
     this.entradasService.GetEntradas().subscribe({
       next: (success: Entrada[]) => {
         success.map(x => {
