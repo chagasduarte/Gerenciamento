@@ -37,6 +37,7 @@ export class EntradasComponent {
   
     OnSubmit(){
       this.entrada.dataDebito = new Date(this.dataDebito);
+      console.log(this.entrada);
       this.entradaService.PostEntrada(this.entrada).subscribe({
         next: (success: Entrada) => {
            this.router.navigate(["entradas-detalhe"]);

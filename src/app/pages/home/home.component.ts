@@ -141,13 +141,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
       next: (success: Entrada[]) => {
         success.map(x => {
           x.dataDebito = new Date(x.dataDebito);
-          console.log(x.dataDebito.getUTCMonth());
-          if ((x.dataDebito.getMonth() == this.systemService.mes.valor && !x.status)) {
+
+          if ((x.dataDebito.getUTCMonth() == this.systemService.mes.valor && !x.status)) {
             this.aReceber += GetSalarioLiquido(x.valor)[2].valor; 
           }
 
           this.systemService.entradas[x.dataDebito.getUTCMonth()] += parseInt(GetSalarioLiquido(x.valor)[2].valor.toString());
-          console.log(this.systemService.entradas)
         })
       }
     })

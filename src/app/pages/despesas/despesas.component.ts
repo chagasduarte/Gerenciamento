@@ -42,7 +42,7 @@ export class DespesasComponent {
       next: (success: Despesa) => {
         if (this.despesa.isParcelada){
           this.requestParcela.idDespesa = success.id;
-          this.requestParcela.dataCompra = this.despesa.dataCompra.toISOString()        
+          this.requestParcela.dataCompra = this.despesa.dataCompra.toISOString().split("T")[0] + "T12:00:00.000Z";        
           this.parcelaService.PostParcela(this.requestParcela).subscribe({
             next: (success: number[]) => {
               this.route.navigate([""]);

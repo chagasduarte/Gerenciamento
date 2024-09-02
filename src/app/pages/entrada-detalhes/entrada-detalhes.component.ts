@@ -42,7 +42,6 @@ export class EntradaDetalhesComponent implements OnInit{
           this.entradasFuturas.push(entrada);
         }
       })
-      console.log(this.entradasFuturas);
     });
   }
 
