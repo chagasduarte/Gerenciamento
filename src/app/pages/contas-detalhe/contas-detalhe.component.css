@@ -1,24 +1,42 @@
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-}
-th, td {
-    text-align: left;
-}
-th {
-
-}
-input[type="number"] {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 4px;
+.container h1 {
+    text-align: center;
 }
 
-.cabecalho {
+.form-input{
+    border: none;
+    width: 100%;
+}
+.data {
+    width: 100%;
+    text-wrap: nowrap;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
+  gap: 10px;
+}
+
+.salario {
+    display: grid;
+    grid-template-areas: 
+    "data valor botao";
+    grid-template-columns: 50% 25% auto;
+}
+
+.linha{
+    background-color: aliceblue;
+    width: 1fr;
+    height: 2px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+.botoes{
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+.adicionar{
     display: flex;
-}
-.cabecalho button {
     justify-content: end;
-    align-self: center;
 }

@@ -28,9 +28,12 @@ export class ContasComponent {
   OnSubmit(){
     this.contasService.PostConta(this.conta).subscribe({
       next: (success: Conta) => {
-         this.router.navigate([""]);
+         this.router.navigate(["contas-detalhe"]);
       }
     });
 
+  }
+  voltar(){
+    this.router.navigate(["contas-detalhe"]);
   }
 }

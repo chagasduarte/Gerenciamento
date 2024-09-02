@@ -222,6 +222,11 @@ input {
     border-radius: 5px;
     border-right: 10px;
     font-size: 20px;
+    transition: transform 0.3s;
+}
+.previstos:hover {
+    cursor: pointer;
+    transform: scale(0.97);
 }
 
 .outros {

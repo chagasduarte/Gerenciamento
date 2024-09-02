@@ -17,6 +17,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './contas-detalhe.component.css'
 })
 export class ContasDetalheComponent {
+
   contas: Conta[] = [];
 
   constructor(
@@ -40,5 +41,8 @@ export class ContasDetalheComponent {
 
   voltar(){
     this.route.navigate([""]);
+  }
+  AdicionaConta() {
+    this.route.navigate(["contas"]);
   }
 }

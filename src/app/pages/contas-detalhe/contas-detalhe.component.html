@@ -1,31 +1,31 @@
-<div class="cabecalho">
-    <h1>Contas</h1>
-    <button (click)="voltar()">Voltar</button>
+
+<div class="container">
+  <h1>Contas</h1>
+  <div class="botoes">
+      <div class="voltar">
+          <button class="btn btn-sm btn-warning" (click)="voltar()">Voltar</button>
+      </div>
+      <div class="adicionar">
+          <button class="btn btn-sm btn-primary" (click)="AdicionaConta()">Nova Conta</button>
+      </div>
+  </div>
+  <div class="linha"></div>
+  <div class="grid">
+      <div class="card card-sm" *ngFor="let conta of contas">
+          <div class="card-header">
+            <b>{{conta.nome}}</b> 
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col">Crédito:</div>
+              <div class="col">{{conta.credito}}</div>
+            </div>
+            <div class="row">
+              <div class="col">Débito:</div>
+              <div class="col">{{conta.debito}}</div>
+            </div>
+          </div>
+      </div>
+  </div>
+  
 </div>
-<table>
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Nome</th>
-      <th>Descrição</th>
-      <th>Crédito</th>
-      <th>Débito</th>
-      <th>Ação</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let conta of contas">
-      <td>{{ conta.id }}</td>
-      <td>{{ conta.nome }}</td>
-      <td>{{ conta.descricao }}</td>
-      <td>{{ conta.credito }}</td>
-      <td>
-        <input
-          type="number"
-          [(ngModel)]="conta.debito"
-        >
-      </td>
-      <td><button (click)="updateDebito(conta)">Salvar</button> </td>
-    </tr>
-  </tbody>
-</table>
