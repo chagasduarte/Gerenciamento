@@ -107,10 +107,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.despesaService.GetDespesasAdicionais().subscribe(x => {
       x.map(gasto => {
         gasto.dataCompra = new Date(gasto.dataCompra);
-        if(!gasto.isPaga && gasto.dataCompra.getMonth() <= this.systemService.mes.valor) {
+        if(!gasto.isPaga && gasto.dataCompra.getUTCMonth() <= this.systemService.mes.valor) {
           this.gastosAdicionais += gasto.valorTotal;
         }
-        this.systemService.saidas[gasto.dataCompra.getMonth()] += parseInt(gasto.valorTotal.toString());
+        this.systemService.saidas[gasto.dataCompra.getUTCMonth()] += parseInt(gasto.valorTotal.toString());
       });
     })
   } 
@@ -120,11 +120,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
       x.map(parcela => {
         parcela.dataVencimento = new Date(parcela.dataVencimento);
         if(parcela.dataVencimento.getFullYear() == new Date().getFullYear()){
-          if(this.systemService.saidas[parcela.dataVencimento.getMonth()]){
-            this.systemService.saidas[parcela.dataVencimento.getMonth()] += parcela.valor;
+          if(this.systemService.saidas[parcela.dataVencimento.getUTCMonth()]){
+            this.systemService.saidas[parcela.dataVencimento.getUTCMonth()] += parcela.valor;
           }
           else{
-            this.systemService.saidas[parcela.dataVencimento.getMonth()] = parseInt(parcela.valor.toString());
+            this.systemService.saidas[parcela.dataVencimento.getUTCMonth()] = parseInt(parcela.valor.toString());
           }
         }
       });
@@ -170,6 +170,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.calculaEntradasFuturas();    
     this.calculaSaldoAtual();
     this.calculaTodasParcelas();
+    this.mostrarInfo("m");
   }
 
   adicionarDespesa() {

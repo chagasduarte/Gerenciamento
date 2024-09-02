@@ -52,17 +52,17 @@ export class MensalComponent implements OnInit{
           x.dataCompra = new Date(x.dataCompra);
           if (!x.isParcelada){
             this.tabela.map( t => {
-              const info = new InfoTabela(x.dataCompra.getDate()+1, x.valorTotal, x.nome);
+              const info = new InfoTabela(x.dataCompra.getUTCDate()+1, x.valorTotal, x.nome);
               if (t.Valor == x.tipoDespesa){
-                if(t.Info[x.dataCompra.getDate()]) {
-                  t.Info[x.dataCompra.getDate()].detalhe += `- ${x.nome}`
-                  t.Info[x.dataCompra.getDate()].valor += x.valorTotal;
+                if(t.Info[x.dataCompra.getUTCDate()]) {
+                  t.Info[x.dataCompra.getUTCDate()].detalhe += `- ${x.nome}`
+                  t.Info[x.dataCompra.getUTCDate()].valor += x.valorTotal;
                 }
                 else {
-                  t.Info[x.dataCompra.getDate()] = info;
-                  t.Info[x.dataCompra.getDate()].cor = x.isPaga?"#60b566":"#ffbf33";
+                  t.Info[x.dataCompra.getUTCDate()] = info;
+                  t.Info[x.dataCompra.getUTCDate()].cor = x.isPaga?"#60b566":"#ffbf33";
                 }
-                this.resultados[x.dataCompra.getDate()] += x.valorTotal
+                this.resultados[x.dataCompra.getUTCDate()] += x.valorTotal
               }
             });
           }
@@ -82,14 +82,14 @@ export class MensalComponent implements OnInit{
             p.isPaga = 3;
           }
           this.tabela.map(t => {
-            const info = new InfoTabela(p.dataVencimento.getDate(), p.valor, `Parcela: ${x.nome}`);
+            const info = new InfoTabela(p.dataVencimento.getUTCDate(), p.valor, `Parcela: ${x.nome}`);
             if(t.Valor == x.tipoDespesa){
-              if(t.Info[p.dataVencimento.getDate()]) {
-                t.Info[p.dataVencimento.getDate()].valor += p.valor;
-                t.Info[p.dataVencimento.getDate()].detalhe += ` | ${x.nome}`
+              if(t.Info[p.dataVencimento.getUTCDate()]) {
+                t.Info[p.dataVencimento.getUTCDate()].valor += p.valor;
+                t.Info[p.dataVencimento.getUTCDate()].detalhe += ` | ${x.nome}`
               }
               else {
-                t.Info[p.dataVencimento.getDate()] = info;
+                t.Info[p.dataVencimento.getUTCDate()] = info;
                 let cor:string = "";
                 switch(p.isPaga){
                   case 0: 
@@ -102,9 +102,9 @@ export class MensalComponent implements OnInit{
                     cor = "#ff4d33";
                     break;
                 }
-                t.Info[p.dataVencimento.getDate()].cor = cor;
+                t.Info[p.dataVencimento.getUTCDate()].cor = cor;
               }                      
-              this.resultados[p.dataVencimento.getDate()] += p.valor;
+              this.resultados[p.dataVencimento.getUTCDate()] += p.valor;
             }
           });
         })
