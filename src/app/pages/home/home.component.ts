@@ -81,7 +81,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   
   calculaGastosParcelados(){
     this.despesaService.GetDespesasParceladas().subscribe(x => {
-      this.despesasParceladas = x;
+      this.despesasParceladas = x.filter(filtro => new  Date(filtro.dataCompra).getUTCMonth() <= this.systemService.mes.valor);
       this.calculaParcelasdoMes()
     });
   }
