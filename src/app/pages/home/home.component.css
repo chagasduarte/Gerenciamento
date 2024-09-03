@@ -295,4 +295,7 @@ input {
         grid-template-columns: 100%;
         grid-template-rows: 30% 70%;
     }
+    .card-button{
+        width: 150px
+        }
 }
