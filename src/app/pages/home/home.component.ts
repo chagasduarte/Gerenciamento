@@ -110,7 +110,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
         if(!gasto.isPaga && gasto.dataCompra.getUTCMonth() <= this.systemService.mes.valor) {
           this.gastosAdicionais += gasto.valorTotal;
         }
-        this.systemService.saidas[gasto.dataCompra.getUTCMonth()] += parseInt(gasto.valorTotal.toString());
+        this.systemService.saidas[gasto.dataCompra.getUTCMonth()] += gasto.valorTotal;
       });
     })
   } 
@@ -124,7 +124,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
             this.systemService.saidas[parcela.dataVencimento.getUTCMonth()] += parcela.valor;
           }
           else{
-            this.systemService.saidas[parcela.dataVencimento.getUTCMonth()] = parseInt(parcela.valor.toString());
+            this.systemService.saidas[parcela.dataVencimento.getUTCMonth()] = parcela.valor;
           }
         }
       });
@@ -146,7 +146,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
             this.aReceber += GetSalarioLiquido(x.valor)[2].valor; 
           }
 
-          this.systemService.entradas[x.dataDebito.getUTCMonth()] += parseInt(GetSalarioLiquido(x.valor)[2].valor.toString());
+          this.systemService.entradas[x.dataDebito.getUTCMonth()] += GetSalarioLiquido(x.valor)[2].valor;
         })
       }
     })

@@ -72,10 +72,59 @@
     margin-right: 5px;
 }
 
-.card {
-    width: 300px;
+.card-button {
+    display: grid;
+    grid-template-areas: 
+    "circle valores"
+    "vazio bg-icon";
+    grid-template-rows: auto auto;
+    grid-template-columns: 30% 70%;
+    width: 200px;
     margin: 5px;
-    height: 120px;
+    height: 100px;
+    border-radius: 15px;
+    transition: transform 0.3s;
+}
+
+.card-button:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+.circle {
+    border-radius: 50px;
+    width: 50px;
+    height: 50px;
+    background-color: #2aecc950;
+    margin: 8px;
+    grid-area: circle;
+}
+
+.valores {
+    grid-area: valores;
+    text-align: left;
+}
+
+.valor {
+  font-size: 29px;
+  height: 2.5rem;
+}
+
+.text {
+    font-size: 14px;
+}
+
+.bg-icon {
+    width: 100%;
+    grid-area: bg-icon;
+    justify-content: end;
+    align-items: end;
+}
+
+.bg-icon img {
+    width: 60px;
+    opacity: 30%;
+    float: right;
 }
 
 .barra {

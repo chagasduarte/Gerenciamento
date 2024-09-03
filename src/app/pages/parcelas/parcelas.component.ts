@@ -75,23 +75,28 @@ export class ParcelasComponent implements OnInit {
     if (cont) {
       if (this.listaPagamento.length > 0){
         this.listaPagamento.map( parcela => {
-          cont.debito -= parcela.valor;
-          this.contasService.PutConta(cont).subscribe({
-            next: (success: Conta) => {
-              parcela.isPaga = 1;
-              this.parcelasService.PutParcela(parcela).subscribe( x => {
-                this.toastr.success("Sucesso", "Parcela Paga com sucesso.");
-              });
-              this.despesa.valorPago += parcela.valor;
-              this.despesaService.PutDespesa(this.despesa).subscribe(x => {
-                this.despesa = x;
-                this.toastr.success("Sucesso", "Valor Total da Despesa Atualizado com sucesso.");
-              })
-            },
-            error: (err:any) => {
-              this.toastr.error("Erro", "Não foi possível realizar o pagamento.")
-            }
-          });
+          if (cont.debito - parcela.valor >= 0) {
+            cont.debito -= parcela.valor;
+            this.contasService.PutConta(cont).subscribe({
+              next: (success: Conta) => {
+                parcela.isPaga = 1;
+                this.parcelasService.PutParcela(parcela).subscribe( x => {
+                  this.toastr.success("Sucesso", "Parcela Paga com sucesso.");
+                });
+                this.despesa.valorPago += parcela.valor;
+                this.despesaService.PutDespesa(this.despesa).subscribe(x => {
+                  this.despesa = x;
+                  this.toastr.success("Sucesso", "Valor Total da Despesa Atualizado com sucesso.");
+                })
+              },
+              error: (err:any) => {
+                this.toastr.error("Erro", "Não foi possível realizar o pagamento.")
+              }
+            });
+          }
+          else {
+            this.toastr.warning("Você é pobre de mais para comprar isso, então não gaste mais", "Aviso")
+          }
         });    
       }
     }

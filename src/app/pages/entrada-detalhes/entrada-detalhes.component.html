@@ -17,8 +17,8 @@
             </div>
             <div class="card-body">
                 <div class="salario">
-                    <div class="data">{{entrada.dataDebito.toUTCString() | date: "MMM dd, yyyy" }}:</div>
-                    <div class="valor"><input class="form-input" type="number" [(ngModel)]="entrada.valor"></div>
+                    <div class="data"><b>{{entrada.dataDebito.toUTCString() | date: "MMM dd, yyyy" }}</b>:</div>
+                    <div class="valor"><b><input class="form-input" type="number" [(ngModel)]="entrada.valor"></b></div>
                     <button class="btn btn-sm btn-primary" (click)="atualizaSalario(entrada)"> Up </button>
                 </div>
                 <div class="row" *ngFor="let desconto of GetSalarioLiquido(entrada.valor)">

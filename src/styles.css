@@ -34,3 +34,23 @@ html::-webkit-scrollbar-track {
   grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
   gap: 10px;
 }
+
+img {
+  width: 100%;
+}
+
+.bg-verde-pastel {
+  background-color: #49865b;
+}
+
+.bg-azul-pastel {
+  background-color: rgb(78, 156, 156);
+}
+
+.bg-laranja-pastel {
+  background-color: #e0a16e;
+}
+
+.bg-vermelho-pastel{
+  background-color: #af6e6e;
+}

@@ -1,7 +1,11 @@
 import { EChartsOption } from "echarts";
 
 export function DefineGraficoAnualOption(entradas: number[], saidas: number[]): EChartsOption{
-   return {
+  for (let i =0; i< 12; i++) {
+    entradas[i] = parseInt(entradas[i].toString());
+    saidas[i] = parseInt(saidas[i].toString());
+  }
+  return {
     legend: {
         data: ['entradas', 'saidas'],
         textStyle: {
@@ -9,7 +13,7 @@ export function DefineGraficoAnualOption(entradas: number[], saidas: number[]): 
         }
     },
     tooltip: {
-      backgroundColor: 'rgba(50,50,50,0.7)',
+      backgroundColor: '#86AEBC',
       textStyle: {
         color: "black"
       }
@@ -38,7 +42,8 @@ export function DefineGraficoAnualOption(entradas: number[], saidas: number[]): 
         label: {
           show: true,
           position: 'top',
-          formatter: '{c}'
+          formatter: '${c}',
+          
         }
       },
       {
@@ -48,7 +53,7 @@ export function DefineGraficoAnualOption(entradas: number[], saidas: number[]): 
         label: {
           show: true,
           position: 'top',
-          formatter: '{c}'
+          formatter: '${c}'
         }
       }
     ]

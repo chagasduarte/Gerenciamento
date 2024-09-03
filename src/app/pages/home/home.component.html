@@ -28,41 +28,54 @@
     </div>
 
     <div class="card-grafico">
-      <div class="plus-card">
-        <div class="card">
-          <div class="previstos" (click)="previstos()">
-            <span><b>Previstos:</b></span>
-            <input [value]="gastoTotalMes | currency">
-          </div>
-          <div class="outros" (click)="gastos()">
-            <span><b>Adicionais:</b></span>
-            <div>
-              <input [value]="gastosAdicionais | currency">
-            </div>
-              
-          </div>
+      <div class="card-button bg-laranja-pastel text-white" (click)="previstos()">
+        <div class="circle">
+          <img src="/assets/img/money-with-wings.svg"/>
         </div>
-      </div>
-      <div class="plus-card">
-        <div class="card">
-            <div class="saldoAtual" (click)="contasDetalhes()">
-              <span> <b>Saldo:</b></span>
-              <div class="money"> {{saldoAtual | currency}} </div>
-            </div>
-            <div class="aReceber" (click)="entradaDetalhes()">
-              <span><b>À Receber:</b></span>
-              <div class="entrada">
-                <div class="money"> {{aReceber | currency}} </div>
-                <img src="/assets/img/check.svg"/>
-              </div>
-            </div>
+        <div class="valores">
+          <div class="valor"> {{gastoTotalMes | currency}} </div>
+          <span class="text">Gastos Previstos</span>
         </div>
+        <div class="bg-icon"><img src="/assets/img/money-with-wings.svg"/></div>
+        
       </div>
-      <div class="graficos">
-        <!-- <div echarts [options]="chartMensalOption" class="charts-bar"></div> -->
+
+      <div class="card-button bg-vermelho-pastel text-white" (click)="gastos()">
+        <div class="circle">
+          <img src="/assets/img/bitcoin-cash-money.svg"/>
+        </div>
+        <div class="valores">
+          <div class="valor"> {{gastosAdicionais | currency}} </div>
+          <span class="text">Gastos Adicionais</span>
+        </div>
+        <div class="bg-icon"><img src="/assets/img/bitcoin-cash-money.svg"/></div>
+        
+      </div>
+      
+      <div class="card-button bg-verde-pastel text-white" (click)="contasDetalhes()">
+        <div class="circle">
+          <img src="/assets/img/money-bag.svg"/>
+        </div>
+        <div class="valores">
+          <div class="valor"> {{saldoAtual | currency}} </div>
+          <span class="text">Saldo Total</span>
+        </div>
+        <div class="bg-icon"><img src="/assets/img/money-bag.svg"/></div>
+        
+      </div>
+
+      <div class="card-button bg-azul-pastel text-white" (click)="entradaDetalhes()">
+        <div class="circle">
+          <img src="/assets/img/dollar-banknote.svg"/>
+        </div>
+        <div class="valores">
+          <div class="valor">{{aReceber | currency}}</div>
+          <span class="text">Valores à receber</span>
+        </div>
+        <div class="bg-icon"><img src="/assets/img/dollar-banknote.svg" alt=""></div>
+        
       </div>
     </div>
-    
   </div>
     
     

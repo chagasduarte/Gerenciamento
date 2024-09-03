@@ -65,18 +65,23 @@ export class GastosComponent {
     if(contaput){
       if(this.listaPagamento.length > 0) {
         this.listaPagamento.map(despesa => {
-          contaput.debito -= despesa.valorTotal;
-          this.contasService.PutConta(contaput!).subscribe(x => {
-            despesa.isPaga = true;
-            this.despesaService.PutDespesa(despesa).subscribe({
-              next: (success: Despesa) => {
-                this.toastService.success("Sucesso", "Despesa paga com sucesso");
-              },
-              error: (err: any) => {
-                this.toastService.error("Erro", "Ocorreu algum erro no processo de atualização.")
-              }
-            })
-          });
+          if ((contaput.debito - despesa.valorTotal) >= 0) {
+            contaput.debito -= despesa.valorTotal
+            this.contasService.PutConta(contaput!).subscribe(x => {
+              despesa.isPaga = true;
+              this.despesaService.PutDespesa(despesa).subscribe({
+                next: (success: Despesa) => {
+                  this.toastService.success("Sucesso", "Despesa paga com sucesso");
+                },
+                error: (err: any) => {
+                  this.toastService.error("Erro", "Ocorreu algum erro no processo de atualização.")
+                }
+              })
+            });
+          }
+          else {
+            this.toastService.warning("Você é pobre de mais para comprar isso, então não gaste mais", "Aviso")
+          }
         });
       }
       else {

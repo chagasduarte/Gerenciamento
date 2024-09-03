@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, LOCALE_ID, OnInit } from '@angular/core';
 import { EntradasService } from '../../shared/services/entradas.service';
 import { Entrada } from '../../shared/models/entradas';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, registerLocaleData } from '@angular/common';
 import { GetSalarioLiquido } from '../../utils/functions/salario';
 import { Router } from '@angular/router';
 import { ContasService } from '../../shared/services/contas.service';
@@ -35,16 +35,16 @@ export class EntradaDetalhesComponent implements OnInit{
     this.entradaService.GetEntradas().subscribe( x => {
       x.map(entrada => {
         entrada.dataDebito = new Date(entrada.dataDebito);
+        
         if (entrada.status) {
           this.entradasRecebidas.push(entrada);
         }
         else {
           this.entradasFuturas.push(entrada);
         }
-      })
+      });
     });
   }
-
 
   receber(entrada: Entrada, valor: number) {
     this.contaService.GetContaById(entrada.contaId).subscribe(x => {
