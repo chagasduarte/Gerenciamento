@@ -18,6 +18,9 @@ export class ContasService {
   GetContaById(id: number) : Observable<Conta> {
     return this.http.get<Conta>(`${this.api}/${id}`);
   }
+  GetContaByMes(mes: number) : Observable<Conta[]> {
+    return this.http.get<Conta[]>(`${this.api}/Mes/${mes}`);
+  }
   GetContas(): Observable<Conta[]>{
     return this.http.get<Conta[]>(`${this.api}`)
   }

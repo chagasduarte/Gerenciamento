@@ -4,4 +4,6 @@ export interface Conta {
     descricao: string; 
     credito: number;   
     debito: number;    
+    mes: number;
+    ano: number;
 }

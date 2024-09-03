@@ -155,7 +155,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   
   calculaSaldoAtual(){
     this.saldoAtual = 0;
-    this.contasService.GetContas().subscribe({
+    this.contasService.GetContaByMes(this.systemService.mes.valor + 1).subscribe({
       next: (success: Conta[]) => {
         success.map(x => {
           this.saldoAtual += x.debito;

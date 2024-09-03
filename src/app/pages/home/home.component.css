@@ -283,19 +283,40 @@ input {
 
 @media screen and (max-width: 440px) {
 
-    .data {
-        display: none;
-    }
+    
     .info-1 {
         grid-template-areas: 
+        "data"
         "grafico"
         "cards";
         grid-template-columns: 100%;
-        grid-template-rows: 50% 50%;
+        grid-template-rows: 20% 30% 40%;
+        height: 600px;
+    }
+    .data-grafico {
+        display: grid;
+        grid-template-areas: 
+        "data graficoPizza";
+    }
+    .data {
+        display: grid;
+        grid-area: data;
     }
     .cards {
         grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
     }
+
+    .grafico-pizza {
+        display: grid;
+        grid-area: graficoPizza;
+        background-color: #be5228;
+        width: 115px;
+        height: 115px;
+        border-radius: 50%;
+        place-items: center;
+        font-size: large;
+    }
+    
     .card-button{
         display: grid;
         grid-template-areas: 

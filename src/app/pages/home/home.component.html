@@ -8,13 +8,21 @@
 </nav>
 
 <div class="info-1">
-  <div class="data">
-    <div class="mes">
-      {{systemService.mes.nome}}
+  <div class="data-grafico">
+    <div class="data">
+      <div class="mes">
+        {{systemService.mes.nome}}
+      </div>
+      <div class="linha"></div>
+      <div class="ano">
+        2024
+      </div>
     </div>
-    <div class="linha"></div>
-    <div class="ano">
-      2024
+   
+    <div class="grafico-pizza">
+      {{
+        (saldoAtual + aReceber) - (gastoTotalMes + gastosAdicionais) | currency
+      }}
     </div>
   </div>
 

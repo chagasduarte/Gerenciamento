@@ -6,6 +6,7 @@ import { GastosComponent } from '../gastos/gastos.component';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { SystemService } from '../../shared/services/system.service';
 
 @Component({
   selector: 'app-contas-detalhe',
@@ -24,7 +25,8 @@ export class ContasDetalheComponent {
   constructor(
     private contaService: ContasService,
     private readonly route: Router,
-    private readonly toastrService: ToastrService          
+    private readonly toastrService: ToastrService,
+    private readonly systemService: SystemService     
   ) {}
 
   ngOnInit(): void {
@@ -32,7 +34,7 @@ export class ContasDetalheComponent {
   }
  
   buscaContas(){
-    this.contaService.GetContas().subscribe(contas => this.contas = contas);
+    this.contaService.GetContaByMes(new Date().getUTCMonth() + 1).subscribe(contas => this.contas = contas);
   }
 
   updateDebito(conta: Conta): void {
