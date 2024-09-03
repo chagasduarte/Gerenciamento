@@ -338,4 +338,9 @@ input {
         margin: 4px;
         grid-area: circle;
     } 
+
+    button {
+        border: none;
+        border-radius: 10px;
+    }
 }
