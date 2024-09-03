@@ -274,14 +274,6 @@ input {
         grid-template-columns: 100%;
         justify-content: center;
     }
-    .grafico {
-        grid-area: grafico;
-    }
-    .cards {
-        display: grid;
-        justify-content: center;
-        grid-area: cards;
-    }
 }
 
 @media screen and (max-width: 440px) {
@@ -296,6 +288,6 @@ input {
         grid-template-rows: 30% 70%;
     }
     .card-button{
-        width: 150px
-        }
+        width: 150px;
+    }
 }
