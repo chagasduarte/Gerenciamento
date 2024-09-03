@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { GetSalarioLiquido } from '../../utils/functions/salario';
 import { ContasService } from '../../shared/services/contas.service';
 import { Conta } from '../../shared/models/conta';
+import { SystemService } from '../../shared/services/system.service';
 
 @Component({
   selector: 'app-entradas',
@@ -25,10 +26,11 @@ export class EntradasComponent {
     constructor(
         private readonly entradaService: EntradasService,
         private readonly contasService: ContasService,
-        private readonly router: Router
+        private readonly router: Router,
+        private readonly systemaService: SystemService
     ){
         this.entrada = {} as Entrada
-        this.contasService.GetContas().subscribe({
+        this.contasService.GetContaByMes(new Date().getUTCMonth() + 1).subscribe({
           next: (success: Conta[]) => {
             this.contas = success;
           } 
