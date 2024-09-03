@@ -14,11 +14,6 @@
     text-align: top;
 }
 
-.abrev-mes:hover {
-    transform: scale(1.2);
-    cursor: pointer;
-}
-
 .abrev-mes{
     margin-right: 12px;
     transition: transform 0.3s;
@@ -70,10 +65,6 @@
     color: #0a0c0e;
     transition: transform 0.3s;
     overflow: hidden;
-}
-.barra-progressao:hover {
-    transform: scale(1.2);
-    cursor: pointer;
 }
 
 .progressao-barra {
@@ -132,11 +123,6 @@
     transition: transform 0.3s;
 }
 
-.card-button:hover {
-    cursor: pointer;
-    transform: scale(1.1);
-}
-
 .circle {
     border-radius: 50px;
     width: 50px;
@@ -172,60 +158,31 @@
     opacity: 30%;
     float: right;
 }
-
-.barra {
-    width: 2px;
-    height: 1.5rem;
-    background-color: black;
-    justify-self: end;
-}
-
-.info-2 {
-   width: 100%;
-   height: auto;
-}
 .janelas {
     color: black;
     font-weight: bold;
 }
-.janela1{
-    grid-area: janela1;
+
+.janela1, .janela2, .janela3{
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     width: 8rem;
     height: 30px;
     transition: transform 0.3s;
 }
-.janela1:hover{
-    cursor: pointer;
-    transform: scale(1.1);
+
+.janela1 {
+    grid-area: janela1;
 }
 .janela2{
     grid-area: janela2;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    width: 8rem;
-    height: 30px;
-    margin-left: 5px;
-    transition: transform 0.3s;
 }
-.janela2:hover {
-    transform: scale(1.1);
-    cursor:pointer;
-}
+
 .janela3{
     grid-area: janela3;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    width: 8rem;
-    height: 30px;
-    margin-left: 5px;
-    transition: transform 0.3s;
 }
-.janela3:hover {
-    transform: scale(1.1);
-    cursor: pointer;
-}
+
+
 .info{
     grid-area: info;
     background-color: rgb(118, 141, 161);
@@ -239,22 +196,10 @@
     scrollbar-width: 2px;
 }
 
-input {
-    border: none;
-    width: 100%;
-    border-radius: 5px;
-    background-color: #69b6a800;
-}
-.d-flex {
-    text-align: center;
-}
-.d-flex progress {
-    transition: transform 0.3s;
-}
-
-.d-flex progress:hover {
-    cursor: pointer;
+.abrev-mes:hover, .barra-progressao:hover, .janela3:hover, .janela2:hover,
+.janela1:hover, .card-button:hover  {
     transform: scale(1.2);
+    cursor: pointer;
 }
 
 @media screen and (max-width: 1012px) {
@@ -334,13 +279,8 @@ input {
         border-radius: 50px;
         width: 40px;
         height: 40px;
-        background-color: #2aecc950;
         margin: 4px;
         grid-area: circle;
     } 
 
-    button {
-        border: none;
-        border-radius: 10px;
-    }
 }
