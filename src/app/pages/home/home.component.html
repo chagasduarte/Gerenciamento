@@ -7,7 +7,7 @@
   </ul>
 </nav>
 
-<div class="info-1 d-flex">
+<div class="info-1">
   <div class="data">
     <div class="mes">
       {{systemService.mes.nome}}
@@ -17,70 +17,71 @@
       2024
     </div>
   </div>
-    
-  <div class="cards">
-    <!-- Barra de progressão das despesas parcelasdas -->
-    <div class="grafico">
-      <div class="d-flex" *ngFor="let despesa of despesasParceladas">
-        <span class="text-end"> {{despesa.nome}}: </span>
-        <progress [value]="despesa.valorPago" [max]="parseInt(despesa.valorTotal)" style="width: 100px; align-self: center;"  (click)="parcelas(despesa)"></progress>
-      </div>
+
+  <div class="grafico">
+    <div class="grafico-header">
+      <h5>Despesas Parcelas</h5>
     </div>
-
-    <div class="card-grafico">
-      <div class="card-button bg-laranja-pastel text-white" (click)="previstos()">
-        <div class="circle">
-          <img src="/assets/img/money-with-wings.svg"/>
+    <div class="grafico-body">
+      <div class="porcentagem-despesa" *ngFor="let despesa of despesasParceladas">
+        <div class="barra-progressao" (click)="parcelas(despesa)">
+          <div class="progressao-barra" [ngStyle]="{'width': (despesa.valorPago * 100)/ despesa.valorTotal + 'px'}">{{despesa.nome}}</div>
         </div>
-        <div class="valores">
-          <div class="valor"> {{gastoTotalMes | currency}} </div>
-          <span class="text">Gastos Previstos</span>
-        </div>
-        <div class="bg-icon"><img src="/assets/img/money-with-wings.svg"/></div>
-        
-      </div>
-
-      <div class="card-button bg-vermelho-pastel text-white" (click)="gastos()">
-        <div class="circle">
-          <img src="/assets/img/bitcoin-cash-money.svg"/>
-        </div>
-        <div class="valores">
-          <div class="valor"> {{gastosAdicionais | currency}} </div>
-          <span class="text">Gastos Adicionais</span>
-        </div>
-        <div class="bg-icon"><img src="/assets/img/bitcoin-cash-money.svg"/></div>
-        
-      </div>
-      
-      <div class="card-button bg-verde-pastel text-white" (click)="contasDetalhes()">
-        <div class="circle">
-          <img src="/assets/img/money-bag.svg"/>
-        </div>
-        <div class="valores">
-          <div class="valor"> {{saldoAtual | currency}} </div>
-          <span class="text">Saldo Total</span>
-        </div>
-        <div class="bg-icon"><img src="/assets/img/money-bag.svg"/></div>
-        
-      </div>
-
-      <div class="card-button bg-azul-pastel text-white" (click)="entradaDetalhes()">
-        <div class="circle">
-          <img src="/assets/img/dollar-banknote.svg"/>
-        </div>
-        <div class="valores">
-          <div class="valor">{{aReceber | currency}}</div>
-          <span class="text">Valores à receber</span>
-        </div>
-        <div class="bg-icon"><img src="/assets/img/dollar-banknote.svg" alt=""></div>
-        
+        <!-- <progress [value]="despesa.valorPago" [max]="parseInt(despesa.valorTotal)" style="width: 100px; align-self: center;"  (click)="parcelas(despesa)"></progress> -->
       </div>
     </div>
   </div>
-    
-    
-</div>
 
+  <div class="cards">
+    <div class="card-button bg-laranja-pastel text-white" (click)="previstos()">
+      <div class="circle">
+        <img src="/assets/img/money-with-wings.svg"/>
+      </div>
+      <div class="valores">
+        <div class="valor"> {{gastoTotalMes | currency}} </div>
+        <span class="text">Gastos Previstos</span>
+      </div>
+      <div class="bg-icon"><img src="/assets/img/money-with-wings.svg"/></div>
+    </div>
+
+    <div class="card-button bg-vermelho-pastel text-white" (click)="gastos()">
+      <div class="circle">
+        <img src="/assets/img/bitcoin-cash-money.svg"/>
+      </div>
+      <div class="valores">
+        <div class="valor"> {{gastosAdicionais | currency}} </div>
+        <span class="text">Gastos Adicionais</span>
+      </div>
+      <div class="bg-icon"><img src="/assets/img/bitcoin-cash-money.svg"/></div>
+      
+    </div>
+    
+    <div class="card-button bg-verde-pastel text-white" (click)="contasDetalhes()">
+      <div class="circle">
+        <img src="/assets/img/money-bag.svg"/>
+      </div>
+      <div class="valores">
+        <div class="valor"> {{saldoAtual | currency}} </div>
+        <span class="text">Saldo Total</span>
+      </div>
+      <div class="bg-icon"><img src="/assets/img/money-bag.svg"/></div>
+      
+    </div>
+
+    <div class="card-button bg-azul-pastel text-white" (click)="entradaDetalhes()">
+      <div class="circle">
+        <img src="/assets/img/dollar-banknote.svg"/>
+      </div>
+      <div class="valores">
+        <div class="valor">{{aReceber | currency}}</div>
+        <span class="text">Valores à receber</span>
+      </div>
+      <div class="bg-icon"><img src="/assets/img/dollar-banknote.svg" alt=""></div>
+      
+    </div>
+  </div>
+</div>
+    
 <div class="info-2">
   <div class="janelas d-flex">
     <div class="janela1" (click)="mostrarInfo('m')" [ngStyle]="{'background-color': colorMensal}">Mensal</div>

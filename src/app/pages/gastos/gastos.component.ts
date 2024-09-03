@@ -80,7 +80,7 @@ export class GastosComponent {
             });
           }
           else {
-            this.toastService.warning("Você é pobre de mais para comprar isso, então não gaste mais", "Aviso")
+            this.toastService.warning("Você é pobre de mais para comprar isso, então não gaste mais", "Aviso");
           }
         });
       }

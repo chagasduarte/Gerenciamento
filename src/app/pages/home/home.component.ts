@@ -36,6 +36,7 @@ import { NgxSpinnerComponent } from 'ngx-spinner';
 })
 export class HomeComponent implements OnInit, AfterViewInit {
 
+
   @ViewChild('container', { read: ViewContainerRef }) container!: ViewContainerRef;
   despesasParceladas: Despesa[] = [];
   entradas!: Entrada[];
@@ -77,7 +78,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.calculaSaldoAtual();
     this.calculaTodasParcelas();
   }
-
+  
   calculaGastosParcelados(){
     this.despesaService.GetDespesasParceladas().subscribe(x => {
       this.despesasParceladas = x;
@@ -183,9 +184,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
   gastos() {
     this.router.navigate(["gastos"]);
   }
-  receber() {
-    
-  }
   
   mostrarInfo(comp: string){
 
@@ -235,4 +233,5 @@ export class HomeComponent implements OnInit, AfterViewInit {
   previstos() {
     this.router.navigate(["previstos"], {queryParams: this.idsPrevisto});
   }
+  
 }
