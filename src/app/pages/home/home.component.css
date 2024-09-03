@@ -3,8 +3,8 @@
     height: 55px;
     overflow-x: auto;
     overflow-y: hidden;
-    scrollbar-width: 2px;
     justify-content: center;
+    width: 100%;
 }
 
 .meses{
@@ -78,8 +78,9 @@
 
 .progressao-barra {
     background-color: #355f70;
-    height: 1.5rem;
-    border-radius: 15px;
+    height: 100%rem;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
     text-align: center;
     text-wrap: nowrap;
     padding-left: 5px;
@@ -93,9 +94,12 @@
     grid-template-rows: 2rem 1fr;
     background-color: rgb(78, 156, 156);
     border-radius: 15px;
+    height: auto;
 }
 .grafico-header{
     grid-area: graficoheader;
+    padding-left: 10px;
+    padding-top: 5px;
 }
 .grafico-body {
     display: grid;
@@ -103,12 +107,14 @@
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     grid-template-rows: repeat(auto-fill, minmax(30px, 1fr));
     place-items: center;
+    padding: 5px;
+    height: auto;
 }
 
 .cards {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 10px;
+    row-gap: 5px;
     width: 100%;
     place-items: center;
 }
@@ -175,9 +181,8 @@
 }
 
 .info-2 {
-   width: 95%;
-   height: autopx;
-   margin-left: 5%;
+   width: 100%;
+   height: auto;
 }
 .janelas {
     color: black;
@@ -277,6 +282,7 @@ input {
 }
 
 @media screen and (max-width: 440px) {
+
     .data {
         display: none;
     }
@@ -285,9 +291,30 @@ input {
         "grafico"
         "cards";
         grid-template-columns: 100%;
-        grid-template-rows: 30% 70%;
+        grid-template-rows: 50% 50%;
+    }
+    .cards {
+        grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
     }
     .card-button{
+        display: grid;
+        grid-template-areas: 
+        "circle valores"
+        "vazio bg-icon";
         width: 175px;
+        grid-template-columns: 30% 70%;
     }
+    .valor {
+        font-size: 25px;
+        height: 1.5rem;
+    }
+
+    .circle {
+        border-radius: 50px;
+        width: 40px;
+        height: 40px;
+        background-color: #2aecc950;
+        margin: 4px;
+        grid-area: circle;
+    } 
 }

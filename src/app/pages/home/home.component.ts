@@ -184,9 +184,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
   gastos() {
     this.router.navigate(["gastos"]);
   }
-  
-  mostrarInfo(comp: string){
 
+  mostrarInfo(comp: string){
     switch (comp) {
       case "m": {
         this.definirContainer(MensalComponent);
@@ -209,7 +208,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
         this.definirContainer(GraficosComponent);
       }
     }
-
   }
 
   definirContainer(component: Type<any>) {
