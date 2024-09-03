@@ -69,6 +69,7 @@
     text-wrap: nowrap;
     color: #0a0c0e;
     transition: transform 0.3s;
+    overflow: hidden;
 }
 .barra-progressao:hover {
     transform: scale(1.2);
@@ -81,6 +82,7 @@
     border-radius: 15px;
     text-align: center;
     text-wrap: nowrap;
+    padding-left: 5px;
 }
 
 .grafico {
@@ -91,8 +93,6 @@
     grid-template-rows: 2rem 1fr;
     background-color: rgb(78, 156, 156);
     border-radius: 15px;
-    padding: 5px;
-    height: auto;
 }
 .grafico-header{
     grid-area: graficoheader;
@@ -102,7 +102,17 @@
     grid-area: graficobody;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     grid-template-rows: repeat(auto-fill, minmax(30px, 1fr));
+    place-items: center;
 }
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    width: 100%;
+    place-items: center;
+}
+
 .card-button {
     display: grid;
     grid-template-areas: 
@@ -242,13 +252,6 @@ input {
     transform: scale(1.2);
 }
 
-.cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 5px;
-}
-
-
 @media screen and (max-width: 1012px) {
     .data {
         display: none;
@@ -269,11 +272,27 @@ input {
         "grafico"
         "cards";
         grid-template-columns: 100%;
+        justify-content: center;
     }
     .grafico {
         grid-area: grafico;
     }
     .cards {
+        display: grid;
+        justify-content: center;
         grid-area: cards;
+    }
+}
+
+@media screen and (max-width: 440px) {
+    .data {
+        display: none;
+    }
+    .info-1 {
+        grid-template-areas: 
+        "grafico"
+        "cards";
+        grid-template-columns: 100%;
+        grid-template-rows: 30% 70%;
     }
 }
