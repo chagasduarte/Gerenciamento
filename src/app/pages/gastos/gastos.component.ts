@@ -23,8 +23,6 @@ import { Conta } from '../../shared/models/conta';
 export class GastosComponent {
 
 
-
-
   gastos!: Despesa[]
   contas!: Conta[]
   listaPagamento: Despesa[] = []
@@ -101,4 +99,9 @@ export class GastosComponent {
   buscaContas(){
     this.contasService.GetContas().subscribe(x => this.contas = x );
   }
+
+  AdicionaGasto() {
+    this.router.navigate(["despesas"]);
+  }
+    
 }

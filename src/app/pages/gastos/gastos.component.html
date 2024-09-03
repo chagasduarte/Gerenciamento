@@ -1,7 +1,13 @@
 <div class="container">
   <h1>Gastos</h1>
-  <button class="btn btn-sm btn-warning" (click)="Voltar()">Voltar</button>
-  <div class="card mb-3"></div>
+  <div class="botoes">
+    <div class="voltar">
+        <button class="btn btn-sm btn-warning" (click)="Voltar()">Voltar</button>
+    </div>
+    <div class="adicionar">
+        <button class="btn btn-sm btn-primary" (click)="AdicionaGasto()"><img src="/assets/img/plus-coin.svg" alt=""/></button>
+    </div>
+</div>  <div class="card mb-3"></div>
   <h3>Abertos:</h3>
   <div class="d-flex  mb-3">
     <div *ngFor="let gasto of gastos">
