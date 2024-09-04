@@ -52,3 +52,68 @@ img {
 .bg-vermelho-pastel{
   background-color: #af6e6e;
 }
+
+
+@media screen and (max-width: 440px) {
+  .info-2 {
+      display: none;
+  }
+  
+  .info-1 {
+      grid-template-areas: 
+      "data"
+      "grafico"
+      "cards";
+      grid-template-columns: 100%;
+      grid-template-rows: 20% 30% 40%;
+      height: 600px;
+      place-items: center;
+      row-gap: 20px;
+  }
+  .data-grafico {
+      display: grid;
+      grid-template-areas: 
+      "data graficoPizza";
+      gap: 20px;
+  }
+  .data {
+      display: grid;
+      grid-area: data;
+  }
+  .cards {
+      grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+  }
+
+  .grafico-pizza {
+      display: grid;
+      grid-area: graficoPizza;
+      width: 115px;
+      height: 115px;
+      border-radius: 50%;
+      place-items: center;
+      font-size: 24px;
+      font-weight: bolder;
+  }
+  
+  .card-button{
+      display: grid;
+      grid-template-areas: 
+      "circle valores"
+      "vazio bg-icon";
+      width: 175px;
+      grid-template-columns: 30% 70%;
+  }
+  .valor {
+      font-size: 25px;
+      height: 1.5rem;
+  }
+
+  .circle {
+      border-radius: 50px;
+      width: 40px;
+      height: 40px;
+      margin: 4px;
+      grid-area: circle;
+  } 
+
+}

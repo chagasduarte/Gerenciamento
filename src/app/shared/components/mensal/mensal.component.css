@@ -4,21 +4,11 @@
   overflow-y: auto;
 }
 
-tbody td {
-  text-align: left;
-  border: 1px solid #768da1
-}
-
 th.sticky-col, td.sticky-col {
-  background-color: #3b666b;
   position: sticky;
   left: 0;
   z-index: 1; /* Garantir que a coluna fixa esteja acima das outras colunas */
 }
-
-thead th {
-  background-color: #29595f;
-}  
 
 .dia {
     white-space: nowrap;
