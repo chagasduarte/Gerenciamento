@@ -256,11 +256,13 @@
         grid-template-rows: 20% 30% 40%;
         height: 600px;
         place-items: center;
+        row-gap: 20px;
     }
     .data-grafico {
         display: grid;
         grid-template-areas: 
         "data graficoPizza";
+        gap: 20px;
     }
     .data {
         display: grid;
