@@ -8,8 +8,8 @@
     <div class="linha"></div>
     <section>
         <h3>À Pagar</h3>
-        <div class="grid">
-            <div class="card card-sm" *ngFor="let parcela of parcelas">
+        <div class="card-parcelas">
+            <div class="parcela bg-laranja-pastel" *ngFor="let parcela of parcelas">
                 <div class="card-header">
                     <b>{{parcela.despesa.nome}}</b> 
                 </div>
@@ -18,7 +18,6 @@
                         <div class="data me-2"><b>{{parcela.parcela.dataVencimento| date}}:</b></div>
                         <div class="valor"><b>{{ parcela.parcela.valor | currency }}</b></div>
                     </div>
-                    <button class="btn btn-sm btn-success justify-content-end">Pagar</button>
                 </div>
             </div>
         </div>
@@ -26,19 +25,20 @@
     <div class="linha"></div>
     <section>
         <h3>Pagas</h3>
-        <div class="grid" *ngIf="parcelasPagas.length > 0">
-            <div class="card card-sm bg-sucess" *ngFor="let parcela of parcelasPagas">
+        <div class="card-parcelas" *ngIf="parcelasPagas.length > 0">
+            <div class="pagas card-sm bg-verde-pastel" *ngFor="let parcela of parcelasPagas">
                 <div class="card-header">
                     <b>{{parcela.despesa.nome}}</b> 
                 </div>
                 <div class="card-body">
-                    <div class="salario">
-                        <div class="data">{{parcela.parcela.dataVencimento| date}}:</div>
-                        <div class="valor"><input class="form-input" type="number" [value]="parcela.parcela.valor"></div>
+                    <div class="salario d-flex">
+                        <div class="data  me-2">{{parcela.parcela.dataVencimento| date}}:</div>
+                        <div class="valor">{{parcela.parcela.valor | currency}} </div>
                     </div>
                 </div>
             </div>
         </div>
+        
         <div *ngIf="!(parcelasPagas.length > 0)" class="justify-content-center text-align-center">
             Não há nada por aqui
         </div>

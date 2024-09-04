@@ -94,8 +94,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
         parcela.dataVencimento = new Date(parcela.dataVencimento)
         if(parcela.isPaga == 0 || parcela.isPaga == 3){
           this.gastoTotalMes += parcela.valor;
-          this.idsPrevisto.push(parcela.id)
         }
+        this.idsPrevisto.push(parcela.id)
       });
     });
   }
@@ -108,7 +108,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.despesaService.GetDespesasAdicionais().subscribe(x => {
       x.map(gasto => {
         gasto.dataCompra = new Date(gasto.dataCompra);
-        if(!gasto.isPaga && gasto.dataCompra.getUTCMonth() <= this.systemService.mes.valor) {
+        if(!gasto.isPaga && gasto.dataCompra.getUTCMonth() == this.systemService.mes.valor) {
           this.gastosAdicionais += gasto.valorTotal;
         }
         this.systemService.saidas[gasto.dataCompra.getUTCMonth()] += gasto.valorTotal;

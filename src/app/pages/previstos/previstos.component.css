@@ -2,3 +2,20 @@
     display: grid;
     grid-template-columns: 50% 50%;
 }
+
+.pagas {
+    width: 175px;
+    padding: 5px;
+    border-radius: 5%;
+    text-wrap: nowrap;
+}
+.parcela {
+    border-radius: 5%;
+    padding: 5px;
+}
+.card-parcelas {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+    place-items: center;
+    gap: 10px;
+}
