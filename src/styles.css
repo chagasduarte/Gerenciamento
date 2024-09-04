@@ -60,3 +60,21 @@ img {
   margin: 8px;
   grid-area: circle;
 }
+
+.botoes{
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+.parcela {
+  border-radius: 5%;
+  padding: 5px;
+  width: 175px;
+  height: 75px;
+  text-wrap: nowrap;
+}
+.card-parcelas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+  place-items: center;
+  gap: 10px;
+}

@@ -23,9 +23,10 @@ import { Conta } from '../../shared/models/conta';
 export class GastosComponent {
 
 
-  gastos!: Despesa[]
-  contas!: Conta[]
-  listaPagamento: Despesa[] = []
+  gastos!: Despesa[];
+  gastosPagos!: Despesa[];
+  contas!: Conta[];
+  listaPagamento: Despesa[] = [];
   ano!: Ano;
   totalPagar: number = 0;
   conta!: Conta;
@@ -45,10 +46,11 @@ export class GastosComponent {
   calculaGastosDoMes(){
     this.despesaService.GetDespesasByMes(this.systemsService.mes.valor + 1).subscribe({
       next: (success: Despesa[]) => {
-        this.gastos = success.filter(x => !x.isParcelada);
+        this.gastos = success.filter(x => !x.isParcelada && !x.isPaga);
+        this.gastosPagos = success.filter(x => !x.isParcelada && x.isPaga);
       },
       error: (err: any) => {
-
+        this.toastService.error("Errou, Porraaaa... Burro!!!", "Erro");
       }
     });
   }
