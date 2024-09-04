@@ -4,7 +4,6 @@
     overflow-x: auto;
     overflow-y: hidden;
     justify-content: center;
-    width: 100%;
 }
 .grafico-pizza {
     display: grid;
@@ -36,8 +35,6 @@
     "data grafico cards";
     grid-template-columns: 25% 35% 35%;
     gap: 5px;
-    width: 100%;
-    justify-content: center;
     margin: 10px;
 }
 .data {
@@ -101,13 +98,16 @@
     grid-template-rows: 2rem 1fr;
     background-color: rgb(78, 156, 156);
     border-radius: 15px;
-    height: auto;
+    min-height: 175px;
+    width: 95%;
 }
 .grafico-header{
     grid-area: graficoheader;
     padding-left: 10px;
     padding-top: 5px;
+    text-align: center;
 }
+
 .grafico-body {
     display: grid;
     grid-area: graficobody;
@@ -255,6 +255,7 @@
         grid-template-columns: 100%;
         grid-template-rows: 20% 30% 40%;
         height: 600px;
+        place-items: center;
     }
     .data-grafico {
         display: grid;
