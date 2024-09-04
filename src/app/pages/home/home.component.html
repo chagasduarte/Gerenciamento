@@ -19,9 +19,9 @@
       </div>
     </div>
    
-    <div class="grafico-pizza">
+    <div class="grafico-pizza" [ngStyle]="{'background-color': corGrafico}">
       {{
-        (saldoAtual + aReceber) - (gastoTotalMes + gastosAdicionais) | currency
+        aindaPossoGastar | currency
       }}
     </div>
   </div>

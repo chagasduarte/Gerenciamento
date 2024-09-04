@@ -21,6 +21,8 @@ import { Cor } from '../../utils/cores';
 import { NgxEchartsDirective } from 'ngx-echarts';
 import { EChartsOption } from 'echarts';
 import { NgxSpinnerComponent } from 'ngx-spinner';
+import { forkJoin } from 'rxjs';
+import { DefineCor } from '../../utils/functions/defineCorGrafico';
 
 @Component({
   selector: 'app-home',
@@ -53,6 +55,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
   colorAnual = "#768da1";
   colorGrafico = "#768da1";
   chartMensalOption!: EChartsOption
+  aindaPossoGastar!: number
+  corGrafico = "#af6e6e";
 
   constructor(
     @Inject(DOCUMENT) document:Document,
@@ -71,76 +75,69 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.mostrarInfo("m");
   }
 
-  ngOnInit(): void {
-    this.calculaGastosParcelados();
-    this.cauculaGastosAdicionais();
-    this.calculaEntradasFuturas();    
-    this.calculaSaldoAtual();
-    this.calculaTodasParcelas();
+  ngOnInit(): void { 
+    this.preencheInformacoes();
   }
   
-  calculaGastosParcelados(){
-    this.despesaService.GetDespesasParceladas().subscribe(x => {
-      this.despesasParceladas = x.filter(filtro => new  Date(filtro.dataCompra).getUTCMonth() <= this.systemService.mes.valor);
-      this.calculaParcelasdoMes()
-    });
-  }
-  
-  calculaParcelasdoMes(){
+  preencheInformacoes(){
     this.gastoTotalMes = 0;
     this.idsPrevisto = [];
-    this.parcelasService.GetParcelasByMes(this.systemService.mes.valor + 1).subscribe(x => {
-      x.map(parcela => {
-        parcela.dataVencimento = new Date(parcela.dataVencimento)
-        if(parcela.isPaga == 0 || parcela.isPaga == 3){
-          this.gastoTotalMes += parcela.valor;
-        }
-        this.idsPrevisto.push(parcela.id)
-      });
-    });
-  }
-
-  cauculaGastosAdicionais(){
     this.gastosAdicionais = 0;
     for (let i = 0; i < 12; i++){
       this.systemService.saidas[i] = 0;
     }
-    this.despesaService.GetDespesasAdicionais().subscribe(x => {
-      x.map(gasto => {
-        gasto.dataCompra = new Date(gasto.dataCompra);
-        if(!gasto.isPaga && gasto.dataCompra.getUTCMonth() == this.systemService.mes.valor) {
-          this.gastosAdicionais += gasto.valorTotal;
-        }
-        this.systemService.saidas[gasto.dataCompra.getUTCMonth()] += gasto.valorTotal;
-      });
-    })
-  } 
-  
-  calculaTodasParcelas(){
-    this.parcelasService.GetParcelas().subscribe(x => {
-      x.map(parcela => {
-        parcela.dataVencimento = new Date(parcela.dataVencimento);
-        if(parcela.dataVencimento.getFullYear() == new Date().getFullYear()){
-          if(this.systemService.saidas[parcela.dataVencimento.getUTCMonth()]){
-            this.systemService.saidas[parcela.dataVencimento.getUTCMonth()] += parcela.valor;
-          }
-          else{
-            this.systemService.saidas[parcela.dataVencimento.getUTCMonth()] = parcela.valor;
-          }
-        }
-      });
-    });
-  }
-  
-  calculaEntradasFuturas(){
     const dataAtual = new Date()
     this.aReceber = 0;
     for (let i = 0; i < 12; i++){
       this.systemService.entradas[i] = 0;
     }
-    this.entradasService.GetEntradas().subscribe({
-      next: (success: Entrada[]) => {
-        success.map(x => {
+    this.saldoAtual = 0;
+    this.aindaPossoGastar = 0;
+    forkJoin([
+      this.despesaService.GetDespesasParceladas(),
+      this.parcelasService.GetParcelasByMes(this.systemService.mes.valor + 1),
+      this.despesaService.GetDespesasAdicionais(),
+      this.parcelasService.GetParcelas(),
+      this.entradasService.GetEntradas(),
+      this.contasService.GetContaByMes(this.systemService.mes.valor + 1)
+    ]).subscribe({
+      next: (success) => {
+        //despesas parceladas
+        this.despesasParceladas = success[0].filter(filtro => new  Date(filtro.dataCompra).getUTCMonth() <= this.systemService.mes.valor);
+       
+        //parcelas do mes
+        success[1].map(parcela => {
+          parcela.dataVencimento = new Date(parcela.dataVencimento)
+          if(parcela.isPaga == 0 || parcela.isPaga == 3){
+            this.gastoTotalMes += parcela.valor;
+          }
+          this.idsPrevisto.push(parcela.id)
+        });
+
+        //despesas adicionais
+        success[2].map(gasto => {
+          gasto.dataCompra = new Date(gasto.dataCompra);
+          if(!gasto.isPaga && gasto.dataCompra.getUTCMonth() == this.systemService.mes.valor) {
+            this.gastosAdicionais += gasto.valorTotal;
+          }
+          this.systemService.saidas[gasto.dataCompra.getUTCMonth()] += gasto.valorTotal;
+        });
+
+        //Todas as Parcelas
+        success[3].map(parcela => {
+          parcela.dataVencimento = new Date(parcela.dataVencimento);
+          if(parcela.dataVencimento.getFullYear() == new Date().getFullYear()){
+            if(this.systemService.saidas[parcela.dataVencimento.getUTCMonth()]){
+              this.systemService.saidas[parcela.dataVencimento.getUTCMonth()] += parcela.valor;
+            }
+            else{
+              this.systemService.saidas[parcela.dataVencimento.getUTCMonth()] = parcela.valor;
+            }
+          }
+        });
+
+        //entradas
+        success[4].map(x => {
           x.dataDebito = new Date(x.dataDebito);
 
           if ((x.dataDebito.getUTCMonth() == this.systemService.mes.valor && !x.status)) {
@@ -148,29 +145,30 @@ export class HomeComponent implements OnInit, AfterViewInit {
           }
 
           this.systemService.entradas[x.dataDebito.getUTCMonth()] += GetSalarioLiquido(x.valor)[2].valor;
-        })
+        });
+
+        //contas
+        success[5].map(x => {
+          this.saldoAtual += x.debito;
+        });
+
+        //calcula saldo do mes
+        // this.aindaPossoGastar = (this.saldoAtual + this.aReceber) - (this.gastoTotalMes + this.gastosAdicionais);
+        this.aindaPossoGastar = 5000;
+
+        //definir cor do gráfico de pizza
+        this.corGrafico = DefineCor(this.aindaPossoGastar);
+      },
+      error: (err: any) => {
+        this.toastService.error("Error", `Alguma coisa deu errado: ${err.mesage}`);
       }
     })
   }
-  
-  calculaSaldoAtual(){
-    this.saldoAtual = 0;
-    this.contasService.GetContaByMes(this.systemService.mes.valor + 1).subscribe({
-      next: (success: Conta[]) => {
-        success.map(x => {
-          this.saldoAtual += x.debito;
-        })
-      }
-    });
-  }
+
 
   mudaMes(mes: Mes){
     this.systemService.mes = mes;
-    this.calculaGastosParcelados();
-    this.cauculaGastosAdicionais();
-    this.calculaEntradasFuturas();    
-    this.calculaSaldoAtual();
-    this.calculaTodasParcelas();
+    this.preencheInformacoes();
     this.mostrarInfo("m");
   }
 
