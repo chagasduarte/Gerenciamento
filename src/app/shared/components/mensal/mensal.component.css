@@ -2,6 +2,8 @@
 .table-container {
   max-height: 400px; /* Ajuste conforme necessário */
   overflow-y: auto;
+  background-color: #768da1;
+
 }
 
 th.sticky-col, td.sticky-col {

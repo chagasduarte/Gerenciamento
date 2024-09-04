@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Inject, LOCALE_ID, OnChanges, OnInit, SimpleChanges, Type, ViewChild, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, LOCALE_ID, OnChanges, OnInit, SimpleChanges, Type, ViewChild, ViewContainerRef } from '@angular/core';
 import { Ano, Mes, Meses } from '../../utils/meses';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { Despesa } from '../../shared/models/despesa';
@@ -40,6 +40,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
 
   @ViewChild('container', { read: ViewContainerRef }) container!: ViewContainerRef;
+
   despesasParceladas: Despesa[] = [];
   entradas!: Entrada[];
   contas!: Conta[];
