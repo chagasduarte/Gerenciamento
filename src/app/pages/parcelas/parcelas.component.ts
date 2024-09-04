@@ -65,7 +65,7 @@ export class ParcelasComponent implements OnInit {
   }
 
   buscaContas(){
-    this.contasService.GetContas().subscribe(x => {
+    this.contasService.GetContaByMes(new Date().getUTCMonth() + 1).subscribe(x => {
       this.contas = x;
     })
   }

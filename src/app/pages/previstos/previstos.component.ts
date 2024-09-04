@@ -5,6 +5,7 @@ import { Parcela } from '../../shared/models/parcela';
 import { CommonModule } from '@angular/common';
 import { Despesa } from '../../shared/models/despesa';
 import { DespesasService } from '../../shared/services/despesas.service';
+import { DefineCorParcela } from '../../utils/functions/defineCorParcela';
 
 @Component({
   selector: 'app-previstos',
@@ -20,6 +21,9 @@ export class PrevistosComponent implements OnInit {
   ids: number[] = [];
   parcelas: {parcela: Parcela, despesa:Despesa}[] = [];
   parcelasPagas: {parcela: Parcela, despesa:Despesa}[] = [];
+  corParcela = "#be5232";
+
+
   constructor(
     private readonly activeRoute: ActivatedRoute,
     private readonly parcelasService: ParcelasService,
@@ -54,4 +58,8 @@ export class PrevistosComponent implements OnInit {
   voltar() {
     this.router.navigate([""]);
   }
+  DefineCorParcela(parcela: Parcela): string {
+    return parcela.isPaga? "#49865b": new Date(parcela.dataVencimento) < new Date()? "#af6e6e" : "#b1ca78";
+  }
+    
 }

@@ -275,7 +275,6 @@
     .grafico-pizza {
         display: grid;
         grid-area: graficoPizza;
-        background-color: #be5228;
         width: 115px;
         height: 115px;
         border-radius: 50%;

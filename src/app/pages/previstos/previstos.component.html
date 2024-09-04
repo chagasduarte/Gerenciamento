@@ -9,7 +9,7 @@
     <section>
         <h3>À Pagar</h3>
         <div class="card-parcelas">
-            <div class="parcela bg-laranja-pastel" *ngFor="let parcela of parcelas">
+            <div class="parcela" *ngFor="let parcela of parcelas" [ngStyle]="{'background-color': DefineCorParcela(parcela.parcela)}">
                 <div class="card-header">
                     <b>{{parcela.despesa.nome}}</b> 
                 </div>
