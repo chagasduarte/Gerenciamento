@@ -36,6 +36,7 @@
     grid-template-columns: 25% 35% 35%;
     gap: 5px;
     margin: 10px;
+    margin-bottom: 50px;
 }
 .data {
     display: grid;
@@ -174,7 +175,12 @@
     opacity: 30%;
     float: right;
 }
+
 .janelas {
+    display: grid;
+    grid-template-areas: 
+    "janela1 janela2 janela3 button";
+    grid-template-columns: 84px 84px 84px 1fr;
     color: black;
     font-weight: bold;
 }
@@ -182,23 +188,21 @@
 .janela1, .janela2, .janela3{
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-    width: 8rem;
+    width: 5rem;
     height: 30px;
     transition: transform 0.3s;
+    text-align: center;
 }
 
-.janela1 {
-    grid-area: janela1;
+.adicionar {
+    border: none;
+    border-radius: 10px;
+    width: 50px;
 }
-.janela2{
-    grid-area: janela2;
+.button {
+    display: grid;
+    place-items: end;
 }
-
-.janela3{
-    grid-area: janela3;
-}
-
-
 .info{
     grid-area: info;
     background-color: rgb(118, 141, 161);

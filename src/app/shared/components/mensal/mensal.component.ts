@@ -31,14 +31,19 @@ export class MensalComponent implements OnInit{
     for (const key in TipoDespesa){
       if (!isNaN(Number(key))) {
         const valor = TipoDespesa[key];
-        const tab = {Nome: valor, Valor: parseInt(key), Info: [{}] as InfoTabela[]} as Despesas;
+        let Info =  [{}] as InfoTabela[]
+        for (let i = 1; i <= this.systemService.mes.dias.length; i++){
+          Info[i] = {detalhe: "-1"} as InfoTabela
+        }
+        const tab = {Nome: valor, Valor: parseInt(key), Info} as Despesas;
         this.tabela.push(tab);
+    
       }
     }
     this.systemService.mes.dias.forEach(x => {
       this.resultados[x.diaMes] = 0;
     })
-
+   
   }
 
   ngOnInit(): void {
@@ -54,8 +59,8 @@ export class MensalComponent implements OnInit{
             this.tabela.map( t => {
               const info = new InfoTabela(x.dataCompra.getUTCDate()+1, x.valorTotal, x.nome);
               if (t.Valor == x.tipoDespesa){
-                if(t.Info[x.dataCompra.getUTCDate()]) {
-                  t.Info[x.dataCompra.getUTCDate()].detalhe += `- ${x.nome}`
+                if(t.Info[x.dataCompra.getUTCDate()].detalhe != "-1") {
+                  t.Info[x.dataCompra.getUTCDate()].detalhe += `| ${x.nome}`
                   t.Info[x.dataCompra.getUTCDate()].valor += x.valorTotal;
                 }
                 else {
@@ -84,7 +89,7 @@ export class MensalComponent implements OnInit{
           this.tabela.map(t => {
             const info = new InfoTabela(p.dataVencimento.getUTCDate(), p.valor, `Parcela: ${x.nome}`);
             if(t.Valor == x.tipoDespesa){
-              if(t.Info[p.dataVencimento.getUTCDate()]) {
+              if(t.Info[p.dataVencimento.getUTCDate()].detalhe != "-1") {
                 t.Info[p.dataVencimento.getUTCDate()].valor += p.valor;
                 t.Info[p.dataVencimento.getUTCDate()].detalhe += ` | ${x.nome}`
               }

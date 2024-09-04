@@ -13,9 +13,9 @@
             <td class="sticky-col">{{item.Nome}}</td>
             <td *ngFor="let dia of systemService.mes.dias" 
                 class="dia" 
-                [title]="item.Info[dia.diaMes]?.detalhe"
-                [ngStyle]="{'background-color': item.Info[dia.diaMes]?.cor}"> 
-              {{item.Info[dia.diaMes]?.valor | currency}} 
+                [title]="item.Info[dia.diaMes]!.detalhe"
+                [ngStyle]="{'background-color': item.Info[dia.diaMes]!.cor}"> 
+              {{item.Info[dia.diaMes]!.valor | currency}} 
             </td>
           </tr>
           <tr>

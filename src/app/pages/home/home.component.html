@@ -91,11 +91,13 @@
 </div>
     
 <div class="info-2">
-  <div class="janelas d-flex">
+  <div class="janelas">
     <div class="janela1" (click)="mostrarInfo('m')" [ngStyle]="{'background-color': colorMensal}">Mensal</div>
     <div class="janela2" (click)="mostrarInfo('a')" [ngStyle]="{'background-color': colorAnual}">Anual</div>
     <div class="janela3" (click)="mostrarInfo('g')" [ngStyle]="{'background-color': colorGrafico}">Gráficos</div>
-    <button class="bg-azul-pastel" (click)="adicionarDespesa()">Add</button>
+    <div class="button">
+      <button class="bg-azul-pastel adicionar" (click)="adicionarDespesa()">Add</button>
+    </div>
   </div>
   <div class="info">
     <ng-template #container></ng-template>

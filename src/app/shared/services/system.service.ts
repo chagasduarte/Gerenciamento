@@ -14,6 +14,6 @@ export class SystemService {
       this.entradas[i] = 0;
       this.saidas[i] = 0;
     }
-    this.mes = new Mes(new Date().getMonth());    
+    this.mes = new Mes(new Date().getUTCMonth());    
   }
 }

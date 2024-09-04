@@ -34,7 +34,7 @@ export class Mes {
     this.nome = Meses[valor];
     this.nomeAbrev = this.nome.substring(0,3);
     this.valor = valor;
-    this.dias = GetDiasSemana(2024, valor)
+    this.dias = GetDiasSemana(2024, valor+1)
   }
 }
 
