@@ -180,18 +180,21 @@
     display: grid;
     grid-template-areas: 
     "janela1 janela2 janela3 button";
-    grid-template-columns: 84px 84px 84px 1fr;
+    grid-template-columns: 7rem 7rem 7rem 1fr;
     color: black;
     font-weight: bold;
+    gap: 5px;
 }
 
 .janela1, .janela2, .janela3{
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    width: 5rem;
+    grid: flex;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    width: 7rem;
     height: 30px;
     transition: transform 0.3s;
     text-align: center;
+    overflow: hidden;
 }
 
 .adicionar {
@@ -199,6 +202,7 @@
     border-radius: 10px;
     width: 50px;
 }
+
 .button {
     display: grid;
     place-items: end;
@@ -206,7 +210,7 @@
 .info{
     grid-area: info;
     background-color: rgb(118, 141, 161);
-    border-color: aliceblue;
+    border-color: #768da1;
     border-style: solid;
     border-width: 8px;
     width: 100%;
@@ -217,7 +221,7 @@
 }
 
 .abrev-mes:hover, .barra-progressao:hover, .janela3:hover, .janela2:hover,
-.janela1:hover, .card-button:hover  {
+.janela1:hover, .card-button:hover {
     transform: scale(1.2);
     cursor: pointer;
 }

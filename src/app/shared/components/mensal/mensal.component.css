@@ -6,7 +6,7 @@
 
 tbody td {
   text-align: left;
-  border: 1px solid rgb(26, 56, 68);
+  border: 1px solid #768da1
 }
 
 th.sticky-col, td.sticky-col {
@@ -27,6 +27,6 @@ thead th {
 }
 
 .tabela {
-    border-collapse: collapse;
-    table-layout: fixed;
+  border-collapse: collapse;
+  table-layout: fixed;
 }

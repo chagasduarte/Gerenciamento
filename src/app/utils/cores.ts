@@ -1,4 +1,4 @@
 export class Cor {
-    branca = "aliceblue"
-    cinza = "#768da1"
+    branca = "#768da1"
+    cinza = "#4D5C82"
 }
