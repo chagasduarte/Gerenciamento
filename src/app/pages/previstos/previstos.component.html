@@ -21,6 +21,7 @@
                 </div>
             </div>
         </div>
+        <div class="" *ngIf="parcelas.length == 0">Tudo Pago Graças a Deus!! Obrigado, Senhor!!!</div>
     </section>
     <div class="linha"></div>
     <section>
@@ -39,7 +40,7 @@
             </div>
         </div>
         
-        <div *ngIf="!(parcelasPagas.length > 0)" class="justify-content-center text-align-center">
+        <div *ngIf="!(parcelasPagas.length > 0)" >
             Não há nada por aqui
         </div>
     </section>
