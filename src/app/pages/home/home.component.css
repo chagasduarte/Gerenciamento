@@ -238,7 +238,7 @@
         "grafico"
         "cards";
         grid-template-columns: 100%;
-        justify-content: center;
+        place-items: center;
     }
 }
 
