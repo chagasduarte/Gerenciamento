@@ -153,8 +153,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
         });
 
         //calcula saldo do mes
-        // this.aindaPossoGastar = (this.saldoAtual + this.aReceber) - (this.gastoTotalMes + this.gastosAdicionais);
-        this.aindaPossoGastar = 5000;
+        this.aindaPossoGastar = (this.saldoAtual + this.aReceber) - (this.gastoTotalMes + this.gastosAdicionais);
 
         //definir cor do gráfico de pizza
         this.corGrafico = DefineCor(this.aindaPossoGastar);
