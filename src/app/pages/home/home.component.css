@@ -171,7 +171,6 @@
     grid-template-areas: 
     "janela1 janela2 janela3 button";
     grid-template-columns: 7rem 7rem 7rem 1fr;
-    color: black;
     font-weight: bold;
     gap: 5px;
 }
