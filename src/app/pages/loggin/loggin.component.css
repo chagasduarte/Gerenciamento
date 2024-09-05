@@ -1,9 +1,6 @@
 /* login.component.css */
 .login-container {
     display: grid;
-    grid-template-areas: 
-    "circle"
-    "form";
     place-items: center;
     width: auto;
     height: auto;
