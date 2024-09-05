@@ -45,7 +45,7 @@ export class DespesasComponent {
           this.requestParcela.dataCompra = this.despesa.dataCompra.toISOString().split("T")[0] + "T12:00:00.000Z";        
           this.parcelaService.PostParcela(this.requestParcela).subscribe({
             next: (success: number[]) => {
-              this.route.navigate([""]);
+              this.route.navigate(["home"]);
             },
             error: (err: any) => {
               this.despesaService.DeleteDespesa(success.id).subscribe();
@@ -53,12 +53,12 @@ export class DespesasComponent {
           });
         }        
         else {
-          this.route.navigate([""]);
+          this.route.navigate(["home"]);
         }
         
       },
       error: (err: any) => {
-        this.route.navigate([""]);
+        this.route.navigate(["home"]);
       }
     })
   }
