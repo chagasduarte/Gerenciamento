@@ -98,9 +98,12 @@
     </div>
     <div class="janela2" (click)="mostrarInfo('a')" [ngStyle]="{'background-color': colorAnual}">
       Anual
+      <img src="/assets/img/data-analytics.svg" style="width: 50px;" alt="">
+    </div>
+    <div class="janela3" (click)="mostrarInfo('g')" [ngStyle]="{'background-color': colorGrafico}">
+      Gráficos
       <img src="/assets/img/charts-checkmark-red-pink.svg" style="width: 30px;" alt="">
     </div>
-    <div class="janela3" (click)="mostrarInfo('g')" [ngStyle]="{'background-color': colorGrafico}">Gráficos</div>
     <div class="button">
       <button class="bg-azul-pastel adicionar" (click)="adicionarDespesa()">Add</button>
     </div>

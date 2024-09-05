@@ -14,6 +14,7 @@
       <div class="card card-sm" *ngFor="let conta of contas">
           <div class="card-header">
             <b>{{conta.nome}}</b> 
+            <b>{{retornaMes(conta) | date : 'MMMM' }}</b>
           </div>
           <div class="card-body">
             <div class="row mb-2">

@@ -37,3 +37,9 @@
     width: auto;
     text-wrap: nowrap;
 }
+
+.card-header {
+    display: grid;
+    grid-template-areas: "nome mes";
+    place-items: center;
+}

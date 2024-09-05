@@ -2,11 +2,9 @@ import { Component } from '@angular/core';
 import { Conta } from '../../shared/models/conta';
 import { ContasService } from '../../shared/services/contas.service';
 import { CommonModule } from '@angular/common';
-import { GastosComponent } from '../gastos/gastos.component';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { SystemService } from '../../shared/services/system.service';
 
 @Component({
   selector: 'app-contas-detalhe',
@@ -26,7 +24,6 @@ export class ContasDetalheComponent {
     private contaService: ContasService,
     private readonly route: Router,
     private readonly toastrService: ToastrService,
-    private readonly systemService: SystemService     
   ) {}
 
   ngOnInit(): void {
@@ -34,7 +31,9 @@ export class ContasDetalheComponent {
   }
  
   buscaContas(){
-    this.contaService.GetContaByMes(new Date().getUTCMonth() + 1).subscribe(contas => this.contas = contas);
+    // this.contaService.GetContaByMes(new Date().getUTCMonth() + 1).subscribe(contas => this.contas = contas);
+    this.contaService.GetContas().subscribe(contas => this.contas = contas);
+
   }
 
   updateDebito(conta: Conta): void {
@@ -50,5 +49,8 @@ export class ContasDetalheComponent {
   AdicionaConta() {
     this.route.navigate(["contas"]);
   }
-  
+  retornaMes(conta: Conta): Date {
+    return new Date(conta.ano, conta.mes-1, 1);
+  }
+    
 }
