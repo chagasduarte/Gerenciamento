@@ -1,17 +1,23 @@
 <!-- login.component.html -->
-<div class="login-container">
-    <h2>Login</h2>
-    <form (ngSubmit)="onLogin()" #loginForm="ngForm">
-      <div>
-        <label for="username">Username:</label>
-        <input type="text" id="username" required [(ngModel)]="username" name="username">
-      </div>
-      <div>
-        <label for="password">Password:</label>
-        <input type="password" id="password" required [(ngModel)]="password" name="password">
-      </div>
-      <button type="submit">Login</button>
-      <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+<div class="login-container bg-login">
+    <div class="circle">
+        <img src="/assets/img/user-login.svg" alt="">
+        <h2>Login</h2>
+    </div>
+    <form (ngSubmit)="onLogin()" #loginForm="ngForm" class="form">
+        <div class="input">
+            <div class="username me-2">
+                <img src="/assets/img/user-group.svg" alt="">
+            </div>
+            <input type="text" id="username" required [(ngModel)]="username" name="username">
+        </div>
+        <div class="input">
+            <div class="password me-2">
+                <img src="/assets/img/lock-password.svg" alt="">
+            </div>
+            <input type="password" id="password" required [(ngModel)]="password" name="password">
+        </div>
+        <button type="submit" class="btn btn-sm btn-primary">Login</button>
     </form>
-  </div>
+</div>
   
