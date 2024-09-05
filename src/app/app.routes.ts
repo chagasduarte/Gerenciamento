@@ -8,15 +8,19 @@ import { GastosComponent } from './pages/gastos/gastos.component';
 import { ContasDetalheComponent } from './pages/contas-detalhe/contas-detalhe.component';
 import { EntradaDetalhesComponent } from './pages/entrada-detalhes/entrada-detalhes.component';
 import { PrevistosComponent } from './pages/previstos/previstos.component';
+import { LoginComponent } from './pages/loggin/loggin.component';
+import { AuthGuard } from './shared/guard/auth.guard';
 
 export const routes: Routes = [
-    { path:"", component: HomeComponent },
-    { path: "despesas", component: DespesasComponent },
-    { path: "entradas", component: EntradasComponent },
-    { path: "contas", component: ContasComponent },
-    { path: "parcelas", component: ParcelasComponent },
-    { path: "gastos", component: GastosComponent },
-    { path: "contas-detalhe", component: ContasDetalheComponent },
-    { path: "entradas-detalhe", component: EntradaDetalhesComponent },
-    { path: "previstos", component: PrevistosComponent}
+    { path: '', redirectTo: '/login', pathMatch: 'full' },
+    { path: 'login', component: LoginComponent },
+    { path: "home", component: HomeComponent },
+    { path: "despesas", component: DespesasComponent, canActivate: [AuthGuard] },
+    { path: "entradas", component: EntradasComponent, canActivate: [AuthGuard] },
+    { path: "contas", component: ContasComponent, canActivate: [AuthGuard] },
+    { path: "parcelas", component: ParcelasComponent, canActivate: [AuthGuard] },
+    { path: "gastos", component: GastosComponent, canActivate: [AuthGuard] },
+    { path: "contas-detalhe", component: ContasDetalheComponent, canActivate: [AuthGuard] },
+    { path: "entradas-detalhe", component: EntradaDetalhesComponent, canActivate: [AuthGuard] },
+    { path: "previstos", component: PrevistosComponent, canActivate: [AuthGuard] }
 ];
