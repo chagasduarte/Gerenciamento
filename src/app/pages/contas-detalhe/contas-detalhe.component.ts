@@ -45,7 +45,7 @@ export class ContasDetalheComponent {
   }
 
   voltar(){
-    this.route.navigate([""]);
+    this.route.navigate(["home"]);
   }
   AdicionaConta() {
     this.route.navigate(["contas"]);
