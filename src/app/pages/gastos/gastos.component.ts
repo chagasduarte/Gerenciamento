@@ -95,7 +95,7 @@ export class GastosComponent {
   }
 
   Voltar() {
-    this.router.navigate([""]);
+    this.router.navigate(["home"]);
   }
 
   buscaContas(){
