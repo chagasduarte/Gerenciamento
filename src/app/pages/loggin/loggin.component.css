@@ -1,33 +1,24 @@
 /* login.component.css */
 .login-container {
-    display: grid;
-    place-items: center;
-    width: auto;
-    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-.circle {
-    grid-area: circle;
-    display: grid;
-}
-
-.form {
-    grid-area: form;
-    display: grid;
-    grid-template-areas: 
-    "loggin"
-    "password"
-    "botton";
-    place-items: end;
-    gap: 10px;
-}
-
 input {
-    opacity: 10%;
-    border-radius: 15px;
+    border-radius: 20px;
     border: none;
+    background-color: #41708378;   
+    padding: 10px;
+    color: aliceblue;
+    flex: 1;
+}
+input::placeholder {
+    color: rgb(149, 175, 197);
 }
 .input {
     display: flex;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 .username, .password {
     display: grid;
@@ -35,4 +26,24 @@ input {
     width: 35px;
     height: 35px;
     place-items: center;
+}
+.button {
+    display: flex;
+    justify-content: end;
+    align-items: flex-end;
+}
+.btn-login {
+    border: none;
+    transition: transform 0.3s;
+    border-radius: 15px;
+    background-color: #273857; /* Adicione uma cor de fundo para o botão */
+    color: white; /* Cor do texto do botão */
+    padding: 5px 10px; /* Adicione espaçamento interno */
+    cursor: pointer;
+    align-self: flex-end; 
+}
+
+.btn-login:hover {
+    transform: scale(1.1);
+    cursor: pointer;
 }
