@@ -1,12 +1,9 @@
 <!-- login.component.html -->
 <div class="login-container bg-login">
-    <div class="circle">
-        <img src="/assets/img/user-login.svg" alt="">
-    </div>
     <form (ngSubmit)="onLogin()" #loginForm="ngForm" class="form">
         <div class="input">
             <div class="username me-2">
-                <img src="/assets/img/user-group.svg" alt="">
+                <img src="/assets/img/user-login.svg" alt="">
             </div>
             <input type="text" id="username" placeholder="Usuário" required [(ngModel)]="username" name="username">
         </div>
