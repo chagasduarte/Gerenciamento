@@ -110,6 +110,6 @@ export class ParcelasComponent implements OnInit {
     }
   }
   Voltar() {
-    this.route.navigate([""]);
+    this.route.navigate(["home"]);
   }
 }
