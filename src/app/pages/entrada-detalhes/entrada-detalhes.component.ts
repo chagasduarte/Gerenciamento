@@ -34,6 +34,10 @@ export class EntradaDetalhesComponent implements OnInit{
   ){
   }
   ngOnInit(): void {
+    this.buscaEntradas();
+  }
+
+  buscaEntradas() {
     this.entradaService.GetEntradas().subscribe( x => {
       x.map(entrada => {
         entrada.dataDebito = new Date(entrada.dataDebito);
@@ -68,12 +72,17 @@ export class EntradaDetalhesComponent implements OnInit{
   }
 
   atualizaSalario(entrada: Entrada) {
-    this.entradaService.PutEntrada(entrada).subscribe(x => this.toastrService.success("Ok", "O valor do salário foi atualizado com sucesso."))
+    this.entradaService.PutEntrada(entrada).subscribe(x => {
+      this.toastrService.success("Ok", "O valor do salário foi atualizado com sucesso.");
+      this.buscaEntradas();
+    });
+
   }
 
   deleteEntrada(id: number){
     this.entradaService.DeleteEntrada(id).subscribe(x => {
       this.toastrService.success("Entrada deletada","OK");
+      this.buscaEntradas();
     })
   }
 

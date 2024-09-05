@@ -80,6 +80,7 @@ export class ParcelasComponent implements OnInit {
             this.contasService.PutConta(cont).subscribe({
               next: (success: Conta) => {
                 parcela.isPaga = 1;
+                parcela.dataVencimento = new Date();
                 this.parcelasService.PutParcela(parcela).subscribe( x => {
                   this.toastr.success("Sucesso", "Parcela Paga com sucesso.");
                 });
