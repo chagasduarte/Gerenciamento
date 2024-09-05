@@ -44,10 +44,11 @@ export class GastosComponent {
   }
 
   calculaGastosDoMes(){
-    this.despesaService.GetDespesasByMes(this.systemsService.mes.valor + 1).subscribe({
+    this.despesaService.GetDespesasAdicionais().subscribe({
       next: (success: Despesa[]) => {
-        this.gastos = success.filter(x => !x.isParcelada && !x.isPaga);
-        this.gastosPagos = success.filter(x => !x.isParcelada && x.isPaga);
+        this.gastos = success.filter(x => !x.isPaga).filter(x => new Date(x.dataCompra).getUTCMonth() == this.systemsService.mes.valor);
+        this.gastosPagos = success.filter(x => x.isPaga).filter(x => new Date(x.dataCompra).getUTCMonth() == this.systemsService.mes.valor);;
+        console.log(success);
       },
       error: (err: any) => {
         this.toastService.error("Errou, Porraaaa... Burro!!!", "Erro");
