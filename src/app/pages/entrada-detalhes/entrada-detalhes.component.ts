@@ -64,7 +64,7 @@ export class EntradaDetalhesComponent implements OnInit{
   }
 
   voltar() {
-    this.router.navigate([""]);
+    this.router.navigate(["home"]);
   }
   GetSalarioLiquido(salario: number): any {
     return GetSalarioLiquido(salario);
