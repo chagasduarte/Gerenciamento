@@ -56,7 +56,7 @@ export class PrevistosComponent implements OnInit {
     });
   }
   voltar() {
-    this.router.navigate([""]);
+    this.router.navigate(["home"]);
   }
   DefineCorParcela(parcela: Parcela): string {
     return new Date(parcela.dataVencimento) < new Date()? "#af6e6e" : "#b1ca78";
