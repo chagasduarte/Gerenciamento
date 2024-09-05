@@ -44,4 +44,8 @@ export class ParcelasService {
     return this.http.put<Parcela>(`${this.api}/${request.id}`, request);
   }
 
+  DeleteParcelasByDespesa(despesa: number){
+    return this.http.delete(`${this.api}/Despesa/${despesa}`);
+  }
+
 }

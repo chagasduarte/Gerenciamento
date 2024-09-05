@@ -7,6 +7,7 @@ import { GetSalarioLiquido } from '../../utils/functions/salario';
 import { Router } from '@angular/router';
 import { ContasService } from '../../shared/services/contas.service';
 import { ToastrService } from 'ngx-toastr';
+import { SystemService } from '../../shared/services/system.service';
 
 @Component({
   selector: 'app-entrada-detalhes',
@@ -28,19 +29,21 @@ export class EntradaDetalhesComponent implements OnInit{
     private readonly entradaService: EntradasService,
     private readonly contaService: ContasService,
     private readonly router: Router,
-    private readonly toastrService: ToastrService
+    private readonly toastrService: ToastrService,
+    private readonly systemsService: SystemService
   ){
   }
   ngOnInit(): void {
     this.entradaService.GetEntradas().subscribe( x => {
       x.map(entrada => {
         entrada.dataDebito = new Date(entrada.dataDebito);
-        
-        if (entrada.status) {
-          this.entradasRecebidas.push(entrada);
-        }
-        else {
-          this.entradasFuturas.push(entrada);
+        if (entrada.dataDebito.getUTCMonth() == this.systemsService.mes.valor){
+          if (entrada.status) {
+            this.entradasRecebidas.push(entrada);
+          }
+          else {
+            this.entradasFuturas.push(entrada);
+          }
         }
       });
     });

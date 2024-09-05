@@ -105,10 +105,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
       next: (success) => {
         //despesas parceladas
         this.despesasParceladas = success[0].filter(filtro => new  Date(filtro.dataCompra).getUTCMonth() <= this.systemService.mes.valor);
-       
+
         //parcelas do mes
         success[1].map(parcela => {
           parcela.dataVencimento = new Date(parcela.dataVencimento)
+
           if(parcela.isPaga == 0 || parcela.isPaga == 3){
             this.gastoTotalMes += parcela.valor;
           }
@@ -134,7 +135,15 @@ export class HomeComponent implements OnInit, AfterViewInit {
             else{
               this.systemService.saidas[parcela.dataVencimento.getUTCMonth()] = parcela.valor;
             }
+            //busca parcelas atrasadas
+            if (this.systemService.mes.valor == new Date().getUTCMonth()) {
+              if((parcela.dataVencimento.getUTCMonth() == this.systemService.mes.valor - 1 && parcela.isPaga == 0) || parcela.isPaga == 3 ){
+                this.gastoTotalMes += parcela.valor;
+                this.idsPrevisto.push(parcela.id)
+              }
+            }
           }
+
         });
 
         //entradas
