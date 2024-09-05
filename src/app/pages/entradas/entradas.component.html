@@ -18,6 +18,11 @@
         <input type="date" class="form-input" id="data" name="data" [(ngModel)]="dataDebito"/>
     </div>
     <div class="form-group">
+        <label for="fixo">Fixo:</label>
+        <input type="checkbox" class="form-input" id="data" name="data" [(ngModel)]="entrada.isFixo"/>
+    </div>
+    
+    <div class="form-group">
         <button type="submit">Enviar</button>
     </div>
 </form>

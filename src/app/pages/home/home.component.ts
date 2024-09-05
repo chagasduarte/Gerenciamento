@@ -151,7 +151,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
           x.dataDebito = new Date(x.dataDebito);
 
           if ((x.dataDebito.getUTCMonth() == this.systemService.mes.valor && !x.status)) {
-            this.aReceber += GetSalarioLiquido(x.valor)[2].valor; 
+            this.aReceber += x.isFixo? GetSalarioLiquido(x.valor)[2].valor: x.valor;
           }
 
           this.systemService.entradas[x.dataDebito.getUTCMonth()] += GetSalarioLiquido(x.valor)[2].valor;

@@ -26,6 +26,7 @@
                     <div class="col">{{desconto.valor | currency}}</div>
                 </div>
                 <button class="btn btn-sm btn-success" (click)="receber(entrada, GetSalarioLiquido(entrada.valor)[2].valor)">Receber</button>
+                <button class="btn btn-sm btn-success" (click)="deleteEntrada(entrada.id)">Deletar</button>
             </div>
         </div>
     </div>

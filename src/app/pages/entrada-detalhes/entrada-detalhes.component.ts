@@ -51,7 +51,12 @@ export class EntradaDetalhesComponent implements OnInit{
 
   receber(entrada: Entrada, valor: number) {
     this.contaService.GetContaById(entrada.contaId).subscribe(x => {
-      x.debito += valor;
+      if(entrada.isFixo){
+        x.debito += valor;
+      }
+      else {
+        x.debito += entrada.valor;
+      }
       this.contaService.PutConta(x).subscribe(x => {
         entrada.status = true;
         this.entradaService.PutEntrada(entrada).subscribe(x => {
@@ -64,6 +69,12 @@ export class EntradaDetalhesComponent implements OnInit{
 
   atualizaSalario(entrada: Entrada) {
     this.entradaService.PutEntrada(entrada).subscribe(x => this.toastrService.success("Ok", "O valor do salário foi atualizado com sucesso."))
+  }
+
+  deleteEntrada(id: number){
+    this.entradaService.DeleteEntrada(id).subscribe(x => {
+      this.toastrService.success("Entrada deletada","OK");
+    })
   }
 
   voltar() {
