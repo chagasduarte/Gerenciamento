@@ -5,6 +5,7 @@ import { EChartsOption } from 'echarts';
 import { NgxEchartsDirective } from 'ngx-echarts';
 import { CommonModule } from '@angular/common';
 import { DefineGraficoProgressaoMensal } from '../../../utils/functions/defineGraficoProgressaoMensal';
+import { DefineGraficoCategoria } from '../../../utils/functions/definGraficoPizzaCategoria';
 
 @Component({
   selector: 'app-graficos',
@@ -19,6 +20,7 @@ import { DefineGraficoProgressaoMensal } from '../../../utils/functions/defineGr
 export class GraficosComponent implements OnInit{
 
   graficoPrograssaoMensal!: EChartsOption;
+  graficoPizzaCategoria: EChartsOption = DefineGraficoCategoria();
 
   contas: number[] = []
   constructor(

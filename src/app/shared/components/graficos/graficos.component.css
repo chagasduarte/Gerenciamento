@@ -1,7 +1,17 @@
 .graficos {
-
+    display: grid;
+    grid-template-areas: 
+    "bar pie";
+    grid-template-columns: 50% 50%;
+    place-items: center ;
 }
 
 .charts-bar {
-    width: 500px;
+    width: 400px;
+    grid-area: bar;
+}
+
+.charts-pie {
+    width: 400px;
+    grid-area: pie;
 }
