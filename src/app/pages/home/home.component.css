@@ -1,10 +1,5 @@
-.barra_navegacao {
-    background-color: #69B6A8;
-    height: 55px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    justify-content: center;
-}
+
+
 .grafico-pizza {
     display: grid;
     grid-area: graficoPizza;
@@ -17,12 +12,6 @@
     font-weight: bolder;
 }
 
-.meses{
-    width: 10%;
-    font-size: 20px;
-    margin: 0.5rem;
-    text-align: top;
-}
 
 .abrev-mes{
     margin-right: 12px;
@@ -82,7 +71,7 @@
 
 .progressao-barra {
     background-color: #355f70;
-    height: 100%rem;
+    height: 100%;
     border-bottom-right-radius: 5px;
     border-top-right-radius: 5px;
     text-align: center;

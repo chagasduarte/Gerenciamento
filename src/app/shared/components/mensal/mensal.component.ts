@@ -35,7 +35,7 @@ export class MensalComponent implements OnInit{
         for (let i = 1; i <= this.systemService.mes.dias.length; i++){
           Info[i] = {detalhe: "-1"} as InfoTabela
         }
-        const tab = {Nome: valor, Valor: parseInt(key), Info} as Despesas;
+        const tab = {Nome: valor, TipoDespesa: parseInt(key), Info} as Despesas;
         this.tabela.push(tab);
     
       }
@@ -58,7 +58,7 @@ export class MensalComponent implements OnInit{
           if (!x.isParcelada){
             this.tabela.map( t => {
               const info = new InfoTabela(x.dataCompra.getUTCDate()+1, x.valorTotal, x.nome);
-              if (t.Valor == x.tipoDespesa){
+              if (t.TipoDespesa == x.tipoDespesa){
                 if(t.Info[x.dataCompra.getUTCDate()].detalhe != "-1") {
                   t.Info[x.dataCompra.getUTCDate()].detalhe += `| ${x.nome}`
                   t.Info[x.dataCompra.getUTCDate()].valor += x.valorTotal;
@@ -81,14 +81,17 @@ export class MensalComponent implements OnInit{
   getParcelasByMesAndId(x: Despesa){
     this.parcelaService.GetParcelasByMesAndId(x.id, this.systemService.mes.valor+1).subscribe({
       next: (success: Parcela[]) => {
+        console.log(x);
+        console.log(success);
         success.map(p => {
           p.dataVencimento = new Date(p.dataVencimento);
           if (p.dataVencimento < new Date() && p.isPaga == 0){
             p.isPaga = 3;
+            this.parcelaService.PutParcela(p).subscribe(x => p = x);
           }
           this.tabela.map(t => {
             const info = new InfoTabela(p.dataVencimento.getUTCDate(), p.valor, `Parcela: ${x.nome}`);
-            if(t.Valor == x.tipoDespesa){
+            if(t.TipoDespesa == x.tipoDespesa){
               if(t.Info[p.dataVencimento.getUTCDate()].detalhe != "-1") {
                 t.Info[p.dataVencimento.getUTCDate()].valor += p.valor;
                 t.Info[p.dataVencimento.getUTCDate()].detalhe += ` | ${x.nome}`

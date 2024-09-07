@@ -1,6 +1,6 @@
 export class Despesas {
   Nome!: string
-  Valor!: number
+  TipoDespesa!: number
   Info: InfoTabela[] = []
 }
 
@@ -24,5 +24,6 @@ export enum TipoDespesa {
   Educacao = 4,
   Lazer = 5,
   Moradia = 6,
-  Outros = 7
+  Servicos = 7,
+  Outros = 8
 }

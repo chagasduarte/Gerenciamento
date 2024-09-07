@@ -1,3 +1,23 @@
-.charts-bar {
-  width: 1fr;
+.grid-temporal {
+  display: grid;
+  place-items: center;
+  width: 100%;
+}
+
+.grid-doze {
+  display: grid;
+  grid-template-areas: "jan fev mar abr mai jun jul ago set out nov dex";
+  grid-template-columns: repeat(12, 50px);
+  font-size: large;
+}
+
+.temp-meses {
+  width: 50px;
+}
+
+.despesa {
+  background-color: rgb(75, 131, 112);
+  height: 25px;
+  border-radius: 15px;
+  padding-left: 10px;
 }

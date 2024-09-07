@@ -82,3 +82,17 @@ img {
   place-items: center;
   gap: 10px;
 }
+
+.meses{
+  width: 10%;
+  font-size: 20px;
+  margin: 0.5rem;
+  text-align: top;
+}
+.barra_navegacao {
+  background-color: #69B6A8;
+  height: 55px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  justify-content: center;
+}

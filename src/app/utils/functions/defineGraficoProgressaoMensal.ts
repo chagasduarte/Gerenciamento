@@ -9,7 +9,6 @@ export function DefineGraficoProgressaoMensal(saldo: number[]): EChartsOption{
         else {
             saldo[i] = 0;
         }
-        console.log(saldo[i])
     }
     return {
       tooltip: {

@@ -1,6 +1,11 @@
 <div class="container">
   <h1>Parcelas {{nomeDespesa}}</h1>
-  <button class="btn btn-sm btn-warning" (click)="Voltar()">Voltar</button>
+  <div class="voltar">
+    <button class="btn btn-sm btn-warning" (click)="Voltar()">Voltar</button>
+</div>
+<div class="adicionar">
+    <button class="btn btn-sm btn-primary" (click)="ApagarConta()">Nova Conta</button>
+</div>
   <div class="linha"></div>
   <div class="secoes">
     <section>

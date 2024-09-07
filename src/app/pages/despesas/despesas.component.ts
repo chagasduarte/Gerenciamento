@@ -37,7 +37,6 @@ export class DespesasComponent {
   OnSubmit() {
     this.despesa.dataCompra = new Date(this.dataCompra);
     this.despesa.tipoDespesa = parseInt(this.despesa.tipoDespesa.toString());
-    console.log(this.despesa);
     this.despesaService.PostDespesa(this.despesa).subscribe({
       next: (success: Despesa) => {
         if (this.despesa.isParcelada){

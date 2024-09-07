@@ -1,17 +1,17 @@
 .graficos {
     display: grid;
-    grid-template-areas: 
-    "bar pie";
-    grid-template-columns: 50% 50%;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
     place-items: center ;
 }
 
-.charts-bar {
+#bar {
     width: 400px;
-    grid-area: bar;
 }
 
-.charts-pie {
+#pie {
     width: 400px;
-    grid-area: pie;
+}
+
+#anual {
+    width: 400px;
 }

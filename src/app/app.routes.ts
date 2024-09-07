@@ -10,6 +10,7 @@ import { EntradaDetalhesComponent } from './pages/entrada-detalhes/entrada-detal
 import { PrevistosComponent } from './pages/previstos/previstos.component';
 import { LoginComponent } from './pages/loggin/loggin.component';
 import { AuthGuard } from './shared/guard/auth.guard';
+import { AnualComponent } from './shared/components/anual/anual.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -22,5 +23,6 @@ export const routes: Routes = [
     { path: "gastos", component: GastosComponent, canActivate: [AuthGuard] },
     { path: "contas-detalhe", component: ContasDetalheComponent, canActivate: [AuthGuard] },
     { path: "entradas-detalhe", component: EntradaDetalhesComponent, canActivate: [AuthGuard] },
-    { path: "previstos", component: PrevistosComponent, canActivate: [AuthGuard] }
+    { path: "previstos", component: PrevistosComponent, canActivate: [AuthGuard] },
+    { path: "anual", component: AnualComponent}
 ];

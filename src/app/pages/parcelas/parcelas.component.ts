@@ -9,6 +9,7 @@ import { Conta } from '../../shared/models/conta';
 import { ToastrService } from 'ngx-toastr';
 import { DespesasService } from '../../shared/services/despesas.service';
 import { Despesa } from '../../shared/models/despesa';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-parcelas',
@@ -21,7 +22,6 @@ import { Despesa } from '../../shared/models/despesa';
   styleUrl: './parcelas.component.css'
 })
 export class ParcelasComponent implements OnInit {
-
 
   parcelas!: Parcela[];
   parcelasPagas!: Parcela[]
@@ -57,7 +57,6 @@ export class ParcelasComponent implements OnInit {
           this.parcelasService.GetParcelasByDespesa(success.id).subscribe(parcelas => {
             this.parcelas = parcelas.filter(filtradas => !filtradas.isPaga)
             this.parcelasPagas = parcelas.filter(x => x.isPaga);
-            console.log(this.parcelas)
           });
         });
       }
@@ -113,4 +112,24 @@ export class ParcelasComponent implements OnInit {
   Voltar() {
     this.route.navigate(["home"]);
   }
+  ApagarConta() {
+    let podeApagar = true; 
+    this.parcelasService.GetParcelasByDespesa(this.despesa.id).subscribe({
+      next: (success: Parcela[]) => {
+        success.map( parcela => {
+          if (parcela.isPaga == 1) {
+            podeApagar = false
+          }
+        });
+        if (podeApagar){
+          this.despesaService.DeleteDespesa(this.despesa.id).subscribe( x => {
+            this.toastr.success("Despesa apagada com Suceeso", "OK");
+          })
+        }
+      }
+    })
+
+    
+  }
+    
 }
