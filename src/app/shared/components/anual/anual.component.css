@@ -11,13 +11,11 @@
   font-size: large;
 }
 
-.temp-meses {
-  width: 50px;
-}
-
 .despesa {
   background-color: rgb(75, 131, 112);
   height: 25px;
   border-radius: 15px;
   padding-left: 10px;
+  margin-top: 5px;
+  margin-left: 5px;
 }

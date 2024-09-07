@@ -57,7 +57,15 @@ export class AnualComponent implements OnInit{
   }
   
   calculaInicioFim(datainicio: Date, datafim:Date): string {
-    return `${datainicio.getUTCMonth()} / ${datafim.getUTCMonth()}`
+    let inicio = datainicio.getUTCMonth() + 1;
+    let fim = 0;
+    if(datainicio.getUTCFullYear()  < datafim.getUTCFullYear()) {
+      fim = 13;
+    }
+    else {
+      fim = datafim.getUTCMonth() + 2
+    }
+    return `${inicio} / ${fim}`
   }
 
 }
