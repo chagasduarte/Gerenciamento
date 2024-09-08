@@ -12,10 +12,20 @@
 }
 
 .despesa {
+  display: flex;
+  align-items: center;
   background-color: rgb(75, 131, 112);
   height: 25px;
   border-radius: 15px;
   padding-left: 10px;
   margin-top: 5px;
   margin-left: 5px;
+  text-wrap: nowrap;
+}
+
+.bola {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: aqua;
 }

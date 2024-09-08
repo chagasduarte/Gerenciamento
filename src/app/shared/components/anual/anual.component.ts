@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { NgxEchartsDirective } from 'ngx-echarts';
 import {EChartsOption} from 'echarts'
 import { DefineGraficoAnualOption } from '../../../utils/functions/anual';
@@ -10,6 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ParcelasService } from '../../services/parcelas.service';
 import { Ano } from '../../../utils/meses';
 import { FormsModule } from '@angular/forms';
+import { After } from 'v8';
 @Component({
   selector: 'app-anual',
   standalone: true,
@@ -21,7 +22,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './anual.component.html',
   styleUrl: './anual.component.css'
 })
-export class AnualComponent implements OnInit{
+export class AnualComponent implements OnInit, AfterViewInit{
 
   chartAnualOption!: EChartsOption;
   despesas: {despesa: Despesa, qtdParcelas: number, dataFinal: Date}[] = [];
@@ -32,6 +33,11 @@ export class AnualComponent implements OnInit{
     private readonly toastrService: ToastrService,
     private readonly parcelasService: ParcelasService
   ){}
+  ngAfterViewInit(): void {
+    this.despesas.sort((a, b) => {
+      return a.despesa.dataCompra.getUTCMonth() - b.despesa.dataCompra.getUTCMonth()
+    })
+  }
 
   ngOnInit(): void {
     this.despesaService.GetDespesas().subscribe({
@@ -42,7 +48,7 @@ export class AnualComponent implements OnInit{
             parcelada.dataCompra = new Date(parcelada.dataCompra);
             this.despesas.push({despesa: parcelada, qtdParcelas: x.length, dataFinal: this.calcularDataFinal(parcelada.dataCompra.toISOString(), x.length)});
           });
-        })
+        });
        },
       error: (err:any) => {
         this.toastrService.error("não foi possível buscar as despesas", "Erro")
@@ -56,16 +62,16 @@ export class AnualComponent implements OnInit{
     return data;
   }
   
-  calculaInicioFim(datainicio: Date, datafim:Date): string {
+  calculaInicioFim(datainicio: Date = new Date(), datafim:Date = new Date()): string {
     let inicio = datainicio.getUTCMonth() + 1;
     let fim = 0;
     if(datainicio.getUTCFullYear()  < datafim.getUTCFullYear()) {
       fim = 13;
     }
     else {
-      fim = datafim.getUTCMonth() + 2
+      fim = datafim.getUTCMonth() + 2;
     }
-    return `${inicio} / ${fim}`
+    return `${inicio} / ${fim}`;
   }
 
 }
