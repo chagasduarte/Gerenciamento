@@ -81,8 +81,6 @@ export class MensalComponent implements OnInit{
   getParcelasByMesAndId(x: Despesa){
     this.parcelaService.GetParcelasByMesAndId(x.id, this.systemService.mes.valor+1).subscribe({
       next: (success: Parcela[]) => {
-        console.log(x);
-        console.log(success);
         success.map(p => {
           p.dataVencimento = new Date(p.dataVencimento);
           if (p.dataVencimento < new Date() && p.isPaga == 0){

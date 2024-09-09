@@ -1,37 +1,42 @@
 import { EChartsOption } from "echarts";
+import { Despesa } from "../../shared/models/despesa";
+import { TipoDespesa } from "../../shared/models/tipoDespesa";
 
-export function DefineGraficoCategoria(): EChartsOption {
-    return {
-        title: {
-            text: 'Gastos Mensais',
-            subtext: 'Porcentagem por Categoria',
-            left: 'center'
-          },
-          tooltip: {
-            trigger: 'item',
-            formatter: '{a} <br/>{b}: {c} ({d}%)'
-          },
-          legend: {
-            orient: 'vertical',
-            left: 'left',
-            data: ['Alimentação', 'Transporte', 'Saúde', 'Educação', 'Lazer', 'Moradia', 'Serviços', 'Outros']
-          },
-          series: [
-            {
-              name: 'Categorias',
-              type: 'pie',
-              radius: '50%',
-              data: [
-                { value: 20, name: 'Alimentação' },
-                { value: 10, name: 'Transporte' },
-                { value: 15, name: 'Saúde' },
-                { value: 10, name: 'Educação' },
-                { value: 10, name: 'Lazer' },
-                { value: 20, name: 'Moradia' },
-                { value: 10, name: 'Serviços' },
-                { value: 5, name: 'Outros' }
-              ]
-            }
-          ]
+export function DefineGraficoCategoria(despesas: Despesa[]): EChartsOption {
+
+  let data: {value: number, name: string}[] = [];
+  let legend: string[] = []
+  despesas.forEach(despesa => {
+    if (data[despesa.tipoDespesa]){
+      data[despesa.tipoDespesa].value += despesa.valorTotal;
+    }
+    else {
+      data[despesa.tipoDespesa] = {value: despesa.valorTotal, name: TipoDespesa[despesa.tipoDespesa]};
+    }
+  });
+
+  return {
+    title: {
+      text: 'Gastos Mensais',
+      subtext: 'Porcentagem por Categoria',
+      left: 'center'
+    },
+    tooltip: {
+      trigger: 'item',
+      formatter: '{a} <br/>{b}: {c} ({d}%)'
+    },
+    legend: {
+      orient: 'vertical',
+      left: 'left',
+      data: legend
+    },
+    series: [
+      {
+        name: 'Categorias',
+        type: 'pie',
+        radius: '50%',
+        data: data
       }
+    ]
+  }
 }

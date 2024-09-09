@@ -8,6 +8,8 @@ import { DefineGraficoProgressaoMensal } from '../../../utils/functions/defineGr
 import { DefineGraficoCategoria } from '../../../utils/functions/definGraficoPizzaCategoria';
 import { DefineGraficoAnualOption } from '../../../utils/functions/anual';
 import { SystemService } from '../../services/system.service';
+import { DespesasService } from '../../services/despesas.service';
+import { Despesa } from '../../models/despesa';
 
 @Component({
   selector: 'app-graficos',
@@ -22,17 +24,19 @@ import { SystemService } from '../../services/system.service';
 export class GraficosComponent implements OnInit{
 
   graficoPrograssaoMensal!: EChartsOption;
-  graficoPizzaCategoria: EChartsOption = DefineGraficoCategoria();
+  graficoPizzaCategoria!: EChartsOption;
   chartAnualOption!: EChartsOption;
 
   contas: number[] = []
   constructor(
     private readonly contasService: ContasService,
-    private readonly systemService: SystemService
+    private readonly systemService: SystemService,
+    private readonly despesasService: DespesasService
   ){}
   ngOnInit(): void {
     this.buscaContas();
     this.chartAnualOption = DefineGraficoAnualOption(this.systemService.entradas, this.systemService.saidas);
+    this.buscaDespesas()
   }
    
   buscaContas(){
@@ -49,6 +53,12 @@ export class GraficosComponent implements OnInit{
     });
   }
 
-
+  buscaDespesas() {
+    this.despesasService.GetDespesasByMes(this.systemService.mes.valor).subscribe({
+      next: (success: Despesa[]) => {
+        this.graficoPizzaCategoria = DefineGraficoCategoria(success);
+      }
+    })
+  }
 
 }

@@ -31,8 +31,8 @@ export class ContasDetalheComponent {
   }
  
   buscaContas(){
-    // this.contaService.GetContaByMes(new Date().getUTCMonth() + 1).subscribe(contas => this.contas = contas);
-    this.contaService.GetContas().subscribe(contas => this.contas = contas);
+    this.contaService.GetContaByMes(new Date().getUTCMonth() + 1).subscribe(contas => this.contas = contas);
+    // this.contaService.GetContas().subscribe(contas => this.contas = contas);
 
   }
 

@@ -12,10 +12,10 @@ interface resultados {
 }
 function calcularINSS(salarioBruto: number): number {
     const faixasINSS = [
-        { limite: 1302.00, aliquota: 0.075 },
-        { limite: 2571.29, aliquota: 0.09 },
-        { limite: 3856.94, aliquota: 0.12 },
-        { limite: 7507.49, aliquota: 0.14 }
+        { limite: 1412.00, aliquota: 0.075 },
+        { limite: 2666.68, aliquota: 0.09 },
+        { limite: 4000.03, aliquota: 0.12 },
+        { limite: 7786.02, aliquota: 0.14 }
     ];
 
     let valorINSS = 0;
@@ -36,11 +36,11 @@ function calcularINSS(salarioBruto: number): number {
 
 function calcularIRRF(baseIRRF: number): number {
     const faixasIRRF = [
-        { limite: 1903.98, aliquota: 0.00, deducao: 0 },
-        { limite: 2826.65, aliquota: 0.075, deducao: 142.80 },
-        { limite: 3751.05, aliquota: 0.15, deducao: 354.80 },
-        { limite: 4664.68, aliquota: 0.225, deducao: 636.13 },
-        { limite: Infinity, aliquota: 0.275, deducao: 869.36 }
+        { limite: 2259.20, aliquota: 0.00, deducao: 0 },
+        { limite: 2826.65, aliquota: 0.075, deducao: 169.44 },
+        { limite: 3751.05, aliquota: 0.15, deducao: 381.44 },
+        { limite: 4664.68, aliquota: 0.225, deducao: 662.77 },
+        { limite: Infinity, aliquota: 0.275, deducao: 896.00 }
     ];
 
     let impostoIRRF = 0;
