@@ -30,7 +30,7 @@ export class EntradasComponent {
         private readonly systemaService: SystemService
     ){
         this.entrada = {} as Entrada
-        this.contasService.GetContaByMes(new Date().getUTCMonth() + 1).subscribe({
+        this.contasService.GetContaByMes(new Date().getUTCMonth() + 1, new Date().getUTCFullYear()).subscribe({
           next: (success: Conta[]) => {
             this.contas = success;
           } 

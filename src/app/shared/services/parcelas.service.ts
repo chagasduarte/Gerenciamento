@@ -16,6 +16,7 @@ export class ParcelasService {
   ) {
     this.api = appSettingService.get().WebApi + "/Parcelas";
   }
+
   GetParcelas() : Observable<Parcela[]>{
     return this.http.get<Parcela[]>(`${this.api}`);
   }
@@ -28,12 +29,12 @@ export class ParcelasService {
     return this.http.get<Parcela>(`${this.api}/${id}`);
   }
 
-  GetParcelasByMesAndId(idDespesa: number, mes: number) : Observable<Parcela[]>{
-    return this.http.get<Parcela[]>(`${this.api}/${idDespesa}/${mes}`);
+  GetParcelasByMesAndId(idDespesa: number, mes: number, ano: number) : Observable<Parcela[]>{
+    return this.http.get<Parcela[]>(`${this.api}/Despesa?id=${idDespesa}&mes=${mes}&ano=${ano}`);
   }
 
-  GetParcelasByMes(mes: number) : Observable<Parcela[]>{
-    return this.http.get<Parcela[]>(`${this.api}/Mes/${mes}`);
+  GetParcelasByMes(mes: number, ano: number) : Observable<Parcela[]>{
+    return this.http.get<Parcela[]>(`${this.api}/Mes?mes=${mes}&ano=${ano}`);
   }
 
   PostParcela(request: ParcelaRequest) : Observable<number[]> {

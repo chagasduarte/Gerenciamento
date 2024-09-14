@@ -15,10 +15,12 @@
       </div>
       <div class="linha"></div>
       <div class="ano">
-        2024
+        {{systemService.ano.valor}}
       </div>
     </div>
    
+    <button (click)="mudaAno(2024)">2024</button>
+    <button (click)="mudaAno(2025)">2025</button>
     <div class="grafico-pizza" [ngStyle]="{'background-color': corGrafico}">
       {{
         aindaPossoGastar | currency

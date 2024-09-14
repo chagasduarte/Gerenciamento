@@ -52,6 +52,7 @@ export class ParcelasComponent implements OnInit {
       next: (success: any) => {
         this.nomeDespesa = success.nome
         this.despesaService.GetDespesasById(success.id).subscribe(despesa => {
+          console.log(despesa)
           despesa.dataCompra = new Date(despesa.dataCompra);
           this.despesa = despesa;
           this.parcelasService.GetParcelasByDespesa(success.id).subscribe(parcelas => {
@@ -64,7 +65,7 @@ export class ParcelasComponent implements OnInit {
   }
 
   buscaContas(){
-    this.contasService.GetContaByMes(new Date().getUTCMonth() + 1).subscribe(x => {
+    this.contasService.GetContaByMes(new Date().getUTCMonth() + 1, new Date().getUTCFullYear() ).subscribe(x => {
       this.contas = x;
     })
   }
@@ -112,13 +113,16 @@ export class ParcelasComponent implements OnInit {
   Voltar() {
     this.route.navigate(["home"]);
   }
+  
   ApagarConta() {
     let podeApagar = true; 
     this.parcelasService.GetParcelasByDespesa(this.despesa.id).subscribe({
       next: (success: Parcela[]) => {
         success.map( parcela => {
           if (parcela.isPaga == 1) {
-            podeApagar = false
+            if (confirm("Despesa possui parcelas já pagas")){
+              podeApagar = false
+            }
           }
         });
         if (podeApagar){
@@ -127,9 +131,7 @@ export class ParcelasComponent implements OnInit {
           })
         }
       }
-    })
-
-    
+    });    
   }
     
 }

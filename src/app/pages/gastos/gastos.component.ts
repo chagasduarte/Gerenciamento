@@ -99,7 +99,7 @@ export class GastosComponent {
   }
 
   buscaContas(){
-    this.contasService.GetContaByMes(new Date().getUTCMonth() + 1).subscribe(x => this.contas = x );
+    this.contasService.GetContaByMes(new Date().getUTCMonth() + 1, new Date().getUTCFullYear()).subscribe(x => this.contas = x );
   }
 
   AdicionaGasto() {

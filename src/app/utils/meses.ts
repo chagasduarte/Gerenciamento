@@ -39,8 +39,10 @@ export class Mes {
 }
 
 export class Ano {
+  valor: number;
   meses: Mes[] = []
   constructor(){
+    this.valor = new Date().getUTCFullYear();
     for(var i = 0; i < 12; i++) {
       var mes: Mes = new Mes(i)
       this.meses.push(mes);

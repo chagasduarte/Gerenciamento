@@ -31,7 +31,8 @@ export class AnualComponent implements OnInit, AfterViewInit{
   constructor(
     private readonly despesaService: DespesasService,
     private readonly toastrService: ToastrService,
-    private readonly parcelasService: ParcelasService
+    private readonly parcelasService: ParcelasService,
+    private readonly systemService: SystemService
   ){}
   ngAfterViewInit(): void {
     this.despesas.sort((a, b) => {
@@ -40,7 +41,7 @@ export class AnualComponent implements OnInit, AfterViewInit{
   }
 
   ngOnInit(): void {
-    this.despesaService.GetDespesas().subscribe({
+    this.despesaService.GetDespesas(this.systemService.ano.valor).subscribe({
       next: (success: Despesa[]) => {
         const despesasParceladas = success.filter(filtro => filtro.isParcelada);
         despesasParceladas.forEach( parcelada => {

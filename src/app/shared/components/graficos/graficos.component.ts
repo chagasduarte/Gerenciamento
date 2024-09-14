@@ -54,7 +54,7 @@ export class GraficosComponent implements OnInit{
   }
 
   buscaDespesas() {
-    this.despesasService.GetDespesasByMes(this.systemService.mes.valor).subscribe({
+    this.despesasService.GetDespesasByMes(this.systemService.mes.valor, this.systemService.ano.valor).subscribe({
       next: (success: Despesa[]) => {
         this.graficoPizzaCategoria = DefineGraficoCategoria(success);
       }

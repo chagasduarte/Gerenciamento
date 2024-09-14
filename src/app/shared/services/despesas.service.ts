@@ -16,16 +16,16 @@ export class DespesasService {
     this.api = appSettingService.get().WebApi + "/Despesas";
   }
 
-  GetDespesas(): Observable<Despesa[]> {
-    return this.http.get<Despesa[]>(`${this.api}`);
+  GetDespesas(ano: number): Observable<Despesa[]> {
+    return this.http.get<Despesa[]>(`${this.api}/Ano?ano=${ano}`);
   }
 
-  GetDespesasParceladas(): Observable<Despesa[]> {
-    return this.http.get<Despesa[]>(`${this.api}/Parceladas`);
+  GetDespesasParceladas(mes: number, ano: number): Observable<Despesa[]> {
+    return this.http.get<Despesa[]>(`${this.api}/Parceladas?mes=${mes}&ano=${ano}`);
   }
 
   GetDespesasAdicionais(): Observable<Despesa[]> {
-    return this.http.get<Despesa[]>(`${this.api}/Adicionais`);
+    return this.http.get<Despesa[]>(`${this.api}/Adicionais?`);
   }
 
   GetDespesasFixas(): Observable<Despesa[]> {
@@ -36,8 +36,8 @@ export class DespesasService {
     return this.http.get<Despesa>(`${this.api}/${id}`);
   }
 
-  GetDespesasByMes(mes: number): Observable<Despesa[]> {
-    return this.http.get<Despesa[]>(`${this.api}/Mes/${mes}`);
+  GetDespesasByMes(mes: number, ano: number): Observable<Despesa[]> {
+    return this.http.get<Despesa[]>(`${this.api}/Mes?mes=${mes}&ano=${ano}`);
   }
   
   PostDespesa(despesa: Despesa): Observable<Despesa> {
@@ -48,6 +48,7 @@ export class DespesasService {
   PutDespesa(despesa: Despesa): Observable<Despesa> {
     return this.http.put<Despesa>(`${this.api}/${despesa.id}`, despesa);
   }
+  
   DeleteDespesa(id: number) {
     return this.http.delete(`${this.api}/${id}`);
   }

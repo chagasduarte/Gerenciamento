@@ -95,16 +95,16 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.saldoAtual = 0;
     this.aindaPossoGastar = 0;
     forkJoin([
-      this.despesaService.GetDespesasParceladas(),
-      this.parcelasService.GetParcelasByMes(this.systemService.mes.valor + 1),
+      this.despesaService.GetDespesasParceladas(this.systemService.mes.valor + 1, this.systemService.ano.valor),
+      this.parcelasService.GetParcelasByMes(this.systemService.mes.valor + 1, this.systemService.ano.valor),
       this.despesaService.GetDespesasAdicionais(),
       this.parcelasService.GetParcelas(),
       this.entradasService.GetEntradas(),
-      this.contasService.GetContaByMes(this.systemService.mes.valor + 1)
+      this.contasService.GetContaByMes(this.systemService.mes.valor + 1, this.systemService.ano.valor)
     ]).subscribe({
       next: (success) => {
         //despesas parceladas
-        this.despesasParceladas = success[0].filter(filtro => new  Date(filtro.dataCompra).getUTCMonth() <= this.systemService.mes.valor);
+        this.despesasParceladas = success[0];
 
         //parcelas do mes
         success[1].map(parcela => {
@@ -150,7 +150,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
         success[4].map(x => {
           x.dataDebito = new Date(x.dataDebito);
 
-          if ((x.dataDebito.getUTCMonth() == this.systemService.mes.valor && !x.status)) {
+          if ((x.dataDebito.getUTCMonth() == this.systemService.mes.valor && !x.status && x.dataDebito.getUTCFullYear() == this.systemService.ano.valor)) {
             this.aReceber += x.isFixo? GetSalarioLiquido(x.valor)[2].valor: x.valor;
           }
 
@@ -169,6 +169,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
         this.corGrafico = DefineCor(this.aindaPossoGastar);
       },
       error: (err: any) => {
+        console.log(err)
         this.toastService.error("Error", `Alguma coisa deu errado: ${err.mesage}`);
       }
     })
@@ -238,5 +239,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
   previstos() {
     this.router.navigate(["previstos"], {queryParams: this.idsPrevisto});
   }
+
+  mudaAno(ano: number) {
+    this.systemService.ano.valor = ano;
+    this.preencheInformacoes();
+    this.mostrarInfo("m");
+  }
+    
   
 }
