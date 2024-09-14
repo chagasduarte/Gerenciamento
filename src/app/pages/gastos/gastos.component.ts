@@ -44,7 +44,7 @@ export class GastosComponent {
   }
 
   calculaGastosDoMes(){
-    this.despesaService.GetDespesasAdicionais().subscribe({
+    this.despesaService.GetDespesasAdicionais(this.systemsService.ano.valor).subscribe({
       next: (success: Despesa[]) => {
         this.gastos = success.filter(x => !x.isPaga).filter(x => new Date(x.dataCompra).getUTCMonth() == this.systemsService.mes.valor);
         this.gastosPagos = success.filter(x => x.isPaga).filter(x => new Date(x.dataCompra).getUTCMonth() == this.systemsService.mes.valor);;

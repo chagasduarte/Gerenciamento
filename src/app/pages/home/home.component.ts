@@ -97,7 +97,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     forkJoin([
       this.despesaService.GetDespesasParceladas(this.systemService.mes.valor + 1, this.systemService.ano.valor),
       this.parcelasService.GetParcelasByMes(this.systemService.mes.valor + 1, this.systemService.ano.valor),
-      this.despesaService.GetDespesasAdicionais(),
+      this.despesaService.GetDespesasAdicionais(this.systemService.ano.valor),
       this.parcelasService.GetParcelas(),
       this.entradasService.GetEntradas(),
       this.contasService.GetContaByMes(this.systemService.mes.valor + 1, this.systemService.ano.valor)
