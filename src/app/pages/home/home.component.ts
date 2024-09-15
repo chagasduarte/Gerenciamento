@@ -100,7 +100,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
       this.despesaService.GetDespesasAdicionais(this.systemService.ano.valor),
       this.parcelasService.GetParcelas(),
       this.entradasService.GetEntradas(),
-      this.contasService.GetContaByMes(this.systemService.mes.valor + 1, this.systemService.ano.valor)
+      this.contasService.GetContaByMes(this.systemService.mes.valor + 1, this.systemService.ano.valor),
+      this.contasService.GetContaByMes(this.systemService.mes.valor + 2, this.systemService.ano.valor)
     ]).subscribe({
       next: (success) => {
         //despesas parceladas
@@ -164,6 +165,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
         //calcula saldo do mes
         this.aindaPossoGastar = (this.saldoAtual + this.aReceber) - (this.gastoTotalMes + this.gastosAdicionais);
+        success[6][2].debito = this.aindaPossoGastar;
+        this.contasService.PutConta(success[6][0]).subscribe(x => {});
 
         //definir cor do gráfico de pizza
         this.corGrafico = DefineCor(this.aindaPossoGastar);
