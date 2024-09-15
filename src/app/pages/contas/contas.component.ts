@@ -17,17 +17,18 @@ import { FormsModule } from '@angular/forms';
 })
 export class ContasComponent {
   conta: Conta;
-
+  dataConta: Date
   constructor(
       private readonly contasService: ContasService,
       private readonly router: Router
   ){
       this.conta = {} as Conta;
+      this.dataConta = new Date();
   }
 
   OnSubmit(){
-    this.conta.mes = new Date().getUTCMonth() + 1;
-    this.conta.ano = new Date().getUTCFullYear();
+    this.conta.mes = new Date(this.dataConta).getUTCMonth() + 1;
+    this.conta.ano = new Date(this.dataConta).getUTCFullYear();
     this.contasService.PostConta(this.conta).subscribe({
       next: (success: Conta) => {
          this.router.navigate(["contas-detalhe"]);
