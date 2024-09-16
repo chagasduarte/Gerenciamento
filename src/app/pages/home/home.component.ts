@@ -166,7 +166,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
         //calcula saldo do mes
         this.aindaPossoGastar = (this.saldoAtual + this.aReceber) - (this.gastoTotalMes + this.gastosAdicionais);
         success[6][0].debito = this.aindaPossoGastar;
-        if (success[6][0].mes != this.systemService.mes.valor + 1 || success[6][0].ano != this.systemService.ano.valor){
+        if (success[6][0].mes > new Date().getUTCMonth() + 1 || success[6][0].ano > new Date().getUTCFullYear()){
           this.contasService.PutConta(success[6][0]).subscribe(x => {});
         }
 
