@@ -39,7 +39,8 @@
 .data-grafico {
     display: grid;
     grid-template-areas: 
-    "data graficoPizza";
+    "data graficoPizza"
+    "botoes botoes";
 }
 
 .mes {

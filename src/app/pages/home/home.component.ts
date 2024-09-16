@@ -148,14 +148,16 @@ export class HomeComponent implements OnInit, AfterViewInit {
         });
 
         //entradas
+        console.log(success[4])
         success[4].map(x => {
           x.dataDebito = new Date(x.dataDebito);
 
-          if ((x.dataDebito.getUTCMonth() == this.systemService.mes.valor && !x.status && x.dataDebito.getUTCFullYear() == this.systemService.ano.valor)) {
-            this.aReceber += x.isFixo? GetSalarioLiquido(x.valor)[2].valor: x.valor;
+          if (x.dataDebito.getUTCFullYear() == this.systemService.ano.valor) {
+            if ((x.dataDebito.getUTCMonth() == this.systemService.mes.valor && !x.status)) {
+              this.aReceber += x.isFixo? GetSalarioLiquido(x.valor)[2].valor: x.valor;
+            }
+            this.systemService.entradas[x.dataDebito.getUTCMonth()] += x.isFixo? GetSalarioLiquido(x.valor)[2].valor: x.valor;
           }
-
-          this.systemService.entradas[x.dataDebito.getUTCMonth()] += GetSalarioLiquido(x.valor)[2].valor;
         });
 
         //contas
@@ -172,6 +174,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
         //definir cor do gráfico de pizza
         this.corGrafico = DefineCor(this.aindaPossoGastar);
+
       },
       error: (err: any) => {
         console.log(err)
@@ -208,10 +211,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
         break;
       }
       case "a": {
-        this.definirContainer(AnualComponent);
-        this.colorAnual = new Cor().branca;
-        this.colorMensal = new Cor().cinza;
-        this.colorGrafico = new Cor().cinza;
+        //this.definirContainer(AnualComponent);
+        //this.colorAnual = new Cor().branca;
+        //this.colorMensal = new Cor().cinza;
+        //this.colorGrafico = new Cor().cinza;
         break;
       }
       case "g": {

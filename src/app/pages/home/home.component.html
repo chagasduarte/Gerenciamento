@@ -18,13 +18,18 @@
         {{systemService.ano.valor}}
       </div>
     </div>
-   
-    <button (click)="mudaAno(2024)">2024</button>
-    <button (click)="mudaAno(2025)">2025</button>
     <div class="grafico-pizza" [ngStyle]="{'background-color': corGrafico}">
       {{
         aindaPossoGastar | currency
       }}
+    </div>
+    <div class="botoes">
+      <div class="botao">
+        <button class="btn btn-success" (click)="mudaAno(2024)">2024</button>
+      </div>
+      <div class="botao">
+        <button class="btn btn-success" (click)="mudaAno(2025)">2025</button>
+      </div>
     </div>
   </div>
 

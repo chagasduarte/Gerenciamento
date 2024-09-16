@@ -42,11 +42,13 @@ export class GraficosComponent implements OnInit{
   buscaContas(){
     this.contasService.GetContas().subscribe(x => {
       x.map( conta => {
-        if (this.contas[conta.mes - 1]){
-          this.contas[conta.mes - 1] += conta.debito;
-        }
-        else {
-          this.contas[conta.mes - 1] = conta.debito;
+        if (conta.ano == this.systemService.ano.valor){
+          if (this.contas[conta.mes-1]){
+              this.contas[conta.mes-1] += conta.debito;
+          }
+          else {
+            this.contas[conta.mes-1] = conta.debito;
+          }
         }
       });
       this.graficoPrograssaoMensal = DefineGraficoProgressaoMensal(this.contas);
