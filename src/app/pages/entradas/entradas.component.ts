@@ -27,10 +27,10 @@ export class EntradasComponent {
         private readonly entradaService: EntradasService,
         private readonly contasService: ContasService,
         private readonly router: Router,
-        private readonly systemaService: SystemService
+        private readonly systemService: SystemService
     ){
         this.entrada = {} as Entrada
-        this.contasService.GetContaByMes(new Date().getUTCMonth() + 1, new Date().getUTCFullYear()).subscribe({
+        this.contasService.GetContas().subscribe({
           next: (success: Conta[]) => {
             this.contas = success;
           } 

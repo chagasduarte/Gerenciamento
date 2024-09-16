@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { ContasService } from '../../shared/services/contas.service';
 import { ToastrService } from 'ngx-toastr';
 import { SystemService } from '../../shared/services/system.service';
+import { Ano, Mes } from '../../utils/meses';
 
 @Component({
   selector: 'app-entrada-detalhes',
@@ -24,24 +25,30 @@ export class EntradaDetalhesComponent implements OnInit{
 
   entradasFuturas: Entrada[] = [];
   entradasRecebidas: Entrada[] = [];
-
+  ano: Ano
   constructor(
     private readonly entradaService: EntradasService,
     private readonly contaService: ContasService,
     private readonly router: Router,
     private readonly toastrService: ToastrService,
-    private readonly systemsService: SystemService
+    private systemsService: SystemService
   ){
+    this.ano = new Ano();
   }
   ngOnInit(): void {
     this.buscaEntradas();
   }
-
+  mudaMes(mes: Mes){
+    this.systemsService.mes = mes;
+    this.entradasFuturas = [];
+    this.entradasRecebidas = [];
+    this.buscaEntradas();
+  }
   buscaEntradas() {
     this.entradaService.GetEntradas().subscribe( x => {
       x.map(entrada => {
         entrada.dataDebito = new Date(entrada.dataDebito);
-        if (entrada.dataDebito.getUTCMonth() == this.systemsService.mes.valor){
+        if (entrada.dataDebito.getUTCMonth() == this.systemsService.mes.valor && entrada.dataDebito.getUTCFullYear() == this.systemsService.ano.valor){
           if (entrada.status) {
             this.entradasRecebidas.push(entrada);
           }

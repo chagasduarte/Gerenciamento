@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { SystemService } from '../../shared/services/system.service';
+import { Ano, Mes } from '../../utils/meses';
 
 @Component({
   selector: 'app-contas-detalhe',
@@ -20,13 +21,15 @@ import { SystemService } from '../../shared/services/system.service';
 export class ContasDetalheComponent {
 
   contas: Conta[] = [];
-
+  ano: Ano
   constructor(
     private contaService: ContasService,
     private readonly route: Router,
     private readonly toastrService: ToastrService,
     private readonly systemService: SystemService
-  ) {}
+  ) {
+    this.ano = new Ano();
+  }
 
   ngOnInit(): void {
     this.buscaContas();
@@ -53,6 +56,12 @@ export class ContasDetalheComponent {
   }
   retornaMes(conta: Conta): Date {
     return new Date(conta.ano, conta.mes-1, 1);
+  }
+
+
+  mudaMes(mes: Mes){
+    this.systemService.mes = mes;
+    this.buscaContas()
   }
     
 }

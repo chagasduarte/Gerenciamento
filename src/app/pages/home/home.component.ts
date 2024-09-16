@@ -165,8 +165,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
         //calcula saldo do mes
         this.aindaPossoGastar = (this.saldoAtual + this.aReceber) - (this.gastoTotalMes + this.gastosAdicionais);
-        success[6][2].debito = this.aindaPossoGastar;
-        this.contasService.PutConta(success[6][0]).subscribe(x => {});
+        success[6][0].debito = this.aindaPossoGastar;
+        if (success[6][0].mes != this.systemService.mes.valor + 1 || success[6][0].ano != this.systemService.ano.valor){
+          this.contasService.PutConta(success[6][0]).subscribe(x => {});
+        }
 
         //definir cor do gráfico de pizza
         this.corGrafico = DefineCor(this.aindaPossoGastar);

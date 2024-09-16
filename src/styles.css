@@ -96,3 +96,13 @@ img {
   overflow-y: hidden;
   justify-content: center;
 }
+
+.abrev-mes{
+  margin-right: 12px;
+  transition: transform 0.3s;
+}
+
+.abrev-mes:hover{
+    transform: scale(1.2);
+    cursor: pointer;
+}
