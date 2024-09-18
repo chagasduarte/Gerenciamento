@@ -117,10 +117,19 @@
 
 <div class="info-3">
 
-  <div class="d-flex">
-    <div class="me-2">Soma: {{somaDespesasMes | currency}}</div>
-    <div class="filtro">
-      <input type="text" class="form-control form-control-sm">
+  <div class="row">
+    <div class="col">Soma: {{somaDespesasMes | currency}}</div>
+    <div class="d-flex col">
+      <select type="number" id="tipoDespesa" name="tipoDespesa" class="form-select form-select-sm">
+        <option value=1>Alimentação</option>
+        <option value=2>Transporte</option>
+        <option value=3>Saúde</option>
+        <option value=4>Educação</option>
+        <option value=5>Lazer</option>
+        <option value=6>Moradia</option>
+        <option value=7>Serviços</option>
+        <option value=8>Outros</option>
+    </select>
       <button class="btn btn-sm btn-success">Filtrar</button>
     </div>
   </div>
