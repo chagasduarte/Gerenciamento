@@ -46,7 +46,8 @@ export class HomeComponent implements OnInit {
     valor: number,
     detalhes: string,
     tipoDespesa: number,
-    dataCompra: Date
+    dataCompra: Date,
+    isPaga: boolean
   }[] = [];
 
   despesasParceladas: Despesa[] = [];
@@ -113,6 +114,8 @@ export class HomeComponent implements OnInit {
       this.contasService.GetContaByMes(this.systemService.mes.valor + 2, this.systemService.ano.valor)
     ]).subscribe({
       next: (success) => {
+        let aux: {idDespesa: number, valorParcela: number, dataParcela: Date}[] = [];
+
         //despesas parceladas
         this.despesasParceladas = success[0];
 
@@ -124,6 +127,7 @@ export class HomeComponent implements OnInit {
             this.gastoTotalMes += parcela.valor;
           }
           this.idsPrevisto.push(parcela.id)
+          aux.push({idDespesa: parcela.despesaId, valorParcela: parcela.valor, dataParcela: new Date(parcela.dataVencimento)})
         });
 
         //despesas adicionais
@@ -133,13 +137,14 @@ export class HomeComponent implements OnInit {
             this.gastosAdicionais += gasto.valorTotal;
           }
           this.systemService.saidas[gasto.dataCompra.getUTCMonth()] += gasto.valorTotal;
-          if (gasto.dataCompra > new Date()){
+          if (gasto.dataCompra.getUTCMonth() == this.systemService.mes.valor){
             this.despesasMes.push({
               nome: gasto.nome, 
               detalhes: gasto.descricao, 
               tipoDespesa: gasto.tipoDespesa, 
               valor: gasto.valorTotal,
-              dataCompra: new Date(gasto.dataCompra)
+              dataCompra: new Date(gasto.dataCompra),
+              isPaga: gasto.isPaga
             });
           }
         });
@@ -188,6 +193,18 @@ export class HomeComponent implements OnInit {
         if (success[6][0].mes > new Date().getUTCMonth() + 1 || success[6][0].ano > new Date().getUTCFullYear()){
           this.contasService.PutConta(success[6][0]).subscribe(x => {});
         }
+        
+        aux.forEach( parcela => {
+          const gasto = success[0].find(x => x.id == parcela.idDespesa);
+          this.despesasMes.push({
+            nome: gasto!.nome, 
+            detalhes: gasto!.descricao, 
+            tipoDespesa: gasto!.tipoDespesa, 
+            valor: parcela.valorParcela,
+            dataCompra: new Date(parcela.dataParcela),
+            isPaga: gasto!.isPaga
+          });
+        })
 
         //definir cor do gráfico de pizza
         this.corGrafico = DefineCor(this.aindaPossoGastar);

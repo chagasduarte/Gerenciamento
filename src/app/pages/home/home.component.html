@@ -117,7 +117,7 @@
 
 <div class="info-3">
   <div *ngFor="let despesa of despesasMes" class="d-flex">
-    <div class="dia me-3 circle" style="display: grid; place-items: center;">{{despesa.dataCompra | date: "dd"}}</div>
+    <div class="dia me-3 circle" style="display: grid; place-items: center;">{{despesa.dataCompra | date: "dd.MM"}}</div>
     <div class="despesa">
       <div class="circle">
         <img [src]="defineImagem(despesa.tipoDespesa)" alt="">
