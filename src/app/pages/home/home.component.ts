@@ -36,10 +36,18 @@ import { DefineCor } from '../../utils/functions/defineCorGrafico';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent implements OnInit, AfterViewInit {
+export class HomeComponent implements OnInit {
 
 
   @ViewChild('container', { read: ViewContainerRef }) container!: ViewContainerRef;
+  
+  despesasMes: {
+    nome: string,
+    valor: number,
+    detalhes: string,
+    tipoDespesa: number,
+    dataCompra: Date
+  }[] = [];
 
   despesasParceladas: Despesa[] = [];
   entradas!: Entrada[];
@@ -58,7 +66,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   chartMensalOption!: EChartsOption
   aindaPossoGastar!: number
   corGrafico = "#af6e6e";
-
+  
   constructor(
     @Inject(DOCUMENT) document:Document,
     private readonly despesaService: DespesasService,
@@ -72,15 +80,16 @@ export class HomeComponent implements OnInit, AfterViewInit {
   ){
     this.ano = new Ano();
   }
-  ngAfterViewInit(): void {
-    this.mostrarInfo("m");
-  }
+  //ngAfterViewInit(): void {
+   // this.mostrarInfo("m");
+ // }
 
   ngOnInit(): void { 
     this.preencheInformacoes();
   }
   
   preencheInformacoes(){
+    this.despesasMes = []
     this.gastoTotalMes = 0;
     this.idsPrevisto = [];
     this.gastosAdicionais = 0;
@@ -124,6 +133,15 @@ export class HomeComponent implements OnInit, AfterViewInit {
             this.gastosAdicionais += gasto.valorTotal;
           }
           this.systemService.saidas[gasto.dataCompra.getUTCMonth()] += gasto.valorTotal;
+          if (gasto.dataCompra > new Date()){
+            this.despesasMes.push({
+              nome: gasto.nome, 
+              detalhes: gasto.descricao, 
+              tipoDespesa: gasto.tipoDespesa, 
+              valor: gasto.valorTotal,
+              dataCompra: new Date(gasto.dataCompra)
+            });
+          }
         });
 
         //Todas as Parcelas
@@ -148,7 +166,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
         });
 
         //entradas
-        console.log(success[4])
         success[4].map(x => {
           x.dataDebito = new Date(x.dataDebito);
 
@@ -174,7 +191,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
         //definir cor do gráfico de pizza
         this.corGrafico = DefineCor(this.aindaPossoGastar);
-
+        this.despesasMes.sort((a,b) => {
+          return a.dataCompra.getUTCDate() - b.dataCompra.getUTCDate();
+        })
       },
       error: (err: any) => {
         console.log(err)
@@ -252,6 +271,30 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.systemService.ano.valor = ano;
     this.preencheInformacoes();
     this.mostrarInfo("m");
+  }
+
+  
+  defineImagem(tipoDespesa: number): string {
+   
+    switch(tipoDespesa) {
+      case 1:
+        return "/assets/img/food-wine-cheese-bread-national-culture-paris.svg";
+      case 2:
+        return "/assets/img/sport-utility-vehicle.svg";
+      case 3: 
+        return "/assets/img/health.svg";
+      case 4: 
+        return "/assets/img/graduation.svg";
+      case 5:
+        return "/assets/img/beach.svg";
+      case 6:
+        return "/assets/img/house-with-garden.svg";
+      case 7:
+        return "/assets/img/beach.svg";
+      case 8: 
+        return "/assets/img/tools-chainsaw.svg";
+    }
+    return "";
   }
     
   
