@@ -38,10 +38,17 @@ import { DefineCor } from '../../utils/functions/defineCorGrafico';
 })
 export class HomeComponent implements OnInit {
 
-
   @ViewChild('container', { read: ViewContainerRef }) container!: ViewContainerRef;
-  
+  filtro: number = 0;
   despesasMes: {
+    nome: string,
+    valor: number,
+    detalhes: string,
+    tipoDespesa: number,
+    dataCompra: Date,
+    isPaga: boolean
+  }[] = [];
+  despesasFiltradas: {
     nome: string,
     valor: number,
     detalhes: string,
@@ -211,9 +218,10 @@ export class HomeComponent implements OnInit {
 
         //definir cor do gráfico de pizza
         this.corGrafico = DefineCor(this.aindaPossoGastar);
-        this.despesasMes.sort((a,b) => {
+        this.despesasFiltradas = this.despesasMes.sort((a,b) => {
           return a.dataCompra.getUTCDate() - b.dataCompra.getUTCDate();
-        })
+        });
+
       },
       error: (err: any) => {
         console.log(err)
@@ -293,7 +301,20 @@ export class HomeComponent implements OnInit {
     this.mostrarInfo("m");
   }
 
-  
+  filtrar(tipoDespesa: string) {
+    this.somaDespesasMes = 0
+    const tipo = parseInt(tipoDespesa)
+    if (tipo > 0) {
+      this.despesasFiltradas = this.despesasMes.filter(x => x.tipoDespesa == tipo);
+    }
+    else {
+      this.despesasFiltradas = this.despesasMes;
+    }
+    this.despesasFiltradas.forEach(x => {
+      this.somaDespesasMes += x.valor;
+    })
+  }
+
   defineImagem(tipoDespesa: number): string {
    
     switch(tipoDespesa) {

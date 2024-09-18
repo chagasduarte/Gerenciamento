@@ -120,7 +120,8 @@
   <div class="row">
     <div class="col">Soma: {{somaDespesasMes | currency}}</div>
     <div class="d-flex col">
-      <select type="number" id="tipoDespesa" name="tipoDespesa" class="form-select form-select-sm">
+      <select #tipoDespesa type="number" id="tipoDespesa" name="tipoDespesa" class="form-select form-select-sm" (change)="filtrar(tipoDespesa.value)">
+        <option value="0">Todos</option>
         <option value=1>Alimentação</option>
         <option value=2>Transporte</option>
         <option value=3>Saúde</option>
@@ -129,12 +130,12 @@
         <option value=6>Moradia</option>
         <option value=7>Serviços</option>
         <option value=8>Outros</option>
-    </select>
+      </select>
       <button class="btn btn-sm btn-success">Filtrar</button>
     </div>
   </div>
 
-  <div *ngFor="let despesa of despesasMes" class="card-feed">
+  <div *ngFor="let despesa of despesasFiltradas" class="card-feed">
     <div class="dia">{{despesa.dataCompra.getUTCDate()}}</div>
     <div class="despesa">
       <div class="circle">
