@@ -173,8 +173,11 @@
 .info-3 {
     display: grid;
     gap: 20px;
+    place-items: center;
 }
-
+.card-feed {
+    display: flex;
+}
 .despesa {
     background-color: rgba(127, 255, 212, 0.123);
     display: grid;
@@ -184,9 +187,17 @@
     grid-template-columns: 75px 1fr;
     border-radius: 15px;
     padding: 10px;
+    width: 325px;
+    margin-left: 10px;
 }
 .dia {
+    display: grid;
+    place-items: center;
+    width: 50px;
+    height: 50px;
     font-size: 32px;
+    border-radius: 50%;
+    background-color:  rgba(127, 255, 212, 0.123);
 }
 .titulo {
     font-weight: bolder;
