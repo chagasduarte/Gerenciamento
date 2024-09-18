@@ -116,13 +116,25 @@
 </div>
 
 <div class="info-3">
+
+  <div class="d-flex">
+    <div class="me-2">Soma: {{somaDespesasMes | currency}}</div>
+    <div class="filtro">
+      <input type="text" class="form-control form-control-sm">
+      <button class="btn btn-sm btn-success">Filtrar</button>
+    </div>
+  </div>
+
   <div *ngFor="let despesa of despesasMes" class="card-feed">
     <div class="dia">{{despesa.dataCompra.getUTCDate()}}</div>
     <div class="despesa">
       <div class="circle">
         <img [src]="defineImagem(despesa.tipoDespesa)" alt="">
       </div>
-      <div class="titulo">{{despesa.nome}} - {{despesa.valor | currency}}</div>
+      <div class="titulo">
+        {{despesa.nome}} - {{despesa.valor | currency}}
+        <input type="checkbox" class="">
+      </div>
       <div class="detalhe">{{despesa.detalhes}}</div>
     </div>
   </div>

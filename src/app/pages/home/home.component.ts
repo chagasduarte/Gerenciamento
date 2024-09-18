@@ -49,7 +49,7 @@ export class HomeComponent implements OnInit {
     dataCompra: Date,
     isPaga: boolean
   }[] = [];
-
+  somaDespesasMes: number = 0;
   despesasParceladas: Despesa[] = [];
   entradas!: Entrada[];
   contas!: Conta[];
@@ -90,6 +90,7 @@ export class HomeComponent implements OnInit {
   }
   
   preencheInformacoes(){
+    this.somaDespesasMes = 0;
     this.despesasMes = []
     this.gastoTotalMes = 0;
     this.idsPrevisto = [];
@@ -146,6 +147,7 @@ export class HomeComponent implements OnInit {
               dataCompra: new Date(gasto.dataCompra),
               isPaga: gasto.isPaga
             });
+            this.somaDespesasMes += gasto.valorTotal;
           }
         });
 
@@ -204,6 +206,7 @@ export class HomeComponent implements OnInit {
             dataCompra: new Date(parcela.dataParcela),
             isPaga: gasto!.isPaga
           });
+          this.somaDespesasMes += parcela.valorParcela;
         })
 
         //definir cor do gráfico de pizza
