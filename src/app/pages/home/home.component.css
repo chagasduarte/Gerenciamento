@@ -261,6 +261,7 @@
         "vazio bg-icon";
         width: 175px;
         grid-template-columns: 30% 70%;
+        width: 175px;
     }
     .valor {
         font-size: 25px;
@@ -274,5 +275,9 @@
         margin: 4px;
         grid-area: circle;
     } 
+    .cards {
+        grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+
+    }
 
 }
