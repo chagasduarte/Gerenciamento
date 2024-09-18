@@ -118,7 +118,8 @@
 <div class="info-3">
 
   <div class="row">
-    <div class="col">Soma: {{somaDespesasMes | currency}}</div>
+    Soma: 
+    <div class="col" style="font-size: 24px; font-weight: bolder;">{{somaDespesasMes | currency}}</div>
     <div class="d-flex col">
       <select #tipoDespesa type="number" id="tipoDespesa" name="tipoDespesa" class="form-select form-select-sm" (change)="filtrar(tipoDespesa.value)">
         <option value="0">Todos</option>
