@@ -222,11 +222,10 @@
     }
     .info-1 {
         grid-template-areas: 
-        "data"
-        "grafico"
-        "cards";
+        "dataGrafico"
+        "graficoCards";
         grid-template-columns: 100%;
-        grid-template-rows: 20% 30% 40%;
+        grid-template-rows: 100px 1fr;
         height: 600px;
         place-items: center;
         row-gap: 20px;
@@ -237,7 +236,13 @@
         "data graficoPizza";
         gap: 20px;
     }
-
+    .grafico-card{
+        grid-template-areas: 
+        "grafico"
+        "cards";
+        gap: 20px;
+        place-items: center;
+    }
     .grafico-pizza {
         display: grid;
         grid-area: graficoPizza;
