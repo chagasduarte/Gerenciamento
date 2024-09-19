@@ -74,7 +74,8 @@ export class HomeComponent implements OnInit {
   chartMensalOption!: EChartsOption
   aindaPossoGastar!: number
   corGrafico = "#af6e6e";
-  
+  anosDeDivida: number[] = [2024, 2025, 2026, 2027, 208];
+
   constructor(
     @Inject(DOCUMENT) document:Document,
     private readonly despesaService: DespesasService,
