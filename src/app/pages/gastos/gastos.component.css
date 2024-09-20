@@ -23,6 +23,21 @@
     justify-content: end;
 }
 
-.card-parcelas button {
-    width: 100px;
+.card-parcelas {
+    & .card-header {
+        display: flex;
+    }
+    & button {
+        width: 100px;
+    }
+}
+
+.gasto-header{
+    display:grid;
+    grid-template-columns: 60% 1fr;
+}
+
+img {
+    width: 25px;
+    align-content: end;
 }

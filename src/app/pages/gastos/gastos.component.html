@@ -8,12 +8,14 @@
         <button class="btn btn-sm btn-primary" (click)="AdicionaGasto()"><img src="/assets/img/plus-coin.svg" alt=""/></button>
     </div>
 </div>  
+
 <div class="linha"></div>
   <h3>Abertos:</h3>
   <div class="card-parcelas">
     <div *ngFor="let gasto of gastos" class="parcela bg-verde-pastel" >
-      <div class="card-header text-break">
-          <b>{{gasto.nome}}</b> 
+      <div class="text-break gasto-header">
+        <b>{{gasto.nome}}</b>
+        <button class="btn btn-sm" (click)="apagarGasto(gasto.id)"><img src="/assets/img/user-trash.svg" alt=""></button>
       </div> 
       <div class="card-body">
         <div class="d-flex">

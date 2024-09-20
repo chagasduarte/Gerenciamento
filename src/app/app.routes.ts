@@ -20,7 +20,7 @@ export const routes: Routes = [
     { path: "entradas", component: EntradasComponent, canActivate: [AuthGuard] },
     { path: "contas", component: ContasComponent, canActivate: [AuthGuard] },
     { path: "parcelas", component: ParcelasComponent, canActivate: [AuthGuard] },
-    { path: "gastos", component: GastosComponent, canActivate: [AuthGuard] },
+    { path: "gastos", component: GastosComponent},
     { path: "contas-detalhe", component: ContasDetalheComponent, canActivate: [AuthGuard] },
     { path: "entradas-detalhe", component: EntradaDetalhesComponent, canActivate: [AuthGuard] },
     { path: "previstos", component: PrevistosComponent, canActivate: [AuthGuard] },

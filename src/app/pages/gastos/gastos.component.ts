@@ -9,14 +9,16 @@ import { SystemService } from '../../shared/services/system.service';
 import { ContasService } from '../../shared/services/contas.service';
 import { ToastrService } from 'ngx-toastr';
 import { Conta } from '../../shared/models/conta';
+import { DespesasComponent } from "../despesas/despesas.component";
 
 @Component({
   selector: 'app-gastos',
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule
-  ],
+    FormsModule,
+    DespesasComponent
+],
   templateUrl: './gastos.component.html',
   styleUrl: './gastos.component.css'
 })
@@ -31,6 +33,7 @@ export class GastosComponent {
   totalPagar: number = 0;
   conta!: Conta;
   idConta!: number;
+adicionar: any;
 
   constructor(
    private readonly despesaService: DespesasService,
@@ -106,4 +109,11 @@ export class GastosComponent {
     this.router.navigate(["despesas"]);
   }
     
+  apagarGasto(id: number) {
+    if (confirm("deseja realmente apagar essa despesa").valueOf()) {
+      this.despesaService.DeleteDespesa(id).subscribe();
+    }
+    this.calculaGastosDoMes();
+    this.buscaContas();
+  }
 }
