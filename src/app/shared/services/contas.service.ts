@@ -30,4 +30,8 @@ export class ContasService {
   PutConta(conta: Conta): Observable<Conta> {
     return this.http.put<Conta>(`${this.api}/${conta.id}`, conta);
   }
+
+  DeleteConta(id: number) {
+    return this.http.delete(`${this.api}/${id}`);
+  }
 }

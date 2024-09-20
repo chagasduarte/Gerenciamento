@@ -111,9 +111,10 @@ adicionar: any;
     
   apagarGasto(id: number) {
     if (confirm("deseja realmente apagar essa despesa").valueOf()) {
-      this.despesaService.DeleteDespesa(id).subscribe();
+      this.despesaService.DeleteDespesa(id).subscribe(x => {
+        this.calculaGastosDoMes();
+        this.buscaContas();
+      });
     }
-    this.calculaGastosDoMes();
-    this.buscaContas();
   }
 }

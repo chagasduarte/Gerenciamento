@@ -63,5 +63,13 @@ export class ContasDetalheComponent {
     this.systemService.mes = mes;
     this.buscaContas()
   }
+
+  deletarConta(id: number) {
+    if (confirm("Deseja realmente deletar essa conta?").valueOf()) {
+      this.contaService.DeleteConta(id).subscribe(x => {
+        this.buscaContas();
+      });
+    }
+  }
     
 }

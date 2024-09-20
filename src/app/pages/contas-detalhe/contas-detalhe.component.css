@@ -40,6 +40,11 @@
 
 .card-header {
     display: grid;
-    grid-template-areas: "nome mes";
+    grid-template-areas: "nome botao";
+    grid-template-columns: 75% 1fr;
     place-items: center;
+}
+
+img {
+    width: 25px;
 }

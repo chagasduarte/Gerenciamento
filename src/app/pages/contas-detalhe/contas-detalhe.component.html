@@ -22,13 +22,13 @@
       <div class="card card-sm" *ngFor="let conta of contas">
           <div class="card-header">
             <b>{{conta.nome}}</b> 
-            <b>{{retornaMes(conta) | date : 'MMMM' }}</b>
+            <button class="btn btn-sm" (click)="deletarConta(conta.id)"><img src="/assets/img/user-trash.svg" alt=""/></button>
           </div>
           <div class="card-body">
             <div class="row mb-2">
               <label for="" class="col">Crédito:</label>
-              <input type="number" class="col input" [(ngModel)]="conta.credito" (click)="updateDebito(conta)"/>
-              <button class="btn btn-sm btn-success col">Salvar</button>
+              <input type="number" class="col input" [(ngModel)]="conta.credito" />
+              <button class="btn btn-sm btn-success col" (click)="updateDebito(conta)">Salvar</button>
             </div>
             <div class="row ">
               <label for="debito" class="label col">Débito:</label>
