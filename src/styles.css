@@ -111,21 +111,17 @@ img {
     cursor: pointer;
     
 }
-.paga {
-  background-color: #2d8b7a;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-}
 
 .pagas {
   display: grid;
   grid-template-columns: repeat(8, 65px);
   overflow-x: auto; /* Permite rolar horizontalmente */
   height: 80px;
-  width: 400px;
+  width: 100%;
 }
-
+.pagas-over {
+  display: flex;
+}
 .paga {
   display: grid;
   place-items: center;
