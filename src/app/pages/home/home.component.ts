@@ -23,6 +23,7 @@ import { EChartsOption } from 'echarts';
 import { NgxSpinnerComponent } from 'ngx-spinner';
 import { forkJoin } from 'rxjs';
 import { DefineCor } from '../../utils/functions/defineCorGrafico';
+import { AgrupamentoTipoDespesa, DespesasMes } from '../../shared/models/despesasMes';
 
 @Component({
   selector: 'app-home',
@@ -40,22 +41,9 @@ export class HomeComponent implements OnInit {
 
   @ViewChild('container', { read: ViewContainerRef }) container!: ViewContainerRef;
   filtro: number = 0;
-  despesasMes: {
-    nome: string,
-    valor: number,
-    detalhes: string,
-    tipoDespesa: number,
-    dataCompra: Date,
-    isPaga: boolean
-  }[] = [];
-  despesasFiltradas: {
-    nome: string,
-    valor: number,
-    detalhes: string,
-    tipoDespesa: number,
-    dataCompra: Date,
-    isPaga: boolean
-  }[] = [];
+  despesasMes: DespesasMes[] = [];
+  despesasPagas!: AgrupamentoTipoDespesa;
+  despesasFiltradas: DespesasMes[] = [];
   somaDespesasMes: number = 0;
   despesasParceladas: Despesa[] = [];
   entradas!: Entrada[];
@@ -123,7 +111,7 @@ export class HomeComponent implements OnInit {
       this.contasService.GetContaByMes(this.systemService.mes.valor + 2, this.systemService.ano.valor)
     ]).subscribe({
       next: (success) => {
-        let aux: {idDespesa: number, valorParcela: number, dataParcela: Date}[] = [];
+        let aux: {idDespesa: number, valorParcela: number, dataParcela: Date, isPaga: boolean}[] = [];
 
         //despesas parceladas
         this.despesasParceladas = success[0];
@@ -136,7 +124,7 @@ export class HomeComponent implements OnInit {
             this.gastoTotalMes += parcela.valor;
           }
           this.idsPrevisto.push(parcela.id)
-          aux.push({idDespesa: parcela.despesaId, valorParcela: parcela.valor, dataParcela: new Date(parcela.dataVencimento)})
+          aux.push({idDespesa: parcela.despesaId, valorParcela: parcela.valor, dataParcela: new Date(parcela.dataVencimento), isPaga: parcela.isPaga == 1})
         });
 
         //despesas adicionais
@@ -212,17 +200,23 @@ export class HomeComponent implements OnInit {
             tipoDespesa: gasto!.tipoDespesa, 
             valor: parcela.valorParcela,
             dataCompra: new Date(parcela.dataParcela),
-            isPaga: gasto!.isPaga
+            isPaga: parcela.isPaga
           });
           this.somaDespesasMes += parcela.valorParcela;
         })
 
         //definir cor do gráfico de pizza
         this.corGrafico = DefineCor(this.aindaPossoGastar);
+
+
         this.despesasFiltradas = this.despesasMes.sort((a,b) => {
           return a.dataCompra.getUTCDate() - b.dataCompra.getUTCDate();
-        });
+        }).filter(x => !x.isPaga);
 
+
+        this.despesasPagas = new AgrupamentoTipoDespesa(this.despesasMes
+          .filter(x => x.isPaga)
+        );
       },
       error: (err: any) => {
         console.log(err)
@@ -313,7 +307,8 @@ export class HomeComponent implements OnInit {
     }
     this.despesasFiltradas.forEach(x => {
       this.somaDespesasMes += x.valor;
-    })
+    });
+    this.despesasFiltradas = this.despesasFiltradas.filter(x => !x.isPaga)
   }
 
   defineImagem(tipoDespesa: number): string {

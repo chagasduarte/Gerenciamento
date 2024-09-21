@@ -138,6 +138,14 @@
     </div>
   </div>
 
+  <div class="pagas">
+    <div class="paga" *ngFor="let paga of despesasPagas.agrupamento">
+      <img [src]="defineImagem(paga.tipo)" style="width: 50px; height: 50px;" alt="">
+      {{paga.soma | currency}}
+
+    </div>
+  </div>
+
   <div *ngFor="let despesa of despesasFiltradas" class="card-feed">
     <div class="dia">{{despesa.dataCompra.getUTCDate()}}</div>
     <div class="despesa">
