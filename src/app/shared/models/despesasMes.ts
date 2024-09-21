@@ -30,7 +30,9 @@ export class AgrupamentoTipoDespesa {
         for(const key in TipoDespesa) {
             if (isNaN(Number(key))) {
                 const tipo = parseInt(TipoDespesa[key]);
-                this.agrupamento.push(new Agrupamento(tipo, despesa.filter(x => x.tipoDespesa == tipo)))      
+                if (despesa.filter(x => x.tipoDespesa == tipo).length > 0) {
+                    this.agrupamento.push(new Agrupamento(tipo, despesa.filter(x => x.tipoDespesa == tipo)))      
+                }
             }
         }
     }
