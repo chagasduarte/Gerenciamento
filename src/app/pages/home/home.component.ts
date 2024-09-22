@@ -338,7 +338,7 @@ export class HomeComponent implements OnInit {
       case 3: 
         return "/assets/img/health.svg";
       case 4: 
-        return "/assets/img/graduation.svg";
+        return "/assets/img/books.svg";
       case 5:
         return "/assets/img/beach.svg";
       case 6:
