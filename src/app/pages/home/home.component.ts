@@ -63,7 +63,7 @@ export class HomeComponent implements OnInit {
   chartMensalOption!: EChartsOption
   aindaPossoGastar!: number
   corGrafico = "#af6e6e";
-  anosDeDivida: number[] = [2024, 2025, 2026, 2027, 208];
+  anosDeDivida: number[] = [2024, 2025, 2026, 2027, 2028,2029, 2030, 2031];
   graficoPrograssaoMensal!: EChartsOption;
   contasValor: number[] = [];
   constructor(
