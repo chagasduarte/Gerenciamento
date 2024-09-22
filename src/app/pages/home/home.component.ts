@@ -24,6 +24,7 @@ import { NgxSpinnerComponent } from 'ngx-spinner';
 import { forkJoin } from 'rxjs';
 import { DefineCor } from '../../utils/functions/defineCorGrafico';
 import { AgrupamentoTipoDespesa, DespesasMes } from '../../shared/models/despesasMes';
+import { DefineGraficoProgressaoMensal } from '../../utils/functions/defineGraficoProgressaoMensal';
 
 @Component({
   selector: 'app-home',
@@ -63,7 +64,8 @@ export class HomeComponent implements OnInit {
   aindaPossoGastar!: number
   corGrafico = "#af6e6e";
   anosDeDivida: number[] = [2024, 2025, 2026, 2027, 208];
-
+  graficoPrograssaoMensal!: EChartsOption;
+  contasValor: number[] = [];
   constructor(
     @Inject(DOCUMENT) document:Document,
     private readonly despesaService: DespesasService,
@@ -108,7 +110,8 @@ export class HomeComponent implements OnInit {
       this.parcelasService.GetParcelas(),
       this.entradasService.GetEntradas(),
       this.contasService.GetContaByMes(this.systemService.mes.valor + 1, this.systemService.ano.valor),
-      this.contasService.GetContaByMes(this.systemService.mes.valor + 2, this.systemService.ano.valor)
+      this.contasService.GetContaByMes(this.systemService.mes.valor + 2, this.systemService.ano.valor),
+      this.contasService.GetContas()
     ]).subscribe({
       next: (success) => {
         let aux: {idDespesa: number, valorParcela: number, dataParcela: Date, isPaga: boolean}[] = [];
@@ -150,7 +153,7 @@ export class HomeComponent implements OnInit {
         //Todas as Parcelas
         success[3].map(parcela => {
           parcela.dataVencimento = new Date(parcela.dataVencimento);
-          if(parcela.dataVencimento.getFullYear() == new Date().getFullYear()){
+          if(parcela.dataVencimento.getUTCFullYear() == new Date().getUTCFullYear()){
             if(this.systemService.saidas[parcela.dataVencimento.getUTCMonth()]){
               this.systemService.saidas[parcela.dataVencimento.getUTCMonth()] += parcela.valor;
             }
@@ -159,7 +162,8 @@ export class HomeComponent implements OnInit {
             }
             //busca parcelas atrasadas
             if (this.systemService.mes.valor == new Date().getUTCMonth()) {
-              if((parcela.dataVencimento.getUTCMonth() == this.systemService.mes.valor - 1 && parcela.isPaga == 0) || parcela.isPaga == 3 ){
+              if((parcela.dataVencimento.getUTCMonth() == this.systemService.mes.valor && parcela.isPaga == 0) || parcela.isPaga == 3 ){
+                console.log(parcela)
                 this.gastoTotalMes += parcela.valor;
                 this.idsPrevisto.push(parcela.id)
               }
@@ -217,6 +221,19 @@ export class HomeComponent implements OnInit {
         this.despesasPagas = new AgrupamentoTipoDespesa(this.despesasMes
           .filter(x => x.isPaga)
         );
+
+        success[7].map(conta => {
+          if (conta.ano == this.systemService.ano.valor){
+            if (this.contasValor[conta.mes-1]){
+                this.contasValor[conta.mes-1] += conta.debito;
+            }
+            else {
+              this.contasValor[conta.mes-1] = conta.debito;
+            }
+          }
+        });
+        this.graficoPrograssaoMensal = DefineGraficoProgressaoMensal(this.contasValor);
+
       },
       error: (err: any) => {
         console.log(err)

@@ -49,7 +49,7 @@ export class PrevistosComponent implements OnInit {
         
         this.despesasService.GetDespesasById(parcela.despesaId).subscribe({
           next: (despesa: Despesa) => {
-            if(parcela.isPaga) {
+            if(parcela.isPaga == 1) {
               this.parcelasPagas.push({parcela: parcela, despesa: despesa});
             }
             else {
