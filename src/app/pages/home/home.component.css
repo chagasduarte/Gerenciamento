@@ -123,7 +123,7 @@
 .cards {
     grid-area: cards;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
     row-gap: 5px;
     width: 100%;
     place-items: center;
@@ -136,7 +136,7 @@
     "vazio bg-icon";
     grid-template-rows: auto auto;
     grid-template-columns: 30% 70%;
-    width: 200px;
+    width: 175px;
     height: 100px;
     border-radius: 15px;
     transition: transform 0.3s;
