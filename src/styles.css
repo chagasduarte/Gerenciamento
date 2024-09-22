@@ -117,15 +117,18 @@ img {
   grid-template-columns: repeat(8, 65px);
   overflow-x: auto; /* Permite rolar horizontalmente */
   height: 80px;
-  width: auto;
+  width: 100%;
 }
 .pagas-over {
   display: flex;
 }
+
 .paga {
   display: grid;
   place-items: center;
   background-color: #2d8b7a;
   border-radius: 50%;
+  width: 50px;
+  height: 50px;
   margin: 10px; /* Margem opcional para espaçamento */
 }
