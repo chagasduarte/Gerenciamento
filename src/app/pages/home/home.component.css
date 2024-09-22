@@ -87,8 +87,7 @@
 .grafico-card{
     grid-area: graficoCards;
     display:grid;
-    grid-template-areas: 
-    "grafico cards";
+    grid-template-areas: "grafico cards";
     width: 100%;
 }
 
@@ -177,6 +176,7 @@
 }
 .card-feed {
     display: flex;
+    position: relative;
 }
 .despesa {
     background-color: rgba(127, 255, 212, 0.123);
@@ -191,6 +191,7 @@
 }
 .dia {
     display: grid;
+    position: relative;
     place-items: center;
     width: 50px;
     height: 50px;
@@ -198,6 +199,18 @@
     border-radius: 50%;
     background-color:  rgba(127, 255, 212, 0.123);
 }
+
+.dia::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 100%; /* Alinha a linha na parte inferior da div "dia" */
+  height: 100%; /* Altura da linha */
+  width: 2px; /* Largura da linha */
+  background-color: #307480; /* Cor da linha */
+}
+
 .titulo {
     font-weight: bolder;
     font-size: 18px;
@@ -208,85 +221,10 @@
     cursor: pointer;
 }
 
-@media screen and (max-width: 1012px) {
-    .info-1 {
-        grid-template-areas: 
-        "grafico cards";
-        grid-template-columns: 50% 50%;
-    }
-}
-
-@media screen and (max-width: 809px) {
-    .info-1 {
+@media screen  and (max-width: 900px) {
+    .grafico-card {
         grid-template-areas: 
         "grafico"
         "cards";
-        grid-template-columns: 100%;
-        place-items: center;
     }
-}
-
-@media screen and (max-width: 440px) {
-    .info-2 {
-        display: none;
-    }
-    .info-1 {
-        grid-template-areas:
-        "anos" 
-        "dataGrafico"
-        "graficoCards";
-        grid-template-columns: 100%;
-        grid-template-rows: 25px 100px 1fr;
-        height: 600px;
-        place-items: center;
-        row-gap: 20px;
-    }
-    .data-grafico {
-        display: grid;
-        grid-template-areas: 
-        "data graficoPizza";
-        gap: 20px;
-    }
-    .grafico-card{
-        grid-template-areas: 
-        "grafico"
-        "cards";
-        gap: 20px;
-        place-items: center;
-    }
-    .grafico-pizza {
-        display: grid;
-        grid-area: graficoPizza;
-        width: 115px;
-        height: 115px;
-        border-radius: 50%;
-        place-items: center;
-        font-size: 24px;
-        font-weight: bolder;
-    }
-    
-    .card-button{
-        display: grid;
-        grid-template-areas: 
-        "circle valores"
-        "vazio bg-icon";
-        width: 175px;
-        grid-template-columns: 30% 70%;
-        width: 175px;
-    }
-    .valor {
-        font-size: 25px;
-        height: 1.5rem;
-    }
-
-    .circle {
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        grid-area: circle;
-    } 
-    .cards {
-        grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
-    }
-
 }
