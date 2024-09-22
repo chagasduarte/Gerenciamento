@@ -127,6 +127,7 @@
     row-gap: 5px;
     width: 100%;
     place-items: center;
+    margin-top: 10px;
 }
 
 .card-button {
