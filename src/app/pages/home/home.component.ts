@@ -123,7 +123,7 @@ export class HomeComponent implements OnInit {
         success[1].map(parcela => {
           parcela.dataVencimento = new Date(parcela.dataVencimento)
 
-          if(parcela.isPaga == 0 || parcela.isPaga == 3){
+          if(parcela.isPaga == 0){
             this.gastoTotalMes += parcela.valor;
           }
           this.idsPrevisto.push(parcela.id)

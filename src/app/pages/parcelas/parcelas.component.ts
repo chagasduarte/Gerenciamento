@@ -10,6 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 import { DespesasService } from '../../shared/services/despesas.service';
 import { Despesa } from '../../shared/models/despesa';
 import { forkJoin } from 'rxjs';
+import { SystemService } from '../../shared/services/system.service';
 
 @Component({
   selector: 'app-parcelas',
@@ -37,7 +38,8 @@ export class ParcelasComponent implements OnInit {
       private readonly contasService: ContasService,
       private readonly despesaService: DespesasService,
       private readonly route: Router,
-      private readonly toastr: ToastrService
+      private readonly toastr: ToastrService,
+      private readonly systemService: SystemService
   ){
     
   }
@@ -51,14 +53,9 @@ export class ParcelasComponent implements OnInit {
     this.activeRouter.queryParams.subscribe({
       next: (success: any) => {
         this.nomeDespesa = success.nome
-        this.despesaService.GetDespesasById(success.id).subscribe(despesa => {
-          console.log(despesa)
-          despesa.dataCompra = new Date(despesa.dataCompra);
-          this.despesa = despesa;
-          this.parcelasService.GetParcelasByDespesa(success.id).subscribe(parcelas => {
-            this.parcelas = parcelas.filter(filtradas => !filtradas.isPaga)
-            this.parcelasPagas = parcelas.filter(x => x.isPaga);
-          });
+        this.parcelasService.GetParcelasByDespesa(success.id).subscribe(parcelas => {
+          this.parcelas = parcelas.filter(filtradas => !filtradas.isPaga && new Date(filtradas.dataVencimento).getUTCFullYear() == this.systemService.ano.valor)
+          this.parcelasPagas = parcelas.filter(x => x.isPaga);
         });
       }
     });
