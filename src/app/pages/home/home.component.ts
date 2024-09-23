@@ -368,5 +368,9 @@ export class HomeComponent implements OnInit {
     }
     return "";
   }
+
+  filtraPagas(tipo : DespesasMes[]){
+    this.despesasFiltradas = tipo;
+  }
     
 }

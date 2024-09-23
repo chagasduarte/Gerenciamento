@@ -122,7 +122,7 @@
 
   <div class="pagas" *ngIf="despesasPagas!.agrupamento.length > 0">
     <div class="pagas-over">
-      <div class="paga" *ngFor="let paga of despesasPagas!.agrupamento">
+      <div class="paga" *ngFor="let paga of despesasPagas!.agrupamento" (click)="filtraPagas(paga.despesas)" >
         <img [src]="defineImagem(paga.tipo)" style="width: 50px; height: 50px;" alt="">
         {{paga.soma | currency}}
       </div>
