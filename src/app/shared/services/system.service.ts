@@ -9,7 +9,7 @@ export class SystemService {
   ano: Ano;
   entradas: number[] = [];
   saidas: number[] = [];
-
+  graficos: boolean = false;
   constructor() { 
     for (let i = 0; i < 12; i++){
       this.entradas[i] = 0;

@@ -42,8 +42,12 @@
     grid-area: dataGrafico;
     display: grid;
     grid-template-areas: 
-    "data graficoPizza botoes";
+    "data graficoPizza progressao";
     gap: 20px;
+}
+
+.graficos {
+    grid-area: progressao;
 }
 
 .mes {
@@ -104,6 +108,8 @@
     width: 95%;
 }
 .grafico-header{
+    display: grid;
+    grid-template-columns: 85% 10%;
     grid-area: graficoheader;
     padding-left: 10px;
     padding-top: 5px;
@@ -172,9 +178,13 @@
 
 .info-3 {
     display: grid;
+    grid-template-areas: 
+    "soma grafico"
+    "pagas grafico"
+    "feed grafico";
     gap: 20px;
-    place-items: center;
     width: 100%;
+    padding: 20px;
 }
 .card-feed {
     display: flex;
@@ -210,7 +220,7 @@
   top: 100%; /* Alinha a linha na parte inferior da div "dia" */
   height: 100%; /* Altura da linha */
   width: 2px; /* Largura da linha */
-  background-color: #307480; /* Cor da linha */
+  background-color: rgba(127, 255, 212, 0.123); /* Cor da linha */
 }
 
 .titulo {
@@ -222,6 +232,7 @@
     transform: scale(1.2);
     cursor: pointer;
 }
+
 
 @media screen  and (max-width: 900px) {
     .grafico-card {

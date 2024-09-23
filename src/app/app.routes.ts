@@ -11,6 +11,7 @@ import { PrevistosComponent } from './pages/previstos/previstos.component';
 import { LoginComponent } from './pages/loggin/loggin.component';
 import { AuthGuard } from './shared/guard/auth.guard';
 import { AnualComponent } from './shared/components/anual/anual.component';
+import { GraficosComponent } from './shared/components/graficos/graficos.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -24,5 +25,5 @@ export const routes: Routes = [
     { path: "contas-detalhe", component: ContasDetalheComponent },
     { path: "entradas-detalhe", component: EntradaDetalhesComponent, canActivate: [AuthGuard] },
     { path: "previstos", component: PrevistosComponent, canActivate: [AuthGuard] },
-    { path: "anual", component: AnualComponent}
+    { path: "graficos", component: GraficosComponent}
 ];

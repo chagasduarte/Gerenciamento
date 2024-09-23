@@ -4,11 +4,12 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map, finalize } from 'rxjs/operators';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { SystemService } from './system.service';
 
 @Injectable()
 export class HttpRequestInterceptor implements HttpInterceptor {
 
-  constructor(private spinner: NgxSpinnerService, private toastr: ToastrService) {}
+  constructor(private spinner: NgxSpinnerService, private toastr: ToastrService, private readonly system:SystemService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     this.spinner.show();
@@ -23,6 +24,7 @@ export class HttpRequestInterceptor implements HttpInterceptor {
       finalize(() => {
         setTimeout(() => {
           this.spinner.hide();
+          this.system.graficos = true;
         }, 1000);
       })
     );

@@ -54,8 +54,8 @@ export class ParcelasComponent implements OnInit {
       next: (success: any) => {
         this.nomeDespesa = success.nome
         this.parcelasService.GetParcelasByDespesa(success.id).subscribe(parcelas => {
-          this.parcelas = parcelas.filter(filtradas => !filtradas.isPaga && new Date(filtradas.dataVencimento).getUTCFullYear() == this.systemService.ano.valor)
-          this.parcelasPagas = parcelas.filter(x => x.isPaga);
+          this.parcelas = parcelas.filter(filtradas => filtradas.isPaga != 1 && new Date(filtradas.dataVencimento).getUTCFullYear() == this.systemService.ano.valor)
+          this.parcelasPagas = parcelas.filter(x => x.isPaga == 1);
         });
       }
     });

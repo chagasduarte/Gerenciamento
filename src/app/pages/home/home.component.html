@@ -2,7 +2,9 @@
   <ul class=" d-flex  justify-content-center">
     <li class="meses d-flex" *ngFor="let mes of ano.meses; let i = index">
       <div class="abrev-mes"(click)="mudaMes(mes)">{{mes.nomeAbrev}}</div>
-      <div class="barra" *ngIf="i < 11"></div>
+    </li>
+    <li class="meses d-flex">
+      <div class="abrev-mes" (click)="graficos()">Graficos</div>
     </li>
   </ul>
 </nav>
@@ -11,6 +13,7 @@
 </div>
 <div class="info-1" id="info-1" name="info-1" className="info-1">
   <div class="data-grafico">
+
     <div class="data">
       <div class="mes">
         {{systemService.mes.nome}}
@@ -20,6 +23,7 @@
         {{systemService.ano.valor}}
       </div>
     </div>
+
     <div class="grafico-pizza" [ngStyle]="{'background-color': corGrafico}">
       {{
         aindaPossoGastar | currency
@@ -31,6 +35,7 @@
     <div class="grafico">
       <div class="grafico-header">
         <h5>Despesas Parcelas</h5>
+        <button class="btn btn-success btn-sm" (click)="adicionarDespesa()">add</button>
       </div>
       <div class="grafico-body">
         <div class="porcentagem-despesa" *ngFor="let despesa of despesasParceladas">
@@ -93,32 +98,10 @@
   
 </div>
     
-<div class="info-2" *ngIf="false">
-  <div class="janelas">
-    <div class="janela1" (click)="mostrarInfo('m')" [ngStyle]="{'background-color': colorMensal}">
-      Mensal
-      <img src="/assets/img/calendar.svg" style="width: 45px;" alt="">
-    </div>
-    <div class="janela2" (click)="mostrarInfo('a')" [ngStyle]="{'background-color': colorAnual}">
-      Anual
-      <img src="/assets/img/data-analytics.svg" style="width: 50px;" alt="">
-    </div>
-    <div class="janela3" (click)="mostrarInfo('g')" [ngStyle]="{'background-color': colorGrafico}">
-      Gráficos
-      <img src="/assets/img/charts-checkmark-red-pink.svg" style="width: 30px;" alt="">
-    </div>
-    <div class="button">
-      <button class="bg-azul-pastel adicionar" (click)="adicionarDespesa()">Add</button>
-    </div>
-  </div>
-  <div class="info">
-    <ng-template #container></ng-template>
-  </div>
-</div>
 
 <div class="info-3">
 
-  <div class="row">
+  <div class="row" style="grid-area: soma;">
     Soma: 
     <div class="col" style="font-size: 24px; font-weight: bolder;">{{somaDespesasMes | currency}}</div>
     <div class="d-flex col">
@@ -137,18 +120,18 @@
     </div>
   </div>
 
-  <div class="pagas" *ngIf="despesasPagas.agrupamento.length > 0">
+  <div class="pagas" *ngIf="despesasPagas!.agrupamento.length > 0" style="grid-area: pagas;">
     <div class="pagas-over">
-      <div class="paga" *ngFor="let paga of despesasPagas.agrupamento">
+      <div class="paga" *ngFor="let paga of despesasPagas!.agrupamento">
         <img [src]="defineImagem(paga.tipo)" style="width: 50px; height: 50px;" alt="">
         {{paga.soma | currency}}
       </div>
     </div>
   </div>
 
-  <div *ngFor="let despesa of despesasFiltradas" class="card-feed">
+  <div *ngFor="let despesa of despesasFiltradas" class="card-feed" style="grid-area: feed;">
     <div class="dia">{{despesa.dataCompra.getUTCDate()}}</div>
-    <div class="despesa">
+    <div class="despesa" [ngStyle]="{'background-color': despesa.isPaga == 3? '#af6e6e': 'rgb(78, 156, 156)'}">
       <div class="circle">
         <img [src]="defineImagem(despesa.tipoDespesa)" alt="">
       </div>
@@ -159,4 +142,5 @@
       <div class="detalhe">{{despesa.detalhes}}</div>
     </div>
   </div>
+
 </div>

@@ -43,7 +43,7 @@ export class HomeComponent implements OnInit {
   @ViewChild('container', { read: ViewContainerRef }) container!: ViewContainerRef;
   filtro: number = 0;
   despesasMes: DespesasMes[] = [];
-  despesasPagas!: AgrupamentoTipoDespesa;
+  despesasPagas: AgrupamentoTipoDespesa = new AgrupamentoTipoDespesa(this.despesasMes);
   despesasFiltradas: DespesasMes[] = [];
   somaDespesasMes: number = 0;
   despesasParceladas: Despesa[] = [];
@@ -64,8 +64,12 @@ export class HomeComponent implements OnInit {
   aindaPossoGastar!: number
   corGrafico = "#af6e6e";
   anosDeDivida: number[] = [2024, 2025, 2026, 2027, 2028,2029, 2030, 2031];
-  graficoPrograssaoMensal!: EChartsOption;
+
   contasValor: number[] = [];
+
+  graficoPrograssaoMensal!: EChartsOption;
+
+
   constructor(
     @Inject(DOCUMENT) document:Document,
     private readonly despesaService: DespesasService,
@@ -79,9 +83,9 @@ export class HomeComponent implements OnInit {
   ){
     this.ano = new Ano();
   }
-  //ngAfterViewInit(): void {
-   // this.mostrarInfo("m");
- // }
+  ngAfterViewInit(): void {
+    this.graficoPrograssaoMensal = DefineGraficoProgressaoMensal();
+  }
 
   ngOnInit(): void { 
     this.preencheInformacoes();
@@ -114,7 +118,7 @@ export class HomeComponent implements OnInit {
       this.contasService.GetContas()
     ]).subscribe({
       next: (success) => {
-        let aux: {idDespesa: number, valorParcela: number, dataParcela: Date, isPaga: boolean}[] = [];
+        let aux: {idDespesa: number, valorParcela: number, dataParcela: Date, isPaga: number}[] = [];
 
         //despesas parceladas
         this.despesasParceladas = success[0];
@@ -126,8 +130,10 @@ export class HomeComponent implements OnInit {
           if(parcela.isPaga == 0){
             this.gastoTotalMes += parcela.valor;
           }
-          this.idsPrevisto.push(parcela.id)
-          aux.push({idDespesa: parcela.despesaId, valorParcela: parcela.valor, dataParcela: new Date(parcela.dataVencimento), isPaga: parcela.isPaga == 1})
+          if (parcela.isPaga != 3) {
+            this.idsPrevisto.push(parcela.id)
+          }
+          aux.push({idDespesa: parcela.despesaId, valorParcela: parcela.valor, dataParcela: new Date(parcela.dataVencimento), isPaga: parcela.isPaga})
         });
 
         //despesas adicionais
@@ -144,7 +150,7 @@ export class HomeComponent implements OnInit {
               tipoDespesa: gasto.tipoDespesa, 
               valor: gasto.valorTotal,
               dataCompra: new Date(gasto.dataCompra),
-              isPaga: gasto.isPaga
+              isPaga: gasto.isPaga? 1: (gasto.dataCompra < new Date())? 3 : 0 
             });
             this.somaDespesasMes += gasto.valorTotal;
           }
@@ -161,13 +167,11 @@ export class HomeComponent implements OnInit {
               this.systemService.saidas[parcela.dataVencimento.getUTCMonth()] = parcela.valor;
             }
             //busca parcelas atrasadas
-            if (this.systemService.mes.valor == new Date().getUTCMonth()) {
-              if((parcela.dataVencimento.getUTCMonth() == this.systemService.mes.valor && parcela.isPaga == 0) || parcela.isPaga == 3 ){
-                console.log(parcela)
-                this.gastoTotalMes += parcela.valor;
-                this.idsPrevisto.push(parcela.id)
-              }
+            if(parcela.isPaga == 3 && parcela.dataVencimento.getUTCMonth() <= this.systemService.mes.valor){
+              this.gastoTotalMes += parcela.valor;
+              this.idsPrevisto.push(parcela.id)
             }
+            
           }
 
         });
@@ -215,11 +219,11 @@ export class HomeComponent implements OnInit {
 
         this.despesasFiltradas = this.despesasMes.sort((a,b) => {
           return a.dataCompra.getUTCDate() - b.dataCompra.getUTCDate();
-        }).filter(x => !x.isPaga);
+        }).filter(x => x.isPaga != 1);
 
 
         this.despesasPagas = new AgrupamentoTipoDespesa(this.despesasMes
-          .filter(x => x.isPaga)
+          .filter(x => x.isPaga == 1)
         );
 
         success[7].map(conta => {
@@ -232,8 +236,6 @@ export class HomeComponent implements OnInit {
             }
           }
         });
-        this.graficoPrograssaoMensal = DefineGraficoProgressaoMensal(this.contasValor);
-
       },
       error: (err: any) => {
         console.log(err)
@@ -307,6 +309,10 @@ export class HomeComponent implements OnInit {
     this.router.navigate(["previstos"], {queryParams: this.idsPrevisto});
   }
 
+  graficos(){
+    this.router.navigate(['graficos']);
+  }
+
   mudaAno(ano: number) {
     this.systemService.ano.valor = ano;
     this.preencheInformacoes();
@@ -351,5 +357,16 @@ export class HomeComponent implements OnInit {
     return "";
   }
     
-  
+  defineCorFeed(status: number): string {
+    switch (status) {
+      case 0: 
+        return "rgba(127, 255, 212, 0.123);";
+      case 1: 
+        return "rgba(127, 255, 212, 0.123);";
+      case 3: 
+         return "#af6e6e";
+    }
+    return "";
+  }
+    
 }

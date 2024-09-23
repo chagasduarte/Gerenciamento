@@ -6,7 +6,7 @@ export interface DespesasMes {
     detalhes: string,
     tipoDespesa: number,
     dataCompra: Date,
-    isPaga: boolean
+    isPaga: number
 }
 
 export class Agrupamento {
@@ -24,7 +24,6 @@ export class Agrupamento {
 }
 
 export class AgrupamentoTipoDespesa {
-
     agrupamento: Agrupamento[] = [];
     constructor(despesa: DespesasMes[]){
         for(const key in TipoDespesa) {
