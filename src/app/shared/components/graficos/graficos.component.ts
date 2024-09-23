@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ContasService } from '../../services/contas.service';
 import { Conta } from '../../models/conta';
 import { EChartsOption } from 'echarts';
@@ -10,6 +10,7 @@ import { DefineGraficoAnualOption } from '../../../utils/functions/anual';
 import { SystemService } from '../../services/system.service';
 import { DespesasService } from '../../services/despesas.service';
 import { Despesa } from '../../models/despesa';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-graficos',
@@ -21,7 +22,7 @@ import { Despesa } from '../../models/despesa';
   templateUrl: './graficos.component.html',
   styleUrl: './graficos.component.css'
 })
-export class GraficosComponent implements OnInit{
+export class GraficosComponent implements OnInit, AfterViewInit{
 
   graficoPrograssaoMensal!: EChartsOption;
   graficoPizzaCategoria!: EChartsOption;
@@ -31,12 +32,16 @@ export class GraficosComponent implements OnInit{
   constructor(
     private readonly contasService: ContasService,
     private readonly systemService: SystemService,
-    private readonly despesasService: DespesasService
+    private readonly despesasService: DespesasService,
+    private readonly router: Router
   ){}
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     this.buscaContas();
     this.chartAnualOption = DefineGraficoAnualOption(this.systemService.entradas, this.systemService.saidas);
     this.buscaDespesas()
+  }
+  ngOnInit(): void {
+    
   }
    
   buscaContas(){
@@ -62,5 +67,7 @@ export class GraficosComponent implements OnInit{
       }
     })
   }
-
+  voltar() {
+    this.router.navigate(['home']);
+  }
 }

@@ -310,7 +310,7 @@ export class HomeComponent implements OnInit {
   }
 
   graficos(){
-    this.router.navigate(['graficos']);
+
   }
 
   mudaAno(ano: number) {
