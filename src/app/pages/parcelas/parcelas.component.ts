@@ -102,10 +102,7 @@ export class ParcelasComponent implements OnInit {
     this.buscaParcelas();
   } 
   adicionaLista(parcela: Parcela){
-    if(parcela.isPaga != 3){
-      parcela.isPaga = 3;
       this.listaPagamento.push(parcela);
-    }
   }
   Voltar() {
     this.route.navigate(["home"]);
