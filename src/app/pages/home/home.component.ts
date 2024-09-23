@@ -167,7 +167,7 @@ export class HomeComponent implements OnInit {
               this.systemService.saidas[parcela.dataVencimento.getUTCMonth()] = parcela.valor;
             }
             //busca parcelas atrasadas
-            if(parcela.isPaga == 3 && parcela.dataVencimento.getUTCMonth() <= this.systemService.mes.valor){
+            if(parcela.isPaga == 3 && (new Date().getUTCMonth() == this.systemService.mes.valor || parcela.dataVencimento.getUTCMonth() == this.systemService.mes.valor)){
               this.gastoTotalMes += parcela.valor;
               this.idsPrevisto.push(parcela.id)
             }
