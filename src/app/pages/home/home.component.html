@@ -101,7 +101,7 @@
 
 <div class="info-3">
 
-  <div class="row" style="grid-area: soma;">
+  <div class="row">
     Soma: 
     <div class="col" style="font-size: 24px; font-weight: bolder;">{{somaDespesasMes | currency}}</div>
     <div class="d-flex col">
@@ -120,7 +120,7 @@
     </div>
   </div>
 
-  <div class="pagas" *ngIf="despesasPagas!.agrupamento.length > 0" style="grid-area: pagas;">
+  <div class="pagas" *ngIf="despesasPagas!.agrupamento.length > 0">
     <div class="pagas-over">
       <div class="paga" *ngFor="let paga of despesasPagas!.agrupamento">
         <img [src]="defineImagem(paga.tipo)" style="width: 50px; height: 50px;" alt="">
@@ -129,7 +129,7 @@
     </div>
   </div>
 
-  <div *ngFor="let despesa of despesasFiltradas" class="card-feed" style="grid-area: feed;">
+  <div *ngFor="let despesa of despesasFiltradas" class="card-feed">
     <div class="dia">{{despesa.dataCompra.getUTCDate()}}</div>
     <div class="despesa" [ngStyle]="{'background-color': despesa.isPaga == 3? '#af6e6e': 'rgb(78, 156, 156)'}">
       <div class="circle">

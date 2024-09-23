@@ -179,16 +179,14 @@
 .info-3 {
     display: grid;
     grid-template-areas: 
-    "soma grafico"
-    "pagas grafico"
-    "feed grafico";
+    "soma"
+    "pagas"
+    "feed";
     gap: 20px;
     width: 100%;
-    padding: 20px;
 }
 .card-feed {
     display: flex;
-    position: relative;
 }
 .despesa {
     background-color: rgba(127, 255, 212, 0.123);
