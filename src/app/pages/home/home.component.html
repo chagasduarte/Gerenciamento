@@ -3,9 +3,6 @@
     <li class="meses d-flex" *ngFor="let mes of ano.meses; let i = index">
       <div class="abrev-mes"(click)="mudaMes(mes)">{{mes.nomeAbrev}}</div>
     </li>
-    <li class="meses d-flex">
-      <div class="abrev-mes" (click)="graficos()">Graficos</div>
-    </li>
   </ul>
 </nav>
 <div class="d-flex">
@@ -24,11 +21,30 @@
       </div>
     </div>
 
-    <div class="grafico-pizza" [ngStyle]="{'background-color': corGrafico}">
-      {{
-        aindaPossoGastar | currency
-      }}
+    <div class="graficos">
+      
+      <div class="grafico-pizza2" [style]="{'--porcentagem': (somaDespesasMes*100/totalEntradas).toString()}">
+        <div class="legenda">
+          {{somaDespesasMes*100/totalEntradas * 10 | percent: '00.00'}}
+          <div class="linha"></div>
+          {{aindaPossoGastar | currency}}
+        </div>
+      </div>
+
+      <div class="barras">
+        <div class="barras-grafico-progressao" *ngFor="let mes of systemService.ano.meses">
+          <div class="entradaSaida">
+            <div class="entrada" [ngStyle]="{'height': mes.entrada*100/9000 + 'px'}">
+              
+            </div>
+            <div class="saida" [ngStyle]="{'height': (mes.saida)*100/9000 + 'px'}"></div>
+          </div>
+          <label>{{mes.nomeAbrev}}</label>
+        </div>
+      </div>
+     
     </div>
+    
   </div>
 
   <div class="grafico-card">

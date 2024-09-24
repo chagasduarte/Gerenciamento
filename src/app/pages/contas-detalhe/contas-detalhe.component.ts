@@ -28,7 +28,7 @@ export class ContasDetalheComponent {
     private readonly toastrService: ToastrService,
     private readonly systemService: SystemService
   ) {
-    this.ano = new Ano();
+    this.ano = new Ano(this.systemService.ano.valor);
   }
 
   ngOnInit(): void {

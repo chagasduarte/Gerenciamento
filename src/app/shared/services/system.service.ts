@@ -15,7 +15,7 @@ export class SystemService {
       this.entradas[i] = 0;
       this.saidas[i] = 0;
     }
-    this.ano = new Ano();
-    this.mes = new Mes(new Date().getUTCMonth());    
+    this.ano = new Ano(new Date().getUTCFullYear());
+    this.mes = new Mes(new Date().getUTCMonth(), new Date().getUTCFullYear());    
   }
 }

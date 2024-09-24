@@ -33,7 +33,7 @@ export class EntradaDetalhesComponent implements OnInit{
     private readonly toastrService: ToastrService,
     private systemsService: SystemService
   ){
-    this.ano = new Ano();
+    this.ano = new Ano(this.systemsService.ano.valor);
   }
   ngOnInit(): void {
     this.buscaEntradas();

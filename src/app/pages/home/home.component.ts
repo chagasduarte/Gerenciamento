@@ -24,7 +24,7 @@ import { NgxSpinnerComponent } from 'ngx-spinner';
 import { forkJoin } from 'rxjs';
 import { DefineCor } from '../../utils/functions/defineCorGrafico';
 import { AgrupamentoTipoDespesa, DespesasMes } from '../../shared/models/despesasMes';
-import { DefineGraficoProgressaoMensal } from '../../utils/functions/defineGraficoProgressaoMensal';
+import graficos from "../../../assets/progressaoMensal.json";
 
 @Component({
   selector: 'app-home',
@@ -64,7 +64,7 @@ export class HomeComponent implements OnInit {
   aindaPossoGastar!: number
   corGrafico = "#af6e6e";
   anosDeDivida: number[] = [2024, 2025, 2026, 2027, 2028,2029, 2030, 2031];
-
+  totalEntradas: number = 0;
   contasValor: number[] = [];
 
   graficoPrograssaoMensal!: EChartsOption;
@@ -81,10 +81,7 @@ export class HomeComponent implements OnInit {
     public systemService: SystemService,
     
   ){
-    this.ano = new Ano();
-  }
-  ngAfterViewInit(): void {
-    this.graficoPrograssaoMensal = DefineGraficoProgressaoMensal();
+    this.ano = new Ano(this.systemService.ano.valor);
   }
 
   ngOnInit(): void { 
@@ -92,6 +89,7 @@ export class HomeComponent implements OnInit {
   }
   
   preencheInformacoes(){
+    this.totalEntradas = 0;
     this.somaDespesasMes = 0;
     this.despesasMes = []
     this.gastoTotalMes = 0;
@@ -181,9 +179,14 @@ export class HomeComponent implements OnInit {
           x.dataDebito = new Date(x.dataDebito);
 
           if (x.dataDebito.getUTCFullYear() == this.systemService.ano.valor) {
-            if ((x.dataDebito.getUTCMonth() == this.systemService.mes.valor && !x.status)) {
-              this.aReceber += x.isFixo? GetSalarioLiquido(x.valor)[2].valor: x.valor;
+            if (x.dataDebito.getUTCMonth() == this.systemService.mes.valor) {
+              if ( !x.status) {
+                this.aReceber += x.isFixo? GetSalarioLiquido(x.valor)[2].valor: x.valor;
+
+              }
+              this.totalEntradas += x.valor;
             }
+            
             this.systemService.entradas[x.dataDebito.getUTCMonth()] += x.isFixo? GetSalarioLiquido(x.valor)[2].valor: x.valor;
           }
         });
@@ -309,14 +312,9 @@ export class HomeComponent implements OnInit {
     this.router.navigate(["previstos"], {queryParams: this.idsPrevisto});
   }
 
-  graficos(){
-
-  }
-
   mudaAno(ano: number) {
-    this.systemService.ano.valor = ano;
+    this.systemService.ano = new Ano(ano);
     this.preencheInformacoes();
-    this.mostrarInfo("m");
   }
 
   filtrar(tipoDespesa: string) {
@@ -372,5 +370,5 @@ export class HomeComponent implements OnInit {
   filtraPagas(tipo : DespesasMes[]){
     this.despesasFiltradas = tipo;
   }
-    
+
 }

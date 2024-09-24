@@ -3,9 +3,7 @@ import { DefineCor } from "./defineCorGrafico";
 import valores from "../../../assets/progressaoMensal.json"
 
 export function DefineGraficoProgressaoMensal(saldo: number[] = []): EChartsOption{
-    if(saldo.length == 0){
-      saldo = valores.valores as number[];
-    }
+
     for (let i =0; i< 12; i++) {
         if (saldo[i]) {
             saldo[i] = parseInt(saldo[i].toString());

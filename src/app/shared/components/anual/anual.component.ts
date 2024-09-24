@@ -26,7 +26,7 @@ export class AnualComponent implements OnInit, AfterViewInit{
 
   chartAnualOption!: EChartsOption;
   despesas: {despesa: Despesa, qtdParcelas: number, dataFinal: Date}[] = [];
-  ano: Ano = new Ano();
+  ano: Ano = new Ano(this.systemService.ano.valor);
 
   constructor(
     private readonly despesaService: DespesasService,

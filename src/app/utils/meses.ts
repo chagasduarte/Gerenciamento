@@ -1,4 +1,5 @@
 import { GetDiasSemana } from "./functions/diasSemana";
+import graficos from "../../assets/progressaoMensal.json" 
 
 export enum Meses {
   "Janeiro" = 0,
@@ -29,23 +30,29 @@ export class Mes {
   nomeAbrev!: string;
   valor!: number;
   dias!: Dia[];
-
-  constructor(valor: number) {
-    this.nome = Meses[valor];
+  entrada: number;
+  saida: number;
+  constructor(mes: number, ano: number) {
+    this.nome = Meses[mes];
     this.nomeAbrev = this.nome.substring(0,3);
-    this.valor = valor;
-    this.dias = GetDiasSemana(2024, valor+1)
+    this.valor = mes;
+    this.dias = GetDiasSemana(ano, mes+1);
+    
+    this.entrada = graficos.graficos[ano-2024].meses[mes][0];
+    this.saida = graficos.graficos[ano-2024].meses[mes][1];
   }
+
 }
 
 export class Ano {
   valor: number;
   meses: Mes[] = []
-  constructor(){
+  constructor(ano: number){
     this.valor = new Date().getUTCFullYear();
     for(var i = 0; i < 12; i++) {
-      var mes: Mes = new Mes(i)
+      var mes: Mes = new Mes(i, ano)
       this.meses.push(mes);
     }
+    console.log(this.meses);
   }
 }
