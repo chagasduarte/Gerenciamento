@@ -48,6 +48,7 @@
     grid-template-columns: 11rem 115px 115px;
     gap: 20px;
     width: 100%;
+    place-items: center;
 }
 
 .mes {
@@ -241,5 +242,11 @@
         grid-template-areas: 
         "grafico"
         "cards";
+    }
+    .barras {
+        display: none;
+    }
+    .graficos {
+        grid-template-columns: 1fr;
     }
 }

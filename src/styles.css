@@ -99,6 +99,7 @@ img {
   overflow-x: auto;
   overflow-y: hidden;
   justify-content: center;
+  width: 100%;
 }
 
 .abrev-mes{
@@ -197,7 +198,7 @@ img {
 
 .barras {
   display: grid;
-  grid-template-columns: repeat(12, 40px);
+  grid-template-columns: repeat(12, auto);
   text-orientation: 40;
   rotate: 40;
 }
