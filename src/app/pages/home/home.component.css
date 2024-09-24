@@ -1,21 +1,4 @@
-
-
-.grafico-pizza {
-    display: grid;
-    grid-area: graficoPizza;
-    background-color: #be5228;
-    width: 115px;
-    height: 115px;
-    border-radius: 50%;
-    place-items: center;
-    font-size: 24px;
-    font-weight: bolder;
-}
-.paga {
-    transition: transform 0.3s;
-}
-
-.abrev-mes{
+.abrev-mes, .paga{
     margin-right: 12px;
     transition: transform 0.3s;
 }
@@ -30,6 +13,15 @@
     margin-top: 25px;
     place-items: center;
  }
+ .data-grafico {
+    grid-area: dataGrafico;
+    display: grid;
+    grid-template-areas: 
+    "data graficos";
+    grid-template-columns: 11rem 115px;
+    gap: 20px;
+    place-items: center;
+}
 .data {
     grid-area: data;
     display: grid;
@@ -40,15 +32,9 @@
     width: 180px;
     height: 100px;
 }
-.data-grafico {
-    grid-area: dataGrafico;
-    display: grid;
-    grid-template-areas: 
-    "data graficos";
-    grid-template-columns: 11rem 115px 115px;
-    gap: 20px;
-    width: 100%;
-    place-items: center;
+
+.graficos {
+    grid-area: graficos;
 }
 
 .mes {
@@ -91,13 +77,14 @@
 
 .grafico-card{
     grid-area: graficoCards;
-    display:grid;
-    grid-template-areas: "grafico cards";
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    grid-template-rows: repeat(auto-fill, minmax(250px, 1fr));
     width: 100%;
+    place-items: center;
 }
 
 .grafico {
-    grid-area: grafico;
     display: grid;
     grid-template-areas: 
     "graficoheader"
@@ -105,8 +92,8 @@
     grid-template-rows: 2rem 1fr;
     background-color: rgb(78, 156, 156);
     border-radius: 15px;
-    min-height: 175px;
     width: 95%;
+    height: 100%;
 }
 .grafico-header{
     display: grid;
@@ -128,7 +115,6 @@
 }
 
 .cards {
-    grid-area: cards;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
     row-gap: 5px;
@@ -243,10 +229,5 @@
         "grafico"
         "cards";
     }
-    .barras {
-        display: none;
-    }
-    .graficos {
-        grid-template-columns: 1fr;
-    }
+
 }

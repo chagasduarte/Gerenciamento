@@ -1,6 +1,6 @@
 <nav class="barra_navegacao"> 
-  <ul class=" d-flex  justify-content-center">
-    <li class="meses d-flex" *ngFor="let mes of ano.meses; let i = index">
+  <ul class="meses">
+    <li class="mes-nav d-flex" *ngFor="let mes of ano.meses; let i = index">
       <div class="abrev-mes"(click)="mudaMes(mes)">{{mes.nomeAbrev}}</div>
     </li>
   </ul>
@@ -9,8 +9,8 @@
   <button class="btn btn-sm btn-success" *ngFor="let ano of anosDeDivida" (click)="mudaAno(ano)">{{ano}}</button>
 </div>
 <div class="info-1" id="info-1" name="info-1" className="info-1">
-  <div class="data-grafico">
 
+  <div class="data-grafico">
     <div class="data">
       <div class="mes">
         {{systemService.mes.nome}}
@@ -22,32 +22,19 @@
     </div>
 
     <div class="graficos">
-      
-      <div class="grafico-pizza2" [style]="{'--porcentagem': (somaDespesasMes*100/totalEntradas).toString()}">
+      <div class="grafico-pizza" [style]="{'--porcentagem': (somaDespesasMes*100/totalEntradas).toString()}">
         <div class="legenda">
           {{somaDespesasMes*100/totalEntradas * 10 | percent: '00.00'}}
           <div class="linha"></div>
           {{aindaPossoGastar | currency}}
         </div>
       </div>
-
-      <div class="barras">
-        <div class="barras-grafico-progressao" *ngFor="let mes of systemService.ano.meses">
-          <div class="entradaSaida">
-            <div class="entrada" [ngStyle]="{'height': mes.entrada*100/9000 + 'px'}">
-              
-            </div>
-            <div class="saida" [ngStyle]="{'height': (mes.saida)*100/9000 + 'px'}"></div>
-          </div>
-          <label>{{mes.nomeAbrev}}</label>
-        </div>
-      </div>
-     
     </div>
     
   </div>
 
   <div class="grafico-card">
+  
     <div class="grafico">
       <div class="grafico-header">
         <h5>Despesas Parcelas</h5>
@@ -110,6 +97,19 @@
         
       </div>
     </div>
+    
+    <div class="barras">
+      <div class="barras-grafico-progressao" *ngFor="let mes of systemService.ano.meses">
+        <div class="entradaSaida">
+          <div class="entrada" [ngStyle]="{'height': mes.entrada*100/9000 + 'px'}">
+            
+          </div>
+          <div class="saida" [ngStyle]="{'height': (mes.saida)*100/9000 + 'px'}"></div>
+        </div>
+        <label>{{mes.nomeAbrev}}</label>
+      </div>
+    </div>
+
   </div>
   
 </div>

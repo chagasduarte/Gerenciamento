@@ -88,19 +88,19 @@ img {
 }
 
 .meses{
-  width: 10%;
-  font-size: 20px;
+  display: flex;
   margin: 0.5rem;
   text-align: top;
+  font-size: 20px;
 }
 
 .barra_navegacao {
+  display: flex;
   background-color: #69B6A8;
   height: 55px;
   overflow-x: auto;
   overflow-y: hidden;
   justify-content: center;
-  width: 100%;
 }
 
 .abrev-mes{
@@ -135,14 +135,7 @@ img {
   margin: 10px; /* Margem opcional para espaçamento */
 }
 
-
-.graficos {
-  grid-area: graficos; 
-  display: grid; 
-  grid-template-columns: 125px 400px;
-  gap: 5px;
-}
-.grafico-pizza2 {
+.grafico-pizza {
   width: 115px;
   height: 115px;
   border-radius: 50%;
@@ -157,6 +150,7 @@ img {
   justify-content: center;
   position: relative;
 }
+
 .barras-grafico-progressao {
   display: grid;
   height: 150px;
@@ -177,24 +171,26 @@ img {
       "entrada saida";
       place-items: end;
       width: 90%;
+      gap: 5px;
       & .entrada {
           grid-area: entrada;
           justify-items: center;
           background-color: rgb(38, 191, 202); 
-          width: 10px; 
+          width: 15px; 
           color: black; font-weight: 1000;
           border-radius: 15px;
       }
       & .saida {
           grid-area: saida;
           background-color: rgb(202, 137, 38); 
-          width: 10px; 
+          width: 15px; 
           grid-area: saida;
           color: black; 
           font-weight: 1000;
           border-radius: 15px;
       }
   }
+  place-self: center;
 }
 
 .barras {
