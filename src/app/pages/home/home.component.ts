@@ -315,6 +315,7 @@ export class HomeComponent implements OnInit {
   mudaAno(ano: number) {
     this.systemService.ano = new Ano(ano);
     this.preencheInformacoes();
+    console.log(this.systemService.ano)
   }
 
   filtrar(tipoDespesa: string) {
