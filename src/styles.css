@@ -168,7 +168,7 @@ img {
   height: 200px;
   grid-template-columns: repeat(12, auto);
   place-items: end;
-  gap:10px;
+  gap:5px;
 
 }
 .progressao-grafico{
@@ -182,7 +182,7 @@ img {
     grid-area: mov;
     justify-self: center;
     border-radius: 15px;
-    width: 15px;
+    width: 10px;
   }
   & label {
     grid-area: mes;
@@ -209,19 +209,19 @@ img {
       "entrada saida";
       place-items: end;
       width: 90%;
-      gap: 5px;
+      gap: 2.5px;
       & .entrada {
           grid-area: entrada;
           justify-items: center;
           background-color: rgb(38, 191, 202); 
-          width: 10px; 
+          width: 8px; 
           color: black; font-weight: 1000;
           border-radius: 15px;
       }
       & .saida {
           grid-area: saida;
           background-color: rgb(202, 137, 38); 
-          width: 10px; 
+          width: 8px; 
           grid-area: saida;
           color: black; 
           font-weight: 1000;
