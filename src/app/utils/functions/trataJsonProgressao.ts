@@ -43,6 +43,4 @@ export function atualizarJson(ano: number, mes: number, tipo: 'entrada' | 'saida
             return;
     }
 
-    // Gravando as mudanças de volta no arquivo JSON
-    console.log('Dados atualizados com sucesso.');
 }

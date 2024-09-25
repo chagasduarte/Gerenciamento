@@ -198,7 +198,6 @@ export class HomeComponent implements OnInit {
 
         //calcula saldo do mes
         this.aindaPossoGastar = (this.saldoAtual + this.aReceber) - (this.gastoTotalMes + this.gastosAdicionais);
-        console.log(success[6]);
         const contas = success[6].sort((a, b) => b.id - a.id);
         contas[0].debito = this.aindaPossoGastar;
         if (contas[0].mes > new Date().getUTCMonth() + 1 || contas[0].ano > new Date().getUTCFullYear()){
@@ -249,7 +248,6 @@ export class HomeComponent implements OnInit {
         
       },
       error: (err: any) => {
-        console.log(err)
         this.toastService.error("Error", `Alguma coisa deu errado: ${err.mesage}`);
       }
     })
