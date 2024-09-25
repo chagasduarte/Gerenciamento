@@ -112,7 +112,7 @@ export class HomeComponent implements OnInit {
       this.parcelasService.GetParcelas(),
       this.entradasService.GetEntradas(),
       this.contasService.GetContaByMes(this.systemService.mes.valor + 1, this.systemService.ano.valor),
-      this.contasService.GetContaByMes(this.systemService.mes.valor + 2, this.systemService.ano.valor),
+      this.contasService.GetContaByMes(this.systemService.mes.valor + 2 > 12? 1: this.systemService.mes.valor, this.systemService.mes.valor + 2 > 12? this.systemService.ano.valor + 1: this.systemService.ano.valor),
       this.contasService.GetContas()
     ]).subscribe({
       next: (success) => {
@@ -240,10 +240,10 @@ export class HomeComponent implements OnInit {
           }
         });
 
-        // grava informações no json.
-        atualizarJson(this.systemService.ano.valor, this.systemService.mes.valor, 'entrada', this.totalEntradas)
-        atualizarJson(this.systemService.ano.valor, this.systemService.mes.valor, 'saida', this.somaDespesasMes)
-        atualizarJson(this.systemService.ano.valor, this.systemService.mes.valor, 'progressao', this.aindaPossoGastar)
+        // // grava informações no json.
+        // atualizarJson(this.systemService.ano.valor, this.systemService.mes.valor, 'entrada', this.totalEntradas)
+        // atualizarJson(this.systemService.ano.valor, this.systemService.mes.valor, 'saida', this.somaDespesasMes)
+        // atualizarJson(this.systemService.ano.valor, this.systemService.mes.valor, 'progressao', this.aindaPossoGastar)
         
       },
       error: (err: any) => {
