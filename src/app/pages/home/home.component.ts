@@ -199,9 +199,10 @@ export class HomeComponent implements OnInit {
         //calcula saldo do mes
         this.aindaPossoGastar = (this.saldoAtual + this.aReceber) - (this.gastoTotalMes + this.gastosAdicionais);
         console.log(success[6]);
-        success[6][0].debito = this.aindaPossoGastar;
-        if (success[6][0].mes > new Date().getUTCMonth() + 1 || success[6][0].ano > new Date().getUTCFullYear()){
-          this.contasService.PutConta(success[6][0]).subscribe(x => {});
+        const contas = success[6].sort((a, b) => b.id - a.id);
+        contas[0].debito = this.aindaPossoGastar;
+        if (contas[0].mes > new Date().getUTCMonth() + 1 || contas[0].ano > new Date().getUTCFullYear()){
+          this.contasService.PutConta(contas[0]).subscribe(x => {});
         }
         
         aux.forEach( parcela => {
