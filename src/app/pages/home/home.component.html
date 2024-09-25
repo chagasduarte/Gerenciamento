@@ -1,6 +1,6 @@
 <nav class="barra_navegacao"> 
   <ul class="meses">
-    <li class="mes-nav d-flex" *ngFor="let mes of ano.meses; let i = index">
+    <li class="d-flex" *ngFor="let mes of ano.meses; let i = index">
       <div class="abrev-mes"(click)="mudaMes(mes)">{{mes.nomeAbrev}}</div>
     </li>
   </ul>
@@ -99,12 +99,26 @@
     </div>
     
     <div class="barras">
-      <div class="barras-grafico-progressao" *ngFor="let mes of systemService.ano.meses">
+      <div class="barras-grafico" *ngFor="let mes of systemService.ano.meses">
         <div class="entradaSaida">
-          <div class="entrada" [ngStyle]="{'height': mes.entrada*100/9000 + 'px'}">
+          <div class="entrada" [ngStyle]="{'height': mes.entrada*180/10000 + 'px'}">
             
           </div>
-          <div class="saida" [ngStyle]="{'height': (mes.saida)*100/9000 + 'px'}"></div>
+          <div class="saida" [ngStyle]="{'height': (mes.saida)*180/10000 + 'px'}"></div>
+        </div>
+        <label>{{mes.nomeAbrev}}</label>
+      </div>
+    </div>
+
+    <div class="progressoes">
+      <div class="progressao-grafico" *ngFor="let mes of systemService.ano.meses">
+        <div class="progressao"
+        [ngStyle]="{'height': (mes.progressao >= 0 ? mes.progressao * 35 / systemService.ano.maiorValor + 'px' : -mes.progressao * 35 / systemService.ano.maiorValor + 'px'), 
+                  'background-color': DefinirCor(mes.progressao), 
+                  'margin-top': (mes.progressao < 0 ? '0' : -mes.progressao * 35 / systemService.ano.maiorValor + 'px')}">
+          <div class="valor-progressao" style=" transform: translateX(-50%) rotate(-90deg); font-size: 12px;">
+            {{mes.progressao | currency}}
+          </div> 
         </div>
         <label>{{mes.nomeAbrev}}</label>
       </div>
@@ -117,11 +131,14 @@
 
 <div class="info-3">
 
-  <div class="row">
+  <div style="display: grid; grid-template-columns: 60px 100px 1fr; width: 95%;">
     Soma: 
     <div class="col" style="font-size: 24px; font-weight: bolder;">{{somaDespesasMes | currency}}</div>
     <div class="d-flex col">
-      <select #tipoDespesa type="number" id="tipoDespesa" name="tipoDespesa" class="form-select form-select-sm" (change)="filtrar(tipoDespesa.value)">
+      <select #tipoDespesa type="number"
+       class="form-select form-select-sm" 
+       style="width: 100px;"
+       (change)="filtrar(tipoDespesa.value)">
         <option value="0">Todos</option>
         <option value=1>Alimentação</option>
         <option value=2>Transporte</option>
@@ -136,8 +153,8 @@
     </div>
   </div>
 
-  <div class="pagas" *ngIf="despesasPagas!.agrupamento.length > 0">
-    <div class="pagas-over">
+  <div *ngIf="despesasPagas!.agrupamento.length > 0" class="agrupamento">
+    <div class="pagas">
       <div class="paga" *ngFor="let paga of despesasPagas!.agrupamento" (click)="filtraPagas(paga.despesas)" >
         <img [src]="defineImagem(paga.tipo)" style="width: 50px; height: 50px;" alt="">
         {{paga.soma | currency}}

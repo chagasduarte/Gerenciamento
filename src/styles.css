@@ -5,7 +5,7 @@ body {
     color: aliceblue;
 }
 
-
+/* 
 html::-webkit-scrollbar {
     width: 10px;
 }
@@ -17,7 +17,7 @@ html::-webkit-scrollbar-thumb {
   
 html::-webkit-scrollbar-track {
   background: #ededed;
-}
+} */
 
 .linha{
   background-color: aliceblue;
@@ -111,29 +111,33 @@ img {
 .abrev-mes:hover{
     transform: scale(1.2);
     cursor: pointer;
-    
 }
 
-.pagas {
+.agrupamento {
   display: grid;
-  grid-template-columns: repeat(8, 65px);
   overflow-x: auto; /* Permite rolar horizontalmente */
   height: 80px;
   width: 100%;
-}
-.pagas-over {
-  display: flex;
+  & .pagas {
+    display: grid;
+    grid-template-columns: repeat(8, 65px);
+    overflow-x: auto; /* Permite rolar horizontalmente */
+    height: 100px;
+
+    & .paga {
+      display: grid;
+      place-items: center;
+      background-color: #2d8b7a;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      margin: 10px; /* Margem opcional para espaçamento */
+    }
+  }
+  
 }
 
-.paga {
-  display: grid;
-  place-items: center;
-  background-color: #2d8b7a;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  margin: 10px; /* Margem opcional para espaçamento */
-}
+
 
 .grafico-pizza {
   width: 115px;
@@ -150,10 +154,44 @@ img {
   justify-content: center;
   position: relative;
 }
-
-.barras-grafico-progressao {
+.barras {
   display: grid;
-  height: 150px;
+  height: 200px;
+  grid-template-columns: repeat(12, auto);
+  gap:10px;
+  place-items: center;
+  margin-bottom: 20px;
+}
+
+.progressoes{
+  display: grid;
+  height: 200px;
+  grid-template-columns: repeat(12, auto);
+  place-items: end;
+  gap:10px;
+
+}
+.progressao-grafico{
+  display: grid;
+  height: 90px;
+  grid-template-areas: 
+  "mov"
+  "mes";
+  grid-template-rows: 1fr 15px;
+  & .progressao {
+    grid-area: mov;
+    justify-self: center;
+    border-radius: 15px;
+    width: 15px;
+  }
+  & label {
+    grid-area: mes;
+  }
+}
+
+.barras-grafico {
+  display: grid;
+  height: 200px;
   grid-template-areas: 
   "mov"
   "mes";
@@ -176,26 +214,18 @@ img {
           grid-area: entrada;
           justify-items: center;
           background-color: rgb(38, 191, 202); 
-          width: 15px; 
+          width: 10px; 
           color: black; font-weight: 1000;
           border-radius: 15px;
       }
       & .saida {
           grid-area: saida;
           background-color: rgb(202, 137, 38); 
-          width: 15px; 
+          width: 10px; 
           grid-area: saida;
           color: black; 
           font-weight: 1000;
           border-radius: 15px;
       }
   }
-  place-self: center;
-}
-
-.barras {
-  display: grid;
-  grid-template-columns: repeat(12, auto);
-  text-orientation: 40;
-  rotate: 40;
 }

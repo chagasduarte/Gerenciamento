@@ -32,6 +32,8 @@ export class Mes {
   dias!: Dia[];
   entrada: number;
   saida: number;
+  progressao: number;
+
   constructor(mes: number, ano: number) {
     this.nome = Meses[mes];
     this.nomeAbrev = this.nome.substring(0,3);
@@ -40,6 +42,7 @@ export class Mes {
     
     this.entrada = graficos.graficos[ano-2024].meses[mes][0];
     this.saida = graficos.graficos[ano-2024].meses[mes][1];
+    this.progressao = graficos.graficos[ano-2024].progressao[mes];
   }
 
 }
@@ -47,10 +50,14 @@ export class Mes {
 export class Ano {
   valor: number;
   meses: Mes[] = []
+  maiorValor: number = 0;
   constructor(ano: number){
     this.valor = ano;
     for(var i = 0; i < 12; i++) {
       var mes: Mes = new Mes(i, ano)
+      if (mes.progressao > this.maiorValor){
+        this.maiorValor = mes.progressao;
+      }
       this.meses.push(mes);
     }
   }

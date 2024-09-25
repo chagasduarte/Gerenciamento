@@ -370,5 +370,9 @@ export class HomeComponent implements OnInit {
   filtraPagas(tipo : DespesasMes[]){
     this.despesasFiltradas = tipo;
   }
+  DefinirCor(valor: number): any {
+    return DefineCor(valor)
+  }
+    
 
 }
