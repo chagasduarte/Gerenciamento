@@ -158,7 +158,7 @@ img {
   display: grid;
   height: 200px;
   grid-template-columns: repeat(12, auto);
-  gap:10px;
+  gap:5px;
   place-items: center;
   margin-bottom: 20px;
 }
@@ -214,14 +214,14 @@ img {
           grid-area: entrada;
           justify-items: center;
           background-color: rgb(38, 191, 202); 
-          width: 8px; 
+          width: 7px; 
           color: black; font-weight: 1000;
           border-radius: 15px;
       }
       & .saida {
           grid-area: saida;
           background-color: rgb(202, 137, 38); 
-          width: 8px; 
+          width: 7px; 
           grid-area: saida;
           color: black; 
           font-weight: 1000;

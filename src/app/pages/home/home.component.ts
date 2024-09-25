@@ -24,7 +24,7 @@ import { NgxSpinnerComponent } from 'ngx-spinner';
 import { forkJoin } from 'rxjs';
 import { DefineCor } from '../../utils/functions/defineCorGrafico';
 import { AgrupamentoTipoDespesa, DespesasMes } from '../../shared/models/despesasMes';
-import graficos from "../../../assets/progressaoMensal.json";
+import { atualizarJson } from '../../utils/functions/trataJsonProgressao';
 
 @Component({
   selector: 'app-home',
@@ -239,6 +239,12 @@ export class HomeComponent implements OnInit {
             }
           }
         });
+
+        // grava informações no json.
+        atualizarJson(this.systemService.ano.valor, this.systemService.mes.valor, 'entrada', this.totalEntradas)
+        atualizarJson(this.systemService.ano.valor, this.systemService.mes.valor, 'saida', this.somaDespesasMes)
+        atualizarJson(this.systemService.ano.valor, this.systemService.mes.valor, 'progressao', this.aindaPossoGastar)
+        
       },
       error: (err: any) => {
         console.log(err)

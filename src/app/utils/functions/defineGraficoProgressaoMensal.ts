@@ -1,6 +1,6 @@
 import { EChartsOption } from "echarts";
 import { DefineCor } from "./defineCorGrafico";
-import valores from "../../../assets/progressaoMensal.json"
+
 
 export function DefineGraficoProgressaoMensal(saldo: number[] = []): EChartsOption{
 

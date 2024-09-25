@@ -1,5 +1,5 @@
 import { GetDiasSemana } from "./functions/diasSemana";
-import graficos from "../../assets/progressaoMensal.json" 
+import graficos from "../utils/progressaoMensal.json" 
 
 export enum Meses {
   "Janeiro" = 0,
