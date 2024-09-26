@@ -58,6 +58,7 @@
       <div class="card card-sm me-2" >
         <div class="card-header text-break">
           <b>{{parcela.dataVencimento | date}}</b> 
+          <button class="btn btn-sm btn-danger" (click)="despagar(parcela)">-</button>
         </div>
         <div class="card-body">
           <div class="d-flex">
