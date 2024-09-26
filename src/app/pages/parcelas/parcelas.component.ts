@@ -53,6 +53,9 @@ export class ParcelasComponent implements OnInit {
     this.activeRouter.queryParams.subscribe({
       next: (success: any) => {
         this.nomeDespesa = success.nome
+        this.despesaService.GetDespesasById(success.id).subscribe(x => {
+          this.despesa = x;
+        });
         this.parcelasService.GetParcelasByDespesa(success.id).subscribe(parcelas => {
           this.parcelas = parcelas.filter(filtradas => filtradas.isPaga != 1 && new Date(filtradas.dataVencimento).getUTCFullYear() == this.systemService.ano.valor)
           this.parcelasPagas = parcelas.filter(x => x.isPaga == 1);
@@ -77,7 +80,6 @@ export class ParcelasComponent implements OnInit {
             this.contasService.PutConta(cont).subscribe({
               next: (success: Conta) => {
                 parcela.isPaga = 1;
-                parcela.dataVencimento = new Date();
                 this.parcelasService.PutParcela(parcela).subscribe( x => {
                   this.toastr.success("Sucesso", "Parcela Paga com sucesso.");
                 });
@@ -126,6 +128,13 @@ export class ParcelasComponent implements OnInit {
         }
       }
     });    
+  }
+
+  despagar(despesa: Parcela){
+    despesa.isPaga = 0;
+    this.parcelasService.PutParcela(despesa).subscribe(x => {
+      this.toastr.success("pois é... pra tu ver como é as coisa", "Success");
+    })
   }
     
 }
