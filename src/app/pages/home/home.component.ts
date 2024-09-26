@@ -25,6 +25,8 @@ import { forkJoin } from 'rxjs';
 import { DefineCor } from '../../utils/functions/defineCorGrafico';
 import { AgrupamentoTipoDespesa, DespesasMes } from '../../shared/models/despesasMes';
 import { atualizarJson } from '../../utils/functions/trataJsonProgressao';
+import { Graficos, MesGrafico } from '../../shared/models/graficos';
+import { GraficoService } from '../../shared/services/graficos.service';
 
 @Component({
   selector: 'app-home',
@@ -66,9 +68,8 @@ export class HomeComponent implements OnInit {
   anosDeDivida: number[] = [2024, 2025, 2026, 2027, 2028,2029, 2030, 2031];
   totalEntradas: number = 0;
   contasValor: number[] = [];
-
-  graficoPrograssaoMensal!: EChartsOption;
-
+  graficos!: MesGrafico[];
+  mostra: boolean = false;
 
   constructor(
     @Inject(DOCUMENT) document:Document,
@@ -79,7 +80,7 @@ export class HomeComponent implements OnInit {
     private readonly toastService: ToastrService,
     private readonly router: Router,
     public systemService: SystemService,
-    
+    private readonly graficosService: GraficoService
   ){
     this.ano = new Ano(this.systemService.ano.valor);
   }
@@ -98,7 +99,6 @@ export class HomeComponent implements OnInit {
     for (let i = 0; i < 12; i++){
       this.systemService.saidas[i] = 0;
     }
-    const dataAtual = new Date()
     this.aReceber = 0;
     for (let i = 0; i < 12; i++){
       this.systemService.entradas[i] = 0;
@@ -113,7 +113,8 @@ export class HomeComponent implements OnInit {
       this.entradasService.GetEntradas(),
       this.contasService.GetContaByMes(this.systemService.mes.valor + 1, this.systemService.ano.valor),
       this.contasService.GetContaByMes(this.systemService.mes.valor + 2 > 12? 1: this.systemService.mes.valor + 2, this.systemService.mes.valor + 2 > 12? this.systemService.ano.valor + 1: this.systemService.ano.valor),
-      this.contasService.GetContas()
+      this.contasService.GetContas(),
+      this.graficosService.GetGraficos(this.systemService.ano.valor)
     ]).subscribe({
       next: (success) => {
         let aux: {idDespesa: number, valorParcela: number, dataParcela: Date, isPaga: number}[] = [];
@@ -240,12 +241,12 @@ export class HomeComponent implements OnInit {
             }
           }
         });
-
-        // // grava informações no json.
-        // atualizarJson(this.systemService.ano.valor, this.systemService.mes.valor, 'entrada', this.totalEntradas)
-        // atualizarJson(this.systemService.ano.valor, this.systemService.mes.valor, 'saida', this.somaDespesasMes)
-        // atualizarJson(this.systemService.ano.valor, this.systemService.mes.valor, 'progressao', this.aindaPossoGastar)
-        
+        this.graficos = success[8].meses.sort((a,b) => {return a.id - b.id});
+        success[8].meses.map( x => {
+          if (this.systemService.ano.maiorValor < Math.abs(x.progressao)){
+            this.systemService.ano.maiorValor = Math.abs(x.progressao);
+          }
+        })
       },
       error: (err: any) => {
         this.toastService.error("Error", `Alguma coisa deu errado: ${err.mesage}`);
@@ -379,6 +380,6 @@ export class HomeComponent implements OnInit {
   DefinirCor(valor: number): any {
     return DefineCor(valor)
   }
-    
 
+    
 }

@@ -55,9 +55,6 @@ export class Ano {
     this.valor = ano;
     for(var i = 0; i < 12; i++) {
       var mes: Mes = new Mes(i, ano)
-      if (mes.progressao > this.maiorValor){
-        this.maiorValor = mes.progressao;
-      }
       this.meses.push(mes);
     }
   }
