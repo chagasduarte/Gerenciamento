@@ -65,7 +65,7 @@ export class HomeComponent implements OnInit {
   chartMensalOption!: EChartsOption
   aindaPossoGastar!: number
   corGrafico = "#af6e6e";
-  anosDeDivida: number[] = [2024, 2025, 2026, 2027, 2028,2029, 2030, 2031];
+  anosDeDivida: number[] = [2024, 2025, 2026];
   totalEntradas: number = 0;
   contasValor: number[] = [];
   graficos!: MesGrafico[];
@@ -200,11 +200,12 @@ export class HomeComponent implements OnInit {
         //calcula saldo do mes
         this.aindaPossoGastar = (this.saldoAtual + this.aReceber) - (this.gastoTotalMes + this.gastosAdicionais);
         const contas = success[6].sort((a, b) => {return b.id - a.id});
-        contas[0].debito = this.aindaPossoGastar;
-        if (contas[0].mes > new Date().getUTCMonth() + 1 || contas[0].ano > new Date().getUTCFullYear()){
-          this.contasService.PutConta(contas[0]).subscribe(x => {});
-        }
-        
+        if (contas) {
+          contas[0].debito = this.aindaPossoGastar;
+          if (contas[0].mes > new Date().getUTCMonth() + 1 || contas[0].ano > new Date().getUTCFullYear()){
+            this.contasService.PutConta(contas[0]).subscribe(x => {});
+          }
+        } 
         aux.forEach( parcela => {
           const gasto = success[0].find(x => x.id == parcela.idDespesa);
           this.despesasMes.push({

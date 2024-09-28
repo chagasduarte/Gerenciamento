@@ -116,7 +116,7 @@ img {
 .agrupamento {
   display: grid;
   overflow-x: auto; /* Permite rolar horizontalmente */
-  height: 80px;
+  height: 100px;
   width: 100%;
   & .pagas {
     display: grid;
@@ -154,6 +154,11 @@ img {
   justify-content: center;
   position: relative;
 }
+
+.grafico-pizza::before {
+  background-color: azure;
+}
+
 /* .barras {
   display: grid;
   height: 200px;
