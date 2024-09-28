@@ -11,6 +11,8 @@ import { SystemService } from '../../services/system.service';
 import { DespesasService } from '../../services/despesas.service';
 import { Despesa } from '../../models/despesa';
 import { Router } from '@angular/router';
+import { MesGrafico } from '../../models/graficos';
+import { DefineCor } from '../../../utils/functions/defineCorGrafico';
 
 @Component({
   selector: 'app-graficos',
@@ -22,52 +24,22 @@ import { Router } from '@angular/router';
   templateUrl: './graficos.component.html',
   styleUrl: './graficos.component.css'
 })
-export class GraficosComponent implements OnInit, AfterViewInit{
+export class GraficosComponent implements OnInit{
 
-  graficoPrograssaoMensal!: EChartsOption;
-  graficoPizzaCategoria!: EChartsOption;
-  chartAnualOption!: EChartsOption;
+  graficos!: MesGrafico[];
 
   contas: number[] = []
   constructor(
     private readonly contasService: ContasService,
-    private readonly systemService: SystemService,
+    public systemService: SystemService,
     private readonly despesasService: DespesasService,
-    private readonly router: Router
+    private readonly router: Router,
   ){}
-  ngAfterViewInit(): void {
-    this.buscaContas();
-    this.chartAnualOption = DefineGraficoAnualOption(this.systemService.entradas, this.systemService.saidas);
-    this.buscaDespesas()
-  }
+  
   ngOnInit(): void {
     
   }
-   
-  buscaContas(){
-    this.contasService.GetContas().subscribe(x => {
-      x.map( conta => {
-        if (conta.ano == this.systemService.ano.valor){
-          if (this.contas[conta.mes-1]){
-              this.contas[conta.mes-1] += conta.debito;
-          }
-          else {
-            this.contas[conta.mes-1] = conta.debito;
-          }
-        }
-      });
-      this.graficoPrograssaoMensal = DefineGraficoProgressaoMensal(this.contas);
-    });
-  }
-
-  buscaDespesas() {
-    this.despesasService.GetDespesasByMes(this.systemService.mes.valor, this.systemService.ano.valor).subscribe({
-      next: (success: Despesa[]) => {
-        this.graficoPizzaCategoria = DefineGraficoCategoria(success);
-      }
-    })
-  }
-  voltar() {
-    this.router.navigate(['home']);
+  DefinirCor(valor: number): any {
+    return DefineCor(valor)
   }
 }

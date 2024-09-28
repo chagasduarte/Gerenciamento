@@ -170,7 +170,7 @@ img {
 
 .progressoes, .barras{
   display: grid;
-  height: 200px;
+  height: 230px;
   grid-template-columns: repeat(12, auto);
   place-items: end;
   gap:5px;
@@ -182,11 +182,13 @@ img {
 
 .progressao-grafico{
   display: grid;
-  height: 90px;
+  height: 100px; 
   grid-template-areas: 
+  "titulo"
   "mov"
   "mes";
-  grid-template-rows: 1fr 15px;
+  grid-template-rows: 15px 1fr 15px;
+  font-size: 18px;
   & .progressao {
     grid-area: mov;
     justify-self: center;
@@ -206,6 +208,8 @@ img {
   "mov"
   "mes";
   grid-template-rows: 1fr 20px;
+  font-size: 18px;
+
   & label {
       grid-area: mes;
   }
@@ -217,23 +221,25 @@ img {
       "entrada saida";
       place-items: end;
       width: 90%;
-      gap: 2.5px;
+      gap: 2px;
       & .entrada {
           grid-area: entrada;
           justify-items: center;
-          background-color: rgb(38, 191, 202); 
-          width: 7px; 
+          background-color: rgb(50, 160, 83); 
+          width: 10px; 
           color: black; font-weight: 1000;
-          border-radius: 15px;
+          border-top-left-radius: 15px;
+          border-top-right-radius: 15px;
+
       }
       & .saida {
           grid-area: saida;
-          background-color: rgb(202, 137, 38); 
-          width: 7px; 
+          background-color: rgb(202, 63, 38); 
+          width: 10px; 
           grid-area: saida;
           color: black; 
           font-weight: 1000;
-          border-radius: 15px;
-      }
+          border-top-left-radius: 15px;
+          border-top-right-radius: 15px;      }
   }
 }

@@ -53,7 +53,7 @@
           </div>
           <div class="saida sombra" [ngStyle]="{'height': (mes.saida)*180/15000 + 'px'}"></div>
         </div>
-        <label>{{mes.nomeAbrev.substring(3,0)}}</label>
+        <label>{{mes.nomeAbrev.substring(2,0).toUpperCase()}}</label>
       </div>
     </div>
 
@@ -67,7 +67,7 @@
             {{mes.progressao| currency}}
           </div> 
         </div>
-        <label>{{mes.nomeAbrev.substring(3,0)}}</label>
+        <label>{{mes.nomeAbrev.substring(2,0).toUpperCase()}}</label>
       </div>
     </div>
 

@@ -1,17 +1,135 @@
-.graficos {
+.pizza {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    position: relative;
+    clip-path: circle(50%);
+}
+
+.slice {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    clip-path: inset(50% 50% 50% 50%);
+    transform-origin: 50% 100%;
+}
+
+.alimentacao {
+    background: #ff6384;
+    transform: rotate(0deg) skewY(-30deg);
+}
+
+.saude {
+    background: #36a2eb;
+    transform: rotate(90deg) skewY(-30deg);
+}
+
+.lazer {
+    background: #ffce56;
+    transform: rotate(135deg) skewY(-30deg);
+}
+
+.servicos {
+    background: #4bc0c0;
+    transform: rotate(180deg) skewY(-30deg);
+}
+
+.moradia {
+    background: #9966ff;
+    transform: rotate(270deg) skewY(-30deg);
+}
+
+.educacao {
+    background: #ff9f40;
+    transform: rotate(300deg) skewY(-30deg);
+}
+
+.transporte {
+    background: #ff9f40;
+    transform: rotate(335deg) skewY(-30deg);
+}
+
+.legend {
+    margin-top: 20px;
+}
+
+.legend div {
+    margin: 5px 0;
+}
+
+
+.progressoes, .barras{
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-    place-items: center ;
-}
-
-#bar {
-    width: 400px;
-}
-
-#pie {
-    width: 400px;
-}
-
-#anual {
-    width: 400px;
+    height: 230px;
+    grid-template-columns: repeat(12, auto);
+    place-items: end;
+    gap:5px;
+    border-radius: 15px;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+  
+  
+  .progressao-grafico{
+    display: grid;
+    height: 100px; 
+    grid-template-areas: 
+    "titulo"
+    "mov"
+    "mes";
+    grid-template-rows: 15px 1fr 15px;
+    font-size: 18px;
+    & .progressao {
+      grid-area: mov;
+      justify-self: center;
+      border-radius: 15px;
+      width: 10px;
+    }
+  
+    & label {
+      grid-area: mes;
+    }
+  }
+  
+  .barras-grafico {
+    display: grid;
+    height: 185px;
+    grid-template-areas: 
+    "mov"
+    "mes";
+    grid-template-rows: 1fr 20px;
+    font-size: 18px;
+  
+    & label {
+        grid-area: mes;
+    }
+  
+    & .entradaSaida {
+        display: grid;
+        grid-area: mov;
+        grid-template-areas: 
+        "entrada saida";
+        place-items: end;
+        width: 90%;
+        gap: 2px;
+        & .entrada {
+            grid-area: entrada;
+            justify-items: center;
+            background-color: rgb(50, 160, 83); 
+            width: 10px; 
+            color: black; font-weight: 1000;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+  
+        }
+        & .saida {
+            grid-area: saida;
+            background-color: rgb(202, 63, 38); 
+            width: 10px; 
+            grid-area: saida;
+            color: black; 
+            font-weight: 1000;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;      }
+    }
 }
