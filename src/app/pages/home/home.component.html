@@ -32,9 +32,9 @@
     </div>
 
     <div class="graficos">
-      <div class="grafico-pizza sombra" [style]="{'--porcentagem': (somaDespesasMes*100/totalEntradas).toString()}" (click)="mostra = !mostra">
+      <div class="grafico-pizza sombra" [style]="{'--porcentagem': (somaDespesasMes*100/totalEntradas).toString()}" (click)="dashboard()">
         <div class="legenda">
-          {{somaDespesasMes*100/totalEntradas * 10 | percent: '00.00'}}
+          {{somaDespesasMes*100/totalEntradas * 10 | percent }}
           <div class="linha"></div>
           {{aindaPossoGastar | currency}}
         </div>
@@ -56,17 +56,18 @@
         <label>{{mes.nomeAbrev.substring(2,0).toUpperCase()}}</label>
       </div>
     </div>
-
     <div class="progressoes sombra" *ngIf="mostra">
-      <div class="progressao-grafico" *ngFor="let mes of graficos" >
+      <div class="progressao-grafico" *ngFor="let mes of graficos" [ngStyle]="{'height': contemMenorQZero? '115px': '30px'}">
+
         <div class="progressao sombra"
-        [ngStyle]="{'height': (mes.progressao >= 0 ? mes.progressao * 70 / systemService.ano.maiorValor + 'px' : -mes.progressao * 70 / systemService.ano.maiorValor + 'px'), 
+        [ngStyle]="{'height': (mes.progressao >= 0 ? (contemMenorQZero? mes.progressao * 100 / systemService.ano.maiorValor + 'px': mes.progressao * 150 / systemService.ano.maiorValor + 'px' ) : -mes.progressao * 80 / systemService.ano.maiorValor + 'px'), 
                   'background-color': DefinirCor(mes.progressao), 
-                  'margin-top': (mes.progressao < 0 ? '0' : -mes.progressao * 70 / systemService.ano.maiorValor + 'px')}">
+                  'margin-top': (mes.progressao < 0 ? '0' : -mes.progressao * (contemMenorQZero?70:150) / systemService.ano.maiorValor + 'px')}">
           <div class="valor-progressao" style=" transform: translateX(-50%) rotate(-90deg); font-size: 12px; position: relative;">
             {{mes.progressao| currency}}
           </div> 
         </div>
+
         <label>{{mes.nomeAbrev.substring(2,0).toUpperCase()}}</label>
       </div>
     </div>

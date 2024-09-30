@@ -1,5 +1,4 @@
-.abrev-mes, .paga{
-    margin-right: 12px;
+.abrev-mes, .paga, .grafico-pizza{
     transition: transform 0.3s;
 }
 
@@ -214,7 +213,7 @@
     font-weight: bolder;
     font-size: 18px;
 }
-.abrev-mes:hover, .barra-progressao:hover, .card-button:hover, .paga:hover {
+.abrev-mes:hover, .barra-progressao:hover, .card-button:hover, .paga:hover, .grafico-pizza:hover {
     transform: scale(1.2);
     cursor: pointer;
 }
@@ -228,6 +227,3 @@
 
 }
 
-.sombra {
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.274)
-}

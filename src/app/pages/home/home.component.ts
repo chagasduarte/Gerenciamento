@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Inject, LOCALE_ID, OnChanges, OnInit, SimpleChanges, Type, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, Inject, OnInit, Type, ViewChild, ViewContainerRef } from '@angular/core';
 import { Ano, Mes, Meses } from '../../utils/meses';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { Despesa } from '../../shared/models/despesa';
@@ -6,16 +6,12 @@ import { DespesasService } from '../../shared/services/despesas.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { ParcelasService } from '../../shared/services/parcelas.service';
-import { Parcela } from '../../shared/models/parcela';
 import { Entrada } from '../../shared/models/entradas';
 import { EntradasService } from '../../shared/services/entradas.service';
 import { GetSalarioLiquido } from '../../utils/functions/salario';
 import { ContasService } from '../../shared/services/contas.service';
 import { Conta } from '../../shared/models/conta';
 import { GastosComponent } from '../gastos/gastos.component';
-import { MensalComponent } from '../../shared/components/mensal/mensal.component';
-import { AnualComponent } from '../../shared/components/anual/anual.component';
-import { GraficosComponent } from '../../shared/components/graficos/graficos.component';
 import { SystemService } from '../../shared/services/system.service';
 import { Cor } from '../../utils/cores';
 import { NgxEchartsDirective } from 'ngx-echarts';
@@ -24,8 +20,7 @@ import { NgxSpinnerComponent } from 'ngx-spinner';
 import { forkJoin } from 'rxjs';
 import { DefineCor } from '../../utils/functions/defineCorGrafico';
 import { AgrupamentoTipoDespesa, DespesasMes } from '../../shared/models/despesasMes';
-import { atualizarJson } from '../../utils/functions/trataJsonProgressao';
-import { Graficos, MesGrafico } from '../../shared/models/graficos';
+import { MesGrafico } from '../../shared/models/graficos';
 import { GraficoService } from '../../shared/services/graficos.service';
 
 @Component({
@@ -70,6 +65,8 @@ export class HomeComponent implements OnInit {
   contasValor: number[] = [];
   graficos!: MesGrafico[];
   mostra: boolean = false;
+  contemMenorQZero: boolean = true;
+
 
   constructor(
     @Inject(DOCUMENT) document:Document,
@@ -105,6 +102,7 @@ export class HomeComponent implements OnInit {
     }
     this.saldoAtual = 0;
     this.aindaPossoGastar = 0;
+    this.contemMenorQZero = false;
     forkJoin([
       this.despesaService.GetDespesasParceladas(this.systemService.mes.valor + 1, this.systemService.ano.valor),
       this.parcelasService.GetParcelasByMes(this.systemService.mes.valor + 1, this.systemService.ano.valor),
@@ -247,6 +245,9 @@ export class HomeComponent implements OnInit {
           if (this.systemService.ano.maiorValor < Math.abs(x.progressao)){
             this.systemService.ano.maiorValor = Math.abs(x.progressao);
           }
+          if (x.progressao < 0){
+            this.contemMenorQZero = true;
+          }
         })
       },
       error: (err: any) => {
@@ -259,7 +260,6 @@ export class HomeComponent implements OnInit {
   mudaMes(mes: Mes){
     this.systemService.mes = mes;
     this.preencheInformacoes();
-    this.mostrarInfo("m");
   }
 
   adicionarDespesa() {
@@ -271,31 +271,6 @@ export class HomeComponent implements OnInit {
   }
   gastos() {
     this.router.navigate(["gastos"]);
-  }
-
-  mostrarInfo(comp: string){
-    switch (comp) {
-      case "m": {
-        this.definirContainer(MensalComponent);
-        this.colorMensal = new Cor().branca;
-        this.colorAnual = new Cor().cinza;
-        this.colorGrafico = new Cor().cinza;
-        break;
-      }
-      case "a": {
-        //this.definirContainer(AnualComponent);
-        //this.colorAnual = new Cor().branca;
-        //this.colorMensal = new Cor().cinza;
-        //this.colorGrafico = new Cor().cinza;
-        break;
-      }
-      case "g": {
-        this.colorGrafico = new Cor().branca;
-        this.colorAnual = new Cor().cinza;
-        this.colorMensal = new Cor().cinza;
-        this.definirContainer(GraficosComponent);
-      }
-    }
   }
 
   definirContainer(component: Type<any>) {
@@ -382,6 +357,8 @@ export class HomeComponent implements OnInit {
   DefinirCor(valor: number): any {
     return DefineCor(valor)
   }
-
+  dashboard(){
+    this.router.navigate(['dash'])
+  }
     
 }

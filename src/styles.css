@@ -182,12 +182,10 @@ img {
 
 .progressao-grafico{
   display: grid;
-  height: 100px; 
   grid-template-areas: 
-  "titulo"
   "mov"
   "mes";
-  grid-template-rows: 15px 1fr 15px;
+  grid-template-rows: 1fr 15px;
   font-size: 18px;
   & .progressao {
     grid-area: mov;
@@ -240,6 +238,10 @@ img {
           color: black; 
           font-weight: 1000;
           border-top-left-radius: 15px;
-          border-top-right-radius: 15px;      }
+          border-top-right-radius: 15px;      
+      }
   }
+}
+.sombra {
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.274)
 }
