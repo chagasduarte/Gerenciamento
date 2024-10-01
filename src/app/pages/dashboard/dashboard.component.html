@@ -35,7 +35,7 @@
       [ngStyle]="{'height': (mes.progressao >= 0 ? (contemMenorQZero? mes.progressao * 100 / systemService.ano.maiorValor + 'px': mes.progressao * 150 / systemService.ano.maiorValor + 'px' ) : -mes.progressao * 80 / systemService.ano.maiorValor + 'px'), 
                 'background-color': DefinirCor(mes.progressao), 
                 'margin-top': (mes.progressao < 0 ? '0' : -mes.progressao * (contemMenorQZero?70:150) / systemService.ano.maiorValor + 'px')}">
-        <div class="valor-progressao" style=" transform: translateX(-50%) rotate(-90deg); font-size: 12px; position: relative;">
+        <div class="valor-progressao" style=" transform: translateX(-50%) rotate(-90deg); font-size: 12px; position: relative;" *ngIf="mes.progressao != 0">
           {{mes.progressao| currency}}
         </div> 
       </div>
