@@ -27,7 +27,12 @@ export class DashboardComponent implements  OnInit {
     contemMenorQZero: boolean = true;
     graficos!: MesGrafico[];
     anosDeDivida: number[] = [2024, 2025, 2026];
-    
+    legendas: {nome: string, cor: string}[] = [
+        {nome: "Alimentação", cor: "rgb(56, 124, 141)"}, 
+        {nome: "Transporte", cor: "rgb(226, 224, 111)"},
+        {nome: "Saúde", cor: "rgb(182, 47, 47)"},
+        {nome: "Lazer", cor: "rgb(135, 67, 141)"}
+    ]
 
     constructor(
         public systemService: SystemService,

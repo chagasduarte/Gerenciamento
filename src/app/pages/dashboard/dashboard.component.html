@@ -62,5 +62,25 @@
       <label>{{mes.nomeAbrev.substring(2,0).toUpperCase()}}</label>
     </div>
   </div>
+  <div class="pizza">
+    <div class="grafico-pizza" 
+    [style]="{
+      '--saude': 25, 
+      '--alimentacao': 10, 
+      '--transporte': 20, 
+      '--educacao': 20,
+      '--lazer': 10,
+      '--moradia':10,
+      '--servicos': 10,
+      }">
+    </div>
+    <div class="legendas">
+      <div class="legenda" *ngFor="let legenda of legendas">
+        <div class="cor me-2" [ngStyle]="{'background-color': legenda.cor}"></div>
+        <div class="nome">{{legenda.nome}}</div>
+      </div>
+    </div>
+  </div>
+  
 </div>
   

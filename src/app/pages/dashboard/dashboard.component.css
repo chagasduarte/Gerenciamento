@@ -1,3 +1,7 @@
+.dashboard {
+  display: flex;
+}
+
 
 .progressoes, .barras{
   display: grid;
@@ -9,7 +13,6 @@
   padding: 10px;
   margin-bottom: 20px;
 }
-
 
 .progressao-grafico{
   display: grid;
@@ -86,4 +89,52 @@
   font-size: 12px; 
   width: 10px;
   height: 10px;
+}
+
+.pizza {
+  display: grid;
+  grid-template-areas: 
+  'grafico legenda';
+  gap: 20px;
+  margin: 10px; 
+}
+
+.grafico-pizza {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: conic-gradient(
+    rgb(56, 124, 141) 0%, 
+    rgb(56, 124, 141) calc(var(--alimentacao) * 1%), /* Primeira parte */
+    rgb(226, 224, 111) calc(var(--alimentacao) * 1%), /* Começo da segunda parte */
+    rgb(226, 224, 111) calc(var(--alimentacao) * 1% + var(--saude) * 1%), /* Segunda parte */
+    rgb(182, 47, 47) calc(var(--alimentacao) * 1% + var(--saude) * 1%), /* Começo da terceira parte */
+    rgb(182, 47, 47) calc(var(--alimentacao) * 1% + var(--saude) * 1% + var(--transporte) * 1%), /* Terceira parte */
+    rgb(135, 67, 141) calc(var(--alimentacao) * 1% + var(--saude) * 1% + var(--transporte) * 1%), /* Começo da quarta parte */
+    rgb(135, 67, 141) calc(var(--alimentacao) * 1% + var(--saude) * 1% + var(--transporte) * 1% + var(--educacao) * 1%), /* Quarta parte */
+    rgb(0, 100, 0) calc(var(--alimentacao) * 1% + var(--saude) * 1% + var(--transporte) * 1% + var(--educacao) * 1%), /* Começo da quinta parte */
+    rgb(0, 100, 0) calc(var(--alimentacao) * 1% + var(--saude) * 1% + var(--transporte) * 1% + var(--educacao) * 1% + var(--lazer) * 1%), /* Quinta parte */
+    rgb(0, 0, 100) calc(var(--alimentacao) * 1% + var(--saude) * 1% + var(--transporte) * 1% + var(--educacao) * 1% + var(--lazer) * 1%), /* Começo da sexta parte */
+    rgb(0, 0, 100) calc(var(--alimentacao) * 1% + var(--saude) * 1% + var(--transporte) * 1% + var(--educacao) * 1% + var(--lazer) * 1% + var(--moradia) * 1%), /* Sexta parte */
+    rgb(255, 165, 0) calc(var(--alimentacao) * 1% + var(--saude) * 1% + var(--transporte) * 1% + var(--educacao) * 1% + var(--lazer) * 1% + var(--moradia) * 1%), /* Começo da sétima parte */
+    rgb(255, 165, 0) 100% /* Sétima parte e cor final */
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.grafico-pizza::before {
+  background-color: azure;
+}
+
+
+.legenda{
+  display: flex;
+}
+
+.cor{
+  width: 20px;
+  height: 20px;
 }
