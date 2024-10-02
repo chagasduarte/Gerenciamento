@@ -27,7 +27,7 @@ export class DashboardComponent implements  OnInit {
     contemMenorQZero: boolean = true;
     graficos!: MesGrafico[];
     anosDeDivida: number[] = [2024, 2025, 2026];
-
+    
 
     constructor(
         public systemService: SystemService,
@@ -44,18 +44,21 @@ export class DashboardComponent implements  OnInit {
         this.graficosService.GetGraficos(this.systemService.ano.valor).subscribe(x => {
             this.graficos = x.meses.sort((a,b) => {return a.id - b.id});
             x.meses.map( x => {
-            if (this.systemService.ano.maiorValor < Math.abs(x.progressao)){
-                this.systemService.ano.maiorValor = Math.abs(x.progressao);
-            }
-            if (x.progressao < 0){
-                this.contemMenorQZero = true;
-            }
+                if (this.systemService.ano.maiorValor < Math.abs(x.progressao)){
+                    this.systemService.ano.maiorValor = Math.abs(x.progressao);
+                }
+                if (x.progressao < 0){
+                    this.contemMenorQZero = true;
+                }
             })
         })
     }
 
-    DefinirCor(valor: number): any {
+    DefinirCor(valor: number): string {
         return DefineCor(valor)
+    }
+    DefineHeight(valor: number): string {
+        return (Math.abs(valor) * 200 / this.systemService.ano.maiorValor) + 'px';
     }
     voltar(){
         this.router.navigate(['home'])

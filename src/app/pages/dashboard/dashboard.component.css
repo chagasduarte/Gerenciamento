@@ -1,71 +1,89 @@
 
 .progressoes, .barras{
+  display: grid;
+  height: 230px;
+  width: 400px;
+  grid-template-columns: repeat(12, auto);
+  place-items: end;
+  gap:2.5px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+
+.progressao-grafico{
+  display: grid;
+  grid-template-areas: 
+  "mov"
+  "mes";
+  height: 100%;
+  grid-template-rows: 1fr 15px;
+  font-size: 18px;
+  & .positivo {
     display: grid;
-    height: 230px;
-    width: 400px;
-    grid-template-columns: repeat(12, auto);
-    place-items: end;
-    gap:2.5px;
-    padding: 10px;
-    margin-bottom: 20px;
+    place-self: end;
+    place-items: center;
+    grid-area: mov;
+    width: 15px;
   }
-  
-  
-  .progressao-grafico{
+  & .negativo {
+    
     display: grid;
-    grid-template-areas: 
-    "mov"
-    "mes";
-    grid-template-rows: 1fr 15px;
-    font-size: 18px;
-    & .progressao {
-      grid-area: mov;
-      justify-self: center;
-      width: 15px;
-    }
-  
-    & label {
+    place-self: top;
+    place-items: center;
+    grid-area: mov;
+    justify-self: center;
+    margin-top: 100px;
+    width: 15px;
+  }
+  & label {
+    grid-area: mes;
+  }
+}
+
+.barras-grafico {
+  display: grid;
+  height: 185px;
+  grid-template-areas: 
+  "mov"
+  "mes";
+  grid-template-rows: 1fr 20px;
+  font-size: 18px;
+
+  & label {
       grid-area: mes;
-    }
   }
-  
-  .barras-grafico {
-    display: grid;
-    height: 185px;
-    grid-template-areas: 
-    "mov"
-    "mes";
-    grid-template-rows: 1fr 20px;
-    font-size: 18px;
-  
-    & label {
-        grid-area: mes;
-    }
-  
-    & .entradaSaida {
-        display: grid;
-        grid-area: mov;
-        grid-template-areas: 
-        "entrada saida";
-        place-items: end;
-        width: 90%;
-        gap: 2px;
-        & .entrada {
-            grid-area: entrada;
-            justify-items: center;
-            background-color: rgb(50, 160, 83); 
-            width: 12.5px; 
-            color: black; 
-            font-weight: 1000;
-        }
-        & .saida {
-            grid-area: saida;
-            background-color: rgb(202, 63, 38); 
-            width: 12.5px; 
-            grid-area: saida;
-            color: black; 
-            font-weight: 1000;
-        }
-    }
+
+  & .entradaSaida {
+      display: grid;
+      grid-area: mov;
+      grid-template-areas: 
+      "entrada saida";
+      place-items: end;
+      width: 90%;
+      gap: 2px;
+      & .entrada {
+          grid-area: entrada;
+          justify-items: center;
+          background-color: rgb(50, 160, 83); 
+          width: 12.5px; 
+          color: black; 
+          font-weight: 1000;
+      }
+      & .saida {
+          grid-area: saida;
+          background-color: rgb(202, 63, 38); 
+          width: 12.5px; 
+          grid-area: saida;
+          color: black; 
+          font-weight: 1000;
+      }
   }
-  
+}
+
+.valor-progressao {
+  transform: translateX(-50%) rotate(-90deg); 
+  font-size: 12px; 
+  width: 10px;
+  height: 10px;
+}
