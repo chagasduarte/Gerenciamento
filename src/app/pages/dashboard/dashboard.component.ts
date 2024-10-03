@@ -29,9 +29,12 @@ export class DashboardComponent implements  OnInit {
     anosDeDivida: number[] = [2024, 2025, 2026];
     legendas: {nome: string, cor: string}[] = [
         {nome: "Alimentação", cor: "rgb(56, 124, 141)"}, 
-        {nome: "Transporte", cor: "rgb(226, 224, 111)"},
-        {nome: "Saúde", cor: "rgb(182, 47, 47)"},
-        {nome: "Lazer", cor: "rgb(135, 67, 141)"}
+        {nome: "Transporte", cor: "rgb(182, 47, 47)"},
+        {nome: "Saúde", cor: "rgb(226, 224, 111)"},
+        {nome: "Lazer", cor: "rgb(0, 0, 100)"},
+        {nome: "Educacao", cor: "rgb(135, 67, 141)"},
+        {nome: "Educacao", cor: "rgb(0, 100, 0)"},
+        {nome: "Moradia", cor: "rgb(255, 165, 0)"}
     ]
 
     constructor(
