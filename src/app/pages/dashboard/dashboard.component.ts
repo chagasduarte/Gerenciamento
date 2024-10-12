@@ -4,7 +4,7 @@ import { NgxSpinnerComponent } from "ngx-spinner";
 import { GastosComponent } from "../gastos/gastos.component";
 import { CommonModule } from "@angular/common";
 import { SystemService } from "../../shared/services/system.service";
-import { MesGrafico } from "../../shared/models/graficos";
+import { MesGrafico, TipoDespesaGrafico } from "../../shared/models/graficos";
 import { DefineCor } from "../../utils/functions/defineCorGrafico";
 import { GraficoService } from "../../shared/services/graficos.service";
 import { Router } from "@angular/router";
@@ -26,6 +26,7 @@ import { Ano, Mes } from "../../utils/meses";
 export class DashboardComponent implements  OnInit {
     contemMenorQZero: boolean = true;
     graficos!: MesGrafico[];
+    tipoDespesaAgrupada!: TipoDespesaGrafico[];
     anosDeDivida: number[] = [2024, 2025, 2026];
     legendas: {nome: string, cor: string}[] = [
         {nome: "Alimentação", cor: "rgb(56, 124, 141)"}, 
@@ -50,6 +51,7 @@ export class DashboardComponent implements  OnInit {
     buscaDados(){
         this.contemMenorQZero = false;
         this.graficosService.GetGraficos(this.systemService.ano.valor).subscribe(x => {
+            this.tipoDespesaAgrupada = x.tipoDespesaAgrupada.sort((a,b) => { return a.tipoDespesa - b.tipoDespesa });
             this.graficos = x.meses.sort((a,b) => {return a.id - b.id});
             x.meses.map( x => {
                 if (this.systemService.ano.maiorValor < Math.abs(x.progressao)){

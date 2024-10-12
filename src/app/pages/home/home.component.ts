@@ -119,7 +119,7 @@ export class HomeComponent implements OnInit {
 
         //despesas parceladas
         this.despesasParceladas = success[0];
-
+        console.log(success[0]);
         //parcelas do mes
         success[1].map(parcela => {
           parcela.dataVencimento = new Date(parcela.dataVencimento)

@@ -65,13 +65,13 @@
   <div class="pizza">
     <div class="grafico-pizza" 
     [style]="{
-      '--saude': 25, 
-      '--alimentacao': 10, 
-      '--transporte': 20, 
-      '--educacao': 20,
-      '--lazer': 10,
-      '--moradia':10,
-      '--servicos': 10,
+      '--saude': tipoDespesaAgrupada[2].valorTotal, 
+      '--alimentacao': tipoDespesaAgrupada[0].valorTotal, 
+      '--transporte': tipoDespesaAgrupada[1].valorTotal, 
+      '--educacao': tipoDespesaAgrupada[3].valorTotal,
+      '--lazer': tipoDespesaAgrupada[4].valorTotal,
+      '--moradia':tipoDespesaAgrupada[5].valorTotal,
+      '--servicos': tipoDespesaAgrupada[6].valorTotal,
       }">
     </div>
     <div class="legendas">
