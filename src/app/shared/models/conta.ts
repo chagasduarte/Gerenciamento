@@ -1,9 +1,9 @@
 export interface Conta {
-    id: number;        
-    nome: string;      
-    descricao: string; 
-    credito: number;   
-    debito: number;    
-    mes: number;
-    ano: number;
+    Id: number;        
+    Nome: string;      
+    Descricao: string; 
+    Credito: number;   
+    Debito: number;    
+    Mes: number;
+    Ano: number;
 }

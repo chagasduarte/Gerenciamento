@@ -55,7 +55,7 @@ export class ContasDetalheComponent {
     this.route.navigate(["contas"]);
   }
   retornaMes(conta: Conta): Date {
-    return new Date(conta.ano, conta.mes-1, 1);
+    return new Date(conta.Ano, conta.Mes-1, 1);
   }
 
 

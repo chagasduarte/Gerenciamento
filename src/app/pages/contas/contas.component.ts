@@ -27,8 +27,8 @@ export class ContasComponent {
   }
 
   OnSubmit(){
-    this.conta.mes = new Date(this.dataConta).getUTCMonth() + 1;
-    this.conta.ano = new Date(this.dataConta).getUTCFullYear();
+    this.conta.Mes = new Date(this.dataConta).getUTCMonth() + 1;
+    this.conta.Ano = new Date(this.dataConta).getUTCFullYear();
     this.contasService.PostConta(this.conta).subscribe({
       next: (success: Conta) => {
          this.router.navigate(["contas-detalhe"]);

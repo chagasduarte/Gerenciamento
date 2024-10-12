@@ -80,7 +80,7 @@
       <div class="grafico-body">
         <div class="porcentagem-despesa" *ngFor="let despesa of despesasParceladas">
           <div class="barra-progressao" (click)="parcelas(despesa)">
-            <div class="progressao-barra" [ngStyle]="{'width': (despesa.valorPago * 150)/ despesa.valorTotal + 'px'}">{{despesa.nome}}</div>
+            <div class="progressao-barra" [ngStyle]="{'width': (despesa.ValorPago * 150)/ despesa.ValorTotal + 'px'}">{{despesa.Nome}}</div>
           </div>
         </div>
       </div>
@@ -165,26 +165,26 @@
     </div>
   </div>
 
-  <div *ngIf="despesasPagas!.agrupamento.length > 0" class="agrupamento">
+  <div *ngIf="despesasPagas!.Agrupamento.length > 0" class="agrupamento">
     <div class="pagas">
-      <div class="paga sombra" *ngFor="let paga of despesasPagas!.agrupamento" (click)="filtraPagas(paga.despesas)" >
-        <img [src]="defineImagem(paga.tipo)" style="width: 50px; height: 50px;" alt="">
-        {{paga.soma | currency}}
+      <div class="paga sombra" *ngFor="let paga of despesasPagas!.Agrupamento" (click)="filtraPagas(paga.Despesas)" >
+        <img [src]="defineImagem(paga.Tipo)" style="width: 50px; height: 50px;" alt="">
+        {{paga.Soma | currency}}
       </div>
     </div>
   </div>
 
   <div *ngFor="let despesa of despesasFiltradas" class="card-feed">
-    <div class="dia sombra">{{despesa.dataCompra.getUTCDate()}}</div>
-    <div class="despesa sombra" [ngStyle]="{'background-color': despesa.isPaga == 3? '#af6e6e': 'rgb(78, 156, 156)'}">
+    <div class="dia sombra">{{despesa.DataCompra.getUTCDate()}}</div>
+    <div class="despesa sombra" [ngStyle]="{'background-color': despesa.IsPaga == 3? '#af6e6e': 'rgb(78, 156, 156)'}">
       <div class="circle">
-        <img [src]="defineImagem(despesa.tipoDespesa)" alt="">
+        <img [src]="defineImagem(despesa.TipoDespesa)" alt="">
       </div>
       <div class="titulo">
-        {{despesa.nome}} - {{despesa.valor | currency}}
+        {{despesa.Nome}} - {{despesa.Valor | currency}}
         <input type="checkbox" class="">
       </div>
-      <div class="detalhe">{{despesa.detalhes}}</div>
+      <div class="detalhe">{{despesa.Detalhes}}</div>
     </div>
   </div>
 

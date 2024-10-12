@@ -49,8 +49,8 @@ adicionar: any;
   calculaGastosDoMes(){
     this.despesaService.GetDespesasAdicionais(this.systemsService.ano.valor).subscribe({
       next: (success: Despesa[]) => {
-        this.gastos = success.filter(x => !x.isPaga).filter(x => new Date(x.dataCompra).getUTCMonth() == this.systemsService.mes.valor);
-        this.gastosPagos = success.filter(x => x.isPaga).filter(x => new Date(x.dataCompra).getUTCMonth() == this.systemsService.mes.valor);;
+        this.gastos = success.filter(x => !x.IsPaga).filter(x => new Date(x.DataCompra).getUTCMonth() == this.systemsService.mes.valor);
+        this.gastosPagos = success.filter(x => x.IsPaga).filter(x => new Date(x.DataCompra).getUTCMonth() == this.systemsService.mes.valor);;
       },
       error: (err: any) => {
         this.toastService.error("Errou, Porraaaa... Burro!!!", "Erro");
@@ -64,14 +64,14 @@ adicionar: any;
   }
 
   pagar() {
-    let contaput = this.contas.find(x => x.id == this.idConta);
+    let contaput = this.contas.find(x => x.Id == this.idConta);
     if(contaput){
       if(this.listaPagamento.length > 0) {
         this.listaPagamento.map(despesa => {
-          if ((contaput.debito - despesa.valorTotal) >= 0) {
-            contaput.debito -= despesa.valorTotal
+          if ((contaput.Debito - despesa.ValorTotal) >= 0) {
+            contaput.Debito -= despesa.ValorTotal
             this.contasService.PutConta(contaput!).subscribe(x => {
-              despesa.isPaga = true;
+              despesa.IsPaga = true;
               this.despesaService.PutDespesa(despesa).subscribe({
                 next: (success: Despesa) => {
                   this.toastService.success("Sucesso", "Despesa paga com sucesso");

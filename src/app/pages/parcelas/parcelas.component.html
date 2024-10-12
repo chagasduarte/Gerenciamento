@@ -14,12 +14,12 @@
         <div *ngFor="let parcela of parcelas">
           <div class="card card-sm" >
             <div class="card-header text-break">
-              <b>{{parcela.dataVencimento | date}}</b> 
+              <b>{{parcela.DataVencimento | date}}</b> 
             </div>
             <div class="card-body">
               <div class="d-flex">
                 <div>Valor:</div>
-                <div>{{parcela.valor | currency}}</div>
+                <div>{{parcela.Valor | currency}}</div>
               </div>
               <div class="row">
                 <button class="btn btn-sm btn-primary" (click)="adicionaLista(parcela)"> Adicionar </button>
@@ -35,12 +35,12 @@
       <div class="div">
         <div class="card bg-sucess">
           <select name="conta" id="conta" class="form-select" [(ngModel)]="idConta">
-            <option [value]="conta.id" *ngFor="let conta of contas" class="form-control">{{conta.nome}}</option>
+            <option [value]="conta.Id" *ngFor="let conta of contas" class="form-control">{{conta.Nome}}</option>
           </select>
           <div class="card-body">
             <div class="d-flex" *ngFor="let item of listaPagamento">
-              <div>{{item.dataVencimento | date}}</div>
-              <div>{{item.valor | currency}}</div>
+              <div>{{item.DataVencimento | date}}</div>
+              <div>{{item.Valor | currency}}</div>
             </div>
           </div>
           <button class="btn btn-sm btn-success" (click)="pagar()">Pagar</button>
@@ -57,13 +57,13 @@
     <div *ngFor="let parcela of parcelasPagas">
       <div class="card card-sm me-2" >
         <div class="card-header text-break">
-          <b>{{parcela.dataVencimento | date}}</b> 
+          <b>{{parcela.DataVencimento | date}}</b> 
           <button class="btn btn-sm btn-danger" (click)="despagar(parcela)">-</button>
         </div>
         <div class="card-body">
           <div class="d-flex">
             <div>Valor:</div>
-            <div>{{parcela.valor | currency}}</div>
+            <div>{{parcela.Valor | currency}}</div>
           </div>
         </div>
       </div>

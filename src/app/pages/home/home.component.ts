@@ -111,8 +111,7 @@ export class HomeComponent implements OnInit {
       this.entradasService.GetEntradas(),
       this.contasService.GetContaByMes(this.systemService.mes.valor + 1, this.systemService.ano.valor),
       this.contasService.GetContaByMes(this.systemService.mes.valor + 2 > 12? 1: this.systemService.mes.valor + 2, this.systemService.mes.valor + 2 > 12? this.systemService.ano.valor + 1: this.systemService.ano.valor),
-      this.contasService.GetContas(),
-      this.graficosService.GetGraficos(this.systemService.ano.valor)
+      this.contasService.GetContas()
     ]).subscribe({
       next: (success) => {
         let aux: {idDespesa: number, valorParcela: number, dataParcela: Date, isPaga: number}[] = [];
@@ -122,51 +121,51 @@ export class HomeComponent implements OnInit {
         console.log(success[0]);
         //parcelas do mes
         success[1].map(parcela => {
-          parcela.dataVencimento = new Date(parcela.dataVencimento)
+          parcela.DataVencimento = new Date(parcela.DataVencimento)
 
-          if(parcela.isPaga == 0){
-            this.gastoTotalMes += parcela.valor;
+          if(parcela.IsPaga == 0){
+            this.gastoTotalMes += parseFloat(parcela.Valor.toString());
           }
-          if (parcela.isPaga != 3) {
-            this.idsPrevisto.push(parcela.id)
+          if (parcela.IsPaga != 3) {
+            this.idsPrevisto.push(parcela.Id)
           }
-          aux.push({idDespesa: parcela.despesaId, valorParcela: parcela.valor, dataParcela: new Date(parcela.dataVencimento), isPaga: parcela.isPaga})
+          aux.push({idDespesa: parcela.DespesaId, valorParcela: parcela.Valor, dataParcela: new Date(parcela.DataVencimento), isPaga: parcela.IsPaga})
         });
 
         //despesas adicionais
         success[2].map(gasto => {
-          gasto.dataCompra = new Date(gasto.dataCompra);
-          if(!gasto.isPaga && gasto.dataCompra.getUTCMonth() == this.systemService.mes.valor) {
-            this.gastosAdicionais += gasto.valorTotal;
+          gasto.DataCompra = new Date(gasto.DataCompra);
+          if(!gasto.IsPaga && gasto.DataCompra.getUTCMonth() == this.systemService.mes.valor) {
+            this.gastosAdicionais += parseFloat(gasto.ValorTotal.toString());
           }
-          this.systemService.saidas[gasto.dataCompra.getUTCMonth()] += gasto.valorTotal;
-          if (gasto.dataCompra.getUTCMonth() == this.systemService.mes.valor){
+          this.systemService.saidas[gasto.DataCompra.getUTCMonth()] += parseFloat(gasto.ValorTotal.toString());
+          if (gasto.DataCompra.getUTCMonth() == this.systemService.mes.valor){
             this.despesasMes.push({
-              nome: gasto.nome, 
-              detalhes: gasto.descricao, 
-              tipoDespesa: gasto.tipoDespesa, 
-              valor: gasto.valorTotal,
-              dataCompra: new Date(gasto.dataCompra),
-              isPaga: gasto.isPaga? 1: (gasto.dataCompra < new Date())? 3 : 0 
+              Nome: gasto.Nome, 
+              Detalhes: gasto.Descricao, 
+              TipoDespesa: gasto.TipoDespesa, 
+              Valor: parseFloat(gasto.ValorTotal.toString()),
+              DataCompra: new Date(gasto.DataCompra),
+              IsPaga: gasto.IsPaga? 1: (gasto.DataCompra < new Date())? 3 : 0 
             });
-            this.somaDespesasMes += gasto.valorTotal;
+            this.somaDespesasMes += parseFloat(gasto.ValorTotal.toString());
           }
         });
 
         //Todas as Parcelas
         success[3].map(parcela => {
-          parcela.dataVencimento = new Date(parcela.dataVencimento);
-          if(parcela.dataVencimento.getUTCFullYear() == new Date().getUTCFullYear()){
-            if(this.systemService.saidas[parcela.dataVencimento.getUTCMonth()]){
-              this.systemService.saidas[parcela.dataVencimento.getUTCMonth()] += parcela.valor;
+          parcela.DataVencimento = new Date(parcela.DataVencimento);
+          if(parcela.DataVencimento.getUTCFullYear() == new Date().getUTCFullYear()){
+            if(this.systemService.saidas[parcela.DataVencimento.getUTCMonth()]){
+              this.systemService.saidas[parcela.DataVencimento.getUTCMonth()] += parseFloat(parcela.Valor.toString());
             }
             else{
-              this.systemService.saidas[parcela.dataVencimento.getUTCMonth()] = parcela.valor;
+              this.systemService.saidas[parcela.DataVencimento.getUTCMonth()] = parseFloat(parcela.Valor.toString());
             }
             //busca parcelas atrasadas
-            if(parcela.isPaga == 3 && (new Date().getUTCMonth() == this.systemService.mes.valor || parcela.dataVencimento.getUTCMonth() == this.systemService.mes.valor)){
-              this.gastoTotalMes += parcela.valor;
-              this.idsPrevisto.push(parcela.id)
+            if(parcela.IsPaga == 3 && (new Date().getUTCMonth() == this.systemService.mes.valor || parcela.DataVencimento.getUTCMonth() == this.systemService.mes.valor)){
+              this.gastoTotalMes += parseFloat(parcela.Valor.toString());
+              this.idsPrevisto.push(parcela.Id)
             }
             
           }
@@ -175,46 +174,46 @@ export class HomeComponent implements OnInit {
 
         //entradas
         success[4].map(x => {
-          x.dataDebito = new Date(x.dataDebito);
+          x.DataDebito = new Date(x.DataDebito);
 
-          if (x.dataDebito.getUTCFullYear() == this.systemService.ano.valor) {
-            if (x.dataDebito.getUTCMonth() == this.systemService.mes.valor) {
-              if ( !x.status) {
-                this.aReceber += x.isFixo? GetSalarioLiquido(x.valor)[2].valor: x.valor;
+          if (x.DataDebito.getUTCFullYear() == this.systemService.ano.valor) {
+            if (x.DataDebito.getUTCMonth() == this.systemService.mes.valor) {
+              if ( !x.Status) {
+                this.aReceber += x.IsFixo? GetSalarioLiquido(parseFloat(x.Valor.toString()))[2].valor: parseFloat(x.Valor.toString());
 
               }
-              this.totalEntradas += x.valor;
+              this.totalEntradas += parseFloat(x.Valor.toString());
             }
             
-            this.systemService.entradas[x.dataDebito.getUTCMonth()] += x.isFixo? GetSalarioLiquido(x.valor)[2].valor: x.valor;
+            this.systemService.entradas[x.DataDebito.getUTCMonth()] += x.IsFixo? GetSalarioLiquido(parseFloat(x.Valor.toString()))[2].valor: parseFloat(x.Valor.toString());
           }
         });
 
         //contas
         success[5].map(x => {
-          this.saldoAtual += x.debito;
+          this.saldoAtual += parseFloat(x.Debito.toString());
         });
 
         //calcula saldo do mes
         this.aindaPossoGastar = (this.saldoAtual + this.aReceber) - (this.gastoTotalMes + this.gastosAdicionais);
-        const contas = success[6].sort((a, b) => {return b.id - a.id});
+        const contas = success[6].sort((a, b) => {return b.Id - a.Id});
         if (contas) {
-          contas[0].debito = this.aindaPossoGastar;
-          if (contas[0].mes > new Date().getUTCMonth() + 1 || contas[0].ano > new Date().getUTCFullYear()){
+          contas[0].Debito = this.aindaPossoGastar;
+          if (contas[0].Mes > new Date().getUTCMonth() + 1 || contas[0].Ano > new Date().getUTCFullYear()){
             this.contasService.PutConta(contas[0]).subscribe(x => {});
           }
         } 
         aux.forEach( parcela => {
-          const gasto = success[0].find(x => x.id == parcela.idDespesa);
+          const gasto = success[0].find(x => x.Id == parcela.idDespesa);
           this.despesasMes.push({
-            nome: gasto!.nome, 
-            detalhes: gasto!.descricao, 
-            tipoDespesa: gasto!.tipoDespesa, 
-            valor: parcela.valorParcela,
-            dataCompra: new Date(parcela.dataParcela),
-            isPaga: parcela.isPaga
+            Nome: gasto!.Nome, 
+            Detalhes: gasto!.Descricao, 
+            TipoDespesa: gasto!.TipoDespesa, 
+            Valor: parseFloat(parcela.valorParcela.toString()),
+            DataCompra: new Date(parcela.dataParcela),
+            IsPaga: parcela.isPaga
           });
-          this.somaDespesasMes += parcela.valorParcela;
+          this.somaDespesasMes += parseFloat(parcela.valorParcela.toString());
         })
 
         //definir cor do gráfico de pizza
@@ -222,33 +221,25 @@ export class HomeComponent implements OnInit {
 
 
         this.despesasFiltradas = this.despesasMes.sort((a,b) => {
-          return a.dataCompra.getUTCDate() - b.dataCompra.getUTCDate();
-        }).filter(x => x.isPaga != 1);
+          return a.DataCompra.getUTCDate() - b.DataCompra.getUTCDate();
+        }).filter(x => x.IsPaga != 1);
 
 
         this.despesasPagas = new AgrupamentoTipoDespesa(this.despesasMes
-          .filter(x => x.isPaga == 1)
+          .filter(x => x.IsPaga == 1)
         );
 
         success[7].map(conta => {
-          if (conta.ano == this.systemService.ano.valor){
-            if (this.contasValor[conta.mes-1]){
-                this.contasValor[conta.mes-1] += conta.debito;
+          if (conta.Ano == this.systemService.ano.valor){
+            if (this.contasValor[conta.Mes-1]){
+                this.contasValor[conta.Mes-1] += conta.Debito;
             }
             else {
-              this.contasValor[conta.mes-1] = conta.debito;
+              this.contasValor[conta.Mes-1] = conta.Debito;
             }
           }
         });
-        this.graficos = success[8].meses.sort((a,b) => {return a.id - b.id});
-        success[8].meses.map( x => {
-          if (this.systemService.ano.maiorValor < Math.abs(x.progressao)){
-            this.systemService.ano.maiorValor = Math.abs(x.progressao);
-          }
-          if (x.progressao < 0){
-            this.contemMenorQZero = true;
-          }
-        })
+
       },
       error: (err: any) => {
         this.toastService.error("Error", `Alguma coisa deu errado: ${err.mesage}`);
@@ -267,7 +258,7 @@ export class HomeComponent implements OnInit {
   }
 
   parcelas(despesa: Despesa) {
-    this.router.navigate(["parcelas"], { queryParams: {id: despesa.id, nome: despesa.nome}})
+    this.router.navigate(["parcelas"], { queryParams: {id: despesa.Id, nome: despesa.Nome}})
   }
   gastos() {
     this.router.navigate(["gastos"]);
@@ -305,15 +296,15 @@ export class HomeComponent implements OnInit {
     this.somaDespesasMes = 0
     const tipo = parseInt(tipoDespesa)
     if (tipo > 0) {
-      this.despesasFiltradas = this.despesasMes.filter(x => x.tipoDespesa == tipo);
+      this.despesasFiltradas = this.despesasMes.filter(x => x.TipoDespesa == tipo);
     }
     else {
       this.despesasFiltradas = this.despesasMes;
     }
     this.despesasFiltradas.forEach(x => {
-      this.somaDespesasMes += x.valor;
+      this.somaDespesasMes += x.Valor;
     });
-    this.despesasFiltradas = this.despesasFiltradas.filter(x => !x.isPaga)
+    this.despesasFiltradas = this.despesasFiltradas.filter(x => !x.IsPaga)
   }
 
   defineImagem(tipoDespesa: number): string {

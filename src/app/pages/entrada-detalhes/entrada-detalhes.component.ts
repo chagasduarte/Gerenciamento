@@ -47,9 +47,9 @@ export class EntradaDetalhesComponent implements OnInit{
   buscaEntradas() {
     this.entradaService.GetEntradas().subscribe( x => {
       x.map(entrada => {
-        entrada.dataDebito = new Date(entrada.dataDebito);
-        if (entrada.dataDebito.getUTCMonth() == this.systemsService.mes.valor && entrada.dataDebito.getUTCFullYear() == this.systemsService.ano.valor){
-          if (entrada.status) {
+        entrada.DataDebito = new Date(entrada.DataDebito);
+        if (entrada.DataDebito.getUTCMonth() == this.systemsService.mes.valor && entrada.DataDebito.getUTCFullYear() == this.systemsService.ano.valor){
+          if (entrada.Status) {
             this.entradasRecebidas.push(entrada);
           }
           else {
@@ -61,15 +61,15 @@ export class EntradaDetalhesComponent implements OnInit{
   }
 
   receber(entrada: Entrada, valor: number) {
-    this.contaService.GetContaById(entrada.contaId).subscribe(x => {
-      if(entrada.isFixo){
-        x.debito += valor;
+    this.contaService.GetContaById(entrada.ContaId).subscribe(x => {
+      if(entrada.IsFixo){
+        x.Debito += valor;
       }
       else {
-        x.debito += entrada.valor;
+        x.Debito += entrada.Valor;
       }
       this.contaService.PutConta(x).subscribe(x => {
-        entrada.status = true;
+        entrada.Status = true;
         this.entradaService.PutEntrada(entrada).subscribe(x => {
           this.toastrService.success("Ok", "O valor solicitado já está em sua conta");
         });

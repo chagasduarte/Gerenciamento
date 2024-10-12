@@ -1,14 +1,14 @@
 import { Parcela } from "./parcela"
 
 export interface Despesa {
-    id: number
-    nome: string
-    descricao: string
-    tipoDespesa: number
-    valorTotal: number
-    valorPago: number
-    dataCompra: Date
-    isParcelada: boolean
-    isPaga: boolean
-    parcelas: Parcela[]
+    Id: number
+    Nome: string
+    Descricao: string
+    TipoDespesa: number
+    ValorTotal: number
+    ValorPago: number
+    DataCompra: Date
+    IsParcelada: boolean
+    IsPaga: boolean
+    Parcelas: Parcela[]
 }

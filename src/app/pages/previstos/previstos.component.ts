@@ -45,22 +45,22 @@ export class PrevistosComponent implements OnInit {
     this.valotTotal = 0;
     this.ids.forEach(id => {
       this.parcelasService.GetParcela(id).subscribe(parcela => {
-        parcela.dataVencimento = new Date(parcela.dataVencimento);
+        parcela.DataVencimento = new Date(parcela.DataVencimento);
         
-        this.despesasService.GetDespesasById(parcela.despesaId).subscribe({
+        this.despesasService.GetDespesasById(parcela.DespesaId).subscribe({
           next: (despesa: Despesa) => {
-            if(parcela.isPaga == 1) {
+            if(parcela.IsPaga == 1) {
               this.parcelasPagas.push({parcela: parcela, despesa: despesa});
             }
             else {
               this.parcelas.push({parcela: parcela, despesa: despesa});
-              this.valotTotal += parcela.valor;
+              this.valotTotal += parseFloat(parcela.Valor.toString());
             }
           },
           error: (err:any) => {
             if(err.status == 404){
-              this.parcelasService.DeleteParcelasByDespesa(parcela.despesaId).subscribe(x => {
-                this.toastrService.warning(`A parcela com id ${parcela.id} não possui despesa registrada, por tanto foi apagada do banco`,"Aviso");
+              this.parcelasService.DeleteParcelasByDespesa(parcela.DespesaId).subscribe(x => {
+                this.toastrService.warning(`A parcela com id ${parcela.Id} não possui despesa registrada, por tanto foi apagada do banco`,"Aviso");
               })
             }
           }
@@ -72,7 +72,7 @@ export class PrevistosComponent implements OnInit {
     this.router.navigate(["home"]);
   }
   DefineCorParcela(parcela: Parcela): string {
-    return new Date(parcela.dataVencimento) < new Date()? "#af6e6e" : "#b1ca78";
+    return new Date(parcela.DataVencimento) < new Date()? "#af6e6e" : "#b1ca78";
   }
     
 }

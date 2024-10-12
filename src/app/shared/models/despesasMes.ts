@@ -1,36 +1,36 @@
 import { TipoDespesa } from "./tipoDespesa"
 
 export interface DespesasMes {
-    nome: string,
-    valor: number,
-    detalhes: string,
-    tipoDespesa: number,
-    dataCompra: Date,
-    isPaga: number
+    Nome: string,
+    Valor: number,
+    Detalhes: string,
+    TipoDespesa: number,
+    DataCompra: Date,
+    IsPaga: number
 }
 
 export class Agrupamento {
-    despesas: DespesasMes[];
-    tipo: TipoDespesa;
-    soma: number;
+    Despesas: DespesasMes[];
+    Tipo: TipoDespesa;
+    Soma: number;
     constructor(tipo: TipoDespesa, despesas: DespesasMes[]){
-        this.soma = 0;
-        this.despesas = despesas;
-        this.tipo = tipo;
+        this.Soma = 0;
+        this.Despesas = despesas;
+        this.Tipo = tipo;
         despesas.map( x => {
-            this.soma += x.valor;
+            this.Soma += x.Valor;
         })
     }
 }
 
 export class AgrupamentoTipoDespesa {
-    agrupamento: Agrupamento[] = [];
+    Agrupamento: Agrupamento[] = [];
     constructor(despesa: DespesasMes[]){
         for(const key in TipoDespesa) {
             if (isNaN(Number(key))) {
                 const tipo = parseInt(TipoDespesa[key]);
-                if (despesa.filter(x => x.tipoDespesa == tipo).length > 0) {
-                    this.agrupamento.push(new Agrupamento(tipo, despesa.filter(x => x.tipoDespesa == tipo)))      
+                if (despesa.filter(x => x.TipoDespesa == tipo).length > 0) {
+                    this.Agrupamento.push(new Agrupamento(tipo, despesa.filter(x => x.TipoDespesa == tipo)))      
                 }
             }
         }

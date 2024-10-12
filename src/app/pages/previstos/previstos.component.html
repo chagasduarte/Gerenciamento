@@ -14,12 +14,12 @@
         <div class="card-parcelas">
             <div class="parcela" *ngFor="let parcela of parcelas" [ngStyle]="{'background-color': DefineCorParcela(parcela.parcela)}">
                 <div class="card-header">
-                    <b>{{parcela.despesa.nome}}</b> 
+                    <b>{{parcela.despesa.Nome}}</b> 
                 </div>
                 <div class="card-body">
                     <div class="salario d-flex">
-                        <div class="data me-2"><b>{{parcela.parcela.dataVencimento| date}}:</b></div>
-                        <div class="valor"><b>{{ parcela.parcela.valor | currency }}</b></div>
+                        <div class="data me-2"><b>{{parcela.parcela.DataVencimento| date}}:</b></div>
+                        <div class="valor"><b>{{ parcela.parcela.Valor | currency }}</b></div>
                     </div>
                 </div>
             </div>
@@ -32,12 +32,12 @@
         <div class="card-parcelas" *ngIf="parcelasPagas.length > 0">
             <div class="parcela bg-verde-pastel" *ngFor="let parcela of parcelasPagas">
                 <div class="card-header">
-                    <b>{{parcela.despesa.nome}}</b> 
+                    <b>{{parcela.despesa.Nome}}</b> 
                 </div>
                 <div class="card-body">
                     <div class="salario d-flex">
-                        <div class="data  me-2">{{parcela.parcela.dataVencimento| date}}:</div>
-                        <div class="valor">{{parcela.parcela.valor | currency}} </div>
+                        <div class="data  me-2">{{parcela.parcela.DataVencimento| date}}:</div>
+                        <div class="valor">{{parcela.parcela.Valor | currency}} </div>
                     </div>
                 </div>
             </div>

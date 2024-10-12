@@ -57,8 +57,8 @@ export class ParcelasComponent implements OnInit {
           this.despesa = x;
         });
         this.parcelasService.GetParcelasByDespesa(success.id).subscribe(parcelas => {
-          this.parcelas = parcelas.filter(filtradas => filtradas.isPaga != 1 && new Date(filtradas.dataVencimento).getUTCFullYear() == this.systemService.ano.valor)
-          this.parcelasPagas = parcelas.filter(x => x.isPaga == 1);
+          this.parcelas = parcelas.filter(filtradas => filtradas.IsPaga != 1 && new Date(filtradas.DataVencimento).getUTCFullYear() == this.systemService.ano.valor)
+          this.parcelasPagas = parcelas.filter(x => x.IsPaga == 1);
         });
       }
     });
@@ -71,19 +71,19 @@ export class ParcelasComponent implements OnInit {
   }
 
   pagar() {
-    let cont = this.contas.find(x => x.id == this.idConta);
+    let cont = this.contas.find(x => x.Id == this.idConta);
     if (cont) {
       if (this.listaPagamento.length > 0){
         this.listaPagamento.map( parcela => {
-          if (cont.debito - parcela.valor >= 0) {
-            cont.debito -= parcela.valor;
+          if (cont.Debito - parcela.Valor >= 0) {
+            cont.Debito -= parcela.Valor;
             this.contasService.PutConta(cont).subscribe({
               next: (success: Conta) => {
-                parcela.isPaga = 1;
+                parcela.IsPaga = 1;
                 this.parcelasService.PutParcela(parcela).subscribe( x => {
                   this.toastr.success("Sucesso", "Parcela Paga com sucesso.");
                 });
-                this.despesa.valorPago += parcela.valor;
+                this.despesa.ValorPago += parcela.Valor;
                 this.despesaService.PutDespesa(this.despesa).subscribe(x => {
                   this.despesa = x;
                   this.toastr.success("Sucesso", "Valor Total da Despesa Atualizado com sucesso.");
@@ -112,17 +112,17 @@ export class ParcelasComponent implements OnInit {
   
   ApagarConta() {
     let podeApagar = true; 
-    this.parcelasService.GetParcelasByDespesa(this.despesa.id).subscribe({
+    this.parcelasService.GetParcelasByDespesa(this.despesa.Id).subscribe({
       next: (success: Parcela[]) => {
         success.map( parcela => {
-          if (parcela.isPaga == 1) {
+          if (parcela.IsPaga == 1) {
             if (confirm("Despesa possui parcelas já pagas")){
               podeApagar = false
             }
           }
         });
         if (podeApagar){
-          this.despesaService.DeleteDespesa(this.despesa.id).subscribe( x => {
+          this.despesaService.DeleteDespesa(this.despesa.Id).subscribe( x => {
             this.toastr.success("Despesa apagada com Suceeso", "OK");
           })
         }
@@ -131,7 +131,7 @@ export class ParcelasComponent implements OnInit {
   }
 
   despagar(despesa: Parcela){
-    despesa.isPaga = 0;
+    despesa.IsPaga = 0;
     this.parcelasService.PutParcela(despesa).subscribe(x => {
       this.toastr.success("pois é... pra tu ver como é as coisa", "Success");
     })

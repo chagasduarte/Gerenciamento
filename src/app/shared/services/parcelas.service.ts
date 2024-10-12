@@ -39,7 +39,7 @@ export class ParcelasService {
   }
 
   PutParcela(request: Parcela) : Observable<Parcela> {
-    return this.http.put<Parcela>(`${this.api}/${request.id}`, request);
+    return this.http.put<Parcela>(`${this.api}/${request.Id}`, request);
   }
 
   DeleteParcelasByDespesa(despesa: number){

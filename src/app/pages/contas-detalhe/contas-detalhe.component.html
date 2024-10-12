@@ -21,18 +21,18 @@
   <div class="grid">
       <div class="card card-sm" *ngFor="let conta of contas">
           <div class="card-header">
-            <b>{{conta.nome}}</b> 
-            <button class="btn btn-sm" (click)="deletarConta(conta.id)"><img src="/assets/img/user-trash.svg" alt=""/></button>
+            <b>{{conta.Nome}}</b> 
+            <button class="btn btn-sm" (click)="deletarConta(conta.Id)"><img src="/assets/img/user-trash.svg" alt=""/></button>
           </div>
           <div class="card-body">
             <div class="row mb-2">
               <label for="" class="col">Crédito:</label>
-              <input type="number" class="col input" [(ngModel)]="conta.credito" />
+              <input type="number" class="col input" [(ngModel)]="conta.Credito" />
               <button class="btn btn-sm btn-success col" (click)="updateDebito(conta)">Salvar</button>
             </div>
             <div class="row ">
               <label for="debito" class="label col">Débito:</label>
-              <input type="number" class="input col" [(ngModel)]="conta.debito"/>
+              <input type="number" class="input col" [(ngModel)]="conta.Debito"/>
               <button class="btn btn-sm btn-success col" (click)="updateDebito(conta)">Salvar</button>
             </div>
           </div>

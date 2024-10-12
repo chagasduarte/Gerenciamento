@@ -23,29 +23,29 @@
     <div class="grid">
         <div class="card card-sm" *ngFor="let entrada of entradasFuturas">
             <div class="card-header">
-                <b>{{entrada.nome}}</b> 
+                <b>{{entrada.Nome}}</b> 
             </div>
-            <div class="card-body" *ngIf="entrada.isFixo">
+            <div class="card-body" *ngIf="entrada.IsFixo">
                 <div class="salario">
-                    <div class="data"><b>{{entrada.dataDebito.toUTCString() | date: "MMM dd, yyyy" }}</b>:</div>
-                    <div class="valor"><b><input class="form-input" type="number" [(ngModel)]="entrada.valor"></b></div>
+                    <div class="data"><b>{{entrada.DataDebito.toUTCString() | date: "MMM dd, yyyy" }}</b>:</div>
+                    <div class="valor"><b><input class="form-input" type="number" [(ngModel)]="entrada.Valor"></b></div>
                     <button class="btn btn-sm btn-primary" (click)="atualizaSalario(entrada)"> Up </button>
                 </div>
-                <div class="row" *ngFor="let desconto of GetSalarioLiquido(entrada.valor)">
+                <div class="row" *ngFor="let desconto of GetSalarioLiquido(entrada.Valor)">
                     <div class="col"> {{desconto.nome}} </div>
                     <div class="col">{{desconto.valor | currency}}</div>
                 </div>
-                <button class="btn btn-sm btn-success" (click)="receber(entrada, GetSalarioLiquido(entrada.valor)[2].valor)">Receber</button>
-                <button class="btn btn-sm btn-success" (click)="deleteEntrada(entrada.id)">Deletar</button>
+                <button class="btn btn-sm btn-success" (click)="receber(entrada, GetSalarioLiquido(entrada.Valor)[2].valor)">Receber</button>
+                <button class="btn btn-sm btn-success" (click)="deleteEntrada(entrada.Id)">Deletar</button>
             </div>
-            <div class="card-body" *ngIf="!entrada.isFixo">
+            <div class="card-body" *ngIf="!entrada.IsFixo">
                 <div class="salario">
-                    <div class="data"><b>{{entrada.dataDebito.toUTCString() | date: "MMM dd, yyyy" }}</b>:</div>
-                    <div class="valor"><b><input class="form-input" type="number" [(ngModel)]="entrada.valor"></b></div>
+                    <div class="data"><b>{{entrada.DataDebito.toUTCString() | date: "MMM dd, yyyy" }}</b>:</div>
+                    <div class="valor"><b><input class="form-input" type="number" [(ngModel)]="entrada.Valor"></b></div>
                     <button class="btn btn-sm btn-primary" (click)="atualizaSalario(entrada)"> Up </button>
                 </div>
-                <button class="btn btn-sm btn-success" (click)="receber(entrada, GetSalarioLiquido(entrada.valor)[2].valor)">Receber</button>
-                <button class="btn btn-sm btn-success" (click)="deleteEntrada(entrada.id)">Deletar</button>
+                <button class="btn btn-sm btn-success" (click)="receber(entrada, GetSalarioLiquido(entrada.Valor)[2].valor)">Receber</button>
+                <button class="btn btn-sm btn-success" (click)="deleteEntrada(entrada.Id)">Deletar</button>
             </div>
         </div>
     </div>
@@ -54,14 +54,14 @@
     <div class="grid">
         <div class="card bg-success text-white" *ngFor="let entrada of entradasRecebidas">
             <div class="card-header">
-                <b>{{entrada.nome}}</b> 
+                <b>{{entrada.Nome}}</b> 
             </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col">Salário:</div>
-                    <div class="col">{{entrada.valor | currency}}</div>
+                    <div class="col">{{entrada.Valor | currency}}</div>
                 </div>
-                <div class="row" *ngFor="let desconto of GetSalarioLiquido(entrada.valor)">
+                <div class="row" *ngFor="let desconto of GetSalarioLiquido(entrada.Valor)">
                     <div class="col"> {{desconto.nome}} </div>
                     <div class="col">{{desconto.valor | currency}}</div>
                 </div>

@@ -38,7 +38,7 @@ export class EntradasComponent {
     }
   
     OnSubmit(){
-      this.entrada.dataDebito = new Date(new Date(this.dataDebito).toISOString().split("T")[0] + "T12:00:00.000Z");
+      this.entrada.DataDebito = new Date(new Date(this.dataDebito).toISOString().split("T")[0] + "T12:00:00.000Z");
 
       this.entradaService.PostEntrada(this.entrada).subscribe({
         next: (success: Entrada) => {

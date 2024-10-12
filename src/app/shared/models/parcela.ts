@@ -1,14 +1,14 @@
 export interface Parcela {
-    id: number
-    despesaId: number
-    valor: number
-    dataVencimento: Date
-    isPaga: number
+    Id: number
+    DespesaId: number
+    Valor: number
+    DataVencimento: Date
+    IsPaga: number
 }
 
 export interface ParcelaRequest {
-    idDespesa: number
-    qtdParcelas: number
-    valor: number
-    dataCompra: string
+    IdDespesa: number
+    QtdParcelas: number
+    Valor: number
+    DataCompra: string
 }

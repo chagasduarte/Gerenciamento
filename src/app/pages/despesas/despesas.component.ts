@@ -35,19 +35,19 @@ export class DespesasComponent {
     this.requestParcela = {} as ParcelaRequest;
   }
   OnSubmit() {
-    this.despesa.dataCompra = new Date(this.dataCompra);
-    this.despesa.tipoDespesa = parseInt(this.despesa.tipoDespesa.toString());
+    this.despesa.DataCompra = new Date(this.dataCompra);
+    this.despesa.TipoDespesa = parseInt(this.despesa.TipoDespesa.toString());
     this.despesaService.PostDespesa(this.despesa).subscribe({
       next: (success: Despesa) => {
-        if (this.despesa.isParcelada){
-          this.requestParcela.idDespesa = success.id;
-          this.requestParcela.dataCompra = this.despesa.dataCompra.toISOString().split("T")[0] + "T12:00:00.000Z";        
+        if (this.despesa.IsParcelada){
+          this.requestParcela.IdDespesa = success.Id;
+          this.requestParcela.DataCompra = this.despesa.DataCompra.toISOString().split("T")[0] + "T12:00:00.000Z";        
           this.parcelaService.PostParcela(this.requestParcela).subscribe({
             next: (success: number[]) => {
               this.route.navigate(["home"]);
             },
             error: (err: any) => {
-              this.despesaService.DeleteDespesa(success.id).subscribe();
+              this.despesaService.DeleteDespesa(success.Id).subscribe();
             }
           });
         }        
