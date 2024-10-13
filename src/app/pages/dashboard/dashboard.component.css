@@ -5,8 +5,21 @@
   place-items: center;
 }
 
+.cartao {
+  display: grid;
+  grid-template-areas: 
+  "header"
+  "body";
+  font-size: 18px;
+  margin-top: 10px;
+}
 
-.progressoes, .barras, .pizza {
+.cartao-header, .cartao-body{
+  display: grid;
+  place-items: center;
+}
+
+.progressoes, .barras {
   display: grid;
   height: 230px;
   width: 400px;
@@ -14,7 +27,6 @@
   place-items: end;
   gap:2.5px;
   padding: 10px;
-  margin-bottom: 20px;
 }
 
 .progressao-grafico{
@@ -23,14 +35,13 @@
   "mov"
   "mes";
   height: 100%;
-  grid-template-rows: 1fr 15px;
-  font-size: 18px;
+  grid-template-rows: 1fr 20px;
   & .positivo {
     display: grid;
     place-self: end;
     place-items: center;
     grid-area: mov;
-    width: 15px;
+    width: 25px;
   }
   & .negativo {
     
@@ -39,8 +50,8 @@
     place-items: center;
     grid-area: mov;
     justify-self: center;
-    margin-top: 100px;
-    width: 15px;
+    margin-top: 90px;
+    width: 25px;
   }
   & label {
     grid-area: mes;
@@ -99,6 +110,9 @@
   grid-template-areas: 
   'grafico legenda';
   gap: 20px;
+  height: 230px;
+  width: 400px;
+  padding: 10px;
 }
 
 .grafico-pizza {
