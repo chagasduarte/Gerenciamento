@@ -4,7 +4,7 @@ import { AppSettingsService } from './app-settings.service';
 import { Entrada } from '../models/entradas';
 import { Observable } from 'rxjs';
 import { FormataEntrada } from '../../utils/functions/entrada';
-import { Graficos } from '../models/graficos';
+import { Graficos, MesGrafico, TipoDespesaGrafico } from '../models/graficos';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +18,10 @@ export class GraficoService {
     this.api = appSettingService.get().WebApi + "/Graficos";
   }
 
-  GetGraficos(ano: number): Observable<Graficos>{
-    return this.http.get<Graficos>(`${this.api}?ano=${ano}`);
+  GetGraficos(ano: number): Observable<MesGrafico[]>{
+    return this.http.get<MesGrafico[]>(`${this.api}?ano=${ano}`);
   }
-
+  GetGraficosPizza(ano: number): Observable<TipoDespesaGrafico[]> {
+    return this.http.get<TipoDespesaGrafico[]>(`${this.api}/Pizza?ano=${ano}`);
+  }
 }

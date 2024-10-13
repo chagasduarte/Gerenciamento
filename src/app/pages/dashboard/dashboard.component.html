@@ -15,6 +15,14 @@
           (click)="mudaAno(ano)">{{ano}}</button>
       </div>
     </li>
+    <li class="d-flex"><button 
+      style="border-radius: 20px;
+      background: #214b5c;
+      color: antiquewhite;
+      font-weight: 900;
+      border: none;"
+      class="me-2 sombra mt-3"  
+      (click)="voltar()">Voltar</button></li>
   </ul>
 </nav>
 
@@ -27,7 +35,7 @@
         </div>
         <div class="saida sombra" [ngStyle]="{'height': (mes.saida)*180/13000 + 'px'}"></div>
       </div>
-      <label>{{mes.nomeAbrev.substring(2,0).toUpperCase()}}</label>
+      <label>{{mes.nomeabrev}}</label>
     </div>
   </div>
   <div class="progressoes sombra">
@@ -59,19 +67,19 @@
           {{mes.progressao| currency}}
         </div> 
       </div>
-      <label>{{mes.nomeAbrev.substring(2,0).toUpperCase()}}</label>
+      <label>{{mes.nomeabrev}}</label>
     </div>
   </div>
   <div class="pizza">
     <div class="grafico-pizza" 
     [style]="{
-      '--saude': tipoDespesaAgrupada[2].valorTotal, 
-      '--alimentacao': tipoDespesaAgrupada[0].valorTotal, 
-      '--transporte': tipoDespesaAgrupada[1].valorTotal, 
-      '--educacao': tipoDespesaAgrupada[3].valorTotal,
-      '--lazer': tipoDespesaAgrupada[4].valorTotal,
-      '--moradia':tipoDespesaAgrupada[5].valorTotal,
-      '--servicos': tipoDespesaAgrupada[6].valorTotal,
+      '--saude': (Saude.saida * 100/ Total), 
+      '--alimentacao': (Alimentacao.saida * 100/ Total), 
+      '--transporte': (Transporte.saida * 100/ Total), 
+      '--educacao': (Educacao.saida * 100/ Total),
+      '--lazer': (Lazer.saida * 100/ Total),
+      '--moradia': (Moradia.saida * 100/ Total),
+      '--servicos': (Servicos.saida * 100/ Total),
       }">
     </div>
     <div class="legendas">

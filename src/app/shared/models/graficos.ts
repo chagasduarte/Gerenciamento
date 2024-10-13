@@ -12,13 +12,14 @@ export class Graficos {
 
 export interface MesGrafico {
   id: number;
-  nomeAbrev: string;
+  nomeabrev: string;
   entrada: number;
   saida: number;
   progressao: number;
 }
 
 export interface TipoDespesaGrafico {
-  tipoDespesa: TipoDespesa;
-  valorTotal: number;
+  id: number;
+  TipoDespesa: TipoDespesa;
+  saida: number;
 }
