@@ -32,7 +32,7 @@
       Entradas e Saidas
     </div>
     <div class="cartao-body">
-      <div class="barras">
+      <div class="barras chart">
         <div class="barras-grafico" *ngFor="let mes of graficos">
           <div class="entradaSaida">
             <div class="entrada sombra" [ngStyle]="{'height': mes.entrada*180/13000 + 'px'}">
@@ -50,7 +50,7 @@
       Progressão
     </div>
     <div class="cartao-body">
-      <div class="progressoes">
+      <div class="progressoes chart">
         <div class="progressao-grafico" *ngFor="let mes of graficos">
     
           <!-- positivo -->
@@ -58,7 +58,7 @@
             *ngIf="mes.progressao > 0" 
             class="positivo sombra"
             [ngStyle]="{
-                    'margin-bottom': contemMenorQZero? '100px': '0px',
+                    'margin-bottom': contemMenorQZero? '95px': '0px',
                     'height': contemMenorQZero? DefineHeight(mes.progressao/2): DefineHeight(mes.progressao), 
                     'background-color': DefinirCor(mes.progressao),
                     }">
@@ -89,7 +89,7 @@
       Porcentagem em Pizza
     </div>
     <div class="cartao-body">
-      <div class="pizza">
+      <div class="pizza chart">
         <div class="grafico-pizza sombra" 
         [style]="{
           '--saude': (Saude.saida * 100/ Total), 
@@ -110,6 +110,45 @@
         </div>
       </div>
     </div>
+  </div>
+  <div class="cartao sombra">
+    <div class="cartao-header">
+       Progressão Tipo Despesa
+    </div>
+    <div class="cartao-body">
+      <div class="grafico-linha chart">
+        
+        <div class="y-axis">
+          <div class="linha-vertical"></div>
+          <div class="numeros">
+            <div>100</div>
+            <div>80</div>
+            <div>60</div>
+            <div>40</div>
+            <div>20</div>
+            <div>0</div>
+          </div>
+        </div>
+        <div class="body">
+          <div class="line"></div>
+        </div>
+        <div class="x-axis">
+          <div class="mes">Jan</div>
+          <div class="mes">Fev</div>
+          <div class="mes">Mar</div>
+          <div class="mes">Abr</div>
+          <div class="mes">Mai</div>
+          <div class="mes">Jun</div>
+          <div class="mes">Jul</div>
+          <div class="mes">Ago</div>
+          <div class="mes">Set</div>
+          <div class="mes">Out</div>
+          <div class="mes">Nov</div>
+          <div class="mes">Dez</div>
+      </div>
+      </div>
+    </div>
+    
   </div>
 </div>
   

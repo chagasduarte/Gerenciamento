@@ -62,6 +62,14 @@ export class DashboardComponent implements  OnInit {
     buscaDados(){
         this.contemMenorQZero = false;
         this.Total = 0;
+        this.Alimentacao.saida = 0;
+        this.Transporte.saida = 0;
+        this.Saude.saida = 0;
+        this.Educacao.saida = 0;
+        this.Lazer.saida = 0;
+        this.Moradia.saida = 0;
+        this.Servicos.saida = 0;
+
         this.graficosService.GetGraficos(this.systemService.ano.valor).subscribe(x => {
             this.graficos = x.sort((a,b) => {return a.id - b.id});
             x.map( x => {
@@ -139,7 +147,7 @@ export class DashboardComponent implements  OnInit {
         return DefineCor(valor)
     }
     DefineHeight(valor: number): string {
-        return (Math.abs(valor) * 200 / this.systemService.ano.maiorValor) + 'px';
+        return (Math.abs(valor) * 190 / this.systemService.ano.maiorValor) + 'px';
     }
     voltar(){
         this.router.navigate(['home'])

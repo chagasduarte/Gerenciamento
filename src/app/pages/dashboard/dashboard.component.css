@@ -4,7 +4,10 @@
   place-self: center;
   place-items: center;
 }
-
+.chart {
+  height: 230px;
+  width: 400px;
+}
 .cartao {
   display: grid;
   grid-template-areas: 
@@ -21,8 +24,6 @@
 
 .progressoes, .barras {
   display: grid;
-  height: 230px;
-  width: 400px;
   grid-template-columns: repeat(12, auto);
   place-items: end;
   gap:2.5px;
@@ -44,13 +45,12 @@
     width: 25px;
   }
   & .negativo {
-    
     display: grid;
     place-self: top;
     place-items: center;
     grid-area: mov;
     justify-self: center;
-    margin-top: 90px;
+    margin-top: 95px;
     width: 25px;
   }
   & label {
@@ -110,8 +110,6 @@
   grid-template-areas: 
   'grafico legenda';
   gap: 20px;
-  height: 230px;
-  width: 400px;
   padding: 10px;
 }
 
@@ -141,11 +139,6 @@
   position: relative;
 }
 
-.grafico-pizza::before {
-  background-color: azure;
-}
-
-
 .legenda{
   display: flex;
 }
@@ -153,4 +146,52 @@
 .cor{
   width: 20px;
   height: 20px;
+}
+.grafico-linha {
+  display: grid;
+  grid-template-areas: 
+  "yaxis body"
+  "yaxis xaxis";
+  grid-template-columns: 30px 1fr;
+  grid-template-rows: 1fr 25px;
+}
+
+.linha-vertical {
+  grid-area: linha;
+  width: 1.5px;
+  height: 230px;
+  border: 1px solid #ccc;
+  background: white;
+}
+
+.numeros {
+  grid-area: numeros;
+  display: grid;
+  grid-template-rows: repeat(6, auto);
+  font-size: 16px;
+  height: 100%;
+}
+
+.line {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  clip-path: polygon(46% 55%, 60% 68%, 77% 53%, 84% 66%, 97% 55%, 100% 99%, 3% 99%, 2% 62%, 19% 53%, 35% 69%);  
+  background-color: #ccc;
+  border-left: 2px solid red; /* Cor da linha */
+  border-bottom: 2px solid red; /* Para simular a linha */
+}
+
+.x-axis {
+  grid-area: xaxis;
+  display: grid;
+  grid-template-columns: repeat(12, auto);
+  width: 100%;
+}
+.y-axis {
+  grid-area: yaxis;
+  width: 30px;
+  display: grid;
+  grid-template-areas: 
+  "numeros linha";
 }
