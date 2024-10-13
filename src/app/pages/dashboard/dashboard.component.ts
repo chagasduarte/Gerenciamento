@@ -39,14 +39,14 @@ export class DashboardComponent implements  OnInit {
     Outros: TipoDespesaGrafico = {id:0,TipoDespesa:TipoDespesa.Outros,saida:0};
     Total: number = 0;
     anosDeDivida: number[] = [2024, 2025, 2026];
-    legendas: {nome: string, cor: string}[] = [
-        {nome: "Alimentação", cor: "rgb(56, 124, 141)"}, 
-        {nome: "Transporte", cor: "rgb(182, 47, 47)"},
-        {nome: "Saúde", cor: "rgb(226, 224, 111)"},
-        {nome: "Educacao", cor: "rgb(135, 67, 141)"},
-        {nome: "Lazer", cor: "rgb(0, 0, 100)"},
-        {nome: "Moradia", cor: "rgb(0, 100, 0)"},
-        {nome: "Servico", cor: "rgb(255, 165, 0)"}
+    legendas: {nome: string, cor: string, porcentagem: number}[] = [
+        {nome: "Alimentação", cor: "rgb(56, 124, 141)", porcentagem: 0}, 
+        {nome: "Transporte", cor: "rgb(182, 47, 47)", porcentagem: 0},
+        {nome: "Saúde", cor: "rgb(226, 224, 111)", porcentagem: 0},
+        {nome: "Educacao", cor: "rgb(135, 67, 141)", porcentagem: 0},
+        {nome: "Lazer", cor: "rgb(0, 100, 0)", porcentagem: 0},
+        {nome: "Moradia", cor: "rgb(0, 0, 100)", porcentagem: 0},
+        {nome: "Servico", cor: "rgb(255, 165, 0)", porcentagem: 0}
     ]
 
     constructor(
@@ -100,11 +100,38 @@ export class DashboardComponent implements  OnInit {
                         this.Servicos.saida += parseFloat(despesa.saida.toString());
                         break;
                     case TipoDespesa.Outros:
-                        this.Outros.saida += parseFloat(despesa.saida.toString());
+                        this.Servicos.saida += parseFloat(despesa.saida.toString());
                         break;
                 }
                 
             });
+            console.log(this.Alimentacao);
+            console.log(this.Total);
+            this.legendas.map(legenda => {
+                switch(legenda.nome){
+                    case "Alimentação":
+                        legenda.porcentagem = this.Alimentacao.saida * 100 / this.Total;
+                        break;
+                    case "Transporte":
+                        legenda.porcentagem = this.Transporte.saida * 100/ this.Total;
+                        break;
+                    case "Saúde":
+                        legenda.porcentagem = this.Saude.saida * 100/ this.Total;
+                        break;
+                    case "Educacao":
+                        legenda.porcentagem = this.Educacao.saida * 100/ this.Total;
+                        break;
+                    case "Lazer":
+                        legenda.porcentagem = this.Lazer.saida * 100 / this.Total;
+                        break;
+                    case "Moradia":
+                        legenda.porcentagem = this.Moradia.saida * 100 / this.Total;
+                        break;
+                    case "Servico":
+                        legenda.porcentagem = this.Servicos.saida * 100 / this.Total;
+                        break;
+                }
+            })
         });
     }
 

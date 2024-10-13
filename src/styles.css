@@ -158,12 +158,6 @@ img {
 .grafico-pizza::before {
   background-color: azure;
 }
-
-/* .barras {
-  display: grid;
-  height: 200px;
-  grid-template-columns: repeat(12, auto);
-  gap:5px;
-  place-items: center;
-  margin-bottom: 20px;
-} */
+.sombra {
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5); /* x-offset, y-offset, blur-radius, color */
+}

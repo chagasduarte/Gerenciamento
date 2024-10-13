@@ -70,8 +70,8 @@
       <label>{{mes.nomeabrev}}</label>
     </div>
   </div>
-  <div class="pizza">
-    <div class="grafico-pizza" 
+  <div class="pizza sombra">
+    <div class="grafico-pizza sombra" 
     [style]="{
       '--saude': (Saude.saida * 100/ Total), 
       '--alimentacao': (Alimentacao.saida * 100/ Total), 
@@ -84,8 +84,9 @@
     </div>
     <div class="legendas">
       <div class="legenda" *ngFor="let legenda of legendas">
-        <div class="cor me-2" [ngStyle]="{'background-color': legenda.cor}"></div>
-        <div class="nome">{{legenda.nome}}</div>
+        <div class="cor me-2 sombra" [ngStyle]="{'background-color': legenda.cor}"></div>
+        <div class="nome me-2">{{legenda.nome}}</div>
+        <div class="porcentagem">{{legenda.porcentagem /100| percent: "1.0-2"}}</div>
       </div>
     </div>
   </div>
