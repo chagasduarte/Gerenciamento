@@ -45,6 +45,9 @@ export class EntradaDetalhesComponent implements OnInit{
     this.buscaEntradas();
   }
   buscaEntradas() {
+    
+    this.entradasFuturas = [];
+    this.entradasRecebidas = [];
     this.entradaService.GetEntradas().subscribe( x => {
       x.map(entrada => {
         entrada.DataDebito = new Date(entrada.DataDebito);
