@@ -33,7 +33,7 @@ export class GastosComponent {
   totalPagar: number = 0;
   conta!: Conta;
   idConta!: number;
-adicionar: any;
+  adicionar: any;
 
   constructor(
    private readonly despesaService: DespesasService,
@@ -59,8 +59,15 @@ adicionar: any;
   }
 
   adicionarListaPagamento(despesa: Despesa){
-    this.totalPagar = 0;
+    this.totalPagar += parseFloat(despesa.ValorTotal.toString());
     this.listaPagamento.push(despesa);
+  }
+  
+  removedaListaPagamento(despesa: Despesa){
+    this.totalPagar -= parseFloat(despesa.ValorTotal.toString());
+    this.listaPagamento = this.listaPagamento.filter( x => {
+      x.Id != despesa.Id;
+    });
   }
 
   pagar() {

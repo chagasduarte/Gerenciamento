@@ -36,10 +36,25 @@
             <option [value]="conta.Id" *ngFor="let conta of contas" class="form-control">{{conta.Nome}}</option>
           </select>
           <div class="card-body">
-            <div class="d-flex" *ngFor="let item of listaPagamento">
-              <div class="me-2">{{item.Nome}}</div>
-              <div>{{item.ValorTotal | currency}}</div>
-            </div>
+            <table class="table table-rover">
+              <thead>
+                <tr>
+                  <td>id</td>
+                  <td>nome</td>
+                  <td>valor</td>
+                  <td>remover</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of listaPagamento">
+                  <td>{{item.Id}}</td>
+                  <td>{{item.Nome}}</td>
+                  <td>{{item.ValorTotal | currency}}</td>
+                  <td><button class="btn btn-sm btn-success" (click)="removedaListaPagamento(item)">-</button></td>
+                </tr>
+              </tbody>
+            </table>
+            <div><span>Total: </span>{{totalPagar | currency}}</div>
           </div>
           <button class="btn btn-sm btn-success" (click)="pagar()">Pagar</button>
         </div>
