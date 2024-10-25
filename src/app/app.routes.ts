@@ -15,7 +15,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 export const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: 'login', component: LoginComponent },
-    { path: "home", component: HomeComponent },
+    { path: "home", component: HomeComponent, canActivate: [AuthGuard] },
     { path: "despesas", component: DespesasComponent, canActivate: [AuthGuard] },
     { path: "entradas", component: EntradasComponent, canActivate: [AuthGuard] },
     { path: "contas", component: ContasComponent, canActivate: [AuthGuard] },

@@ -1,0 +1,21 @@
+.pagina {
+    display: grid;
+    grid-template-areas: "barra pagina";
+    grid-template-columns: auto 1fr;
+    overflow-x: auto;
+    overflow-y: auto;
+    height: 100vh;
+}
+
+app-home {
+    width: 1fr;
+    overflow-y: auto;
+    overflow-x: auto;
+    height: 100vh;
+}
+
+@media screen and (max-width:700px) {
+    app-side-bar {
+        display: none;
+    }
+}
