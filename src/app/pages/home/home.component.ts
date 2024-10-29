@@ -196,7 +196,7 @@ export class HomeComponent implements OnInit {
 
         //calcula saldo do mes
         this.aindaPossoGastar = (this.saldoAtual + this.aReceber) - (this.gastoTotalMes + this.gastosAdicionais);
-        const contas = success[6].sort((a, b) => {return b.Id - a.Id});
+        const contas = success[6].sort((a, b) => {return a.Id - b.Id});
         if (contas) {
           contas[0].Debito = this.aindaPossoGastar;
           if (contas[0].Mes > new Date().getUTCMonth() + 1 || contas[0].Ano > new Date().getUTCFullYear()){
