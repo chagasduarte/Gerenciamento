@@ -113,8 +113,6 @@ export class DashboardComponent implements  OnInit {
                 }
                 
             });
-            console.log(this.Alimentacao);
-            console.log(this.Total);
             this.legendas.map(legenda => {
                 switch(legenda.nome){
                     case "Alimentação":
