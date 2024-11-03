@@ -31,7 +31,8 @@ export class ParcelasComponent implements OnInit {
   listaPagamento: Parcela[] = [];
   nomeDespesa!: string;
   despesa!: Despesa;
-  
+  totalPagar: number = 0;
+
   constructor(
       private readonly parcelasService: ParcelasService,
       private readonly activeRouter: ActivatedRoute,
@@ -104,8 +105,10 @@ export class ParcelasComponent implements OnInit {
     this.buscaParcelas();
   } 
   adicionaLista(parcela: Parcela){
-      this.listaPagamento.push(parcela);
+    this.totalPagar += parseFloat(parcela.Valor.toString());
+    this.listaPagamento.push(parcela);
   }
+
   Voltar() {
     this.route.navigate(["home"]);
   }
@@ -136,5 +139,11 @@ export class ParcelasComponent implements OnInit {
       this.toastr.success("pois é... pra tu ver como é as coisa", "Success");
     })
   }
-    
+  removedaListaPagamento(parcela: Parcela) {
+    console.log(parcela);
+    console.log(this.listaPagamento);
+    this.totalPagar -= parseFloat(parcela.Valor.toString());
+    this.listaPagamento = this.listaPagamento.filter( x => x.Id != parcela.Id);
+    console.log(this.listaPagamento)
+  }   
 }
