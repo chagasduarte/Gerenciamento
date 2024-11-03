@@ -65,9 +65,7 @@ export class GastosComponent {
   
   removedaListaPagamento(despesa: Despesa){
     this.totalPagar -= parseFloat(despesa.ValorTotal.toString());
-    this.listaPagamento = this.listaPagamento.filter( x => {
-      x.Id != despesa.Id;
-    });
+    this.listaPagamento = this.listaPagamento.filter( x => x.Id != despesa.Id );
   }
 
   pagar() {
@@ -101,7 +99,10 @@ export class GastosComponent {
     else {
       this.toastService.warning("Aviso", "Selecione uma conta para fazer esse pagamento");
     }
-    
+    this.calculaGastosDoMes();
+    this.buscaContas();
+    this.listaPagamento = [];
+    this.totalPagar = 0;
   }
 
   Voltar() {

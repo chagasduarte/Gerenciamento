@@ -103,6 +103,8 @@ export class ParcelasComponent implements OnInit {
     }
     
     this.buscaParcelas();
+    this.listaPagamento = [];
+    this.totalPagar = 0;
   } 
   adicionaLista(parcela: Parcela){
     this.totalPagar += parseFloat(parcela.Valor.toString());
@@ -140,8 +142,6 @@ export class ParcelasComponent implements OnInit {
     })
   }
   removedaListaPagamento(parcela: Parcela) {
-    console.log(parcela);
-    console.log(this.listaPagamento);
     this.totalPagar -= parseFloat(parcela.Valor.toString());
     this.listaPagamento = this.listaPagamento.filter( x => x.Id != parcela.Id);
     console.log(this.listaPagamento)
