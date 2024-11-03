@@ -15,7 +15,10 @@ export class DespesasService {
    ) { 
     this.api = appSettingService.get().WebApi + "/Despesas";
   }
-
+  GetAll(): Observable<Despesa[]> {
+    return this.http.get<Despesa[]>(`${this.api}/`);
+  }
+  
   GetDespesas(ano: number): Observable<Despesa[]> {
     return this.http.get<Despesa[]>(`${this.api}/Ano?ano=${ano}`);
   }

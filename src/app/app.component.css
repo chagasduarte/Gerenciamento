@@ -7,7 +7,7 @@
     height: 100vh;
 }
 
-app-home {
+.paginas {
     width: 1fr;
     overflow-y: auto;
     overflow-x: auto;

@@ -1,0 +1,9 @@
+@media screen  and (max-width: 900px) {
+    .grafico-card {
+        grid-template-areas: 
+        "grafico"
+        "cards";
+    }
+
+}
+

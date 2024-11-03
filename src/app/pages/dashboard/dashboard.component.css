@@ -1,13 +1,17 @@
 .dashboard {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-  place-self: center;
+  grid-template-columns: repeat(auto-fill, minmax(auto, 1fr));
   place-items: center;
 }
+
 .chart {
-  height: 230px;
+  margin: 5px;
+  height: 300px;
   width: 400px;
+  border-radius: 15px;
+  background-color: rgba(69, 69, 133, 0);
 }
+
 .cartao {
   display: grid;
   grid-template-areas: 
