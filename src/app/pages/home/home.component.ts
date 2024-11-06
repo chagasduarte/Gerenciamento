@@ -111,13 +111,14 @@ export class HomeComponent implements OnInit {
       this.entradasService.GetEntradas(),
       this.contasService.GetContaByMes(this.systemService.mes.valor + 1, this.systemService.ano.valor),
       this.contasService.GetContaByMes(this.systemService.mes.valor + 2 > 12? 1: this.systemService.mes.valor + 2, this.systemService.mes.valor + 2 > 12? this.systemService.ano.valor + 1: this.systemService.ano.valor),
-      this.contasService.GetContas()
+      this.contasService.GetContas(),
+      this.despesaService.GetDespesasParceladasNaoPagas(this.systemService.mes.valor + 1, this.systemService.ano.valor)
     ]).subscribe({
       next: (success) => {
         let aux: {idDespesa: number, valorParcela: number, dataParcela: Date, isPaga: number}[] = [];
 
         //despesas parceladas
-        this.despesasParceladas = success[0];
+        this.despesasParceladas = success[8];
         //parcelas do mes
         success[1].map(parcela => {
           parcela.DataVencimento = new Date(parcela.DataVencimento)
@@ -196,7 +197,6 @@ export class HomeComponent implements OnInit {
         //calcula saldo do mes
         this.aindaPossoGastar = (this.saldoAtual + this.aReceber) - (this.gastoTotalMes + this.gastosAdicionais);
         const contas = success[6].sort((a, b) => {return a.Id - b.Id});
-        console.log(contas)
         if (contas) {
           contas[0].Debito = this.aindaPossoGastar;
           if (contas[0].Mes > new Date().getUTCMonth() + 1 || contas[0].Ano > new Date().getUTCFullYear()){
