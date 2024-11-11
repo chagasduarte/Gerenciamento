@@ -27,10 +27,7 @@ import { GraficoService } from '../../shared/services/graficos.service';
   selector: 'app-home',
   standalone: true,
   imports: [
-    CommonModule,
-    GastosComponent,
-    NgxEchartsDirective,
-    NgxSpinnerComponent
+    CommonModule
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
