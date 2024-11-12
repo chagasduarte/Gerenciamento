@@ -7,6 +7,8 @@ import { Despesa } from '../../shared/models/despesa';
 import { DespesasService } from '../../shared/services/despesas.service';
 import { DefineCorParcela } from '../../utils/functions/defineCorParcela';
 import { ToastrService } from 'ngx-toastr';
+import { Ano, Mes } from '../../utils/meses';
+import { SystemService } from '../../shared/services/system.service';
 
 @Component({
   selector: 'app-previstos',
@@ -24,17 +26,16 @@ export class PrevistosComponent implements OnInit {
   parcelasPagas: {parcela: Parcela, despesa:Despesa}[] = [];
   corParcela = "#be5232";
   valotTotal!: number;
-
+  ano!: Ano;
+  
   constructor(
-    private readonly activeRoute: ActivatedRoute,
     private readonly parcelasService: ParcelasService,
     private readonly despesasService: DespesasService,
     private readonly router: Router,
-    private readonly toastrService: ToastrService
+    private readonly toastrService: ToastrService,
+    private readonly systemService: SystemService
   ){
-    this.activeRoute.queryParamMap.subscribe(x => {
-      x.keys.map(id => this.ids.push(parseInt(x.get(id)!.toString())))
-    });
+    this.ano = new Ano(this.systemService.ano.valor);
   }
 
   ngOnInit(): void {
@@ -43,8 +44,14 @@ export class PrevistosComponent implements OnInit {
 
   buscaParcelas(){
     this.valotTotal = 0;
-    this.ids.forEach(id => {
-      this.parcelasService.GetParcela(id).subscribe(parcela => {
+
+    this.parcelas = [];
+    this.parcelasPagas = [];
+
+    this.parcelasService.GetParcelasByMes(this.systemService.mes.valor + 1, this.systemService.ano.valor).subscribe(parcelas => {
+      console.log(parcelas)
+
+      parcelas.map( parcela => {
         parcela.DataVencimento = new Date(parcela.DataVencimento);
         
         this.despesasService.GetDespesasById(parcela.DespesaId).subscribe({
@@ -56,16 +63,9 @@ export class PrevistosComponent implements OnInit {
               this.parcelas.push({parcela: parcela, despesa: despesa});
               this.valotTotal += parseFloat(parcela.Valor.toString());
             }
-          },
-          error: (err:any) => {
-            if(err.status == 404){
-              this.parcelasService.DeleteParcelasByDespesa(parcela.DespesaId).subscribe(x => {
-                this.toastrService.warning(`A parcela com id ${parcela.Id} não possui despesa registrada, por tanto foi apagada do banco`,"Aviso");
-              })
-            }
           }
         })
-      })
+      });
     });
   }
   voltar() {
@@ -74,5 +74,8 @@ export class PrevistosComponent implements OnInit {
   DefineCorParcela(parcela: Parcela): string {
     return new Date(parcela.DataVencimento) < new Date()? "#af6e6e" : "#b1ca78";
   }
-    
+  mudaMes(mes: Mes){
+    this.systemService.mes = mes;
+    this.buscaParcelas();
+  }
 }

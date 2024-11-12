@@ -34,7 +34,6 @@ import { GraficoService } from '../../shared/services/graficos.service';
 })
 export class HomeComponent implements OnInit {
 
-  @ViewChild('container', { read: ViewContainerRef }) container!: ViewContainerRef;
   filtro: number = 0;
   despesasMes: DespesasMes[] = [];
   despesasPagas: AgrupamentoTipoDespesa = new AgrupamentoTipoDespesa(this.despesasMes);
@@ -159,8 +158,14 @@ export class HomeComponent implements OnInit {
             else{
               this.systemService.saidas[parcela.DataVencimento.getUTCMonth()] = parseFloat(parcela.Valor.toString());
             }
+            if(parcela.DataVencimento < new Date() && parcela.IsPaga == 0){
+              parcela.IsPaga = 3;
+              this.parcelasService.PutParcela(parcela).subscribe(x => {
+                parcela = x;
+              })
+            }
             //busca parcelas atrasadas
-            if(parcela.IsPaga == 3 && (new Date().getUTCMonth() == this.systemService.mes.valor || parcela.DataVencimento.getUTCMonth() == this.systemService.mes.valor)){
+            if(parcela.IsPaga == 3 && this.systemService.mes.valor == new Date().getUTCMonth()){
               this.gastoTotalMes += parseFloat(parcela.Valor.toString());
               this.idsPrevisto.push(parcela.Id)
             }
@@ -261,14 +266,6 @@ export class HomeComponent implements OnInit {
     this.router.navigate(["gastos"]);
   }
 
-  definirContainer(component: Type<any>) {
-    if (this.container) {
-      this.container.clear();
-      this.container.createComponent(component);
-    } else {
-      console.error('Container não foi inicializado corretamente.');
-    }
-  }
   contasDetalhes() {
     this.router.navigate(["contas-detalhe"])
   }
@@ -280,7 +277,7 @@ export class HomeComponent implements OnInit {
     return parseInt(valor.toString());
   }
   previstos() {
-    this.router.navigate(["previstos"], {queryParams: this.idsPrevisto});
+    this.router.navigate(["previstos"]);
   }
 
   mudaAno(ano: number) {
