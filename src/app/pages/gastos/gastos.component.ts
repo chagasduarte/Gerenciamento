@@ -34,7 +34,8 @@ export class GastosComponent {
   conta!: Conta;
   idConta!: number;
   adicionar: any;
-
+  aindafalta:number = 0;
+  totalPagos: number =0;
   constructor(
    private readonly despesaService: DespesasService,
    private readonly contasService: ContasService,
@@ -47,10 +48,25 @@ export class GastosComponent {
   }
 
   calculaGastosDoMes(){
+
+    this.gastos = [];
+    this.gastosPagos = [];
+    this.contas = [];
+    this.listaPagamento = [];
+    this.totalPagar = 0;
+    this.idConta = 0;
+    this.aindafalta = 0;
+    this.totalPagos = 0;
     this.despesaService.GetDespesasAdicionais(this.systemsService.ano.valor).subscribe({
       next: (success: Despesa[]) => {
         this.gastos = success.filter(x => !x.IsPaga).filter(x => new Date(x.DataCompra).getUTCMonth() == this.systemsService.mes.valor);
-        this.gastosPagos = success.filter(x => x.IsPaga).filter(x => new Date(x.DataCompra).getUTCMonth() == this.systemsService.mes.valor);;
+        this.gastosPagos = success.filter(x => x.IsPaga).filter(x => new Date(x.DataCompra).getUTCMonth() == this.systemsService.mes.valor);
+        this.gastos.forEach(x => {
+          this.aindafalta += parseFloat(x.ValorTotal.toString());
+        })
+        this.gastosPagos.forEach(x => {
+          this.totalPagos += parseFloat(x.ValorTotal.toString());
+        })
       },
       error: (err: any) => {
         this.toastService.error("Errou, Porraaaa... Burro!!!", "Erro");
@@ -124,5 +140,18 @@ export class GastosComponent {
         this.buscaContas();
       });
     }
+  }
+  despagar(gasto: Despesa){
+    gasto.IsPaga = false;
+    this.despesaService.PutDespesa(gasto).subscribe({
+      next: (success: Despesa) => {
+        this.toastService.success("Sucesso", "Despesa de volta a lista de não pagas sucesso");
+        this.calculaGastosDoMes();
+        this.buscaContas();
+      },
+      error: (err: any) => {
+        this.toastService.error("Erro", "Ocorreu algum erro no processo de atualização.")
+      }
+    })
   }
 }
