@@ -137,6 +137,17 @@ export class DashboardComponent implements  OnInit {
         }
         return dados;
     }
+
+    drawChartProg(){
+
+    }
+    progrecao(): (string | number)[][] {
+        let dados: (string | number)[][] = [];
+        dados.push(['Mês', 'Progressao']);
+
+
+        return dados;
+    }
     drawChart() {
         // Carregar o pacote de gráficos
         const google = (window as any).google;
