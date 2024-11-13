@@ -11,6 +11,7 @@ import { Router } from "@angular/router";
 import { Ano, Mes } from "../../utils/meses";
 import { Despesa } from "../../shared/models/despesa";
 import { DespesasService } from "../../shared/services/despesas.service";
+import { ContasService } from "../../shared/services/contas.service";
 
 @Component({
     selector: 'app-dashboard',
@@ -36,7 +37,8 @@ export class DashboardComponent implements  OnInit {
         public systemService: SystemService,
         private readonly graficosService: GraficoService,
         private readonly router: Router,
-        private readonly despesasService: DespesasService
+        private readonly despesasService: DespesasService,
+        private readonly contasService: ContasService
     ){
     }
     ngOnInit(): void {
@@ -54,7 +56,8 @@ export class DashboardComponent implements  OnInit {
                 this.despesas = despesas;
                 this.agruparDespesas()
             }
-        })
+        });
+        this.contasService.GetContas
     }
 
     agruparDespesas(){
