@@ -5,7 +5,6 @@ body {
     color: aliceblue;
 }
 
-/* 
 html::-webkit-scrollbar {
     width: 10px;
 }
@@ -17,7 +16,7 @@ html::-webkit-scrollbar-thumb {
   
 html::-webkit-scrollbar-track {
   background: #ededed;
-} */
+} 
 
 .linha{
   background-color: aliceblue;

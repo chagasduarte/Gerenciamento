@@ -84,7 +84,8 @@ export class ParcelasComponent implements OnInit {
                 this.parcelasService.PutParcela(parcela).subscribe( x => {
                   this.toastr.success("Sucesso", "Parcela Paga com sucesso.");
                 });
-                this.despesa.ValorPago += parcela.Valor;
+                this.despesa.ValorPago = parseFloat(this.despesa.ValorPago.toString());
+                this.despesa.ValorPago += parseFloat(parcela.Valor.toString());
                 this.despesaService.PutDespesa(this.despesa).subscribe(x => {
                   this.despesa = x;
                   this.toastr.success("Sucesso", "Valor Total da Despesa Atualizado com sucesso.");
