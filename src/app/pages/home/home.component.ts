@@ -27,17 +27,13 @@ import { GraficoService } from '../../shared/services/graficos.service';
   selector: 'app-home',
   standalone: true,
   imports: [
-    CommonModule,
-    GastosComponent,
-    NgxEchartsDirective,
-    NgxSpinnerComponent
+    CommonModule
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css', './home.component.mobile.css']
 })
 export class HomeComponent implements OnInit {
 
-  @ViewChild('container', { read: ViewContainerRef }) container!: ViewContainerRef;
   filtro: number = 0;
   despesasMes: DespesasMes[] = [];
   despesasPagas: AgrupamentoTipoDespesa = new AgrupamentoTipoDespesa(this.despesasMes);
@@ -111,13 +107,14 @@ export class HomeComponent implements OnInit {
       this.entradasService.GetEntradas(),
       this.contasService.GetContaByMes(this.systemService.mes.valor + 1, this.systemService.ano.valor),
       this.contasService.GetContaByMes(this.systemService.mes.valor + 2 > 12? 1: this.systemService.mes.valor + 2, this.systemService.mes.valor + 2 > 12? this.systemService.ano.valor + 1: this.systemService.ano.valor),
-      this.contasService.GetContas()
+      this.contasService.GetContas(),
+      this.despesaService.GetDespesasParceladasNaoPagas(this.systemService.mes.valor + 1, this.systemService.ano.valor)
     ]).subscribe({
       next: (success) => {
         let aux: {idDespesa: number, valorParcela: number, dataParcela: Date, isPaga: number}[] = [];
 
         //despesas parceladas
-        this.despesasParceladas = success[0];
+        this.despesasParceladas = success[8];
         //parcelas do mes
         success[1].map(parcela => {
           parcela.DataVencimento = new Date(parcela.DataVencimento)
@@ -161,8 +158,14 @@ export class HomeComponent implements OnInit {
             else{
               this.systemService.saidas[parcela.DataVencimento.getUTCMonth()] = parseFloat(parcela.Valor.toString());
             }
+            if(parcela.DataVencimento < new Date() && parcela.IsPaga == 0){
+              parcela.IsPaga = 3;
+              this.parcelasService.PutParcela(parcela).subscribe(x => {
+                parcela = x;
+              })
+            }
             //busca parcelas atrasadas
-            if(parcela.IsPaga == 3 && (new Date().getUTCMonth() == this.systemService.mes.valor || parcela.DataVencimento.getUTCMonth() == this.systemService.mes.valor)){
+            if(parcela.IsPaga == 3 && this.systemService.mes.valor == new Date().getUTCMonth()){
               this.gastoTotalMes += parseFloat(parcela.Valor.toString());
               this.idsPrevisto.push(parcela.Id)
             }
@@ -196,7 +199,6 @@ export class HomeComponent implements OnInit {
         //calcula saldo do mes
         this.aindaPossoGastar = (this.saldoAtual + this.aReceber) - (this.gastoTotalMes + this.gastosAdicionais);
         const contas = success[6].sort((a, b) => {return a.Id - b.Id});
-        console.log(contas)
         if (contas) {
           contas[0].Debito = this.aindaPossoGastar;
           if (contas[0].Mes > new Date().getUTCMonth() + 1 || contas[0].Ano > new Date().getUTCFullYear()){
@@ -264,14 +266,6 @@ export class HomeComponent implements OnInit {
     this.router.navigate(["gastos"]);
   }
 
-  definirContainer(component: Type<any>) {
-    if (this.container) {
-      this.container.clear();
-      this.container.createComponent(component);
-    } else {
-      console.error('Container não foi inicializado corretamente.');
-    }
-  }
   contasDetalhes() {
     this.router.navigate(["contas-detalhe"])
   }
@@ -283,7 +277,7 @@ export class HomeComponent implements OnInit {
     return parseInt(valor.toString());
   }
   previstos() {
-    this.router.navigate(["previstos"], {queryParams: this.idsPrevisto});
+    this.router.navigate(["previstos"]);
   }
 
   mudaAno(ano: number) {

@@ -26,7 +26,9 @@ export class DespesasService {
   GetDespesasParceladas(mes: number, ano: number): Observable<Despesa[]> {
     return this.http.get<Despesa[]>(`${this.api}/Parceladas?mes=${mes}&ano=${ano}`);
   }
-
+  GetDespesasParceladasNaoPagas(mes: number, ano: number): Observable<Despesa[]> {
+    return this.http.get<Despesa[]>(`${this.api}/ParceladasNaoPagas?mes=${mes}&ano=${ano}`);
+  }
   GetDespesasAdicionais(ano: number): Observable<Despesa[]> {
     return this.http.get<Despesa[]>(`${this.api}/Adicionais?ano=${ano}`);
   }
