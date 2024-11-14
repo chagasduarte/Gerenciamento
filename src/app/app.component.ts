@@ -6,6 +6,7 @@ import { SystemService } from './shared/services/system.service';
 import { AuthService } from './shared/services/auth.service';
 import { HomeComponent } from "./pages/home/home.component";
 import { SideBarComponent } from './shared/components/side-bar/side-bar.component';
+import { LoginComponent } from "./pages/loggin/loggin.component";
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,8 @@ import { SideBarComponent } from './shared/components/side-bar/side-bar.componen
     RouterOutlet,
     CommonModule,
     NgxSpinnerComponent,
-    HomeComponent
+    HomeComponent,
+    LoginComponent
 ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
@@ -24,5 +26,5 @@ import { SideBarComponent } from './shared/components/side-bar/side-bar.componen
 export class AppComponent {
    
   constructor(public authService: AuthService){}
-
+  
 }

@@ -1,5 +1,5 @@
-<div class="pagina">
-    <app-side-bar></app-side-bar>
+<div class="pagina" >
+    <app-side-bar *ngIf="authService.isLogged"></app-side-bar>
     <div class="paginas">
         <router-outlet hidden></router-outlet>
     </div>

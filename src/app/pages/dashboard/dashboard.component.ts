@@ -12,6 +12,7 @@ import { Ano, Mes } from "../../utils/meses";
 import { Despesa } from "../../shared/models/despesa";
 import { DespesasService } from "../../shared/services/despesas.service";
 import { ContasService } from "../../shared/services/contas.service";
+import { TipoDespesa } from "../../shared/models/tipoDespesa";
 
 @Component({
     selector: 'app-dashboard',
@@ -61,8 +62,10 @@ export class DashboardComponent implements  OnInit {
     }
 
     agruparDespesas(){
-        for (let i = 0; i <= 8; i++){
-            this.tipoDespesaAgrupada.push( {id: i+1, TipoDespesa: i+1, saida: 0})
+        for (const tipo in  TipoDespesa){
+            if(!isNaN(Number(tipo))) {
+                this.tipoDespesaAgrupada.push( {id: Number(tipo), TipoDespesa: Number(tipo), saida: 0})
+            }
         }
         for (let despesa of this.despesas){
           this.tipoDespesaAgrupada[despesa.TipoDespesa].saida += parseFloat(despesa.ValorTotal.toString());
@@ -84,29 +87,34 @@ export class DashboardComponent implements  OnInit {
           this.drawChartInOut();
           this.drawChart();
           this.drawChartPizza();
+          this.drawChartProg();
         };
         document.body.appendChild(script);
     }
     drawChartPizza(){
         const google = (window as any).google;
-        google.charts.load('current', {'packages': ['pie']});
+        google.charts.load('current', {'packages': ['corechart']});
         google.charts.setOnLoadCallback(() => {
-            const data = google.visualization.arrayToDataTable(this.tipoDespesaAgrupada);
+            const data = google.visualization.arrayToDataTable(this.despesaAgrupadaToArray());
             var options = {
-                title: 'Entradas e Saidas',
-                backgroundColor: { fill: '#f0f0f0' },  // Cor de fundo do gráfico
-                chartArea: {
-                    backgroundColor: { fill: '#ffffff' }  // Cor de fundo da área do gráfico
-                },
-                bars: 'vertical', // Required for Material Bar Charts.
-                hAxis: {format: 'decimal'},
-                colors: ['#1b9e77', '#d95f02'],
-                legend: { position: 'none' }
+                title: 'Categoria',
             };
-            var chart = new google.charts.Pie(document.getElementById('pizza'));
+            var chart = new google.visualization.PieChart(document.getElementById('pizza'));
 
             chart.draw(data, options);
         })
+    }
+
+    despesaAgrupadaToArray(): (string | number)[][] {
+        let dados: (string | number)[][] = [];
+        dados.push(['Categoria', 'Valor']);
+        for(const tipo in  TipoDespesa) {
+            if(!isNaN(Number(tipo))) {
+                const valor = this.tipoDespesaAgrupada.find(x => x.TipoDespesa == Number(tipo))?.saida || 0;
+                dados.push([TipoDespesa[tipo], valor])
+            }
+        }
+        return dados;
     }
     drawChartInOut(){
         const google = (window as any).google;
@@ -139,13 +147,34 @@ export class DashboardComponent implements  OnInit {
     }
 
     drawChartProg(){
+        const google = (window as any).google;
+        google.charts.load('current', {'packages': ['bar']});
+        google.charts.setOnLoadCallback(() => {
+            const data = google.visualization.arrayToDataTable(this.progrecao());
+            var options = {
+                title: 'Progressão',
+                backgroundColor: { fill: '#f0f0f0' },  // Cor de fundo do gráfico
+                chartArea: {
+                    backgroundColor: { fill: '#ffffff' }  // Cor de fundo da área do gráfico
+                },
+                bars: 'vertical', // Required for Material Bar Charts.
+                hAxis: {format: 'decimal'},
+                colors: ['#1b9e77', '#d95f02'],
+                legend: { position: 'none' }
+            };
+            var chart = new google.charts.Bar(document.getElementById('progressao'));
 
+            chart.draw(data, options);
+        })
     }
     progrecao(): (string | number)[][] {
         let dados: (string | number)[][] = [];
         dados.push(['Mês', 'Progressao']);
-
-
+        
+        for(const mes of this.graficos){
+            dados.push([mes.nomeabrev, parseFloat(mes.progressao.toString())]);
+        }
+        
         return dados;
     }
     drawChart() {

@@ -4,24 +4,31 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class AuthService {
-  private loggedIn = false;
-
-  constructor() { }
+  isLogged = false;
+  constructor() { 
+    if (typeof window !== 'undefined') {
+    this.isLogged = localStorage.getItem('isLoggedIn') == 'true';
+  }}
 
   login(username: string, password: string): boolean {
     // Aqui você deve implementar a autenticação real
     if (username === 'xuxu' && password === 'xuxuzinha') {
-      this.loggedIn = true;
+      if (typeof window !== 'undefined') {
+        this.isLogged = true;
+        localStorage.setItem('isLoggedIn', 'true');
+      }
       return true;
     }
     return false;
   }
 
   logout() {
-    this.loggedIn = false;
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('isLoggedIn', 'false');
+    }
   }
 
-  isLoggedIn(): boolean {
-    return true;
+  IsLoggedIn(): boolean {
+    return this.isLogged;
   }
 }

@@ -13,16 +13,16 @@ import { AuthGuard } from './shared/guard/auth.guard';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 export const routes: Routes = [
-    { path: '', redirectTo: '/login', pathMatch: 'full' },
+    { path: '', component: HomeComponent, canActivate: [AuthGuard] },
     { path: 'login', component: LoginComponent },
     { path: "home", component: HomeComponent, canActivate: [AuthGuard] },
     { path: "despesas", component: DespesasComponent, canActivate: [AuthGuard] },
     { path: "entradas", component: EntradasComponent, canActivate: [AuthGuard] },
     { path: "contas", component: ContasComponent, canActivate: [AuthGuard] },
     { path: "parcelas", component: ParcelasComponent, canActivate: [AuthGuard] },
-    { path: "gastos", component: GastosComponent },
-    { path: "contas-detalhe", component: ContasDetalheComponent },
+    { path: "gastos", component: GastosComponent, canActivate: [AuthGuard] },
+    { path: "contas-detalhe", component: ContasDetalheComponent, canActivate: [AuthGuard] },
     { path: "entradas-detalhe", component: EntradaDetalhesComponent, canActivate: [AuthGuard] },
     { path: "previstos", component: PrevistosComponent, canActivate: [AuthGuard] },
-    { path: "dash", component: DashboardComponent}
+    { path: "dash", component: DashboardComponent, canActivate: [AuthGuard]}
 ];
