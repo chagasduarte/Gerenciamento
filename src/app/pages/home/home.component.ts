@@ -30,7 +30,7 @@ import { GraficoService } from '../../shared/services/graficos.service';
     CommonModule
   ],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrls: ['./home.component.css', './home.component.mobile.css']
 })
 export class HomeComponent implements OnInit {
 

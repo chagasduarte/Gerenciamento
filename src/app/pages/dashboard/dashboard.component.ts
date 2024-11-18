@@ -9,6 +9,9 @@ import { DefineCor } from "../../utils/functions/defineCorGrafico";
 import { GraficoService } from "../../shared/services/graficos.service";
 import { Router } from "@angular/router";
 import { Ano, Mes } from "../../utils/meses";
+import { Despesa } from "../../shared/models/despesa";
+import { DespesasService } from "../../shared/services/despesas.service";
+import { ContasService } from "../../shared/services/contas.service";
 import { TipoDespesa } from "../../shared/models/tipoDespesa";
 
 @Component({
@@ -27,131 +30,180 @@ import { TipoDespesa } from "../../shared/models/tipoDespesa";
 export class DashboardComponent implements  OnInit {
     contemMenorQZero: boolean = true;
     graficos!: MesGrafico[];
-    tipoDespesaAgrupada!: TipoDespesaGrafico[];
-    Alimentacao: TipoDespesaGrafico = {id:0,TipoDespesa:TipoDespesa.Alimentacao,saida:0};
-
-    Transporte: TipoDespesaGrafico = {id:0,TipoDespesa:TipoDespesa.Transporte,saida:0};
-    Saude: TipoDespesaGrafico = {id:0,TipoDespesa:TipoDespesa.Saude,saida:0};
-    Educacao: TipoDespesaGrafico = {id:0,TipoDespesa:TipoDespesa.Educacao,saida:0};
-    Lazer: TipoDespesaGrafico = {id:0,TipoDespesa:TipoDespesa.Lazer,saida:0};
-    Moradia: TipoDespesaGrafico = {id:0,TipoDespesa:TipoDespesa.Moradia,saida:0};
-    Servicos: TipoDespesaGrafico = {id:0,TipoDespesa:TipoDespesa.Servicos,saida:0};
-    Outros: TipoDespesaGrafico = {id:0,TipoDespesa:TipoDespesa.Outros,saida:0};
-    Total: number = 0;
+    despesas: Despesa[] = [];
+    tipoDespesaAgrupada: TipoDespesaGrafico[] = [];
     anosDeDivida: number[] = [2024, 2025, 2026];
-    legendas: {nome: string, cor: string, porcentagem: number}[] = [
-        {nome: "Alimentação", cor: "rgb(56, 124, 141)", porcentagem: 0}, 
-        {nome: "Transporte", cor: "rgb(182, 47, 47)", porcentagem: 0},
-        {nome: "Saúde", cor: "rgb(226, 224, 111)", porcentagem: 0},
-        {nome: "Educacao", cor: "rgb(135, 67, 141)", porcentagem: 0},
-        {nome: "Lazer", cor: "rgb(0, 100, 0)", porcentagem: 0},
-        {nome: "Moradia", cor: "rgb(0, 0, 100)", porcentagem: 0},
-        {nome: "Servico", cor: "rgb(255, 165, 0)", porcentagem: 0}
-    ]
 
     constructor(
         public systemService: SystemService,
         private readonly graficosService: GraficoService,
-        private readonly router: Router
+        private readonly router: Router,
+        private readonly despesasService: DespesasService,
+        private readonly contasService: ContasService
     ){
     }
     ngOnInit(): void {
-        this.buscaDados()
+        this.buscaDados();
+        
     }
 
     buscaDados(){
-        this.contemMenorQZero = false;
-        this.Total = 0;
-        this.Alimentacao.saida = 0;
-        this.Transporte.saida = 0;
-        this.Saude.saida = 0;
-        this.Educacao.saida = 0;
-        this.Lazer.saida = 0;
-        this.Moradia.saida = 0;
-        this.Servicos.saida = 0;
-
         this.graficosService.GetGraficos(this.systemService.ano.valor).subscribe(x => {
-            this.graficos = x.sort((a,b) => {return a.id - b.id});
-            x.map( x => {
-                if (this.systemService.ano.maiorValor < Math.abs(x.progressao)){
-                    this.systemService.ano.maiorValor = Math.abs(x.progressao);
-                }
-                if (x.progressao < 0){
-                    this.contemMenorQZero = true;
-                }
-            })
+            this.graficos = x
+            this.loadGoogleCharts()
         });
-        this.graficosService.GetGraficosPizza(this.systemService.ano.valor).subscribe(x => {
-            this.tipoDespesaAgrupada = x;
-            x.map(despesa => {
-                this.Total += parseFloat(despesa.saida.toString());
-                switch(despesa.TipoDespesa) {
-                    case 1:
-                        this.Alimentacao.saida += parseFloat(despesa.saida.toString());
-                        break;
-                    case 2:
-                        this.Transporte.saida += parseFloat(despesa.saida.toString());
-                        break;
-                    case 3:
-                        this.Saude.saida += parseFloat(despesa.saida.toString());
-                        break;
-                    case 4:
-                        this.Educacao.saida += parseFloat(despesa.saida.toString());
-                        break;
-                    case TipoDespesa.Lazer:
-                        this.Lazer.saida += parseFloat(despesa.saida.toString());
-                        break;
-                    case TipoDespesa.Moradia:
-                        this.Moradia.saida += parseFloat(despesa.saida.toString());
-                        break;
-                    case TipoDespesa.Servicos:
-                        this.Servicos.saida += parseFloat(despesa.saida.toString());
-                        break;
-                    case TipoDespesa.Outros:
-                        this.Servicos.saida += parseFloat(despesa.saida.toString());
-                        break;
-                }
-                
-            });
-            this.legendas.map(legenda => {
-                switch(legenda.nome){
-                    case "Alimentação":
-                        legenda.porcentagem = this.Alimentacao.saida * 100 / this.Total;
-                        break;
-                    case "Transporte":
-                        legenda.porcentagem = this.Transporte.saida * 100/ this.Total;
-                        break;
-                    case "Saúde":
-                        legenda.porcentagem = this.Saude.saida * 100/ this.Total;
-                        break;
-                    case "Educacao":
-                        legenda.porcentagem = this.Educacao.saida * 100/ this.Total;
-                        break;
-                    case "Lazer":
-                        legenda.porcentagem = this.Lazer.saida * 100 / this.Total;
-                        break;
-                    case "Moradia":
-                        legenda.porcentagem = this.Moradia.saida * 100 / this.Total;
-                        break;
-                    case "Servico":
-                        legenda.porcentagem = this.Servicos.saida * 100 / this.Total;
-                        break;
-                }
-            })
+        this.despesasService.GetDespesasAdicionais(this.systemService.ano.valor).subscribe({
+            next: (despesas: Despesa[]) => {
+                this.despesas = despesas;
+                this.agruparDespesas()
+            }
         });
+        this.contasService.GetContas
     }
 
-    DefinirCor(valor: number): string {
-        return DefineCor(valor)
+    agruparDespesas(){
+        for (const tipo in  TipoDespesa){
+            if(!isNaN(Number(tipo))) {
+                this.tipoDespesaAgrupada.push( {id: Number(tipo), TipoDespesa: Number(tipo), saida: 0})
+            }
+        }
+        for (let despesa of this.despesas){
+          this.tipoDespesaAgrupada[despesa.TipoDespesa].saida += parseFloat(despesa.ValorTotal.toString());
+        }
     }
-    DefineHeight(valor: number): string {
-        return (Math.abs(valor) * 190 / this.systemService.ano.maiorValor) + 'px';
-    }
+
     voltar(){
         this.router.navigate(['home'])
     }
     mudaAno(ano: number){
         this.systemService.ano = new Ano(ano);
-        this.buscaDados()
+        this.buscaDados();
     }
+
+    loadGoogleCharts() {
+        const script = document.createElement('script');
+        script.src = 'https://www.gstatic.com/charts/loader.js';
+        script.onload = () => {
+          this.drawChartInOut();
+          this.drawChart();
+          this.drawChartPizza();
+          this.drawChartProg();
+        };
+        document.body.appendChild(script);
+    }
+    drawChartPizza(){
+        const google = (window as any).google;
+        google.charts.load('current', {'packages': ['corechart']});
+        google.charts.setOnLoadCallback(() => {
+            const data = google.visualization.arrayToDataTable(this.despesaAgrupadaToArray());
+            var options = {
+                title: 'Categoria',
+            };
+            var chart = new google.visualization.PieChart(document.getElementById('pizza'));
+
+            chart.draw(data, options);
+        })
+    }
+
+    despesaAgrupadaToArray(): (string | number)[][] {
+        let dados: (string | number)[][] = [];
+        dados.push(['Categoria', 'Valor']);
+        for(const tipo in  TipoDespesa) {
+            if(!isNaN(Number(tipo))) {
+                const valor = this.tipoDespesaAgrupada.find(x => x.TipoDespesa == Number(tipo))?.saida || 0;
+                dados.push([TipoDespesa[tipo], valor])
+            }
+        }
+        return dados;
+    }
+    drawChartInOut(){
+        const google = (window as any).google;
+        google.charts.load('current', {'packages': ['bar']});
+        google.charts.setOnLoadCallback(() => {
+            const data = google.visualization.arrayToDataTable(this.arrayInOut());
+            var options = {
+                title: 'Entradas e Saidas',
+                backgroundColor: { fill: '#f0f0f0' },  // Cor de fundo do gráfico
+                chartArea: {
+                    backgroundColor: { fill: '#ffffff' }  // Cor de fundo da área do gráfico
+                },
+                bars: 'vertical', // Required for Material Bar Charts.
+                hAxis: {format: 'decimal'},
+                colors: ['#1b9e77', '#d95f02'],
+                legend: { position: 'none' }
+            };
+            var chart = new google.charts.Bar(document.getElementById('entradas_saidas'));
+
+            chart.draw(data, options);
+        })
+    }
+    arrayInOut(): (string | number)[][] {
+        let dados: (string | number)[][] = [];
+        dados.push(['Mês', 'Entradas', 'Saidas']);
+        for(const mes of this.graficos){
+            dados.push([mes.nomeabrev, parseFloat(mes.entrada.toString()), parseFloat(mes.saida.toString())]);
+        }
+        return dados;
+    }
+
+    drawChartProg(){
+        const google = (window as any).google;
+        google.charts.load('current', {'packages': ['bar']});
+        google.charts.setOnLoadCallback(() => {
+            const data = google.visualization.arrayToDataTable(this.progrecao());
+            var options = {
+                title: 'Progressão',
+                backgroundColor: { fill: '#f0f0f0' },  // Cor de fundo do gráfico
+                chartArea: {
+                    backgroundColor: { fill: '#ffffff' }  // Cor de fundo da área do gráfico
+                },
+                bars: 'vertical', // Required for Material Bar Charts.
+                hAxis: {format: 'decimal'},
+                colors: ['#1b9e77', '#d95f02'],
+                legend: { position: 'none' }
+            };
+            var chart = new google.charts.Bar(document.getElementById('progressao'));
+
+            chart.draw(data, options);
+        })
+    }
+    progrecao(): (string | number)[][] {
+        let dados: (string | number)[][] = [];
+        dados.push(['Mês', 'Progressao']);
+        
+        for(const mes of this.graficos){
+            dados.push([mes.nomeabrev, parseFloat(mes.progressao.toString())]);
+        }
+        
+        return dados;
+    }
+    drawChart() {
+        // Carregar o pacote de gráficos
+        const google = (window as any).google;
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(() => {
+            const data = google.visualization.arrayToDataTable([
+            ['Mês', 'Alimentação', 'Transporte', 'Saúde', 'Educação', 'Lazer', 'Moradia', 'Serviços', 'Outros' ],
+            ['Janeiro', 300, 200, 150, 250, 50,50,50,50],
+            ['Fevereiro', 400, 250, 100, 300, 50,50,50,50],
+            ['Março', 350, 300, 200, 220, 50,50,50,50],
+            ['Abril', 450, 320, 180, 350, 50,50,50,50],
+            ['Maio', 400, 250, 220, 300, 50,50,50,50],
+            ['Junho', 500, 400, 300, 400, 50,50,50,50]
+            ]);
+
+            const options = {
+            title: 'Gastos Mensais por Tipo',
+            curveType: 'function',
+            legend: { position: 'bottom' },
+            hAxis: { title: 'Mês' },
+            vAxis: { title: 'Gastos (R$)' },
+            colors: ['#e2431e', '#f1ca3a', '#6f9654', '#1c91c0']
+            };
+
+            const chart = new google.visualization.LineChart(document.getElementById('grafico_linha'));
+            chart.draw(data, options);
+        });
+    }
+    
 }
