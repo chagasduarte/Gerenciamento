@@ -11,9 +11,10 @@ import { PrevistosComponent } from './pages/previstos/previstos.component';
 import { LoginComponent } from './pages/loggin/loggin.component';
 import { AuthGuard } from './shared/guard/auth.guard';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { PaginasComponent } from './paginas/paginas.component';
 
 export const routes: Routes = [
-    { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+    { path: '', component: PaginasComponent, canActivate: [AuthGuard] },
     { path: 'login', component: LoginComponent },
     { path: "home", component: HomeComponent, canActivate: [AuthGuard] },
     { path: "despesas", component: DespesasComponent, canActivate: [AuthGuard] },

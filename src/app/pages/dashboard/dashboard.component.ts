@@ -58,7 +58,6 @@ export class DashboardComponent implements  OnInit {
                 this.agruparDespesas()
             }
         });
-        this.contasService.GetContas
     }
 
     agruparDespesas(){
@@ -68,7 +67,12 @@ export class DashboardComponent implements  OnInit {
             }
         }
         for (let despesa of this.despesas){
-          this.tipoDespesaAgrupada[despesa.TipoDespesa].saida += parseFloat(despesa.ValorTotal.toString());
+            try {
+                this.tipoDespesaAgrupada[despesa.TipoDespesa -1].saida += parseFloat(despesa.ValorTotal.toString());
+            }
+            catch {
+                console.log(despesa);
+            }
         }
     }
 
@@ -85,7 +89,7 @@ export class DashboardComponent implements  OnInit {
         script.src = 'https://www.gstatic.com/charts/loader.js';
         script.onload = () => {
           this.drawChartInOut();
-          this.drawChart();
+          this.drawChartLine();
           this.drawChartPizza();
           this.drawChartProg();
         };
@@ -93,11 +97,15 @@ export class DashboardComponent implements  OnInit {
     }
     drawChartPizza(){
         const google = (window as any).google;
-        google.charts.load('current', {'packages': ['corechart']});
+        google.charts.load('current', {packages: ["corechart", "bar"]});
         google.charts.setOnLoadCallback(() => {
             const data = google.visualization.arrayToDataTable(this.despesaAgrupadaToArray());
             var options = {
                 title: 'Categoria',
+                is3D: true,
+                backgroundColor: {fill: 'none'},
+                width: 1300,
+                height: 600
             };
             var chart = new google.visualization.PieChart(document.getElementById('pizza'));
 
@@ -118,22 +126,20 @@ export class DashboardComponent implements  OnInit {
     }
     drawChartInOut(){
         const google = (window as any).google;
-        google.charts.load('current', {'packages': ['bar']});
+        google.charts.load('current', {packages: ["corechart", "bar"]});
         google.charts.setOnLoadCallback(() => {
             const data = google.visualization.arrayToDataTable(this.arrayInOut());
             var options = {
                 title: 'Entradas e Saidas',
-                backgroundColor: { fill: '#f0f0f0' },  // Cor de fundo do gráfico
-                chartArea: {
-                    backgroundColor: { fill: '#ffffff' }  // Cor de fundo da área do gráfico
-                },
-                bars: 'vertical', // Required for Material Bar Charts.
-                hAxis: {format: 'decimal'},
+                orientation: 'horizontal',
                 colors: ['#1b9e77', '#d95f02'],
-                legend: { position: 'none' }
-            };
-            var chart = new google.charts.Bar(document.getElementById('entradas_saidas'));
+                legend: { position: 'none' },
+                backgroundColor: {fill: 'none'},
+                width: 1300,
+                height: 600
 
+            };
+            var chart = new google.visualization.BarChart(document.getElementById('entradas_saidas'));
             chart.draw(data, options);
         })
     }
@@ -148,22 +154,21 @@ export class DashboardComponent implements  OnInit {
 
     drawChartProg(){
         const google = (window as any).google;
-        google.charts.load('current', {'packages': ['bar']});
+        google.charts.load("current", { packages: ["corechart", "bar"] })
         google.charts.setOnLoadCallback(() => {
-            const data = google.visualization.arrayToDataTable(this.progrecao());
+            var data = google.visualization.arrayToDataTable(this.progrecao());
             var options = {
                 title: 'Progressão',
-                backgroundColor: { fill: '#f0f0f0' },  // Cor de fundo do gráfico
-                chartArea: {
-                    backgroundColor: { fill: '#ffffff' }  // Cor de fundo da área do gráfico
-                },
-                bars: 'vertical', // Required for Material Bar Charts.
-                hAxis: {format: 'decimal'},
-                colors: ['#1b9e77', '#d95f02'],
-                legend: { position: 'none' }
+                orientation: 'horizontal',
+                colors: ['#1b9e77'],
+                legend: { position: 'none' },
+                backgroundColor: {fill: 'none'},
+                width: 1300,
+                height: 600
             };
-            var chart = new google.charts.Bar(document.getElementById('progressao'));
-
+    
+            var chart = new google.visualization.BarChart(document.getElementById('progressao'));
+    
             chart.draw(data, options);
         })
     }
@@ -177,33 +182,40 @@ export class DashboardComponent implements  OnInit {
         
         return dados;
     }
-    drawChart() {
+    drawChartLine() {
         // Carregar o pacote de gráficos
         const google = (window as any).google;
         google.charts.load('current', {'packages':['corechart']});
         google.charts.setOnLoadCallback(() => {
-            const data = google.visualization.arrayToDataTable([
-            ['Mês', 'Alimentação', 'Transporte', 'Saúde', 'Educação', 'Lazer', 'Moradia', 'Serviços', 'Outros' ],
-            ['Janeiro', 300, 200, 150, 250, 50,50,50,50],
-            ['Fevereiro', 400, 250, 100, 300, 50,50,50,50],
-            ['Março', 350, 300, 200, 220, 50,50,50,50],
-            ['Abril', 450, 320, 180, 350, 50,50,50,50],
-            ['Maio', 400, 250, 220, 300, 50,50,50,50],
-            ['Junho', 500, 400, 300, 400, 50,50,50,50]
-            ]);
+            const data = google.visualization.arrayToDataTable(this.graficoLinhasToArray());
 
             const options = {
-            title: 'Gastos Mensais por Tipo',
-            curveType: 'function',
-            legend: { position: 'bottom' },
-            hAxis: { title: 'Mês' },
-            vAxis: { title: 'Gastos (R$)' },
-            colors: ['#e2431e', '#f1ca3a', '#6f9654', '#1c91c0']
+                title: 'Gastos Mensais por Tipo',
+                backgroundColor: {fill: 'none'},
+                width: 1300,
+                height: 600
             };
 
             const chart = new google.visualization.LineChart(document.getElementById('grafico_linha'));
             chart.draw(data, options);
         });
     }
+    graficoLinhasToArray(): (string | number)[][] {
+        let dados: (string | number)[][] = [];
+        dados.push(['Mês', 'Alimentação', 'Transporte', 'Saúde', 'Educação', 'Lazer', 'Moradia', 'Serviços', 'Outros' ]);
+        dados.push(['Jan', 50,            80,            90,      64,         96,      35,         82,       56]);
+        dados.push(['Fev', 70,            100,            80,     61,         80,      125,         62.35,   106]);
+        dados.push(['Mar', 40,            10,            35,     81,         95,      106,         42,   95]);
+        dados.push(['Abr', 40,            10,            35,     81,         95,      106,         42,   95]);
+        dados.push(['Mai', 40,            10,            35,     81,         95,      106,         42,   95]);
+        dados.push(['Jun', 40,            10,            35,     81,         95,      106,         42,   95]);
+        dados.push(['Jul', 40,            10,            35,     81,         95,      106,         42,   95]);
+        dados.push(['Ago', 40,            10,            35,     81,         95,      106,         42,   95]);
+        dados.push(['Set', 40,            10,            35,     81,         95,      106,         42,   95]);
+        dados.push(['Out', 40,            10,            35,     81,         95,      106,         42,   95]);
+        dados.push(['Nov', 40,            10,            35,     81,         95,      106,         42,   95]);
+        dados.push(['Dez', 40,            10,            35,     81,         95,      106,         42,   95]);
     
+        return dados;
+    }
 }

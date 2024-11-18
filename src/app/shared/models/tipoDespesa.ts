@@ -18,12 +18,12 @@ export class InfoTabela {
 }
 
 export enum TipoDespesa {
-  Alimentacao = 1,
-  Transporte = 2,
-  Saude = 3,
-  Educacao = 4,
-  Lazer = 5,
-  Moradia = 6,
-  Servicos = 7,
-  Outros = 8
+  Alimentacao = 0,
+  Transporte = 1,
+  Saude = 2,
+  Educacao = 3,
+  Lazer = 4,
+  Moradia = 5,
+  Servicos = 6,
+  Outros = 7
 }

@@ -4,151 +4,175 @@
       <div class="abrev-mes"(click)="mudaMes(mes)">{{mes.nomeAbrev}}</div>
     </li>
   </ul>
+
+      <li class="d-flex" *ngFor="let ano of anosDeDivida">
+        <div class="d-flex justify-content-center">
+          <button 
+            style="border-radius: 20px;
+                   background: linear-gradient(to right, #9e3776, #214b5c, #09293f);
+                   color: antiquewhite;
+                   font-weight: 900;
+                   border: none;"
+            
+            class="me-2 sombra mt-3" 
+            (click)="mudaAno(ano)">{{ano}}</button>
+        </div>
+      </li>
+      <li class="d-flex"><button 
+        style="border-radius: 20px;
+        background: #214b5c;
+        color: antiquewhite;
+        font-weight: 900;
+        border: none;"
+        class="me-2 sombra mt-3"  
+        (click)="voltar()">Voltar</button></li>
+  
 </nav>
+<div class="infos" #infos>
+  <div class="info-1" id="info-1" name="info-1" className="info-1">
 
-<div class="info-1" id="info-1" name="info-1" className="info-1">
-
-  <div class="data-grafico">
-    <div 
-      style="font-weight: 900;"
-      class="data">
-      <div class="mes">
-        {{systemService.mes.nome}}
-      </div>
-      <div class="linha"></div>
-      <div class="ano">
-        {{systemService.ano.valor}}
-      </div>
-    </div>
-
-    <div class="graficos">
-      <div class="grafico-pizza sombra" [style]="{'--porcentagem': (somaDespesasMes*100/totalEntradas).toString()}" (click)="dashboard()">
-        <div class="legenda">
-          {{somaDespesasMes*100/totalEntradas * 10 | percent }}
-          <div class="linha"></div>
-          {{aindaPossoGastar | currency}}
+    <div class="data-grafico">
+      <div 
+        style="font-weight: 900;"
+        class="data">
+        <div class="mes">
+          {{systemService.mes.nome}}
+        </div>
+        <div class="linha"></div>
+        <div class="ano">
+          {{systemService.ano.valor}}
         </div>
       </div>
-    </div>
-    
-  </div>
 
-  <div class="grafico-card">
-     
-    <div class="grafico sombra">
-      <div class="grafico-header">
-        <h5>Despesas Parcelas</h5>
-        <button class="btn btn-success btn-sm" (click)="adicionarDespesa()">add</button>
-      </div>
-      <div class="grafico-body">
-        <div class="porcentagem-despesa" *ngFor="let despesa of despesasParceladas">
-          <div class="barra-progressao" (click)="parcelas(despesa)">
-            <div class="progressao-barra" [ngStyle]="{'width': (despesa.ValorPago * 150)/ despesa.ValorTotal + 'px'}">{{despesa.Nome}}</div>
+      <div class="graficos">
+        <div class="grafico-pizza sombra" [style]="{'--porcentagem': (somaDespesasMes*100/totalEntradas).toString()}" (click)="dashboard()">
+          <div class="legenda">
+            {{somaDespesasMes*100/totalEntradas * 10 | percent }}
+            <div class="linha"></div>
+            {{aindaPossoGastar | currency}}
           </div>
         </div>
       </div>
-    </div>
-  
-    <div class="cards">
-      <div class="card-button bg-laranja-pastel text-white sombra" (click)="previstos()">
-        <div class="circle">
-          <img src="/assets/img/money-with-wings.svg"/>
-        </div>
-        <div class="valores">
-          <div class="valor"> {{gastoTotalMes | currency}} </div>
-          <span class="text">Gastos Previstos</span>
-        </div>
-        <div class="bg-icon"><img src="/assets/img/money-with-wings.svg"/></div>
-      </div>
-  
-      <div class="card-button bg-vermelho-pastel text-white sombra" (click)="gastos()">
-        <div class="circle">
-          <img src="/assets/img/bitcoin-cash-money.svg"/>
-        </div>
-        <div class="valores">
-          <div class="valor"> {{gastosAdicionais | currency}} </div>
-          <span class="text">Gastos Adicionais</span>
-        </div>
-        <div class="bg-icon"><img src="/assets/img/bitcoin-cash-money.svg"/></div>
-        
-      </div>
       
-      <div class="card-button bg-verde-pastel text-white sombra" (click)="contasDetalhes()">
-        <div class="circle">
-          <img src="/assets/img/money-bag.svg"/>
-        </div>
-        <div class="valores">
-          <div class="valor"> {{saldoAtual | currency}} </div>
-          <span class="text">Saldo Total</span>
-        </div>
-        <div class="bg-icon"><img src="/assets/img/money-bag.svg"/></div>
-        
-      </div>
-  
-      <div class="card-button bg-azul-pastel text-white sombra" (click)="entradaDetalhes()">
-        <div class="circle">
-          <img src="/assets/img/dollar-banknote.svg"/>
-        </div>
-        <div class="valores">
-          <div class="valor">{{aReceber | currency}}</div>
-          <span class="text">Valores à receber</span>
-        </div>
-        <div class="bg-icon"><img src="/assets/img/dollar-banknote.svg" alt=""></div>
-        
-      </div>
     </div>
-   
 
-  </div>
-  
-</div>
+    <div class="grafico-card">
+      
+      <div class="grafico sombra">
+        <div class="grafico-header">
+          <h5>Despesas Parcelas</h5>
+          <button class="btn btn-success btn-sm" (click)="adicionarDespesa()">add</button>
+        </div>
+        <div class="grafico-body">
+          <div class="porcentagem-despesa" *ngFor="let despesa of despesasParceladas">
+            <div class="barra-progressao" (click)="parcelas(despesa)">
+              <div class="progressao-barra" [ngStyle]="{'width': (despesa.ValorPago * 150)/ despesa.ValorTotal + 'px'}">{{despesa.Nome}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div class="cards">
+        <div class="card-button bg-laranja-pastel text-white sombra" (click)="previstos()">
+          <div class="circle">
+            <img src="/assets/img/money-with-wings.svg"/>
+          </div>
+          <div class="valores">
+            <div class="valor"> {{gastoTotalMes | currency}} </div>
+            <span class="text">Gastos Previstos</span>
+          </div>
+          <div class="bg-icon"><img src="/assets/img/money-with-wings.svg"/></div>
+        </div>
+    
+        <div class="card-button bg-vermelho-pastel text-white sombra" (click)="gastos()">
+          <div class="circle">
+            <img src="/assets/img/bitcoin-cash-money.svg"/>
+          </div>
+          <div class="valores">
+            <div class="valor"> {{gastosAdicionais | currency}} </div>
+            <span class="text">Gastos Adicionais</span>
+          </div>
+          <div class="bg-icon"><img src="/assets/img/bitcoin-cash-money.svg"/></div>
+          
+        </div>
+        
+        <div class="card-button bg-verde-pastel text-white sombra" (click)="contasDetalhes()">
+          <div class="circle">
+            <img src="/assets/img/money-bag.svg"/>
+          </div>
+          <div class="valores">
+            <div class="valor"> {{saldoAtual | currency}} </div>
+            <span class="text">Saldo Total</span>
+          </div>
+          <div class="bg-icon"><img src="/assets/img/money-bag.svg"/></div>
+          
+        </div>
+    
+        <div class="card-button bg-azul-pastel text-white sombra" (click)="entradaDetalhes()">
+          <div class="circle">
+            <img src="/assets/img/dollar-banknote.svg"/>
+          </div>
+          <div class="valores">
+            <div class="valor">{{aReceber | currency}}</div>
+            <span class="text">Valores à receber</span>
+          </div>
+          <div class="bg-icon"><img src="/assets/img/dollar-banknote.svg" alt=""></div>
+          
+        </div>
+      </div>
     
 
-<div class="info-3">
-
-  <div style="display: grid; grid-template-columns: 60px 100px 1fr; width: 95%;">
-    Soma: 
-    <div class="col" style="font-size: 24px; font-weight: bolder;">{{somaDespesasMes | currency}}</div>
-    <div class="d-flex col">
-      <select #tipoDespesa type="number"
-       class="form-select form-select-sm" 
-       style="width: 100px;"
-       (change)="filtrar(tipoDespesa.value)">
-        <option value="0">Todos</option>
-        <option value=1>Alimentação</option>
-        <option value=2>Transporte</option>
-        <option value=3>Saúde</option>
-        <option value=4>Educação</option>
-        <option value=5>Lazer</option>
-        <option value=6>Moradia</option>
-        <option value=7>Serviços</option>
-        <option value=8>Outros</option>
-      </select>
-      <button class="btn btn-sm btn-success">Filtrar</button>
     </div>
+    
   </div>
+      
 
-  <div *ngIf="despesasPagas!.Agrupamento.length > 0" class="agrupamento">
-    <div class="pagas">
-      <div class="paga sombra" *ngFor="let paga of despesasPagas!.Agrupamento" (click)="filtraPagas(paga.Despesas)" >
-        <img [src]="defineImagem(paga.Tipo)" style="width: 50px; height: 50px;" alt="">
-        {{paga.Soma | currency}}
+  <div class="info-3">
+
+    <div style="display: grid; grid-template-columns: 60px 100px 1fr; width: 95%;">
+      Soma: 
+      <div class="col" style="font-size: 24px; font-weight: bolder;">{{somaDespesasMes | currency}}</div>
+      <div class="d-flex col">
+        <select #tipoDespesa type="number"
+        class="form-select form-select-sm" 
+        style="width: 100px;"
+        (change)="filtrar(tipoDespesa.value)">
+          <option value="0">Todos</option>
+          <option value=1>Alimentação</option>
+          <option value=2>Transporte</option>
+          <option value=3>Saúde</option>
+          <option value=4>Educação</option>
+          <option value=5>Lazer</option>
+          <option value=6>Moradia</option>
+          <option value=7>Serviços</option>
+          <option value=8>Outros</option>
+        </select>
+        <button class="btn btn-sm btn-success">Filtrar</button>
       </div>
     </div>
-  </div>
 
-  <div *ngFor="let despesa of despesasFiltradas" class="card-feed">
-    <div class="dia sombra">{{despesa.DataCompra.getUTCDate()}}</div>
-    <div class="despesa sombra" [ngStyle]="{'background-color': despesa.IsPaga == 3? '#af6e6e': 'rgb(78, 156, 156)'}">
-      <div class="circle">
-        <img [src]="defineImagem(despesa.TipoDespesa)" alt="">
+    <div *ngIf="despesasPagas!.Agrupamento.length > 0" class="agrupamento">
+      <div class="pagas">
+        <div class="paga sombra" *ngFor="let paga of despesasPagas!.Agrupamento" (click)="filtraPagas(paga.Despesas)" >
+          <img [src]="defineImagem(paga.Tipo)" style="width: 50px; height: 50px;" alt="">
+          {{paga.Soma | currency}}
+        </div>
       </div>
-      <div class="titulo">
-        {{despesa.Nome}} - {{despesa.Valor | currency}}
-        <input type="checkbox" class="">
-      </div>
-      <div class="detalhe">{{despesa.Detalhes}}</div>
     </div>
-  </div>
 
+    <div *ngFor="let despesa of despesasFiltradas" class="card-feed">
+      <div class="dia sombra">{{despesa.DataCompra.getUTCDate()}}</div>
+      <div class="despesa sombra" [ngStyle]="{'background-color': despesa.IsPaga == 3? '#af6e6e': 'rgb(78, 156, 156)'}">
+        <div class="circle">
+          <img [src]="defineImagem(despesa.TipoDespesa)" alt="">
+        </div>
+        <div class="titulo">
+          {{despesa.Nome}} - {{despesa.Valor | currency}}
+          <input type="checkbox" class="">
+        </div>
+        <div class="detalhe">{{despesa.Detalhes}}</div>
+      </div>
+    </div>
+
+  </div>
 </div>

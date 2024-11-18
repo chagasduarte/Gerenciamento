@@ -63,6 +63,13 @@ export class PrevistosComponent implements OnInit {
               this.parcelas.push({parcela: parcela, despesa: despesa});
               this.valotTotal += parseFloat(parcela.Valor.toString());
             }
+          },
+          error: (err: any) => {
+            if (err.status == 404){
+              this.parcelasService.DeleteParcelasByDespesa(parcela.DespesaId).subscribe( x => {
+                this.toastrService.warning('Aviso', 'Como essa despesa não foi encontrada, apagamos todas as parcelas referentes a ela.')
+              });
+            }  
           }
         })
       });

@@ -33,6 +33,8 @@ import { GraficoService } from '../../shared/services/graficos.service';
   styleUrls: ['./home.component.css', './home.component.mobile.css']
 })
 export class HomeComponent implements OnInit {
+  
+  @ViewChild('infos', { read: ViewContainerRef }) infos!: ViewContainerRef;
 
   filtro: number = 0;
   despesasMes: DespesasMes[] = [];
@@ -81,7 +83,9 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void { 
     this.preencheInformacoes();
   }
-  
+  voltar() {
+    throw new Error('Method not implemented.');
+  }
   preencheInformacoes(){
     this.totalEntradas = 0;
     this.somaDespesasMes = 0;
