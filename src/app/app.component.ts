@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NgxSpinnerComponent } from 'ngx-spinner';
 import { SystemService } from './shared/services/system.service';
@@ -12,19 +12,23 @@ import { LoginComponent } from "./pages/loggin/loggin.component";
   selector: 'app-root',
   standalone: true,
   imports: [
-    HomeComponent,
-    SideBarComponent,
     RouterOutlet,
     CommonModule,
     NgxSpinnerComponent,
-    HomeComponent,
-    LoginComponent
 ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-   
+  @ViewChild('paginas', { read: ViewContainerRef } ) paginas!: ViewContainerRef
+  anosDeDivida: number[] = [2024, 2025, 2026];
+
   constructor(public authService: AuthService){}
+
+  mudaAno(ano: number){
+    this.paginas.element.nativeElement.innerHTML = '';
+    this.paginas.clear();
+    this.paginas.createComponent(HomeComponent);    
+  }
   
 }

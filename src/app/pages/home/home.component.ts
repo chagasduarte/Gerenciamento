@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, Type, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, Inject, OnChanges, OnInit, SimpleChanges, Type, ViewChild, ViewContainerRef } from '@angular/core';
 import { Ano, Mes, Meses } from '../../utils/meses';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { Despesa } from '../../shared/models/despesa';
@@ -77,6 +77,8 @@ export class HomeComponent implements OnInit {
   ){
     this.ano = new Ano(this.systemService.ano.valor);
   }
+
+
 
   ngOnInit(): void { 
     this.preencheInformacoes();

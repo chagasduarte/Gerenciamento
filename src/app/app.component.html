@@ -1,8 +1,6 @@
-<div class="pagina" >
-    <app-side-bar *ngIf="authService.isLogged"></app-side-bar>
-    <div class="paginas">
-        <router-outlet hidden></router-outlet>
-    </div>
+   
+<div class="paginas">
+    <router-outlet hidden></router-outlet>
 </div>
 <ngx-spinner type="ball-scale-multiple" bdColor="#4d12a050"
 [color]="'#333'" [size]="'medium'" [fullScreen]="true" />
