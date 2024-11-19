@@ -4,6 +4,19 @@
         "grafico"
         "cards";
     }
+    .pagina  {
+        grid-template-areas: 
+        'bar'
+        'info';
+        grid-template-columns: 1fr;
+        overflow-x: auto;
+        overflow-y: auto;
+        height: 100vh;
+    }
 
+    .side-bar {
+        display: none;
+    }
+    
 }
 
