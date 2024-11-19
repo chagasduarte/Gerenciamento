@@ -221,16 +221,7 @@
     text-align: center;
     font-weight: bold;
 }
-.dia::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  top: 100%; /* Alinha a linha na parte inferior da div "dia" */
-  height: 100%; /* Altura da linha */
-  width: 2px; /* Largura da linha */
-  background-color: rgba(127, 255, 212, 0.123); /* Cor da linha */
-}
+
 
 .titulo {
     font-weight: bolder;
