@@ -95,11 +95,7 @@
 .grafico-card{
     grid-area: graficoCards;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 400px));
-    grid-template-rows: repeat(auto-fill, minmax(250px, 1fr));
     width: 100%;
-    place-items: center;
-    place-self: center;
 }
 
 .grafico {
@@ -110,7 +106,6 @@
     grid-template-rows: 2rem 1fr;
     background-color: rgb(78, 156, 156);
     border-radius: 15px;
-    width: 95%;
     height: 100%;
 }
 .grafico-header{
@@ -251,4 +246,7 @@ a {
 a:hover {
   transform: scale(1.2);
   cursor: pointer;
+}
+.accordion {
+    width: 400px;
 }
