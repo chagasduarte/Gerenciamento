@@ -219,7 +219,7 @@
 
             <div *ngFor="let despesa of despesasFiltradas" class="card-feed">
               <div class="dia sombra">{{despesa.DataCompra.getUTCDate()}}</div>
-              <div class="despesa sombra" [ngStyle]="{'background-color': despesa.IsPaga == 3? '#af6e6e': 'rgb(78, 156, 156)'}">
+              <div class="despesa sombra" [ngStyle]="{'background-color': defineCorFeed(despesa.IsPaga)}">
                 <div class="circle">
                   <img [src]="defineImagem(despesa.TipoDespesa)" alt="">
                 </div>

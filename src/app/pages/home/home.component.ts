@@ -346,9 +346,9 @@ export class HomeComponent implements OnInit {
   defineCorFeed(status: number): string {
     switch (status) {
       case 0: 
-        return "rgba(127, 255, 212, 0.123);";
+        return "rgb(78, 156, 156)";
       case 1: 
-        return "rgba(127, 255, 212, 0.123);";
+        return "rgba(127, 255, 212)";
       case 3: 
          return "#af6e6e";
     }
