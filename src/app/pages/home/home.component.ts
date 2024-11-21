@@ -22,12 +22,14 @@ import { DefineCor } from '../../utils/functions/defineCorGrafico';
 import { AgrupamentoTipoDespesa, DespesasMes } from '../../shared/models/despesasMes';
 import { MesGrafico } from '../../shared/models/graficos';
 import { GraficoService } from '../../shared/services/graficos.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css', './home.component.mobile.css']
@@ -62,7 +64,7 @@ export class HomeComponent implements OnInit {
   graficos!: MesGrafico[];
   mostra: boolean = false;
   contemMenorQZero: boolean = true;
-
+  termo: string = "Todas";
 
   constructor(
     @Inject(DOCUMENT) document:Document,
@@ -347,5 +349,14 @@ export class HomeComponent implements OnInit {
   dashboard(){
     this.router.navigate(['dash'])
   }
-    
+  filtrarPorTermo(){
+    if (this.termo == 'Todas') {
+      this.despesasFiltradas = this.despesasMes;
+    }
+    else {
+      console.log(this.termo)
+      this.despesasFiltradas = this.despesasMes.filter(x => { return x.Detalhes.toLocaleUpperCase().includes(this.termo.toLocaleUpperCase());});
+    }
+  }
+  
 }
