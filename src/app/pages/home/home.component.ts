@@ -285,7 +285,18 @@ export class HomeComponent implements OnInit {
   }
 
   mudaAno(ano: number) {
-    this.systemService.mes = new Mes(0, ano);
+    if (ano < 2024){
+      return;
+    }
+    else if(ano == 2024){
+      this.systemService.mes = new Mes(8, ano);
+      if (new Date().getUTCFullYear() == ano){
+        this.systemService.mes = new Mes(new Date().getUTCMonth(), ano);
+      }
+    }
+    else if (new Date().getUTCFullYear() == ano){
+      this.systemService.mes = new Mes(new Date().getUTCMonth(), ano);
+    }
     this.systemService.ano = new Ano(ano);
     this.ano = new Ano(ano);
     this.preencheInformacoes();
