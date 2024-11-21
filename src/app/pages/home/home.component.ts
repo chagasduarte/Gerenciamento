@@ -297,6 +297,9 @@ export class HomeComponent implements OnInit {
     else if (new Date().getUTCFullYear() == ano){
       this.systemService.mes = new Mes(new Date().getUTCMonth(), ano);
     }
+    else {
+      this.systemService.mes = new Mes(0, ano);
+    }
     this.systemService.ano = new Ano(ano);
     this.ano = new Ano(ano);
     this.preencheInformacoes();
