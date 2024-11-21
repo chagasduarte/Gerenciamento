@@ -350,7 +350,7 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['dash'])
   }
   filtrarPorTermo(){
-    if (this.termo == 'Todas') {
+    if (this.termo.toLocaleUpperCase() == 'Todas'.toLocaleUpperCase()) {
       this.despesasFiltradas = this.despesasMes;
     }
     else {
