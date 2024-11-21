@@ -287,6 +287,7 @@ export class HomeComponent implements OnInit {
   mudaAno(ano: number) {
     this.systemService.mes = new Mes(0, ano);
     this.systemService.ano = new Ano(ano);
+    this.ano = new Ano(ano);
     this.preencheInformacoes();
   }
 

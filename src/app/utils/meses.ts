@@ -46,9 +46,18 @@ export class Ano {
   maiorValor: number = 0;
   constructor(ano: number){
     this.valor = ano;
-    for(var i = 0; i < 12; i++) {
-      var mes: Mes = new Mes(i, ano)
-      this.meses.push(mes);
+    if (ano <= 2024){
+      for(var i = 8; i < 12; i++) {
+        var mes: Mes = new Mes(i, ano)
+        this.meses.push(mes);
+      }
     }
+    else {
+      for(var i = 0; i < 12; i++) {
+        var mes: Mes = new Mes(i, ano)
+        this.meses.push(mes);
+      }
+    }
+    
   }
 }
