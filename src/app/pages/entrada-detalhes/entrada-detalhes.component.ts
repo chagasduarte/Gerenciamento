@@ -25,7 +25,10 @@ export class EntradaDetalhesComponent implements OnInit{
 
   entradasFuturas: Entrada[] = [];
   entradasRecebidas: Entrada[] = [];
-  ano: Ano
+  ano: Ano;
+  recebidos: number = 0;
+  areceber: number = 0;
+
   constructor(
     private readonly entradaService: EntradasService,
     private readonly contaService: ContasService,
@@ -45,6 +48,8 @@ export class EntradaDetalhesComponent implements OnInit{
     this.buscaEntradas();
   }
   buscaEntradas() {
+    this.recebidos = 0;
+    this.areceber = 0;
     this.entradasFuturas = [];
     this.entradasRecebidas = [];
     this.entradaService.GetEntradas().subscribe( x => {
@@ -53,9 +58,11 @@ export class EntradaDetalhesComponent implements OnInit{
         if (entrada.DataDebito.getUTCMonth() == this.systemsService.mes.valor && entrada.DataDebito.getUTCFullYear() == this.systemsService.ano.valor){
           if (entrada.Status) {
             this.entradasRecebidas.push(entrada);
+            this.recebidos += parseFloat(entrada.Valor.toString());
           }
           else {
             this.entradasFuturas.push(entrada);
+            this.areceber += parseFloat(entrada.Valor.toString());
           }
         }
       });

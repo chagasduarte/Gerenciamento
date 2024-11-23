@@ -19,7 +19,7 @@
         </div>
     </div>
     <div class="linha"></div>
-    <h3>À Receber</h3>
+    <h3>À Receber: {{areceber}}</h3>
     <div class="grid">
         <div class="card card-sm" *ngFor="let entrada of entradasFuturas">
             <div class="card-header">
@@ -50,7 +50,7 @@
         </div>
     </div>
     <div class="card mb-3"></div>
-    <h3>Recebidos</h3>
+    <h3>Recebidos: {{recebidos | currency}}</h3>
     <div class="grid">
         <div class="card bg-success text-white" *ngFor="let entrada of entradasRecebidas">
             <div class="card-header">
