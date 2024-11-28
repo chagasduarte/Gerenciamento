@@ -119,6 +119,11 @@ export class HomeComponent implements OnInit {
 
         //despesas parceladas
         this.despesasParceladas = success[8];
+        this.despesasParceladas.map( x => {
+          x.ValorPago = parseFloat(x.ValorPago.toString());
+          x.ValorTotal = parseFloat(x.ValorTotal.toString());
+          console.log(x);
+        })
         //parcelas do mes
         success[1].map(parcela => {
           parcela.DataVencimento = new Date(parcela.DataVencimento)
@@ -373,5 +378,15 @@ export class HomeComponent implements OnInit {
       this.despesasFiltradas = this.despesasMes.filter(x => { return x.Detalhes.toLocaleUpperCase().includes(this.termo.toLocaleUpperCase());});
     }
   }
+
+  soma(entrada: DespesasMes) {
+    this.somaDespesasMes += parseFloat(entrada.Valor.toString());
+  }
+
+  zerar(){
+    this.somaDespesasMes = 0;
+  }
+
+
   
 }

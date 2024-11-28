@@ -18,6 +18,8 @@
 }
 
 .infos {
+    display: grid;
+    gap: 5px;
     width: 1fr;
     overflow-y: auto;
     overflow-x: auto;

@@ -102,7 +102,20 @@ export class ParcelasComponent implements OnInit {
         });    
       }
     }
-    
+    else{
+      this.listaPagamento.forEach( parcela => {
+        parcela.IsPaga = 1;
+        this.parcelasService.PutParcela(parcela).subscribe( x => {
+          this.toastr.success("Sucesso", "Parcela modificado com status de paga");
+        });
+        this.despesa.ValorPago = parseFloat(this.despesa.ValorPago.toString());
+        this.despesa.ValorPago += parseFloat(parcela.Valor.toString());
+        this.despesaService.PutDespesa(this.despesa).subscribe(x => {
+          this.despesa = x;
+          this.toastr.success("Sucesso", "Valor Total da Despesa Atualizado com sucesso.");
+        });
+      });
+    }
     this.buscaParcelas();
     this.listaPagamento = [];
     this.totalPagar = 0;

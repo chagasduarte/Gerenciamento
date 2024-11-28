@@ -83,8 +83,10 @@
     </ul>
   </nav>
   
-  <div class="infos">
-    <div class="info-1 me-3" id="info-1" name="info-1" className="info-1">
+  <div class="infos ">
+    <div class="accordion" id="accordionExample">
+
+    <div id="info-1" name="info-1" className="info-1">
 
       <div class="accordion" id="accordionExample">
         <div class="accordion-item">
@@ -128,7 +130,7 @@
                   <div class="grafico-body">
                     <div class="porcentagem-despesa" *ngFor="let despesa of despesasParceladas">
                       <div class="barra-progressao" (click)="parcelas(despesa)">
-                        <div class="progressao-barra" [ngStyle]="{'width': (despesa.ValorPago * 150)/ despesa.ValorTotal + 'px'}">{{despesa.Nome}}</div>
+                        <div class="progressao-barra" [ngStyle]="{'width': ( despesa.ValorPago* 150)/ despesa.ValorTotal + 'px'}">{{despesa.Nome}}</div>
                       </div>
                     </div>
                   </div>
@@ -196,7 +198,7 @@
       <div class="accordion" id="accordionExample2">
       <div class="accordion-item">
         <h2 class="accordion-header d-flex">
-            <div class="col" style="font-size: 24px; font-weight: bolder;">{{somaDespesasMes | currency}}</div>
+            <div class="col" style="font-size: 24px; font-weight: bolder;">{{somaDespesasMes | currency}}</div><button class="btn btn-sm btn-danger" (click)="zerar()">0</button>
             <div class="d-flex col">
               <input type="text" class="form-control form-control-sm" [(ngModel)]="termo">
               <button class="btn btn-sm btn-success" (click)="filtrarPorTermo()">Filtrar</button>
@@ -225,7 +227,7 @@
                 </div>
                 <div class="titulo">
                   {{despesa.Nome}} - {{despesa.Valor | currency}}
-                  <input type="checkbox" class="">
+                  <button class="btn btn-sm btn-warning" (click)="soma(despesa)"></button>
                 </div>
                 <div class="detalhe">{{despesa.Detalhes}}</div>
               </div>
@@ -235,6 +237,5 @@
       </div>
     </div>
   </div>
-
 </div>
-
+</div>
