@@ -1,4 +1,4 @@
-.abrev-mes, .paga, .grafico-pizza{
+.paga, .grafico-pizza{
     transition: transform 0.3s;
 }
 
@@ -193,18 +193,13 @@
     background-color:  rgba(127, 255, 212, 0.123);
 }
 
-.legenda {
-    position: absolute;
-    text-align: center;
-    font-weight: bold;
-}
 
 
 .titulo {
     font-weight: bolder;
     font-size: 18px;
 }
-.abrev-mes:hover, .barra-progressao:hover, .card-button:hover, .paga:hover, .grafico-pizza:hover {
+.barra-progressao:hover, .card-button:hover, .paga:hover, .grafico-pizza:hover {
     transform: scale(1.2);
     cursor: pointer;
 }
