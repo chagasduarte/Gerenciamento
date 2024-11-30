@@ -42,8 +42,7 @@ img {
     align-content: end;
 }
 
-.gastos {
-    display: grid;
-    place-items: center;
+h1 {
+    text-align: center;
     font-size: 40px;
 }
