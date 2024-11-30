@@ -41,3 +41,9 @@ img {
     width: 25px;
     align-content: end;
 }
+
+.gastos {
+    display: grid;
+    place-items: center;
+    font-size: 40px;
+}
