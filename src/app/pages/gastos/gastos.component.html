@@ -1,5 +1,5 @@
 <div class="container">
-  <h1>Gastos {{totalPagos + aindafalta |currency}}</h1>
+  <h1>{{totalPagos + aindafalta |currency}}</h1>
   <div class="botoes">
     <div class="voltar">
         <button class="btn btn-sm btn-warning" (click)="Voltar()">Voltar</button>
@@ -28,8 +28,7 @@
       </div>
     </div>
     <div class="linha"></div>
-    <div class="pagamento" *ngIf="listaPagamento.length">
-      <h3>Área de pagamentos</h3>
+    <div class="pagamento" *ngIf="listaPagamento.length || true">
       <div class="div">
         <div class="card bg-sucess">
           <select name="conta" id="conta" class="form-select" [(ngModel)]="idConta">
@@ -39,7 +38,6 @@
             <table class="table table-rover">
               <thead>
                 <tr>
-                  <td>id</td>
                   <td>nome</td>
                   <td>valor</td>
                   <td>remover</td>
@@ -47,7 +45,6 @@
               </thead>
               <tbody>
                 <tr *ngFor="let item of listaPagamento">
-                  <td>{{item.Id}}</td>
                   <td>{{item.Nome}}</td>
                   <td>{{item.ValorTotal | currency}}</td>
                   <td><button class="btn btn-sm btn-success" (click)="removedaListaPagamento(item)">-</button></td>
