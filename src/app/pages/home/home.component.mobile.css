@@ -11,7 +11,7 @@
         grid-template-columns: 1fr;
         overflow-x: auto;
         overflow-y: auto;
-        height: 100vh;
+        height: 90vh;
     }
 
     .side-bar {
@@ -19,34 +19,6 @@
     }
     
 }
-
-
-html::-webkit-scrollbar {
-    width: 10px;
-}
-  
-html::-webkit-scrollbar-thumb {
-  border-radius: 50px;
-  background: #6e6ece;
-}
-  
-html::-webkit-scrollbar-track {
-  background: #ededed;
-} 
-
-
-html::-webkit-scrollbar {
-    width: 10px;
-}
-  
-html::-webkit-scrollbar-thumb {
-  border-radius: 50px;
-  background: #6e6ece;
-}
-  
-html::-webkit-scrollbar-track {
-  background: #ededed;
-} 
 
 .legenda {
     position: absolute;

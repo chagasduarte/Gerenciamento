@@ -3,6 +3,7 @@ body {
     background-color: #4D5C82;
     font-family: "karantina";
     color: aliceblue;
+    height: 98vh;
 }
 
 html::-webkit-scrollbar {
@@ -164,3 +165,31 @@ img {
 .sombra {
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5); /* x-offset, y-offset, blur-radius, color */
 }
+
+
+html::-webkit-scrollbar {
+  width: 10px;
+}
+
+html::-webkit-scrollbar-thumb {
+border-radius: 50px;
+background: #6e6ece;
+}
+
+html::-webkit-scrollbar-track {
+background: #ededed;
+} 
+
+
+html::-webkit-scrollbar {
+  width: 10px;
+}
+
+html::-webkit-scrollbar-thumb {
+border-radius: 50px;
+background: #6e6ece;
+}
+
+html::-webkit-scrollbar-track {
+background: #ededed;
+} 
