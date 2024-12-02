@@ -98,6 +98,7 @@ export class DashboardComponent implements  OnInit {
             const data = google.visualization.arrayToDataTable(this.despesaAgrupadaToArray());
             var options = {
                 title: 'Categoria',
+                backgroundColor: {fill: "none"}
             };
             var chart = new google.visualization.PieChart(document.getElementById('pizza'));
 
@@ -118,21 +119,18 @@ export class DashboardComponent implements  OnInit {
     }
     drawChartInOut(){
         const google = (window as any).google;
-        google.charts.load('current', {'packages': ['bar']});
+        google.charts.load('current', {'packages': ['corechart', 'bar']});
         google.charts.setOnLoadCallback(() => {
             const data = google.visualization.arrayToDataTable(this.arrayInOut());
             var options = {
                 title: 'Entradas e Saidas',
-                backgroundColor: { fill: '#f0f0f0' },  // Cor de fundo do gráfico
-                chartArea: {
-                    backgroundColor: { fill: '#ffffff' }  // Cor de fundo da área do gráfico
-                },
-                bars: 'vertical', // Required for Material Bar Charts.
+                backgroundColor: { fill: 'none' },  // Cor de fundo do gráfico            
+                bars: 'horizontal', // Required for Material Bar Charts.
                 hAxis: {format: 'decimal'},
                 colors: ['#1b9e77', '#d95f02'],
                 legend: { position: 'none' }
             };
-            var chart = new google.charts.Bar(document.getElementById('entradas_saidas'));
+            var chart = new google.visualization.BarChart(document.getElementById('entradas_saidas'));
 
             chart.draw(data, options);
         })
@@ -153,16 +151,13 @@ export class DashboardComponent implements  OnInit {
             const data = google.visualization.arrayToDataTable(this.progrecao());
             var options = {
                 title: 'Progressão',
-                backgroundColor: { fill: '#f0f0f0' },  // Cor de fundo do gráfico
-                chartArea: {
-                    backgroundColor: { fill: '#ffffff' }  // Cor de fundo da área do gráfico
-                },
+                backgroundColor: {fill: "none"},
                 bars: 'vertical', // Required for Material Bar Charts.
                 hAxis: {format: 'decimal'},
                 colors: ['#1b9e77', '#d95f02'],
                 legend: { position: 'none' }
             };
-            var chart = new google.charts.Bar(document.getElementById('progressao'));
+            var chart = new google.visualization.BarChart(document.getElementById('progressao'));
 
             chart.draw(data, options);
         })
@@ -193,12 +188,13 @@ export class DashboardComponent implements  OnInit {
             ]);
 
             const options = {
-            title: 'Gastos Mensais por Tipo',
-            curveType: 'function',
-            legend: { position: 'bottom' },
-            hAxis: { title: 'Mês' },
-            vAxis: { title: 'Gastos (R$)' },
-            colors: ['#e2431e', '#f1ca3a', '#6f9654', '#1c91c0']
+                title: 'Gastos Mensais por Tipo',
+                curveType: 'function',
+                legend: { position: 'bottom' },
+                hAxis: { title: 'Mês' },
+                vAxis: { title: 'Gastos (R$)' },
+                colors: ['#e2431e', '#f1ca3a', '#6f9654', '#1c91c0'],
+                backgroundColor: {fill: "none"}
             };
 
             const chart = new google.visualization.LineChart(document.getElementById('grafico_linha'));

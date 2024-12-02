@@ -10,11 +10,14 @@
     grid-template-columns: auto 1fr;
     overflow-x: auto;
     overflow-y: auto;
-    height: 100vh;
+    height: 100%;
 }
 
 .side-bar {
     grid-area:  side;
+    margin: 5px;
+    border-radius: 15px;
+     
 }
 
 .infos {
@@ -24,6 +27,9 @@
     overflow-y: auto;
     overflow-x: auto;
     height: 100vh;
+    margin: 5px;
+    border-radius: 15px;
+    padding: 15px;
 }
 
 
@@ -62,7 +68,9 @@
     height: 3px;
     border-radius: 15px;
 }
-
+.porcentagem-despesa {
+    margin-bottom: 5px;
+}
 .barra-progressao {
     background-color: aliceblue;
     width: 150px;
@@ -87,10 +95,13 @@
 .grafico-card{
     grid-area: graficoCards;
     display: grid;
+    place-items: center;
     width: 100%;
+    gap: 20px;
 }
 
 .grafico {
+    width: 95%;
     display: grid;
     grid-template-areas: 
     "graficoheader"
@@ -214,6 +225,7 @@ main {
     height: 100%;
     background-color: #333f5f;
     font-size: 24px;
+    border-radius: 15px;
 }
 
 svg {

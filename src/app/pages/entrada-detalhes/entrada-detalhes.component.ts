@@ -72,10 +72,10 @@ export class EntradaDetalhesComponent implements OnInit{
   receber(entrada: Entrada, valor: number) {
     this.contaService.GetContaById(entrada.ContaId).subscribe(x => {
       if(entrada.IsFixo){
-        x.Debito += valor;
+        x.Debito += parseFloat(valor.toString());
       }
       else {
-        x.Debito += entrada.Valor;
+        x.Debito += parseFloat(entrada.Valor.toString());
       }
       this.contaService.PutConta(x).subscribe(x => {
         entrada.Status = true;
