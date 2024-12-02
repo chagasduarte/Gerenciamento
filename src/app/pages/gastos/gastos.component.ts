@@ -113,7 +113,22 @@ export class GastosComponent {
       }
     }
     else {
-      this.toastService.warning("Aviso", "Selecione uma conta para fazer esse pagamento");
+      if(this.listaPagamento.length > 0) {
+        this.listaPagamento.map(despesa => {
+          despesa.IsPaga = true;
+          this.despesaService.PutDespesa(despesa).subscribe({
+            next: (success: Despesa) => {
+              this.toastService.success("Sucesso", "Despesa paga com sucesso");
+            },
+            error: (err: any) => {
+              this.toastService.error("Erro", "Ocorreu algum erro no processo de atualização.")
+            }
+          })          
+        });
+      }
+      else {
+        this.toastService.warning("Aviso", "Selecione uma despesa para ser paga");
+      }
     }
     this.calculaGastosDoMes();
     this.buscaContas();

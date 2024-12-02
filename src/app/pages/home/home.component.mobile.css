@@ -34,3 +34,24 @@ html::-webkit-scrollbar-track {
   background: #ededed;
 } 
 
+
+html::-webkit-scrollbar {
+    width: 10px;
+}
+  
+html::-webkit-scrollbar-thumb {
+  border-radius: 50px;
+  background: #6e6ece;
+}
+  
+html::-webkit-scrollbar-track {
+  background: #ededed;
+} 
+
+.legenda {
+    position: absolute;
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+    color: black;
+}

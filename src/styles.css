@@ -107,6 +107,8 @@ img {
 .abrev-mes{
   margin-right: 12px;
   transition: transform 0.3s;
+  font-size: 25px;
+  font-weight: bold;
 }
 
 .abrev-mes:hover{
