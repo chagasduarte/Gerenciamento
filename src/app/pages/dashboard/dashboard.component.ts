@@ -58,10 +58,11 @@ export class DashboardComponent implements  OnInit {
                 this.agruparDespesas()
             }
         });
-        this.contasService.GetContas
     }
 
     agruparDespesas(){
+        this.tipoDespesaAgrupada = [];
+        this.tipoDespesaAgrupada.push( {id: Number(0), TipoDespesa: Number(0), saida: 0})
         for (const tipo in  TipoDespesa){
             if(!isNaN(Number(tipo))) {
                 this.tipoDespesaAgrupada.push( {id: Number(tipo), TipoDespesa: Number(tipo), saida: 0})

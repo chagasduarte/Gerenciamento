@@ -25,26 +25,13 @@
             <div class="card-header">
                 <b>{{entrada.Nome}}</b> 
             </div>
-            <div class="card-body" *ngIf="entrada.IsFixo">
+            <div class="card-body" >
                 <div class="salario">
                     <div class="data"><b>{{entrada.DataDebito.toUTCString() | date: "MMM dd, yyyy" }}</b>:</div>
                     <div class="valor"><b><input class="form-input" type="number" [(ngModel)]="entrada.Valor"></b></div>
                     <button class="btn btn-sm btn-primary" (click)="atualizaSalario(entrada)"> Up </button>
                 </div>
-                <div class="row" *ngFor="let desconto of GetSalarioLiquido(entrada.Valor)">
-                    <div class="col"> {{desconto.nome}} </div>
-                    <div class="col">{{desconto.valor | currency}}</div>
-                </div>
-                <button class="btn btn-sm btn-success" (click)="receber(entrada, GetSalarioLiquido(entrada.Valor)[2].valor)">Receber</button>
-                <button class="btn btn-sm btn-success" (click)="deleteEntrada(entrada.Id)">Deletar</button>
-            </div>
-            <div class="card-body" *ngIf="!entrada.IsFixo">
-                <div class="salario">
-                    <div class="data"><b>{{entrada.DataDebito.toUTCString() | date: "MMM dd, yyyy" }}</b>:</div>
-                    <div class="valor"><b><input class="form-input" type="number" [(ngModel)]="entrada.Valor"></b></div>
-                    <button class="btn btn-sm btn-primary" (click)="atualizaSalario(entrada)"> Up </button>
-                </div>
-                <button class="btn btn-sm btn-success" (click)="receber(entrada, GetSalarioLiquido(entrada.Valor)[2].valor)">Receber</button>
+                <button class="btn btn-sm btn-success" (click)="receber(entrada, entrada.Valor)">Receber</button>
                 <button class="btn btn-sm btn-success" (click)="deleteEntrada(entrada.Id)">Deletar</button>
             </div>
         </div>
@@ -60,10 +47,6 @@
                 <div class="row">
                     <div class="col">Salário:</div>
                     <div class="col">{{entrada.Valor | currency}}</div>
-                </div>
-                <div class="row" *ngFor="let desconto of GetSalarioLiquido(entrada.Valor)">
-                    <div class="col"> {{desconto.nome}} </div>
-                    <div class="col">{{desconto.valor | currency}}</div>
                 </div>
             </div>
         </div>

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DespesasService } from '../../shared/services/despesas.service';
 import { Despesa } from '../../shared/models/despesa';
@@ -24,7 +24,7 @@ import { Parcela } from '../../shared/models/parcela';
   templateUrl: './gastos.component.html',
   styleUrl: './gastos.component.css'
 })
-export class GastosComponent {
+export class GastosComponent implements OnInit{
 
 
   gastos!: Despesa[];
@@ -35,7 +35,8 @@ export class GastosComponent {
   
   parcelas: {parcela: Parcela, despesa:Despesa}[] = [];
   parcelasPagas: {parcela: Parcela, despesa:Despesa}[] = [];
-  
+  listaParcelasPagar: {parcela: Parcela, despesa:Despesa}[] = [];
+
   ano!: Ano;
   totalPagar: number = 0;
   conta!: Conta;
@@ -54,7 +55,9 @@ export class GastosComponent {
     this.calculaGastosDoMes();
     this.buscaContas();
   }
-
+  ngOnInit(): void {
+    this.buscaParcelas();
+  }
   calculaGastosDoMes(){
 
     this.gastos = [];
@@ -91,8 +94,10 @@ export class GastosComponent {
     this.totalPagar -= parseFloat(despesa.ValorTotal.toString());
     this.listaPagamento = this.listaPagamento.filter( x => x.Id != despesa.Id );
   }
+  pagar(){
 
-  pagar() {
+  }
+  pagarDespesa() {
     let contaput = this.contas.find(x => x.Id == this.idConta);
     if(contaput){
       if(this.listaPagamento.length > 0) {
@@ -184,7 +189,7 @@ export class GastosComponent {
 
     this.parcelas = [];
     this.parcelasPagas = [];
-
+    this.listaParcelasPagar = [];
     this.parcelasService.GetParcelasByMes(this.systemsService.mes.valor + 1, this.systemsService.ano.valor).subscribe(parcelas => {
       parcelas.map( parcela => {
         parcela.DataVencimento = new Date(parcela.DataVencimento);
@@ -196,7 +201,6 @@ export class GastosComponent {
             }
             else {
               this.parcelas.push({parcela: parcela, despesa: despesa});
-              this.totalPagar += parseFloat(parcela.Valor.toString());
             }
           },
           error: (err: any) => {
@@ -214,4 +218,19 @@ export class GastosComponent {
   DefineCorParcela(parcela: Parcela): string {
     return new Date(parcela.DataVencimento) < new Date()? "#af6e6e" : "#b1ca78";
   }
+
+  adicionarParcelasLista(parcela: Parcela, despesa:Despesa){
+    this.listaParcelasPagar.push({parcela, despesa});
+    this.totalPagar += parseFloat(parcela.Valor.toString());
+  }
+
+  removedaListaPagamentoParcelas(parcela: Parcela, despesa:Despesa){
+    this.totalPagar -= parseFloat(parcela.Valor.toString());
+    this.listaParcelasPagar = this.listaParcelasPagar.filter( x => x.parcela.Id != parcela.Id );
+  }
+
+  pagarParcelas() {
+    
+        
+  } 
 }
