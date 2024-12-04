@@ -10,6 +10,8 @@ import { ContasService } from '../../shared/services/contas.service';
 import { ToastrService } from 'ngx-toastr';
 import { Conta } from '../../shared/models/conta';
 import { DespesasComponent } from "../despesas/despesas.component";
+import { ParcelasService } from '../../shared/services/parcelas.service';
+import { Parcela } from '../../shared/models/parcela';
 
 @Component({
   selector: 'app-gastos',
@@ -29,6 +31,11 @@ export class GastosComponent {
   gastosPagos!: Despesa[];
   contas!: Conta[];
   listaPagamento: Despesa[] = [];
+
+  
+  parcelas: {parcela: Parcela, despesa:Despesa}[] = [];
+  parcelasPagas: {parcela: Parcela, despesa:Despesa}[] = [];
+  
   ano!: Ano;
   totalPagar: number = 0;
   conta!: Conta;
@@ -41,7 +48,8 @@ export class GastosComponent {
    private readonly contasService: ContasService,
    private readonly router: Router,
    private readonly systemsService: SystemService,
-   private readonly toastService: ToastrService
+   private readonly toastService: ToastrService,
+   private readonly parcelasService: ParcelasService,
   ){
     this.calculaGastosDoMes();
     this.buscaContas();
@@ -156,6 +164,7 @@ export class GastosComponent {
       });
     }
   }
+  
   despagar(gasto: Despesa){
     gasto.IsPaga = false;
     this.despesaService.PutDespesa(gasto).subscribe({
@@ -168,5 +177,41 @@ export class GastosComponent {
         this.toastService.error("Erro", "Ocorreu algum erro no processo de atualização.")
       }
     })
+  }
+
+  
+  buscaParcelas(){
+
+    this.parcelas = [];
+    this.parcelasPagas = [];
+
+    this.parcelasService.GetParcelasByMes(this.systemsService.mes.valor + 1, this.systemsService.ano.valor).subscribe(parcelas => {
+      parcelas.map( parcela => {
+        parcela.DataVencimento = new Date(parcela.DataVencimento);
+        
+        this.despesaService.GetDespesasById(parcela.DespesaId).subscribe({
+          next: (despesa: Despesa) => {
+            if(parcela.IsPaga == 1) {
+              this.parcelasPagas.push({parcela: parcela, despesa: despesa});
+            }
+            else {
+              this.parcelas.push({parcela: parcela, despesa: despesa});
+              this.totalPagar += parseFloat(parcela.Valor.toString());
+            }
+          },
+          error: (err: any) => {
+            console.log(err.status)
+            if (err.status == 404){
+              this.parcelasService.DeleteParcelasByDespesa(parcela.DespesaId).subscribe( x => {
+                this.toastService.warning('Aviso', 'Como essa despesa não foi encontrada, apagamos todas as parcelas referentes a ela.')
+              });
+            }  
+          }
+        })
+      });
+    });
+  }
+  DefineCorParcela(parcela: Parcela): string {
+    return new Date(parcela.DataVencimento) < new Date()? "#af6e6e" : "#b1ca78";
   }
 }

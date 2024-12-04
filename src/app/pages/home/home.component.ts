@@ -122,8 +122,8 @@ export class HomeComponent implements OnInit {
         this.despesasParceladas.map( x => {
           x.ValorPago = parseFloat(x.ValorPago.toString());
           x.ValorTotal = parseFloat(x.ValorTotal.toString());
-          console.log(x);
         })
+
         //parcelas do mes
         success[1].map(parcela => {
           parcela.DataVencimento = new Date(parcela.DataVencimento)

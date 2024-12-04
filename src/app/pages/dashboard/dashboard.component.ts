@@ -98,7 +98,8 @@ export class DashboardComponent implements  OnInit {
             const data = google.visualization.arrayToDataTable(this.despesaAgrupadaToArray());
             var options = {
                 title: 'Categoria',
-                backgroundColor: {fill: "none"}
+                backgroundColor: {fill: "none"},
+                is3D: true
             };
             var chart = new google.visualization.PieChart(document.getElementById('pizza'));
 

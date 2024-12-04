@@ -109,17 +109,7 @@
     <div id="info-1" name="info-1" className="info-1">
       <div class="grafico-card">
         <div class="cards">
-          <div class="card-button bg-laranja-pastel text-white sombra" (click)="previstos()">
-            <div class="circle">
-              <img src="/assets/img/money-with-wings.svg"/>
-            </div>
-            <div class="valores">
-              <div class="valor"> {{gastoTotalMes | currency}} </div>
-              <span class="text">Gastos Previstos</span>
-            </div>
-            <div class="bg-icon"><img src="/assets/img/money-with-wings.svg"/></div>
-          </div>
-      
+               
           <div class="card-button bg-vermelho-pastel text-white sombra" (click)="gastos()">
             <div class="circle">
               <img src="/assets/img/bitcoin-cash-money.svg"/>
@@ -159,13 +149,16 @@
         
         <div class="grafico sombra">
           <div class="grafico-header">
-            <h5>Despesas Parcelas</h5>
+            <h5>Despesas Parcelas: {{gastoTotalMes | currency}}</h5>
             <button class="btn btn-success btn-sm" (click)="adicionarDespesa()">add</button>
           </div>
           <div class="grafico-body">
             <div class="porcentagem-despesa" *ngFor="let despesa of despesasParceladas">
               <div class="barra-progressao" (click)="parcelas(despesa)">
                 <div class="progressao-barra" [ngStyle]="{'width': ( despesa.ValorPago* 150)/ despesa.ValorTotal + 'px'}">{{despesa.Nome}}</div>
+              </div>
+              <div class="dados-parcelas">
+                <b>3/6</b> <b>{{despesa.Parcelas}}</b>
               </div>
             </div>
           </div>
