@@ -1,5 +1,5 @@
 <div class="container">
-  <h1>{{totalPagos + aindafalta |currency}}</h1>
+  <h1>{{totalPagos | currency}}/{{aindaFaltaParcelado + aindafalta |currency}}</h1>
   <div class="botoes">
     <div class="voltar">
         <button class="btn btn-sm btn-warning" (click)="Voltar()">Voltar</button>
@@ -10,7 +10,7 @@
 </div>  
 
   <div class="linha"></div>
-  <h3>Abertos Previstos: {{aindafalta | currency}}</h3>
+  <h3>Abertos Previstos: {{aindaFaltaParcelado | currency}}</h3>
   <div class="card-parcelas">
     <div class="parcela" *ngFor="let parcela of parcelas" [ngStyle]="{'background-color': DefineCorParcela(parcela.parcela)}">
       <div class="card-header">

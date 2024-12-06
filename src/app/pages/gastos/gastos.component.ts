@@ -43,6 +43,7 @@ export class GastosComponent implements OnInit{
   idConta!: number;
   adicionar: any;
   aindafalta:number = 0;
+  aindaFaltaParcelado: number = 0;
   totalPagos: number =0;
   constructor(
    private readonly despesaService: DespesasService,
@@ -204,6 +205,7 @@ export class GastosComponent implements OnInit{
             }
             else {
               this.parcelas.push({parcela: parcela, despesa: despesa});
+              this.aindaFaltaParcelado += parseFloat(parcela.Valor.toString());
             }
           },
           error: (err: any) => {
