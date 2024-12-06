@@ -26,13 +26,14 @@
     width: 1fr;
     overflow-y: auto;
     overflow-x: auto;
-    height: 90vh;
     margin: 5px;
     border-radius: 15px;
     padding: 15px;
 }
 
-
+.info-1 .data-grafico {
+    display: none;
+}
  .data-grafico {
     grid-area: dataGrafico;
     display: grid;
@@ -51,7 +52,9 @@
     width: 180px;
     height: 100px;
 }
-
+.anos-rodape{
+    display: none;
+}
 .mes {
     grid-area: mes;
     font-size: 40px;

@@ -1,5 +1,6 @@
 <div class="container">
-  <h1>{{totalPagos | currency}}/{{aindaFaltaParcelado + aindafalta |currency}}</h1>
+  <h1 *ngIf="totalPagos != aindaFaltaParcelado + aindafalta">{{totalPagos | currency}}/{{aindaFaltaParcelado + aindafalta |currency}}</h1>
+  <h1 *ngIf="totalPagos == aindaFaltaParcelado + aindafalta">{{aindaFaltaParcelado + aindafalta |currency}}</h1>
   <div class="botoes">
     <div class="voltar">
         <button class="btn btn-sm btn-warning" (click)="Voltar()">Voltar</button>

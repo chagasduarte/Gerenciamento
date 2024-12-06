@@ -95,7 +95,6 @@
     </main>
   </div>
 
-
   <nav class="barra_navegacao"> 
     <ul class="meses">
       <li class="d-flex" *ngFor="let mes of ano.meses; let i = index">
@@ -105,8 +104,32 @@
   </nav>
   
   <div class="infos">
-
-    <div id="info-1" name="info-1" className="info-1">
+   
+    <div id="info-1" name="info-1" class="info-1">
+      <div class="data-grafico">
+        <div 
+          style="font-weight: 900;"
+          class="data">
+          <div class="mes">
+            {{systemService.mes.nome}}
+          </div>
+          <div class="linha"></div>
+          <div class="ano">
+            {{systemService.ano.valor}}
+          </div>
+        </div>
+  
+        <div class="graficos">
+          <div class="grafico-pizza sombra" [style]="{'--porcentagem': (somaDespesasMes*100/totalEntradas).toString()}" (click)="dashboard()">
+            <div class="legenda">
+              {{somaDespesasMes*100/totalEntradas * 10 | percent }}
+              <div class="linha"></div>
+              {{aindaPossoGastar | currency}}
+            </div>
+          </div>
+        </div>
+        
+      </div>
       <div class="grafico-card">
         <div class="cards">
                
@@ -168,8 +191,7 @@
       </div>
     </div>
           
-
-     <div class="info-3">
+    <div class="info-3">
       <div class="d-flex">
         <div class="col" style="font-size: 24px; font-weight: bolder;">{{somaDespesasMes | currency}}</div><button class="btn btn-sm btn-danger" (click)="zerar()">0</button>
         <div class="d-flex col">
@@ -200,5 +222,18 @@
         </div>
       </div>
     </div> 
+
   </div>
+
+  <nav class="anos-rodape"> 
+    <div class="meses-rodape">
+      <div class="d-grid gap-2 d-md-flex" *ngFor="let ano of anosDeDivida">
+          <button
+            style="margin: 5px;
+                   border-radius: 10px;
+                   border: none;"
+            (click)="mudaAno(ano)">{{ano}}</button>
+      </div>
+    </div>
+  </nav>
 </div>

@@ -7,17 +7,43 @@
     .pagina  {
         grid-template-areas: 
         'bar'
-        'info';
+        'info'
+        'anos-rodape';
         grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr auto;
         overflow-x: auto;
         overflow-y: auto;
-        height: 90vh;
+        height: 100vh;
     }
 
     .side-bar {
         display: none;
     }
-    
+        
+    .info-1 .data-grafico {
+        grid-area: dataGrafico;
+        display: grid;
+        grid-template-areas: 
+        "data graficos";
+        grid-template-columns: 11rem 115px;
+        gap: 20px;
+        place-items: center;
+        padding: 15px;
+    }
+
+    .anos-rodape {
+        display: grid;
+        place-items: center;
+    }
+
+    .infos {
+        display: grid;
+        gap: 5px;
+        overflow-y: auto;
+        overflow-x: auto;
+        margin: 0px;
+        padding: 0px;
+    }
 }
 
 .legenda {
@@ -26,4 +52,8 @@
     font-weight: bold;
     font-size: 20px;
     color: black;
+}
+
+.meses-rodape {
+    display: flex;
 }
