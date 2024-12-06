@@ -95,7 +95,8 @@ export class GastosComponent implements OnInit{
     this.listaPagamento = this.listaPagamento.filter( x => x.Id != despesa.Id );
   }
   pagar(){
-
+    this.pagarDespesa();
+    this.pagarParcelas();
   }
   pagarDespesa() {
     let contaput = this.contas.find(x => x.Id == this.idConta);
@@ -104,22 +105,24 @@ export class GastosComponent implements OnInit{
         this.listaPagamento.map(despesa => {
           if ((contaput.Debito - despesa.ValorTotal) >= 0) {
             contaput.Debito -= despesa.ValorTotal
-            this.contasService.PutConta(contaput!).subscribe(x => {
-              despesa.IsPaga = true;
-              this.despesaService.PutDespesa(despesa).subscribe({
-                next: (success: Despesa) => {
-                  this.toastService.success("Sucesso", "Despesa paga com sucesso");
-                },
-                error: (err: any) => {
-                  this.toastService.error("Erro", "Ocorreu algum erro no processo de atualização.")
-                }
-              })
-            });
+            despesa.IsPaga = true;
+            this.despesaService.PutDespesa(despesa).subscribe({
+              next: (success: Despesa) => {
+                this.toastService.success("Sucesso", "Despesa paga com sucesso");
+              },
+              error: (err: any) => {
+                this.toastService.error("Erro", "Ocorreu algum erro no processo de atualização.")
+              }
+            })
+           
           }
           else {
             this.toastService.warning("Você é pobre de mais para comprar isso, então não gaste mais", "Aviso");
           }
         });
+        this.contasService.PutConta(contaput).subscribe( x => {
+          this.toastService.success("conta atualizada com sucesso;", "Ok");
+        })
       }
       else {
         this.toastService.warning("Aviso", "Selecione uma despesa para ser paga");
