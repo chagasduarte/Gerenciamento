@@ -181,7 +181,7 @@
                 <div class="progressao-barra" [ngStyle]="{'width': ( despesa.ValorPago* 150)/ despesa.ValorTotal + 'px'}">{{despesa.Nome}}</div>
               </div>
               <div class="dados-parcelas">
-                <b>3/6</b> <b>{{despesa.Parcelas}}</b>
+                <b>{{despesa.ParcelasPagas}} de {{despesa.Parcelas}}</b>
               </div>
             </div>
           </div>

@@ -10,5 +10,6 @@ export interface Despesa {
     DataCompra: Date
     IsParcelada: boolean
     IsPaga: boolean
-    Parcelas: Parcela[]
+    Parcelas: number,
+    ParcelasPagas: number,
 }
