@@ -145,14 +145,19 @@ export class HomeComponent implements OnInit {
           }
           this.systemService.saidas[gasto.DataCompra.getUTCMonth()] += parseFloat(gasto.ValorTotal.toString());
           if (gasto.DataCompra.getUTCMonth() == this.systemService.mes.valor){
-            this.despesasMes.push({
-              Nome: gasto.Nome, 
-              Detalhes: gasto.Descricao, 
-              TipoDespesa: gasto.TipoDespesa, 
-              Valor: parseFloat(gasto.ValorTotal.toString()),
-              DataCompra: new Date(gasto.DataCompra),
-              IsPaga: gasto.IsPaga? 1: (gasto.DataCompra < new Date())? 3 : 0 
-            });
+            try {
+              this.despesasMes.push({
+                Nome: gasto.Nome, 
+                Detalhes: gasto.Descricao, 
+                TipoDespesa: gasto.TipoDespesa, 
+                Valor: parseFloat(gasto.ValorTotal.toString()),
+                DataCompra: new Date(gasto.DataCompra),
+                IsPaga: gasto.IsPaga? 1: (gasto.DataCompra < new Date())? 3 : 0 
+              });
+            }
+            catch {
+              console.log(gasto);
+            }
             this.somaDespesasMes += parseFloat(gasto.ValorTotal.toString());
           }
         });
@@ -178,7 +183,6 @@ export class HomeComponent implements OnInit {
               this.gastoTotalMes += parseFloat(parcela.Valor.toString());
               this.idsPrevisto.push(parcela.Id)
             }
-            
           }
 
         });
@@ -216,14 +220,19 @@ export class HomeComponent implements OnInit {
         } 
         aux.forEach( parcela => {
           const gasto = success[0].find(x => x.Id == parcela.idDespesa);
-          this.despesasMes.push({
-            Nome: gasto!.Nome, 
-            Detalhes: gasto!.Descricao, 
-            TipoDespesa: gasto!.TipoDespesa, 
-            Valor: parseFloat(parcela.valorParcela.toString()),
-            DataCompra: new Date(parcela.dataParcela),
-            IsPaga: parcela.isPaga
-          });
+          try {  
+            this.despesasMes.push({
+              Nome: gasto!.Nome, 
+              Detalhes: gasto!.Descricao, 
+              TipoDespesa: gasto!.TipoDespesa, 
+              Valor: parseFloat(parcela.valorParcela.toString()),
+              DataCompra: new Date(parcela.dataParcela),
+              IsPaga: parcela.isPaga
+            });
+          }
+          catch {
+            console.log(gasto);
+          }
           this.somaDespesasMes += parseFloat(parcela.valorParcela.toString());
         })
 
@@ -250,7 +259,7 @@ export class HomeComponent implements OnInit {
             }
           }
         });
-
+        console.log(this.somaDespesasMes);
       },
       error: (err: any) => {
         this.toastService.error("Error", `Alguma coisa deu errado: ${err.mesage}`);
