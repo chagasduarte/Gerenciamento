@@ -10,7 +10,7 @@
     grid-template-columns: auto 1fr;
     overflow-x: auto;
     overflow-y: auto;
-    height: 98vh;
+    height: 95vh;
 }
 
 .side-bar {
