@@ -1,4 +1,4 @@
-import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection, isDevMode } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -9,6 +9,7 @@ import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-br
 import { provideEcharts } from 'ngx-echarts';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { HttpRequestInterceptor } from './shared/services/spinner.interceptor';
+import { provideServiceWorker } from '@angular/service-worker';
 
 
 export const appConfig: ApplicationConfig = {
@@ -32,6 +33,9 @@ export const appConfig: ApplicationConfig = {
                   preventDuplicates: true,
                 }),
                 NgxSpinnerModule.forRoot({})
-              )
+              ), provideServiceWorker('ngsw-worker.js', {
+            enabled: !isDevMode(),
+            registrationStrategy: 'registerWhenStable:30000'
+          })
             ]
 };
