@@ -23,6 +23,8 @@ import { AgrupamentoTipoDespesa, DespesasMes } from '../../shared/models/despesa
 import { MesGrafico } from '../../shared/models/graficos';
 import { GraficoService } from '../../shared/services/graficos.service';
 import { FormsModule } from '@angular/forms';
+import { LogMensal } from '../../shared/models/logMensal';
+import { LogMensalService } from '../../shared/services/log-mensal.service';
 
 @Component({
     selector: 'app-home',
@@ -65,6 +67,15 @@ export class HomeComponent implements OnInit {
   mostra: boolean = false;
   contemMenorQZero: boolean = true;
   termo: string = "Todas";
+  log: LogMensal = {
+    abrevmes: "",
+    ano: 0,
+    id: 0,
+    mes: 0,
+    nomemes: "",
+    percentgasto: 0,
+    valorsaldo: 0
+  }
 
   constructor(
     @Inject(DOCUMENT) document:Document,
@@ -75,12 +86,11 @@ export class HomeComponent implements OnInit {
     private readonly toastService: ToastrService,
     private readonly router: Router,
     public systemService: SystemService,
-    private readonly graficosService: GraficoService
+    private readonly graficosService: GraficoService,
+    private readonly logService: LogMensalService
   ){
     this.ano = new Ano(this.systemService.ano.valor);
   }
-
-
 
   ngOnInit(): void { 
     this.preencheInformacoes();
@@ -259,7 +269,13 @@ export class HomeComponent implements OnInit {
             }
           }
         });
-        console.log(this.somaDespesasMes);
+        this.log.abrevmes = this.systemService.mes.nomeAbrev;
+        this.log.ano = this.systemService.ano.valor;
+        this.log.mes = this.systemService.mes.valor + 1;
+        this.log.nomemes = this.systemService.mes.nome;
+        this.log.percentgasto = (this.somaDespesasMes*100/this.totalEntradas * 10);
+        this.log.valorsaldo = this.saldoAtual;
+        this.gravaLog();
       },
       error: (err: any) => {
         this.toastService.error("Error", `Alguma coisa deu errado: ${err.mesage}`);
@@ -396,6 +412,10 @@ export class HomeComponent implements OnInit {
     this.somaDespesasMes = 0;
   }
 
-
+  gravaLog(){
+    this.logService.postLog(this.log).subscribe(x => {
+      this.toastService.success("Log Gravado");
+    })
+  }
   
 }

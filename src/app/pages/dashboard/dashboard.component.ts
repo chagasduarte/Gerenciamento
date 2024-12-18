@@ -13,6 +13,9 @@ import { Despesa } from "../../shared/models/despesa";
 import { DespesasService } from "../../shared/services/despesas.service";
 import { ContasService } from "../../shared/services/contas.service";
 import { TipoDespesa } from "../../shared/models/tipoDespesa";
+import { LogMensalService } from "../../shared/services/log-mensal.service";
+import { LogMensal } from "../../shared/models/logMensal";
+import { forkJoin } from "rxjs";
 
 @Component({
     selector: 'app-dashboard',
@@ -30,13 +33,14 @@ export class DashboardComponent implements  OnInit {
     despesas: Despesa[] = [];
     tipoDespesaAgrupada: TipoDespesaGrafico[] = [];
     anosDeDivida: number[] = [2024, 2025, 2026];
-
+    logs: LogMensal[] = [];
     constructor(
         public systemService: SystemService,
         private readonly graficosService: GraficoService,
         private readonly router: Router,
         private readonly despesasService: DespesasService,
-        private readonly contasService: ContasService
+        private readonly contasService: ContasService,
+        private readonly logsService: LogMensalService
     ){
     }
     ngOnInit(): void {
@@ -45,16 +49,20 @@ export class DashboardComponent implements  OnInit {
     }
 
     buscaDados(){
-        this.graficosService.GetGraficos(this.systemService.ano.valor).subscribe(x => {
-            this.graficos = x
-            this.loadGoogleCharts()
-        });
-        this.despesasService.GetDespesasAdicionais(this.systemService.ano.valor).subscribe({
-            next: (despesas: Despesa[]) => {
-                this.despesas = despesas;
-                this.agruparDespesas()
+         forkJoin([
+            this.graficosService.GetGraficos(this.systemService.ano.valor),
+            this.despesasService.GetDespesasAdicionais(this.systemService.ano.valor),
+            this.logsService.getAllLogs(this.systemService.ano.valor)
+        ]).subscribe({
+            next: (success) => {
+                this.graficos = success[0];
+                this.despesas = success[1];
+                this.logs = success[2];
+                this.agruparDespesas();
+                this.loadGoogleCharts();
             }
         });
+        
     }
 
     agruparDespesas(){
@@ -86,8 +94,35 @@ export class DashboardComponent implements  OnInit {
           this.drawChart();
           this.drawChartPizza();
           this.drawChartProg();
+          this.drawSaidas();
         };
         document.body.appendChild(script);
+    }
+    drawSaidas(){
+        const google = (window as any).google;
+        google.charts.load('current', {'packages': ['corechart']});
+
+
+        google.charts.setOnLoadCallback(() => {
+            const data = google.visualization.arrayToDataTable(this.saidasToArray());
+            var options = {
+                title: 'Saídas',
+                backgroundColor: {fill: "none"},
+                bars: 'vartical'
+            };
+            var chart = new google.visualization.ColumnChart(document.getElementById('saidas'));
+
+            chart.draw(data, options);
+        })
+    }
+    saidasToArray(): (string | number)[][]{
+        let dados: (string | number)[][] = [];    
+        dados.push(['Mês','Saidas']);
+        this.logs = this.logs.sort((a, b) => {return a.mes - b.mes})
+        this.logs.forEach(x => {
+           dados.push([x.abrevmes, parseFloat(x.valorsaldo.toString())]);
+        })
+        return dados;
     }
     drawChartPizza(){
         const google = (window as any).google;
