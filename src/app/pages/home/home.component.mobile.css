@@ -34,6 +34,7 @@
     .anos-rodape {
         display: grid;
         place-items: center;
+        width: 30px;
     }
 
     .infos {
