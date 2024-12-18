@@ -12,6 +12,8 @@ import { TipoDespesa } from "../../shared/models/tipoDespesa";
 import { LogMensalService } from "../../shared/services/log-mensal.service";
 import { LogMensal } from "../../shared/models/logMensal";
 import { forkJoin } from "rxjs";
+import { drawSaidas } from "./drawcharts/saidas.coloumn";
+import { drawCategoriaPie } from "./drawcharts/categorias.pie";
 
 @Component({
     selector: 'app-dashboard',
@@ -92,75 +94,13 @@ export class DashboardComponent implements  OnInit {
         script.onload = () => {
         //   this.drawChartInOut();
         //   this.drawChart();
-          this.drawChartPizza();
+        drawCategoriaPie(this.tipoDespesaAgrupada);
         //   this.drawChartProg();
-          this.drawSaidas();
+          drawSaidas(this.logs);
         };
         document.body.appendChild(script);
     }
-    drawSaidas(){
-        const google = (window as any).google;
-        google.charts.load('current', {'packages': ['corechart']});
-
-
-        google.charts.setOnLoadCallback(() => {
-            const data = google.visualization.arrayToDataTable(this.saidasToArray());
-            
-            var view = new google.visualization.DataView(data);
-
-            view.setColumns([0, 1,
-                { calc: "stringify",
-                  sourceColumn: 1,
-                  type: "string",
-                  role: "annotation",
-                  font: {color: "#123456"}
-                }]);
-            var options = {
-                backgroundColor: {fill: "none"},
-                trendlines: {type: 'linear', lineWidth: 5, opacity: .3},
-                legend: {position: 'none'}
-            };
-
-            var chart = new google.visualization.ColumnChart(document.getElementById('saidas'));
-            
-            chart.draw(view, options);
-        })
-    }
-    saidasToArray(): (any)[][]{
-        let dados: (any)[][] = [];    
-        dados.push(['Mês','Saidas']);
-        this.logs = this.logs.sort((a, b) => {return a.mes - b.mes})
-        this.logs.forEach(x => {
-           dados.push([x.abrevmes, parseFloat(x.valorsaldo.toString())]);
-        })
-        return dados;
-    }
-    drawChartPizza(){
-        const google = (window as any).google;
-        google.charts.load('current', {'packages': ['corechart']});
-        google.charts.setOnLoadCallback(() => {
-            const data = new google.visualization.arrayToDataTable(this.despesaAgrupadaToArray());
-            var options = {
-                backgroundColor: {fill: "none"},
-                is3D: true
-            };
-            var chart = new google.visualization.PieChart(document.getElementById('pizza'));
-
-            chart.draw(data, options);
-        })
-    }
-
-    despesaAgrupadaToArray(): (string | number)[][] {
-        let dados: (string | number)[][] = [];
-        dados.push(['Categoria', 'Valor']);
-        for(const tipo in  TipoDespesa) {
-            if(!isNaN(Number(tipo))) {
-                const valor = this.tipoDespesaAgrupada.find(x => x.TipoDespesa == Number(tipo))?.saida || 0;
-                dados.push([TipoDespesa[tipo], valor])
-            }
-        }
-        return dados;
-    }
+    
     drawChartInOut(){
         const google = (window as any).google;
         google.charts.load('current', {'packages': ['corechart', 'bar']});
