@@ -25,14 +25,13 @@ import { GraficoService } from '../../shared/services/graficos.service';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-home',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule
-  ],
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css', './home.component.mobile.css']
+    selector: 'app-home',
+    imports: [
+        CommonModule,
+        FormsModule
+    ],
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.css', './home.component.mobile.css']
 })
 export class HomeComponent implements OnInit {
 

@@ -11,14 +11,13 @@ import { SystemService } from '../../shared/services/system.service';
 import { Ano, Mes } from '../../utils/meses';
 
 @Component({
-  selector: 'app-entrada-detalhes',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule
-  ],
-  templateUrl: './entrada-detalhes.component.html',
-  styleUrl: './entrada-detalhes.component.css'
+    selector: 'app-entrada-detalhes',
+    imports: [
+        CommonModule,
+        FormsModule
+    ],
+    templateUrl: './entrada-detalhes.component.html',
+    styleUrl: './entrada-detalhes.component.css'
 })
 export class EntradaDetalhesComponent implements OnInit{
 

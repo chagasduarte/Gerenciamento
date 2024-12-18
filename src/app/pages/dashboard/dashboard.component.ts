@@ -16,12 +16,11 @@ import { TipoDespesa } from "../../shared/models/tipoDespesa";
 
 @Component({
     selector: 'app-dashboard',
-    standalone: true,
     imports: [
-      CommonModule,
-      GastosComponent,
-      NgxEchartsDirective,
-      NgxSpinnerComponent
+        CommonModule,
+        GastosComponent,
+        NgxEchartsDirective,
+        NgxSpinnerComponent
     ],
     templateUrl: './dashboard.component.html',
     styleUrl: './dashboard.component.css'

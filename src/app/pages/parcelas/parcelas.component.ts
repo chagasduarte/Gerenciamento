@@ -13,14 +13,13 @@ import { forkJoin } from 'rxjs';
 import { SystemService } from '../../shared/services/system.service';
 
 @Component({
-  selector: 'app-parcelas',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule
-  ],
-  templateUrl: './parcelas.component.html',
-  styleUrl: './parcelas.component.css'
+    selector: 'app-parcelas',
+    imports: [
+        CommonModule,
+        FormsModule
+    ],
+    templateUrl: './parcelas.component.html',
+    styleUrl: './parcelas.component.css'
 })
 export class ParcelasComponent implements OnInit {
 

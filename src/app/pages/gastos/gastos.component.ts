@@ -14,15 +14,14 @@ import { ParcelasService } from '../../shared/services/parcelas.service';
 import { Parcela } from '../../shared/models/parcela';
 
 @Component({
-  selector: 'app-gastos',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    DespesasComponent
-],
-  templateUrl: './gastos.component.html',
-  styleUrl: './gastos.component.css'
+    selector: 'app-gastos',
+    imports: [
+        CommonModule,
+        FormsModule,
+        DespesasComponent
+    ],
+    templateUrl: './gastos.component.html',
+    styleUrl: './gastos.component.css'
 })
 export class GastosComponent implements OnInit{
 

@@ -10,14 +10,13 @@ import { Conta } from '../../shared/models/conta';
 import { SystemService } from '../../shared/services/system.service';
 
 @Component({
-  selector: 'app-entradas',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule
-  ],
-  templateUrl: './entradas.component.html',
-  styleUrl: './entradas.component.css'
+    selector: 'app-entradas',
+    imports: [
+        CommonModule,
+        FormsModule
+    ],
+    templateUrl: './entradas.component.html',
+    styleUrl: './entradas.component.css'
 })
 export class EntradasComponent {
     entrada: Entrada;

@@ -9,15 +9,14 @@ import { SideBarComponent } from './shared/components/side-bar/side-bar.componen
 import { LoginComponent } from "./pages/loggin/loggin.component";
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [
-    RouterOutlet,
-    CommonModule,
-    NgxSpinnerComponent,
-],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+    selector: 'app-root',
+    imports: [
+        RouterOutlet,
+        CommonModule,
+        NgxSpinnerComponent,
+    ],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.css'
 })
 export class AppComponent {
   @ViewChild('paginas', { read: ViewContainerRef } ) paginas!: ViewContainerRef

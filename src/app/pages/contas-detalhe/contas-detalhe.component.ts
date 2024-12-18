@@ -9,14 +9,13 @@ import { SystemService } from '../../shared/services/system.service';
 import { Ano, Mes } from '../../utils/meses';
 
 @Component({
-  selector: 'app-contas-detalhe',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule
-  ],
-  templateUrl: './contas-detalhe.component.html',
-  styleUrl: './contas-detalhe.component.css'
+    selector: 'app-contas-detalhe',
+    imports: [
+        CommonModule,
+        FormsModule
+    ],
+    templateUrl: './contas-detalhe.component.html',
+    styleUrl: './contas-detalhe.component.css'
 })
 export class ContasDetalheComponent {
 

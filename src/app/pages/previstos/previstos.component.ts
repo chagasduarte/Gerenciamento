@@ -11,13 +11,12 @@ import { Ano, Mes } from '../../utils/meses';
 import { SystemService } from '../../shared/services/system.service';
 
 @Component({
-  selector: 'app-previstos',
-  standalone: true,
-  imports: [
-    CommonModule
-  ],
-  templateUrl: './previstos.component.html',
-  styleUrl: './previstos.component.css'
+    selector: 'app-previstos',
+    imports: [
+        CommonModule
+    ],
+    templateUrl: './previstos.component.html',
+    styleUrl: './previstos.component.css'
 })
 export class PrevistosComponent implements OnInit {
 

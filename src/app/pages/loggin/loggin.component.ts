@@ -6,14 +6,13 @@ import { FormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './loggin.component.html',
-  standalone: true,
-  imports:[
-    CommonModule,
-    FormsModule
-  ],
-  styleUrls: ['./loggin.component.css']
+    selector: 'app-login',
+    templateUrl: './loggin.component.html',
+    imports: [
+        CommonModule,
+        FormsModule
+    ],
+    styleUrls: ['./loggin.component.css']
 })
 export class LoginComponent {
   username: string = '';

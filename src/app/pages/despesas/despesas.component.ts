@@ -11,13 +11,13 @@ import { Conta } from '../../shared/models/conta';
 import { FormataDespesa } from '../../utils/functions/despesa';
 
 @Component({
-  selector: 'app-despesas',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule],
-  templateUrl: './despesas.component.html',
-  styleUrl: './despesas.component.css'
+    selector: 'app-despesas',
+    imports: [
+        CommonModule,
+        FormsModule
+    ],
+    templateUrl: './despesas.component.html',
+    styleUrl: './despesas.component.css'
 })
 export class DespesasComponent {
   contas: Conta[] = []
