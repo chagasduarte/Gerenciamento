@@ -19,6 +19,7 @@
     "@angular/platform-browser": "^18.0.0",
     "@angular/platform-browser-dynamic": "^18.0.0",
     "@angular/platform-server": "^18.0.0",
+    "@angular/pwa": "^19.0.5",
     "@angular/router": "^18.0.0",
     "@angular/ssr": "^18.0.4",
     "angular": "^1.8.3",
