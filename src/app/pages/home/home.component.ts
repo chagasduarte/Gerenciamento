@@ -413,7 +413,7 @@ export class HomeComponent implements OnInit {
   }
 
   gravaLog(){
-    if (this.log.mes < new Date().getUTCMonth() && this.log.ano <= new Date().getUTCFullYear()){
+    if (this.log.mes < new Date().getUTCMonth()+ 1 && this.log.ano <= new Date().getUTCFullYear()){
        this.toastService.warning("Não é possivel modificar os dados") 
     }
     else{

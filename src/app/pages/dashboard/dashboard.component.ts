@@ -1,11 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { NgxEchartsDirective } from "ngx-echarts";
-import { NgxSpinnerComponent } from "ngx-spinner";
-import { GastosComponent } from "../gastos/gastos.component";
 import { CommonModule } from "@angular/common";
 import { SystemService } from "../../shared/services/system.service";
 import { MesGrafico, TipoDespesaGrafico } from "../../shared/models/graficos";
-import { DefineCor } from "../../utils/functions/defineCorGrafico";
 import { GraficoService } from "../../shared/services/graficos.service";
 import { Router } from "@angular/router";
 import { Ano, Mes } from "../../utils/meses";
@@ -16,7 +12,6 @@ import { TipoDespesa } from "../../shared/models/tipoDespesa";
 import { LogMensalService } from "../../shared/services/log-mensal.service";
 import { LogMensal } from "../../shared/models/logMensal";
 import { forkJoin } from "rxjs";
-import { color } from "echarts";
 
 @Component({
     selector: 'app-dashboard',
@@ -75,7 +70,11 @@ export class DashboardComponent implements  OnInit {
             }
         }
         for (let despesa of this.despesas){
-          this.tipoDespesaAgrupada[despesa.TipoDespesa].saida += parseFloat(despesa.ValorTotal.toString());
+          this.tipoDespesaAgrupada.map(x => { 
+            if (x.TipoDespesa == despesa.TipoDespesa ) {
+                x.saida += parseFloat(despesa.ValorTotal.toString())
+            }
+          });
         }
     }
 
@@ -93,7 +92,7 @@ export class DashboardComponent implements  OnInit {
         script.onload = () => {
         //   this.drawChartInOut();
         //   this.drawChart();
-        //   this.drawChartPizza();
+          this.drawChartPizza();
         //   this.drawChartProg();
           this.drawSaidas();
         };
@@ -117,10 +116,8 @@ export class DashboardComponent implements  OnInit {
                   font: {color: "#123456"}
                 }]);
             var options = {
-                title: 'Saídas',
                 backgroundColor: {fill: "none"},
                 trendlines: {type: 'linear', lineWidth: 5, opacity: .3},
-
                 legend: {position: 'none'}
             };
 
@@ -142,9 +139,8 @@ export class DashboardComponent implements  OnInit {
         const google = (window as any).google;
         google.charts.load('current', {'packages': ['corechart']});
         google.charts.setOnLoadCallback(() => {
-            const data = google.visualization.arrayToDataTable(this.despesaAgrupadaToArray());
+            const data = new google.visualization.arrayToDataTable(this.despesaAgrupadaToArray());
             var options = {
-                title: 'Categoria',
                 backgroundColor: {fill: "none"},
                 is3D: true
             };
