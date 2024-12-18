@@ -15,10 +15,10 @@ import { Parcela } from '../../shared/models/parcela';
 
 @Component({
     selector: 'app-gastos',
+    standalone: true,
     imports: [
-        CommonModule,
-        FormsModule,
-        DespesasComponent
+      CommonModule,
+      FormsModule
     ],
     templateUrl: './gastos.component.html',
     styleUrl: './gastos.component.css'

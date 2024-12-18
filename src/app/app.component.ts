@@ -5,11 +5,11 @@ import { NgxSpinnerComponent } from 'ngx-spinner';
 import { SystemService } from './shared/services/system.service';
 import { AuthService } from './shared/services/auth.service';
 import { HomeComponent } from "./pages/home/home.component";
-import { SideBarComponent } from './shared/components/side-bar/side-bar.component';
 import { LoginComponent } from "./pages/loggin/loggin.component";
 
 @Component({
     selector: 'app-root',
+    standalone: true,
     imports: [
         RouterOutlet,
         CommonModule,

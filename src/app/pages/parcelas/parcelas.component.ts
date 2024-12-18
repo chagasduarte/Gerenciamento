@@ -14,6 +14,7 @@ import { SystemService } from '../../shared/services/system.service';
 
 @Component({
     selector: 'app-parcelas',
+    standalone: true,
     imports: [
         CommonModule,
         FormsModule

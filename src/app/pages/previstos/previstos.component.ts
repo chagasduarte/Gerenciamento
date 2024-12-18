@@ -12,6 +12,7 @@ import { SystemService } from '../../shared/services/system.service';
 
 @Component({
     selector: 'app-previstos',
+    standalone: true,
     imports: [
         CommonModule
     ],

@@ -26,6 +26,7 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-home',
+    standalone: true,
     imports: [
         CommonModule,
         FormsModule

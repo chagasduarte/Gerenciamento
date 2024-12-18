@@ -11,6 +11,7 @@ import { SystemService } from '../../shared/services/system.service';
 
 @Component({
     selector: 'app-entradas',
+    standalone: true,
     imports: [
         CommonModule,
         FormsModule

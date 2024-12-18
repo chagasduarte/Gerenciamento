@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
     selector: 'app-login',
     templateUrl: './loggin.component.html',
+    standalone: true,
     imports: [
         CommonModule,
         FormsModule

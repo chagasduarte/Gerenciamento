@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-contas',
+    standalone: true,
     imports: [
         CommonModule,
         FormsModule

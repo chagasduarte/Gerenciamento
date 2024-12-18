@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-index',
+    standalone: true,
     imports: [CommonModule, FormsModule],
     templateUrl: './index.component.html',
     styleUrl: './index.component.css'

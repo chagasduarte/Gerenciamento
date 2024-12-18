@@ -12,6 +12,7 @@ import { FormataDespesa } from '../../utils/functions/despesa';
 
 @Component({
     selector: 'app-despesas',
+    standalone: true,
     imports: [
         CommonModule,
         FormsModule

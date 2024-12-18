@@ -10,6 +10,7 @@ import { Ano, Mes } from '../../utils/meses';
 
 @Component({
     selector: 'app-contas-detalhe',
+    standalone: true,
     imports: [
         CommonModule,
         FormsModule
