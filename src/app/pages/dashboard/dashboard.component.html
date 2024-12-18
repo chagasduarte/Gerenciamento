@@ -1,38 +1,36 @@
 
+<div class="pagina-dash">
+  <nav class="barra_navegacao"> 
+    <ul class="meses">
+      <li class="d-flex" *ngFor="let ano of anosDeDivida">
+        <div class="d-flex justify-content-center">
+          <button 
+            style="border-radius: 20px;
+                   background: linear-gradient(to right, #9e3776, #214b5c, #09293f);
+                   color: antiquewhite;
+                   font-weight: 900;
+                   border: none;"
+            
+            class="me-2 sombra mt-3" 
+            (click)="mudaAno(ano)">{{ano}}</button>
+        </div>
+      </li>
+    </ul>
+  </nav>
+  
+  <div class="dashboard sombra">
+    <!-- <div class="chart" id="pizza"  style="width: 900px; height: 500px;"></div> -->
+    <div class="chart" id="saidas"></div>
+    <!-- <div class="chart" id="entradas_saidas"></div> -->
+   
+    <!-- <div class="chart" id="progressao"></div> -->
+    <!-- <div class="chart" id="grafico_linha"></div> -->
+  
+  </div>
 
-<nav class="barra_navegacao"> 
-  <ul class="meses">
-    <li class="d-flex" *ngFor="let ano of anosDeDivida">
-      <div class="d-flex justify-content-center">
-        <button 
-          style="border-radius: 20px;
-                 background: linear-gradient(to right, #9e3776, #214b5c, #09293f);
-                 color: antiquewhite;
-                 font-weight: 900;
-                 border: none;"
-          
-          class="me-2 sombra mt-3" 
-          (click)="mudaAno(ano)">{{ano}}</button>
-      </div>
-    </li>
-    <li class="d-flex"><button 
-      style="border-radius: 20px;
-      background: #214b5c;
-      color: antiquewhite;
-      font-weight: 900;
-      border: none;"
-      class="me-2 sombra mt-3"  
-      (click)="voltar()">Voltar</button></li>
-  </ul>
-</nav>
-
-<div class="dashboard">
-  <!-- <div class="chart" id="pizza"  style="width: 900px; height: 500px;"></div> -->
-  <div class="chart" id="saidas"></div>
-  <!-- <div class="chart" id="entradas_saidas"></div> -->
- 
-  <!-- <div class="chart" id="progressao"></div> -->
-  <!-- <div class="chart" id="grafico_linha"></div> -->
-
+  <div class="rodape">
+    
+  </div>
 </div>
+
   

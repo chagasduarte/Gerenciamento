@@ -16,6 +16,7 @@ import { TipoDespesa } from "../../shared/models/tipoDespesa";
 import { LogMensalService } from "../../shared/services/log-mensal.service";
 import { LogMensal } from "../../shared/models/logMensal";
 import { forkJoin } from "rxjs";
+import { color } from "echarts";
 
 @Component({
     selector: 'app-dashboard',
@@ -90,10 +91,10 @@ export class DashboardComponent implements  OnInit {
         const script = document.createElement('script');
         script.src = 'https://www.gstatic.com/charts/loader.js';
         script.onload = () => {
-          this.drawChartInOut();
-          this.drawChart();
-          this.drawChartPizza();
-          this.drawChartProg();
+        //   this.drawChartInOut();
+        //   this.drawChart();
+        //   this.drawChartPizza();
+        //   this.drawChartProg();
           this.drawSaidas();
         };
         document.body.appendChild(script);
@@ -105,18 +106,31 @@ export class DashboardComponent implements  OnInit {
 
         google.charts.setOnLoadCallback(() => {
             const data = google.visualization.arrayToDataTable(this.saidasToArray());
+            
+            var view = new google.visualization.DataView(data);
+
+            view.setColumns([0, 1,
+                { calc: "stringify",
+                  sourceColumn: 1,
+                  type: "string",
+                  role: "annotation",
+                  font: {color: "#123456"}
+                }]);
             var options = {
                 title: 'Saídas',
                 backgroundColor: {fill: "none"},
-                bars: 'vartical'
-            };
-            var chart = new google.visualization.ColumnChart(document.getElementById('saidas'));
+                trendlines: {type: 'linear', lineWidth: 5, opacity: .3},
 
-            chart.draw(data, options);
+                legend: {position: 'none'}
+            };
+
+            var chart = new google.visualization.ColumnChart(document.getElementById('saidas'));
+            
+            chart.draw(view, options);
         })
     }
-    saidasToArray(): (string | number)[][]{
-        let dados: (string | number)[][] = [];    
+    saidasToArray(): (any)[][]{
+        let dados: (any)[][] = [];    
         dados.push(['Mês','Saidas']);
         this.logs = this.logs.sort((a, b) => {return a.mes - b.mes})
         this.logs.forEach(x => {
