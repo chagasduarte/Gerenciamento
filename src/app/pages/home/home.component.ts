@@ -413,9 +413,15 @@ export class HomeComponent implements OnInit {
   }
 
   gravaLog(){
-    this.logService.postLog(this.log).subscribe(x => {
-      this.toastService.success("Log Gravado");
-    })
+    if (this.log.mes < new Date().getUTCMonth() && this.log.ano <= new Date().getUTCFullYear()){
+       this.toastService.warning("Não é possivel modificar os dados") 
+    }
+    else{
+      this.logService.postLog(this.log).subscribe(x => {
+        this.toastService.success("Log Gravado");
+      })
+    }
+    
   }
   
 }
