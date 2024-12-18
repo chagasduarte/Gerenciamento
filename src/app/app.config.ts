@@ -9,8 +9,7 @@ import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-br
 import { provideEcharts } from 'ngx-echarts';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { HttpRequestInterceptor } from './shared/services/spinner.interceptor';
-import { provideServiceWorker } from '@angular/service-worker';
-
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }), 
@@ -32,7 +31,8 @@ export const appConfig: ApplicationConfig = {
                   positionClass: 'toast-top-right',
                   preventDuplicates: true,
                 }),
-                NgxSpinnerModule.forRoot({})
+                NgxSpinnerModule.forRoot({}),
+                ServiceWorkerModule.register('ngsw-worker.js', {  })
               )
               
             ]
