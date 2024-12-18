@@ -40,7 +40,7 @@
                 </div>
               </div>
       
-              <div class="graficos">
+              <div class="graficos up-hover">
                 <div class="grafico-pizza sombra" [style]="{'--porcentagem': (somaDespesasMes*100/totalEntradas).toString()}" (click)="dashboard()">
                   <div class="legenda">
                     {{somaDespesasMes*100/totalEntradas * 10 | percent }}
@@ -53,21 +53,29 @@
             </div>
           </div>
           <hr>
+          <div class="d-flex flex-center text-white sombra up-hover" (click)="contasDetalhes()">
+            <div class="circle">
+              <img src="/assets/img/money-bag.svg"/>
+            </div>
+            <div class="valores">
+              <div class="valor"> {{saldoAtual | currency}} </div>
+            </div>
+          </div>
           <ul class="nav nav-pills flex-column mb-auto">
               <li class="nav-item">
-                  <a href="home" class="nav-link text-whit">
+                  <a href="home" class="nav-link text-whit up-hover">
                       <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"/></svg>
                       Home
                   </a>
               </li>
               <li class="nav-item">
-                  <a  href="dash" class="nav-link text-white">
+                  <a  href="dash" class="nav-link text-white up-hover">
                       <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
                       Dashboard
                   </a>
               </li>
               <li class="nav-item">
-                  <a href="#" class="nav-link text-white">
+                  <a href="#" class="nav-link text-white up-hover">
                       <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
                       Orders
                   </a>
@@ -133,7 +141,7 @@
       <div class="grafico-card">
         <div class="cards">
                
-          <div class="card-button bg-vermelho-pastel text-white sombra" (click)="gastos()">
+          <div class="card-button bg-vermelho-pastel text-white sombra up-hover" (click)="gastos()">
             <div class="circle">
               <img src="/assets/img/bitcoin-cash-money.svg"/>
             </div>
@@ -145,19 +153,7 @@
             
           </div>
           
-          <div class="card-button bg-verde-pastel text-white sombra" (click)="contasDetalhes()">
-            <div class="circle">
-              <img src="/assets/img/money-bag.svg"/>
-            </div>
-            <div class="valores">
-              <div class="valor"> {{saldoAtual | currency}} </div>
-              <span class="text">Saldo Total</span>
-            </div>
-            <div class="bg-icon"><img src="/assets/img/money-bag.svg"/></div>
-            
-          </div>
-      
-          <div class="card-button bg-azul-pastel text-white sombra" (click)="entradaDetalhes()">
+          <div class="card-button bg-azul-pastel text-white sombra up-hover" (click)="entradaDetalhes()">
             <div class="circle">
               <img src="/assets/img/dollar-banknote.svg"/>
             </div>
@@ -177,7 +173,7 @@
           </div>
           <div class="grafico-body">
             <div class="porcentagem-despesa" *ngFor="let despesa of despesasParceladas">
-              <div class="barra-progressao" (click)="parcelas(despesa)">
+              <div class="barra-progressao up-hover" (click)="parcelas(despesa)">
                 <div class="progressao-barra" [ngStyle]="{'width': ( despesa.ValorPago* 150)/ despesa.ValorTotal + 'px'}">{{despesa.Nome}}</div>
               </div>
               <div class="dados-parcelas">
@@ -193,7 +189,7 @@
     <hr>
     <div class="info-3">
       <div class="d-flex">
-        <div class="col" style="font-size: 24px; font-weight: bolder;">{{somaDespesasMes | currency}}</div><button class="btn btn-sm btn-danger" (click)="zerar()">0</button>
+        <div class="col" style="font-size: 30px; font-weight: bolder;">Total: {{somaDespesasMes | currency}}</div><button class="btn btn-sm btn-danger" (click)="zerar()">0</button>
         <div class="d-flex col">
           <input type="text" class="form-control form-control-sm" [(ngModel)]="termo">
           <button class="btn btn-sm btn-success" (click)="filtrarPorTermo()">Filtrar</button>
@@ -201,7 +197,7 @@
       </div>
       <div *ngIf="despesasPagas!.Agrupamento.length > 0" class="agrupamento">
         <div class="pagas">
-          <div class="paga sombra" *ngFor="let paga of despesasPagas!.Agrupamento" (click)="filtraPagas(paga.Despesas)" >
+          <div class="paga sombra  up-hover" *ngFor="let paga of despesasPagas!.Agrupamento" (click)="filtraPagas(paga.Despesas)" >
             <img [src]="defineImagem(paga.Tipo)" style="width: 50px; height: 50px;" alt="">
             {{paga.Soma | currency}}
           </div>
