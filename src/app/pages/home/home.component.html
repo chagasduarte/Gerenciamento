@@ -112,7 +112,9 @@
   </nav>
   
   <div class="infos">
-   
+    <div class="valor-conta-mobile up-hover" (click)="contasDetalhes()">
+     Saldo:  {{saldoAtual | currency}}
+    </div>
     <div id="info-1" name="info-1" class="info-1">
       <div class="data-grafico">
         <div 

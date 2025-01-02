@@ -418,7 +418,6 @@ export class HomeComponent implements OnInit {
     }
     else{
       this.logService.postLog(this.log).subscribe(x => {
-        this.toastService.success("Log Gravado");
       })
     }
     

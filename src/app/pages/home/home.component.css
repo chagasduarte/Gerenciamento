@@ -233,6 +233,9 @@ svg {
     height: 25px;
 }
 
+.valor-conta-mobile {
+    display:none;
+}
 
 .accordion {
     width: 400px;

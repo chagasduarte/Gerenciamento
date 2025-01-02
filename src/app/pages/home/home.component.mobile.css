@@ -46,6 +46,15 @@
         margin: 0px;
         padding: 0px;
     }
+    .valor-conta-mobile {
+        display: grid;
+        place-items: left;
+        background-color: #465272;
+        border-radius: 15px;
+        margin: 5px;
+        font-size: 25px;
+        padding: 5px;
+    }
 }
 
 .legenda {
