@@ -168,12 +168,12 @@
           </div>
         </div>
         
-        <div class="grafico sombra">
+        <div class="grafico sombra  up-hover">
           <div class="grafico-header">
             <h5>Despesas Parcelas: {{gastoTotalMes | currency}}</h5>
             <button class="btn btn-success btn-sm" (click)="adicionarDespesa()">add</button>
           </div>
-          <div class="grafico-body">
+          <div class="grafico-body" (click)="previstos()">
             <div class="porcentagem-despesa" *ngFor="let despesa of despesasParceladas">
               <div class="barra-progressao up-hover" (click)="parcelas(despesa)">
                 <div class="progressao-barra" [ngStyle]="{'width': ( despesa.ValorPago* 150)/ despesa.ValorTotal + 'px'}">{{despesa.Nome}}</div>

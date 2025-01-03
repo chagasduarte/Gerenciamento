@@ -49,23 +49,31 @@ export class PrevistosComponent implements OnInit {
     this.parcelasPagas = [];
 
     this.parcelasService.GetParcelasByMes(this.systemService.mes.valor + 1, this.systemService.ano.valor).subscribe(parcelas => {
-      console.log(parcelas)
 
       parcelas.map( parcela => {
         parcela.DataVencimento = new Date(parcela.DataVencimento);
         
         this.despesasService.GetDespesasById(parcela.DespesaId).subscribe({
           next: (despesa: Despesa) => {
-            if(parcela.IsPaga == 1) {
-              this.parcelasPagas.push({parcela: parcela, despesa: despesa});
+            
+            if(despesa){
+              if(parcela.IsPaga == 1) {
+                this.parcelasPagas.push({parcela: parcela, despesa: despesa});
+              }
+              else {
+                this.parcelas.push({parcela: parcela, despesa: despesa});
+                this.valotTotal += parseFloat(parcela.Valor.toString());
+              }
             }
             else {
-              this.parcelas.push({parcela: parcela, despesa: despesa});
-              this.valotTotal += parseFloat(parcela.Valor.toString());
+              console.log("Chegou aqui");
+
+              this.parcelasService.DeleteParcelasByDespesa(parcela.DespesaId).subscribe( x => {
+                this.toastrService.warning('Aviso', 'Como essa despesa não foi encontrada, apagamos todas as parcelas referentes a ela.')
+              });
             }
           },
           error: (err: any) => {
-            console.log(err.status)
             if (err.status == 404){
               this.parcelasService.DeleteParcelasByDespesa(parcela.DespesaId).subscribe( x => {
                 this.toastrService.warning('Aviso', 'Como essa despesa não foi encontrada, apagamos todas as parcelas referentes a ela.')
