@@ -12,6 +12,7 @@ import { LoginComponent } from './pages/loggin/loggin.component';
 import { AuthGuard } from './shared/guard/auth.guard';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { IndexComponent } from './pages/index/index.component';
+import { ObjetivosComponent } from './pages/objetivos/objetivos.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent, canActivate: [AuthGuard] },
@@ -26,5 +27,6 @@ export const routes: Routes = [
     { path: "entradas-detalhe", component: EntradaDetalhesComponent, canActivate: [AuthGuard] },
     { path: "previstos", component: PrevistosComponent, canActivate: [AuthGuard] },
     { path: "dash", component: DashboardComponent, canActivate: [AuthGuard]},
-    { path: "index", component: IndexComponent, canActivate: [AuthGuard]}
+    { path: "index", component: IndexComponent, canActivate: [AuthGuard]},
+    { path: "objetivos", component: ObjetivosComponent, canActivate: [AuthGuard]}
 ];

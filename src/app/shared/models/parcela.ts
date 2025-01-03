@@ -4,6 +4,7 @@ export interface Parcela {
     Valor: number
     DataVencimento: Date
     IsPaga: number
+    TipoDespesa: number
 }
 
 export interface ParcelaRequest {

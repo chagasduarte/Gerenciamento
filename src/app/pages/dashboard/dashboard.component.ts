@@ -12,8 +12,11 @@ import { TipoDespesa } from "../../shared/models/tipoDespesa";
 import { LogMensalService } from "../../shared/services/log-mensal.service";
 import { LogMensal } from "../../shared/models/logMensal";
 import { forkJoin } from "rxjs";
-import { drawSaidas } from "./drawcharts/saidas.coloumn";
+import { drawSaidas } from "./drawcharts/progressao.coloumn";
 import { drawCategoriaPie } from "./drawcharts/categorias.pie";
+import { drawMediasBar } from "./drawcharts/medias.bar";
+import { Parcela } from "../../shared/models/parcela";
+import { ParcelasService } from "../../shared/services/parcelas.service";
 
 @Component({
     selector: 'app-dashboard',
@@ -29,6 +32,7 @@ export class DashboardComponent implements  OnInit {
     contemMenorQZero: boolean = true;
     graficos!: MesGrafico[];
     despesas: Despesa[] = [];
+    parcelas: Parcela[] = [];
     tipoDespesaAgrupada: TipoDespesaGrafico[] = [];
     anosDeDivida: number[] = [2024, 2025, 2026];
     logs: LogMensal[] = [];
@@ -38,7 +42,8 @@ export class DashboardComponent implements  OnInit {
         private readonly router: Router,
         private readonly despesasService: DespesasService,
         private readonly contasService: ContasService,
-        private readonly logsService: LogMensalService
+        private readonly logsService: LogMensalService,
+        private readonly parcelasService: ParcelasService
     ){
     }
     ngOnInit(): void {
@@ -50,12 +55,15 @@ export class DashboardComponent implements  OnInit {
          forkJoin([
             this.graficosService.GetGraficos(this.systemService.ano.valor),
             this.despesasService.GetDespesasAdicionais(this.systemService.ano.valor),
-            this.logsService.getAllLogs(this.systemService.ano.valor)
+            this.logsService.getAllLogs(this.systemService.ano.valor),
+            this.parcelasService.GetParcelasByAno(this.systemService.ano.valor)
         ]).subscribe({
             next: (success) => {
                 this.graficos = success[0];
                 this.despesas = success[1];
                 this.logs = success[2];
+                this.parcelas = success[3];
+
                 this.agruparDespesas();
                 this.loadGoogleCharts();
             }
@@ -78,6 +86,13 @@ export class DashboardComponent implements  OnInit {
             }
           });
         }
+        for( let parcela of this.parcelas){
+            this.tipoDespesaAgrupada.map(x => {
+                if (x.TipoDespesa == parcela.TipoDespesa){
+                    x.saida += parseFloat(parcela.Valor.toString());
+                }
+            })
+        }
     }
 
     voltar(){
@@ -94,9 +109,9 @@ export class DashboardComponent implements  OnInit {
         script.onload = () => {
         //   this.drawChartInOut();
         //   this.drawChart();
-        drawCategoriaPie(this.tipoDespesaAgrupada);
-        //   this.drawChartProg();
-          drawSaidas(this.logs);
+            drawCategoriaPie(this.tipoDespesaAgrupada);
+            drawSaidas(this.logs);
+            drawMediasBar(this.tipoDespesaAgrupada, this.systemService.ano);
         };
         document.body.appendChild(script);
     }
@@ -128,62 +143,5 @@ export class DashboardComponent implements  OnInit {
         return dados;
     }
 
-    drawChartProg(){
-        const google = (window as any).google;
-        google.charts.load('current', {'packages': ['bar']});
-        google.charts.setOnLoadCallback(() => {
-            const data = google.visualization.arrayToDataTable(this.progrecao());
-            var options = {
-                title: 'Progressão',
-                backgroundColor: {fill: "none"},
-                bars: 'vertical', // Required for Material Bar Charts.
-                hAxis: {format: 'decimal'},
-                colors: ['#1b9e77', '#d95f02'],
-                legend: { position: 'none' }
-            };
-            var chart = new google.visualization.BarChart(document.getElementById('progressao'));
-
-            chart.draw(data, options);
-        })
-    }
-    progrecao(): (string | number)[][] {
-        let dados: (string | number)[][] = [];
-        dados.push(['Mês', 'Progressao']);
-        
-        for(const mes of this.graficos){
-            dados.push([mes.nomeabrev, parseFloat(mes.progressao.toString())]);
-        }
-        
-        return dados;
-    }
-    drawChart() {
-        // Carregar o pacote de gráficos
-        const google = (window as any).google;
-        google.charts.load('current', {'packages':['corechart']});
-        google.charts.setOnLoadCallback(() => {
-            const data = google.visualization.arrayToDataTable([
-            ['Mês', 'Alimentação', 'Transporte', 'Saúde', 'Educação', 'Lazer', 'Moradia', 'Serviços', 'Outros' ],
-            ['Janeiro', 300, 200, 150, 250, 50,50,50,50],
-            ['Fevereiro', 400, 250, 100, 300, 50,50,50,50],
-            ['Março', 350, 300, 200, 220, 50,50,50,50],
-            ['Abril', 450, 320, 180, 350, 50,50,50,50],
-            ['Maio', 400, 250, 220, 300, 50,50,50,50],
-            ['Junho', 500, 400, 300, 400, 50,50,50,50]
-            ]);
-
-            const options = {
-                title: 'Gastos Mensais por Tipo',
-                curveType: 'function',
-                legend: { position: 'bottom' },
-                hAxis: { title: 'Mês' },
-                vAxis: { title: 'Gastos (R$)' },
-                colors: ['#e2431e', '#f1ca3a', '#6f9654', '#1c91c0'],
-                backgroundColor: {fill: "none"}
-            };
-
-            const chart = new google.visualization.LineChart(document.getElementById('grafico_linha'));
-            chart.draw(data, options);
-        });
-    }
     
 }

@@ -34,6 +34,9 @@ export class ParcelasService {
     return this.http.get<Parcela[]>(`${this.api}/Mes?mes=${mes}&ano=${ano}`);
   }
 
+  GetParcelasByAno(ano: number) : Observable<Parcela[]>{
+    return this.http.get<Parcela[]>(`${this.api}/Ano?ano=${ano}`);
+  }
   PostParcela(request: ParcelaRequest) : Observable<number[]> {
     return this.http.post<number[]>(`${this.api}`, request);
   }

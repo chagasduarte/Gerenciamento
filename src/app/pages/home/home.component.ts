@@ -138,12 +138,10 @@ export class HomeComponent implements OnInit {
         success[1].map(parcela => {
           parcela.DataVencimento = new Date(parcela.DataVencimento)
 
-          if(parcela.IsPaga == 0){
+          if(parcela.IsPaga == 0 || parcela.IsPaga == 3){
             this.gastoTotalMes += parseFloat(parcela.Valor.toString());
           }
-          if (parcela.IsPaga != 3) {
-            this.idsPrevisto.push(parcela.Id)
-          }
+
           aux.push({idDespesa: parcela.DespesaId, valorParcela: parcela.Valor, dataParcela: new Date(parcela.DataVencimento), isPaga: parcela.IsPaga})
         });
 
@@ -269,6 +267,7 @@ export class HomeComponent implements OnInit {
             }
           }
         });
+
         this.log.abrevmes = this.systemService.mes.nomeAbrev;
         this.log.ano = this.systemService.ano.valor;
         this.log.mes = this.systemService.mes.valor + 1;

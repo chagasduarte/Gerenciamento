@@ -75,9 +75,9 @@
                   </a>
               </li>
               <li class="nav-item">
-                  <a href="#" class="nav-link text-white up-hover">
+                  <a href="objetivos" class="nav-link text-white up-hover">
                       <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
-                      Orders
+                      Objetivos
                   </a>
               </li>
               
@@ -187,6 +187,8 @@
       
        
       </div>
+      {{ aindaPossoGastar | currency}} = ({{ saldoAtual | currency}} + {{ aReceber| currency}}) - ({{ gastoTotalMes | currency}}+ {{ gastosAdicionais| currency}});
+
     </div>
     <hr>
     <div class="info-3">
