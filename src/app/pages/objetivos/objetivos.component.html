@@ -1,0 +1,19 @@
+<form action="" [formGroup]="form" class="d-flex justify-content-center gap-3">
+    <div class="compra"> 
+        <h1>Valor Compra</h1>
+        <div class="d-flex row">
+            <div class="col-5">
+                Valor: <input type="text" class="form-control form-control-sm" formControlName="valorCompra" (change)="calculaPorcentagem()">
+            </div>
+            <div class="col-2">
+                Quantidade: <input type="text" class="form-control form-control-sm" formControlName="quantidade"(change)="calculaPorcentagem()">
+            </div>
+        </div>
+        Valor Real: <input type="text" class="form-control form-control-sm col-5" formControlName="valorTotal">
+    </div>
+    <div class="compra">
+        <h1>Valor Venda</h1>
+        <input type="text" class="form-control form-control-sm" formControlName="valorMinimoRevenda" (change)="calculaLucro()">
+        Lucro: <input type="text" class="form-control form-control-sm" formControlName="valorLucro">
+    </div>
+</form>

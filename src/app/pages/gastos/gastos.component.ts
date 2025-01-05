@@ -237,4 +237,7 @@ export class GastosComponent implements OnInit{
     
         
   } 
+  objetivos(){
+    this.router.navigate(['objetivos'])
+  }
 }

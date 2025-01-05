@@ -90,7 +90,7 @@
     
     <div *ngFor="let gasto of gastosPagos" class="parcela bg-verde-pastel">
         <div class="card-header text-break">
-            <b>{{gasto.Nome}}</b> 
+            <b (click)="objetivos()">{{gasto.Nome}}</b> 
         </div>
         <div class="card-body">
           <div class="d-flex">
