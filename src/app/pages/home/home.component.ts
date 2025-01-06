@@ -214,7 +214,9 @@ export class HomeComponent implements OnInit {
 
         //contas
         success[5].map(x => {
-          this.saldoAtual += parseFloat(x.Debito.toString());
+          if(x) {
+            this.saldoAtual += parseFloat(x.Debito.toString());
+          }
         });
 
         //calcula saldo do mes
