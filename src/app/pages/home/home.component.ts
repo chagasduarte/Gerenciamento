@@ -213,12 +213,11 @@ export class HomeComponent implements OnInit {
         });
 
         //contas
-        success[5].map(x => {
-          if(x) {
+        if(success[5].length > 0) {
+          success[5].map(x => {
             this.saldoAtual += parseFloat(x.Debito.toString());
-          }
-        });
-
+          });
+        } 
         //calcula saldo do mes
         this.aindaPossoGastar = (this.saldoAtual + this.aReceber) - (this.gastoTotalMes + this.gastosAdicionais);
         const contas = success[6].sort((a, b) => {return a.Id - b.Id});
