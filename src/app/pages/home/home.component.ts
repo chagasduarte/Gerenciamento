@@ -186,11 +186,6 @@ export class HomeComponent implements OnInit {
                 parcela = x;
               })
             }
-            //busca parcelas atrasadas
-            if(parcela.IsPaga == 3 && this.systemService.mes.valor == new Date().getUTCMonth()){
-              this.gastoTotalMes += parseFloat(parcela.Valor.toString());
-              this.idsPrevisto.push(parcela.Id)
-            }
           }
 
         });
@@ -221,7 +216,7 @@ export class HomeComponent implements OnInit {
         //calcula saldo do mes
         this.aindaPossoGastar = (this.saldoAtual + this.aReceber) - (this.gastoTotalMes + this.gastosAdicionais);
         const contas = success[6].sort((a, b) => {return a.Id - b.Id});
-        if (contas) {
+        if (contas.length> 0) {
           contas[0].Debito = this.aindaPossoGastar;
           if (contas[0].Mes > new Date().getUTCMonth() + 1 || contas[0].Ano > new Date().getUTCFullYear()){
             this.contasService.PutConta(contas[0]).subscribe(x => {});

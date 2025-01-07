@@ -7,16 +7,6 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.btn-primary {
-    border: none;
-    border-radius: 10px;
-    background-color: rgb(78, 165, 180);
-}
-
-.botoes{
-    display: grid;
-    grid-template-columns: 50% 50%;
-}
 
 .adicionar{
     display: flex;
@@ -45,4 +35,14 @@ img {
 h1 {
     text-align: center;
     font-size: 40px;
+}
+
+.butao {
+    display: grid;
+    place-items: center;
+}
+
+.voltar {
+    display: grid;
+    place-items: center;
 }

@@ -1,10 +1,11 @@
 <div class="container">
-  <div class="botoes">
-    <div class="voltar">
+  <div class="row">
+    <div class="col voltar">
         <button class="btn btn-sm btn-warning" (click)="Voltar()">Voltar</button>
     </div>
-    <div class="adicionar">
-        <button class="btn btn-sm btn-primary" (click)="AdicionaGasto()"><img src="/assets/img/plus-coin.svg" alt=""/></button>
+    <h1 class="col">{{aindaFaltaParcelado + aindafalta | currency}}</h1>
+    <div class="col butao">
+        <button class="btn btn-sm btn-primary" (click)="AdicionaGasto()">Add</button>
     </div>
 </div>  
 
