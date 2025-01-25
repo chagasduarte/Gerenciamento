@@ -13,14 +13,22 @@
     justify-content: end;
 }
 
-.card-parcelas {
+.parcela {
+    display: grid;
+    grid-template-rows: 
+    "nome"
+    "data";
     & .card-header {
-        display: flex;
+        grid-area: nome;
     }
-    & button {
-        width: 100px;
-    }
+    & .card-body {
+        grid-area: data;
+        display: grid;
+        grid-template-columns: "data botao";
+    }     
 }
+   
+
 
 .gasto-header{
     display:grid;

@@ -17,12 +17,14 @@ import { FormsModule } from '@angular/forms';
 })
 export class ContasComponent {
   conta: Conta;
-  dataConta: Date
+  dataConta: Date;
+  listaPessoas: string[] = ["Chagas", "Lu"];
+
   constructor(
       private readonly contasService: ContasService,
       private readonly router: Router
   ){
-      this.conta = {} as Conta;
+      this.conta = {Credito: 0, Debito: 0} as Conta;
       this.dataConta = new Date();
   }
 

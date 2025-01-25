@@ -8,14 +8,18 @@
         <input type="number" id="valor" name="valor" step="0.01" required [(ngModel)]="entrada.Valor">
     </div>
     <div class="form-group">
-        <label for="contaId">Conta ID:</label>
-        <select name="contaId" id="contaId" [(ngModel)]="entrada.ContaId">
-            <option [value]="conta.Id" *ngFor="let conta of contas"> {{conta.Nome}} </option>
-        </select>
+        <label for="data">Data Débito:</label>
+        <input type="date" class="form-input" id="data" name="data" [(ngModel)]="dataDebito" (change)="filtraContas()"/>
     </div>
     <div class="form-group">
-        <label for="data">Data Débito:</label>
-        <input type="date" class="form-input" id="data" name="data" [(ngModel)]="dataDebito"/>
+        <label for="contaId">Conta ID:</label>
+        <div class="d-flex">
+            <select class="col" name="contaId" id="contaId" [(ngModel)]="entrada.ContaId">
+                <option [value]="conta.Id" *ngFor="let conta of contasFiltradas"> {{conta.Nome}} </option>
+            </select>
+            <button class="btn btn-primary btn-sm" (click)="novaConta()">Nova Conta</button>
+        </div>
+        
     </div>
     <div class="form-group">
         <label for="fixo">Fixo:</label>
@@ -23,6 +27,6 @@
     </div>
     
     <div class="form-group">
-        <button type="submit">Enviar</button>
+        <button class="btn btn-primary btn-sm" type="submit">Enviar</button>
     </div>
 </form>

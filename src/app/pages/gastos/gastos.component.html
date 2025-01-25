@@ -11,6 +11,7 @@
 
   <div class="linha"></div>
   <h3>Abertos Previstos: {{aindaFaltaParcelado | currency}}</h3>
+  
   <div class="card-parcelas">
     <div class="parcela" *ngFor="let parcela of parcelas" [ngStyle]="{'background-color': DefineCorParcela(parcela.parcela)}">
       <div class="card-header">
@@ -23,9 +24,9 @@
           </div>
           <button class="btn btn-sm btn-primary" (click)="adicionarParcelasLista(parcela.parcela, parcela.despesa)">Adicionar</button>
       </div>
+    </div>
   </div>
-    
-  </div>
+
   <div class="card mb-3"></div>
   <h3>Abertos Adicionais: {{aindafalta | currency}}</h3>
   <div class="card-parcelas">

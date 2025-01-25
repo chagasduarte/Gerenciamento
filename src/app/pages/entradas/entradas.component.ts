@@ -23,6 +23,8 @@ export class EntradasComponent {
     entrada: Entrada;
     contas!: Conta[];
     dataDebito!: Date
+    contasFiltradas!: Conta[];
+
     constructor(
         private readonly entradaService: EntradasService,
         private readonly contasService: ContasService,
@@ -33,10 +35,11 @@ export class EntradasComponent {
         this.contasService.GetContas().subscribe({
           next: (success: Conta[]) => {
             this.contas = success;
+            this.contasFiltradas = success;
           } 
         })
     }
-  
+    
     OnSubmit(){
       this.entrada.DataDebito = new Date(new Date(this.dataDebito).toISOString().split("T")[0] + "T12:00:00.000Z");
 
@@ -45,5 +48,13 @@ export class EntradasComponent {
            this.router.navigate(["entradas-detalhe"]);
         }
       });
+    }
+
+    filtraContas(){
+      this.contasFiltradas = this.contas.filter(x => { return x.Ano == new Date(this.dataDebito).getUTCFullYear() && x.Mes == new Date(this.dataDebito).getUTCMonth() + 1});
+    }
+
+    novaConta(){
+      this.router.navigate(["contas"])
     }
 }
