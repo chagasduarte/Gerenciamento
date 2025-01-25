@@ -17,7 +17,7 @@
         <label for="contaId">Conta ID:</label>
         <div class="d-flex">
             <select class="col" name="contaId" id="contaId" [(ngModel)]="entrada.ContaId">
-                <option [value]="conta.Id" *ngFor="let conta of contasFiltradas"> {{conta.Nome}} </option>
+                <option [value]="conta.Id" *ngFor="let conta of contasFiltradas"> {{conta.Nome}} - {{conta.Descricao}} </option>
             </select>
             <button class="btn btn-primary btn-sm" (click)="novaConta()">Nova Conta</button>
         </div>
