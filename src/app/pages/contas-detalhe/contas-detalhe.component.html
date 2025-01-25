@@ -21,8 +21,11 @@
   <div class="grid">
       <div class="card card-sm" *ngFor="let conta of contas">
           <div class="card-header">
-            <b>{{conta.Nome}}</b> 
-            <button class="btn btn-sm" (click)="deletarConta(conta.Id)"><img src="/assets/img/user-trash.svg" alt=""/></button>
+            <b>{{conta.Nome}} - {{conta.Descricao}} / {{conta.Mes}}</b> 
+            <div class="d-flex">
+              <button class="btn btn-sm" (click)="deletarConta(conta.Id)"><img src="/assets/img/user-trash.svg" alt=""/></button>
+              <button class="btn btn-sm" (click)="editar(conta.Id)"><img src="/assets/img/edit-two.svg" alt=""/></button>
+            </div>
           </div>
           <div class="card-body">
             <div class="row mb-2">

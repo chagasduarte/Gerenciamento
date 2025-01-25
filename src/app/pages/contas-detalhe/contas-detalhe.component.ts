@@ -71,5 +71,7 @@ export class ContasDetalheComponent {
       });
     }
   }
-    
+  editar(id: number){
+    this.route.navigate(["contas", {id}])
+  }
 }
