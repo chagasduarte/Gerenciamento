@@ -74,8 +74,9 @@ img {
   grid-template-areas: 
   "header"
   "body";
-  grid-template-rows: 50px 50px;
+  grid-template-rows: 30px 70px;
   border-radius: 5%;
+  gap: 5px;
   padding: 5px;
   width: 175px;
   height: 100px;
@@ -193,3 +194,7 @@ background: #6e6ece;
 html::-webkit-scrollbar-track {
 background: #ededed;
 } 
+
+.usuario {
+  background-color: #4d7e75;
+}

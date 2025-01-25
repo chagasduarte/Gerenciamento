@@ -7,32 +7,9 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-
 .adicionar{
     display: flex;
     justify-content: end;
-}
-
-.parcela {
-    display: grid;
-    grid-template-rows: 
-    "nome"
-    "data";
-    & .card-header {
-        grid-area: nome;
-    }
-    & .card-body {
-        grid-area: data;
-        display: grid;
-        grid-template-columns: "data botao";
-    }     
-}
-   
-
-
-.gasto-header{
-    display:grid;
-    grid-template-columns: 60% 1fr;
 }
 
 img {

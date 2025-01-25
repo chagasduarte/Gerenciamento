@@ -1,7 +1,9 @@
 <form id="entradaForm" class="entradasForm" (submit)="OnSubmit()">
     <div class="form-group">
         <label for="nome">Nome:</label>
-        <input type="text" id="nome" name="nome" required [(ngModel)]="entrada.Nome">
+        <select type="text" id="nome" name="nome" required [(ngModel)]="entrada.Nome">
+            <option [value]="entrada" *ngFor="let entrada of entradas">{{entrada}}</option>
+        </select>
     </div>
     <div class="form-group">
         <label for="valor">Valor:</label>

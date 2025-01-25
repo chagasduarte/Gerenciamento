@@ -19,7 +19,8 @@ export class ContasComponent {
   conta: Conta;
   dataConta: Date;
   listaPessoas: string[] = ["Chagas", "Lu"];
-
+  descricaoConta: string[] = ["Inter", "Itau", "Swile"];
+  
   constructor(
       private readonly contasService: ContasService,
       private readonly router: Router

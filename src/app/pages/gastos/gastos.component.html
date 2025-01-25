@@ -31,7 +31,7 @@
   <h3>Abertos Adicionais: {{aindafalta | currency}}</h3>
   <div class="card-parcelas">
     <div *ngFor="let gasto of gastos" class="parcela bg-verde-pastel" >
-      <div class="text-break gasto-header">
+      <div class="text-break card-header">
         <b>{{gasto.Nome}}</b>
         <button class="btn btn-sm" (click)="apagarGasto(gasto.Id)"><img src="/assets/img/user-trash.svg" alt=""></button>
       </div> 
@@ -40,9 +40,7 @@
           <div class="me-2">{{gasto.DataCompra | date}}:</div>
           <div>{{gasto.ValorTotal | currency}}</div>
         </div>
-        <div class="row">
-          <button class="btn btn-sm btn-primary" (click)="adicionarListaPagamento(gasto)"> Adicionar </button>
-        </div>
+        <button class="btn btn-sm btn-primary" (click)="adicionarListaPagamento(gasto)"> Adicionar </button>
       </div>
     </div>
     <div class="pagamento" *ngIf="listaPagamento.length || true">
