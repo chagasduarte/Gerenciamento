@@ -106,4 +106,12 @@ export class EntradaDetalhesComponent implements OnInit{
   AdicionaEntrada() {
     this.router.navigate(["entradas"]);
   }
+  deletar(entrada: Entrada){
+    if (confirm()){
+      this.entradaService.DeleteEntrada(entrada.Id).subscribe( x=> {
+        this.toastrService.success("Entrada deletada", "Sucesso");
+        this.entradasRecebidas.splice(this.entradasRecebidas.indexOf(entrada),1);
+      })
+    }
+  }
 }

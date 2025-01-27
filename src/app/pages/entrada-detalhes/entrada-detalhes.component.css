@@ -40,3 +40,7 @@
     display: flex;
     justify-content: end;
 }
+
+img {
+    height: 25px;
+}

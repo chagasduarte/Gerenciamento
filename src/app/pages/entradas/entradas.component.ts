@@ -56,6 +56,6 @@ export class EntradasComponent {
     }
 
     novaConta(){
-      this.router.navigate(["contas"])
+      this.router.navigate(["contas", {paginaAnterior: "entradas"}])
     }
 }

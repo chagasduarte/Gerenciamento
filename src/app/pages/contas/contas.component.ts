@@ -21,6 +21,8 @@ export class ContasComponent implements OnInit {
   listaPessoas: string[] = ["Chagas", "Lu"];
   descricaoConta: string[] = ["Inter", "Itau", "Swile"];
   update: boolean = false;
+  paginaAnterior: string = "";
+
   constructor(
       private readonly contasService: ContasService,
       private readonly router: Router,
@@ -36,6 +38,9 @@ export class ContasComponent implements OnInit {
           this.conta = x;
           this.update = true;
         })
+      }
+      if(x["paginaAnterior"]){
+        this.paginaAnterior = x["paginaAnterior"];
       }
     });
   }
@@ -53,12 +58,20 @@ export class ContasComponent implements OnInit {
     else {
       this.contasService.PostConta(this.conta).subscribe({
         next: (success: Conta) => {
-           this.router.navigate(["contas-detalhe"]);
+           this.voltar();
         }
       });
     }
   }
   voltar(){
-    this.router.navigate(["contas-detalhe"]);
+    switch (this.paginaAnterior) {
+      case "entradas": 
+        this.router.navigate(["entradas"]);
+        break;
+      case "":
+        this.router.navigate(["contas-detalhe"]);
+        break;
+    }
+
   }
 }
