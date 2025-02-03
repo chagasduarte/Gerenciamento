@@ -24,7 +24,7 @@ export class EntradasComponent {
     contas!: Conta[];
     dataDebito!: Date
     contasFiltradas!: Conta[];
-    entradas: string[] = ["Salário SmartHint", "Salário Ótica", "Benefícios SmartHint", "Parcial Ótica"]
+    entradas: string[] = ["Salário SmartHint", "Salário Ótica", "Benefícios SmartHint", "Parcial Ótica", "Fora de Escopo"]
     
     constructor(
         private readonly entradaService: EntradasService,
