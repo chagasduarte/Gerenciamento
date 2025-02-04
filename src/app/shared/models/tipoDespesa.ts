@@ -25,5 +25,6 @@ export enum TipoDespesa {
   Lazer = 5,
   Moradia = 6,
   Servicos = 7,
-  Outros = 8
+  Outros = 8,
+  Investimentos = 9
 }
