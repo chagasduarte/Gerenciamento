@@ -364,6 +364,8 @@ export class HomeComponent implements OnInit {
         return "/assets/img/customer-service.svg";
       case 8: 
         return "/assets/img/tools-chainsaw.svg";
+      case 9: 
+        return "/assets/img/revenue.svg";
     }
     return "";
   }
