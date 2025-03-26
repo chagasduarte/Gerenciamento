@@ -1,6 +1,6 @@
-import { LogMensal } from "../../../shared/models/logMensal";
+import { MesGrafico } from "../../../shared/models/graficos";
 
-export function drawSaidas(log: LogMensal[]){
+export function drawSaidas(log: MesGrafico[]){
     const google = (window as any).google;
     google.charts.load('current', {'packages': ['corechart']});
 
@@ -9,37 +9,34 @@ export function drawSaidas(log: LogMensal[]){
         const data = google.visualization.arrayToDataTable(saidasToArray(log));
         
         var view = new google.visualization.DataView(data);
-
-        view.setColumns([0, 1,
-            { calc: "stringify",
-              sourceColumn: 1,
-              type: "string",
-              role: "annotation",
-              font: {color: "#ffffff"}
-            }]);
         var options = {
+            chart: {
+                title: 'Progressão',
+            },
             backgroundColor: {fill: "none"},
-            trendlines: {type: 'linear', lineWidth: 5, opacity: .3},
-            legend: {position: 'none'},
+            seriesType: 'bars',
+            series: {0: {type: 'line'}},
             width: 900,
-            height: 300
+            height: 300,
+            colors: ['red', '#1b9e77', '#d95f02']
         };
 
-        var chart = new google.visualization.ColumnChart(document.getElementById('progressao'));
+        var chart = new google.visualization.ComboChart(document.getElementById('progressao'));
         
         chart.draw(view, options);
     })
 }
 
-function saidasToArray(logs: LogMensal[]): (any)[][]{
+function saidasToArray(logs: MesGrafico[]): (any)[][]{
     let mesAtual = new Date().getUTCMonth() + 1;
     let dados: (any)[][] = [];    
-    dados.push(['Mês','Saldo']);
-    logs = logs.sort((a, b) => {return a.mes - b.mes})
+    dados.push(['Mês','Progressão', 'Entradas',  'Saídas']);
+    logs = logs.sort((a, b) => {return a.id - b.id})
     logs.forEach(x => {
-        // if (x.mes >= mesAtual - 3 && x.mes <= mesAtual + 3) {
-            dados.push([x.abrevmes, parseFloat(x.valorsaldo.toString())]);
-        // }
+        if (x.id >= mesAtual - 2 && x.id <= mesAtual + 3) {
+            dados.push([x.nomeabrev, parseFloat(x.progressao.toString()), parseFloat(x.entrada.toString()), parseFloat(x.saida.toString())]);
+        }
     })
+    console.log(dados)
     return dados;
 }

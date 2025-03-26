@@ -36,6 +36,7 @@ export class DashboardComponent implements  OnInit {
     tipoDespesaAgrupada: TipoDespesaGrafico[] = [];
     anosDeDivida: number[] = [2024, 2025, 2026];
     logs: LogMensal[] = [];
+
     constructor(
         public systemService: SystemService,
         private readonly graficosService: GraficoService,
@@ -110,7 +111,7 @@ export class DashboardComponent implements  OnInit {
         //   this.drawChartInOut();
         //   this.drawChart();
             drawCategoriaPie(this.tipoDespesaAgrupada);
-            drawSaidas(this.logs);
+            drawSaidas(this.graficos);
             drawMediasBar(this.tipoDespesaAgrupada, this.systemService.ano);
         };
         document.body.appendChild(script);
