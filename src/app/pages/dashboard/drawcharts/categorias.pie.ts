@@ -8,7 +8,9 @@ export function drawCategoriaPie(tipoDespesaAgrupada: TipoDespesaGrafico[]){
         const data = new google.visualization.arrayToDataTable(despesaAgrupadaToArray(tipoDespesaAgrupada));
         var options = {
             backgroundColor: {fill: "none"},
-            is3D: true
+            is3D: true,
+            width: 500,
+            height:300
         };
         var chart = new google.visualization.PieChart(document.getElementById('pizza'));
 

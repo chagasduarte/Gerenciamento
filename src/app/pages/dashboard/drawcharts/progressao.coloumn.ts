@@ -15,12 +15,14 @@ export function drawSaidas(log: LogMensal[]){
               sourceColumn: 1,
               type: "string",
               role: "annotation",
-              font: {color: "#123456"}
+              font: {color: "#ffffff"}
             }]);
         var options = {
             backgroundColor: {fill: "none"},
             trendlines: {type: 'linear', lineWidth: 5, opacity: .3},
-            legend: {position: 'none'}
+            legend: {position: 'none'},
+            width: 900,
+            height: 300
         };
 
         var chart = new google.visualization.ColumnChart(document.getElementById('progressao'));
@@ -30,11 +32,14 @@ export function drawSaidas(log: LogMensal[]){
 }
 
 function saidasToArray(logs: LogMensal[]): (any)[][]{
+    let mesAtual = new Date().getUTCMonth() + 1;
     let dados: (any)[][] = [];    
-    dados.push(['Mês','Saidas']);
+    dados.push(['Mês','Saldo']);
     logs = logs.sort((a, b) => {return a.mes - b.mes})
     logs.forEach(x => {
-       dados.push([x.abrevmes, parseFloat(x.valorsaldo.toString())]);
+        // if (x.mes >= mesAtual - 3 && x.mes <= mesAtual + 3) {
+            dados.push([x.abrevmes, parseFloat(x.valorsaldo.toString())]);
+        // }
     })
     return dados;
 }

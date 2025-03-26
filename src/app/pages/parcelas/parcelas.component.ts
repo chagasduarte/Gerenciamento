@@ -58,7 +58,11 @@ export class ParcelasComponent implements OnInit {
           this.despesa = x;
         });
         this.parcelasService.GetParcelasByDespesa(success.id).subscribe(parcelas => {
-          this.parcelas = parcelas.filter(filtradas => filtradas.IsPaga != 1 && new Date(filtradas.DataVencimento).getUTCFullYear() == this.systemService.ano.valor)
+          this.parcelas = parcelas.filter(filtradas => filtradas.IsPaga != 1 && new Date(filtradas.DataVencimento).getUTCFullYear() == this.systemService.ano.valor);
+          this.parcelas.map(x => {
+            x.DataVencimentoString = x.DataVencimento.toString().split('T')[0];
+            x.Juros = 0;
+          })
           this.parcelasPagas = parcelas.filter(x => x.IsPaga == 1);
         });
       }
@@ -160,4 +164,11 @@ export class ParcelasComponent implements OnInit {
     this.listaPagamento = this.listaPagamento.filter( x => x.Id != parcela.Id);
     console.log(this.listaPagamento)
   }   
+
+  AtualizaParcela(parcela: Parcela){
+    parcela.DataVencimento = new Date(parcela.DataVencimentoString)
+    this.parcelasService.PutParcela(parcela).subscribe(x => {
+      console.log(x);
+    })
+  }
 }

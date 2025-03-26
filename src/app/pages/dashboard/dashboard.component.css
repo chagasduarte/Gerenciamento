@@ -2,8 +2,8 @@
   width: 100%;
 }
 
-.chart {
-  display: grid;
-  place-items: center;
+.dashboard{
+  display: flex;
   width: 100%;
+  flex-wrap: wrap;
 }

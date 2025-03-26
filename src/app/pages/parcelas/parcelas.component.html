@@ -13,13 +13,14 @@
       <div class="parcelas">
         <div *ngFor="let parcela of parcelas">
           <div class="card card-sm" >
-            <div class="card-header text-break">
-              <b>{{parcela.DataVencimento | date}}</b> 
+            <div class="card-header text-break d-flex row">
+              <input type="date" [(ngModel)]="parcela.DataVencimentoString" class="form-control form-control-sm col-1">
+              <button class="btn btn-success btn-sm" (click)="AtualizaParcela(parcela)">Up</button>
             </div>
             <div class="card-body">
               <div class="d-flex">
                 <div>Valor:</div>
-                <div>{{parcela.Valor | currency}}</div>
+                <div>{{parcela.Valor + parcela.Juros | currency}}</div>
               </div>
               <div class="row">
                 <button class="btn btn-sm btn-primary" (click)="adicionaLista(parcela)"> Adicionar </button>

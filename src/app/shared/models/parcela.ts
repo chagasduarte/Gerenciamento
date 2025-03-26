@@ -5,6 +5,8 @@ export interface Parcela {
     DataVencimento: Date
     IsPaga: number
     TipoDespesa: number
+    DataVencimentoString: string
+    Juros: number
 }
 
 export interface ParcelaRequest {
