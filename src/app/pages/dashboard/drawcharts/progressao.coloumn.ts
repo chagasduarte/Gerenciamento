@@ -9,6 +9,8 @@ export function drawSaidas(log: MesGrafico[]){
         const data = google.visualization.arrayToDataTable(saidasToArray(log));
         
         var view = new google.visualization.DataView(data);
+        var dash = document.getElementById('dashboard');
+        console.log(dash!.offsetWidth);
         var options = {
             chart: {
                 title: 'Progressão',
@@ -16,9 +18,9 @@ export function drawSaidas(log: MesGrafico[]){
             backgroundColor: {fill: "none"},
             seriesType: 'bars',
             series: {0: {type: 'line'}},
-            width: 900,
+            width: (dash!.offsetWidth / 3) * 2,
             height: 300,
-            colors: ['red', '#1b9e77', '#d95f02']
+            colors: ['red', '#1b9e77', 'orange']
         };
 
         var chart = new google.visualization.ComboChart(document.getElementById('progressao'));
