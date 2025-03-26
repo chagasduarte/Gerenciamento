@@ -18,7 +18,7 @@ export function drawSaidas(log: MesGrafico[]){
             backgroundColor: {fill: "none"},
             seriesType: 'bars',
             series: {0: {type: 'line'}},
-            width: (dash!.offsetWidth / 3) * 2,
+            width: (dash!.offsetWidth / 5) * 4,
             height: 300,
             colors: ['red', '#1b9e77', 'orange']
         };
