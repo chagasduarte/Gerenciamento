@@ -34,7 +34,7 @@ export class DashboardComponent implements  OnInit {
     despesas: Despesa[] = [];
     parcelas: Parcela[] = [];
     tipoDespesaAgrupada: TipoDespesaGrafico[] = [];
-    anosDeDivida: number[] = [2024, 2025, 2026];
+    anosDeDivida: number[] = [2024, 2025, 2026, 2027];
     logs: LogMensal[] = [];
 
     constructor(
@@ -49,7 +49,6 @@ export class DashboardComponent implements  OnInit {
     }
     ngOnInit(): void {
         this.buscaDados();
-        
     }
 
     buscaDados(){

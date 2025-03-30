@@ -12,15 +12,16 @@ export function drawSaidas(log: MesGrafico[]){
         var dash = document.getElementById('dashboard');
         console.log(dash!.offsetWidth);
         var options = {
-            chart: {
-                title: 'Progressão',
-            },
+            title: 'Progressão',
             backgroundColor: {fill: "none"},
             seriesType: 'bars',
             series: {0: {type: 'line'}},
-            width: (dash!.offsetWidth / 5) * 4,
+            width: (dash!.offsetWidth / 10) * 9,
             height: 300,
-            colors: ['red', '#1b9e77', 'orange']
+            colors: ['red', '#1b9e77', 'orange'],
+            vAxis: {
+                format: '$.00'
+            }
         };
 
         var chart = new google.visualization.ComboChart(document.getElementById('progressao'));
