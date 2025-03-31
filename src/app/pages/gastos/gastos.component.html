@@ -47,7 +47,7 @@
       <div class="div">
         <div class="card bg-sucess">
           <select name="conta" id="conta" class="form-select" [(ngModel)]="idConta">
-            <option [value]="conta.Id" *ngFor="let conta of contas" class="form-control">{{conta.Nome}}</option>
+            <option [value]="conta.Id" *ngFor="let conta of contas" class="form-control">{{conta.Nome}} - {{conta.Descricao}}</option>
           </select>
           <div class="card-body">
             <table class="table table-rover">
