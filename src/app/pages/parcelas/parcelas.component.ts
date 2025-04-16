@@ -50,7 +50,6 @@ export class ParcelasComponent implements OnInit {
   }
   
   buscaParcelas() {
-    let valorpago = 0;
     this.activeRouter.queryParams.subscribe({
       next: (success: any) => {
         this.nomeDespesa = success.nome

@@ -20,7 +20,7 @@
             <div class="card-body">
               <div class="d-flex">
                 <div>Valor:</div>
-                <div>{{parcela.Valor + parcela.Juros | currency}}</div>
+                <div>{{(parcela.Valor) | currency}}</div>
               </div>
               <div class="row">
                 <button class="btn btn-sm btn-primary" (click)="adicionaLista(parcela)"> Adicionar </button>
@@ -79,7 +79,7 @@
         <div class="card-body">
           <div class="d-flex">
             <div>Valor:</div>
-            <div>{{parcela.Valor | currency}}</div>
+            <div>{{(+parcela.Valor + (+parcela.Juros || 0) ) | currency}}</div>
           </div>
         </div>
       </div>
