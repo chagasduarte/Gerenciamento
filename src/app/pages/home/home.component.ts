@@ -214,7 +214,7 @@ export class HomeComponent implements OnInit {
           });
         } 
         //calcula saldo do mes
-        this.aindaPossoGastar = (this.aReceber) - (this.gastoTotalMes + this.gastosAdicionais);
+        this.aindaPossoGastar = (this.saldoAtual + this.aReceber) - (this.gastoTotalMes + this.gastosAdicionais);
         const contas = success[6].sort((a, b) => {return a.Id - b.Id});
         if (contas.length> 0) {
           contas[0].Debito = this.aindaPossoGastar;
