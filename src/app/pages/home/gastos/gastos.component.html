@@ -22,7 +22,8 @@
               <div class="data me-2"><b>{{parcela.parcela.DataVencimento| date}}:</b></div>
               <div class="valor"><b>{{ parcela.parcela.Valor | currency }}</b></div>
           </div>
-          <button class="btn btn-sm btn-primary" (click)="adicionarParcelasLista(parcela.parcela, parcela.despesa)">Adicionar</button>
+          <button class="btn btn-sm btn-primary gap-5" (click)="adicionarParcelasLista(parcela.parcela, parcela.despesa)">Adicionar</button>
+          <button class="btn btn-sm btn-warning">Edit</button>
       </div>
     </div>
   </div>

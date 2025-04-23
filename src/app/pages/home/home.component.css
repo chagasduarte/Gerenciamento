@@ -32,14 +32,15 @@
 .info-1 .data-grafico {
     display: none;
 }
- .data-grafico {
+.data-grafico {
     grid-area: dataGrafico;
     display: grid;
     grid-template-areas: 
     "data graficos";
-    grid-template-columns: 11rem 115px;
-    gap: 20px;
+    grid-template-columns: 11rem 100px;
+    gap: 10px;
     place-items: center;
+    width: 100%;
 }
 .data {
     display: grid;
@@ -47,7 +48,7 @@
     "mes mes"
     "linha linha"
     "ano ano";
-    width: 180px;
+    width: 170px;
     height: 100px;
 }
 .anos-rodape{

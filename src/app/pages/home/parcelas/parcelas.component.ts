@@ -75,11 +75,8 @@ export class ParcelasComponent implements OnInit {
       this.contas = x;
     })
   }
-  pagar(){
-    this.systemService.pagamentosParcelas = this.listaPagamento;
-    this.route.navigate(["pagamentos"])
-  }
-  pagarOld() {
+
+  pagar() {
     let cont = this.contas.find(x => x.Id == this.idConta);
     if (cont) {
       if (this.listaPagamento.length > 0){

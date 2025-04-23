@@ -12,6 +12,7 @@ import { Conta } from '../../../shared/models/conta';
 import { DespesasComponent } from "../despesas/despesas.component";
 import { ParcelasService } from '../../../shared/services/parcelas.service';
 import { Parcela } from '../../../shared/models/parcela';
+import { combineLatest } from 'rxjs';
 
 @Component({
     selector: 'app-gastos',
@@ -44,6 +45,7 @@ export class GastosComponent implements OnInit{
   aindafalta:number = 0;
   aindaFaltaParcelado: number = 0;
   totalPagos: number =0;
+
   constructor(
    private readonly despesaService: DespesasService,
    private readonly contasService: ContasService,
@@ -59,29 +61,33 @@ export class GastosComponent implements OnInit{
     this.buscaParcelas();
   }
   calculaGastosDoMes(){
-
-    this.gastos = [];
-    this.gastosPagos = [];
-    this.contas = [];
-    this.listaPagamento = [];
-    this.totalPagar = 0;
-    this.idConta = 0;
-    this.aindafalta = 0;
-    this.totalPagos = 0;
-    this.despesaService.GetDespesasAdicionais(this.systemsService.ano.valor).subscribe({
-      next: (success: Despesa[]) => {
-        this.gastos = success.filter(x => !x.IsPaga).filter(x => new Date(x.DataCompra).getUTCMonth() == this.systemsService.mes.valor);
-        this.gastosPagos = success.filter(x => x.IsPaga).filter(x => new Date(x.DataCompra).getUTCMonth() == this.systemsService.mes.valor);
-        this.gastos.forEach(x => {
-          this.aindafalta += parseFloat(x.ValorTotal.toString());
-        })
-        this.gastosPagos.forEach(x => {
-          this.totalPagos += parseFloat(x.ValorTotal.toString());
-        })
-      },
-      error: (err: any) => {
-        this.toastService.error("Errou, Porraaaa... Burro!!!", "Erro");
-      }
+    combineLatest([
+      this.systemsService.ano$,
+      this.systemsService.mes$
+    ]).subscribe(([ano, mes]) => {
+      this.despesaService.GetDespesasAdicionais(ano.valor).subscribe({
+        next: (success: Despesa[]) => {
+          this.gastos = [];
+          this.gastosPagos = [];
+          this.contas = [];
+          this.listaPagamento = [];
+          this.totalPagar = 0;
+          this.idConta = 0;
+          this.aindafalta = 0;
+          this.totalPagos = 0;
+          this.gastos = success.filter(x => !x.IsPaga).filter(x => new Date(x.DataCompra).getUTCMonth() == mes.valor);
+          this.gastosPagos = success.filter(x => x.IsPaga).filter(x => new Date(x.DataCompra).getUTCMonth() == mes.valor);
+          this.gastos.forEach(x => {
+            this.aindafalta += parseFloat(x.ValorTotal.toString());
+          })
+          this.gastosPagos.forEach(x => {
+            this.totalPagos += parseFloat(x.ValorTotal.toString());
+          })
+        },
+        error: (err: any) => {
+          this.toastService.error("Errou, Porraaaa... Burro!!!", "Erro");
+        }
+      });
     });
   }
 
@@ -189,36 +195,43 @@ export class GastosComponent implements OnInit{
 
   
   buscaParcelas(){
+    combineLatest([
+      this.systemsService.ano$,
+      this.systemsService.mes$
+    ]).subscribe(([ano, mes]) => {
 
-    this.parcelas = [];
-    this.parcelasPagas = [];
-    this.listaParcelasPagar = [];
-    this.parcelasService.GetParcelasByMes(this.systemsService.mes.valor + 1, this.systemsService.ano.valor).subscribe(parcelas => {
-      parcelas.map( parcela => {
-        parcela.DataVencimento = new Date(parcela.DataVencimento);
-        
-        this.despesaService.GetDespesasById(parcela.DespesaId).subscribe({
-          next: (despesa: Despesa) => {
-            if(parcela.IsPaga == 1) {
-              this.parcelasPagas.push({parcela: parcela, despesa: despesa});
+      this.parcelasService.GetParcelasByMes(mes.valor + 1, ano.valor).subscribe(parcelas => {
+        this.parcelas = [];
+        this.parcelasPagas = [];
+        this.listaParcelasPagar = [];
+        this.aindaFaltaParcelado = 0;
+        parcelas.map( parcela => {
+          parcela.DataVencimento = new Date(parcela.DataVencimento);
+          
+          this.despesaService.GetDespesasById(parcela.DespesaId).subscribe({
+            next: (despesa: Despesa) => {
+              if(parcela.IsPaga == 1) {
+                this.parcelasPagas.push({parcela: parcela, despesa: despesa});
+              }
+              else {
+                this.parcelas.push({parcela: parcela, despesa: despesa});
+                this.aindaFaltaParcelado += parseFloat(parcela.Valor.toString());
+              }
+            },
+            error: (err: any) => {
+              console.log(err.status)
+              if (err.status == 404){
+                this.parcelasService.DeleteParcelasByDespesa(parcela.DespesaId).subscribe( x => {
+                  this.toastService.warning('Aviso', 'Como essa despesa não foi encontrada, apagamos todas as parcelas referentes a ela.')
+                });
+              }  
             }
-            else {
-              this.parcelas.push({parcela: parcela, despesa: despesa});
-              this.aindaFaltaParcelado += parseFloat(parcela.Valor.toString());
-            }
-          },
-          error: (err: any) => {
-            console.log(err.status)
-            if (err.status == 404){
-              this.parcelasService.DeleteParcelasByDespesa(parcela.DespesaId).subscribe( x => {
-                this.toastService.warning('Aviso', 'Como essa despesa não foi encontrada, apagamos todas as parcelas referentes a ela.')
-              });
-            }  
-          }
-        })
+          })
+        });
       });
     });
   }
+
   DefineCorParcela(parcela: Parcela): string {
     return new Date(parcela.DataVencimento) < new Date()? "#af6e6e" : "#b1ca78";
   }
