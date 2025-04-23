@@ -96,6 +96,9 @@ export class HomeComponent implements OnInit {
           this.aindaPossoGastar = 0;
           this.gastoTotalMes = 0;
           this.gastosAdicionais = 0;
+          this.somaDespesasMes = 0;
+          this.totalEntradas = 0;
+
           let aux: {idDespesa: number, valorParcela: number, dataParcela: Date, isPaga: number}[] = [];
 
           success[0].forEach( (conta) => {
