@@ -1,14 +1,15 @@
 import { Component, LOCALE_ID, OnInit } from '@angular/core';
-import { EntradasService } from '../../shared/services/entradas.service';
-import { Entrada } from '../../shared/models/entradas';
+import { EntradasService } from '../../../shared/services/entradas.service';
+import { Entrada } from '../../../shared/models/entradas';
 import { FormsModule } from '@angular/forms';
 import { CommonModule, registerLocaleData } from '@angular/common';
-import { GetSalarioLiquido } from '../../utils/functions/salario';
+import { GetSalarioLiquido } from '../../../utils/functions/salario';
 import { Router } from '@angular/router';
-import { ContasService } from '../../shared/services/contas.service';
+import { ContasService } from '../../../shared/services/contas.service';
 import { ToastrService } from 'ngx-toastr';
-import { SystemService } from '../../shared/services/system.service';
-import { Ano, Mes } from '../../utils/meses';
+import { SystemService } from '../../../shared/services/system.service';
+import { Ano, Mes } from '../../../utils/meses';
+import { combineLatest } from 'rxjs';
 
 @Component({
     selector: 'app-entrada-detalhes',
@@ -41,32 +42,33 @@ export class EntradaDetalhesComponent implements OnInit{
   ngOnInit(): void {
     this.buscaEntradas();
   }
-  mudaMes(mes: Mes){
-    this.systemsService.mes = mes;
-    this.entradasFuturas = [];
-    this.entradasRecebidas = [];
-    this.buscaEntradas();
-  }
+
   buscaEntradas() {
     this.recebidos = 0;
     this.areceber = 0;
     this.entradasFuturas = [];
     this.entradasRecebidas = [];
-    this.entradaService.GetEntradas().subscribe( x => {
-      x.map(entrada => {
-        entrada.DataDebito = new Date(entrada.DataDebito);
-        if (entrada.DataDebito.getUTCMonth() == this.systemsService.mes.valor && entrada.DataDebito.getUTCFullYear() == this.systemsService.ano.valor){
-          if (entrada.Status) {
-            this.entradasRecebidas.push(entrada);
-            this.recebidos += parseFloat(entrada.Valor.toString());
+    combineLatest([
+      this.systemsService.ano$,
+      this.systemsService.mes$
+    ]).subscribe(([ano, mes]) => {
+      this.entradaService.GetEntradas().subscribe( x => {
+        x.map(entrada => {
+          entrada.DataDebito = new Date(entrada.DataDebito);
+          if (entrada.DataDebito.getUTCMonth() == mes.valor && entrada.DataDebito.getUTCFullYear() == ano.valor){
+            if (entrada.Status) {
+              this.entradasRecebidas.push(entrada);
+              this.recebidos += parseFloat(entrada.Valor.toString());
+            }
+            else {
+              this.entradasFuturas.push(entrada);
+              this.areceber += parseFloat(entrada.Valor.toString());
+            }
           }
-          else {
-            this.entradasFuturas.push(entrada);
-            this.areceber += parseFloat(entrada.Valor.toString());
-          }
-        }
+        });
       });
-    });
+    })
+    
   }
 
   receber(entrada: Entrada, valor: number) {

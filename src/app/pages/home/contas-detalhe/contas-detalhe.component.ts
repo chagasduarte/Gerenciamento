@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { Conta } from '../../shared/models/conta';
-import { ContasService } from '../../shared/services/contas.service';
+import { Conta } from '../../../shared/models/conta';
+import { ContasService } from '../../../shared/services/contas.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { SystemService } from '../../shared/services/system.service';
-import { Ano, Mes } from '../../utils/meses';
+import { SystemService } from '../../../shared/services/system.service';
+import { Ano, Mes } from '../../../utils/meses';
 
 @Component({
     selector: 'app-contas-detalhe',
@@ -56,12 +56,6 @@ export class ContasDetalheComponent {
   }
   retornaMes(conta: Conta): Date {
     return new Date(conta.Ano, conta.Mes-1, 1);
-  }
-
-
-  mudaMes(mes: Mes){
-    this.systemService.mes = mes;
-    this.buscaContas()
   }
 
   deletarConta(id: number) {

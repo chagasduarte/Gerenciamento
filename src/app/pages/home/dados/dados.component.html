@@ -1,0 +1,110 @@
+<div class="infos">
+    <div class="valor-conta-mobile up-hover" (click)="contasDetalhes()">
+     Saldo:  {{saldoAtual | currency}}
+    </div>
+    <div id="info-1" name="info-1" class="info-1">
+      <div class="data-grafico">
+        <div 
+          style="font-weight: 900;"
+          class="data">
+          <div class="mes">
+            {{systemService.mes.nome}}
+          </div>
+          <div class="linha"></div>
+          <div class="ano">
+            {{systemService.ano.valor}}
+          </div>
+        </div>
+  
+        <div class="graficos">
+          <div class="grafico-pizza sombra" [style]="{'--porcentagem': (somaDespesasMes*100/totalEntradas).toString()}" (click)="dashboard()">
+            <div class="legenda">
+              {{somaDespesasMes*100/totalEntradas * 10 | percent }}
+              <div class="linha"></div>
+              {{aindaPossoGastar | currency}}
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      <div class="grafico-card">
+        <div class="cards">
+               
+          <div class="card-button bg-vermelho-pastel text-white sombra up-hover" (click)="gastos()">
+            <div class="circle">
+              <img src="/assets/img/bitcoin-cash-money.svg"/>
+            </div>
+            <div class="valores">
+              <div class="valor"> {{gastosAdicionais + gastoTotalMes | currency}} </div>
+              <span class="text">Gastos</span>
+            </div>
+            <div class="bg-icon"><img src="/assets/img/bitcoin-cash-money.svg"/></div>
+            
+          </div>
+          
+          <div class="card-button bg-azul-pastel text-white sombra up-hover" (click)="entradaDetalhes()">
+            <div class="circle">
+              <img src="/assets/img/dollar-banknote.svg"/>
+            </div>
+            <div class="valores">
+              <div class="valor">{{aReceber | currency}}</div>
+              <span class="text">Valores à receber</span>
+            </div>
+            <div class="bg-icon"><img src="/assets/img/dollar-banknote.svg" alt=""></div>
+            
+          </div>
+        </div>
+        
+        <div class="grafico sombra  up-hover">
+          <div class="grafico-header">
+            <h5>Despesas Parcelas: {{gastoTotalMes | currency}}</h5>
+            <button class="btn btn-success btn-sm" (click)="adicionarDespesa()">add</button>
+          </div>
+          <div class="grafico-body" (click)="previstos()">
+            <div class="porcentagem-despesa" *ngFor="let despesa of despesasParceladas">
+              <div class="barra-progressao up-hover" (click)="parcelas(despesa)">
+                <div class="progressao-barra" [ngStyle]="{'width': ( despesa.ValorPago* 150)/ despesa.ValorTotal + 'px'}">{{despesa.Nome}}</div>
+              </div>
+              <div class="dados-parcelas">
+                <b>{{despesa.ParcelasPagas}} de {{despesa.Parcelas}}</b>
+              </div>
+            </div>
+          </div>
+        </div> 
+      </div>
+
+    </div>
+    <hr>
+    <div class="info-3">
+      <div class="d-flex">
+        <div class="col" style="font-size: 25px; font-weight: bolder;">{{somaDespesasMes | currency}}</div><button class="btn btn-sm btn-danger" (click)="zerar()">0</button>
+        <div class="d-flex col">
+          <input type="text" class="form-control form-control-sm" [(ngModel)]="termo">
+          <button class="btn btn-sm btn-success" (click)="filtrarPorTermo()">Filtrar</button>
+        </div>
+      </div>
+      <div *ngIf="despesasPagas!.Agrupamento.length > 0" class="agrupamento">
+        <div class="pagas">
+          <div class="paga sombra  up-hover" *ngFor="let paga of despesasPagas!.Agrupamento" (click)="filtraPagas(paga.Despesas)" >
+            <img [src]="defineImagem(paga.Tipo)" style="width: 50px; height: 50px;" alt="">
+            {{paga.Soma | currency}}
+          </div>
+        </div>
+      </div>
+         
+      <div *ngFor="let despesa of despesasFiltradas" class="card-feed">
+        <div class="dia sombra">{{despesa.DataCompra.getUTCDate()}}</div>
+        <div class="despesa sombra" [ngStyle]="{'background-color': defineCorFeed(despesa.IsPaga)}">
+          <div class="circle">
+            <img [src]="defineImagem(despesa.TipoDespesa)" alt="">
+          </div>
+          <div class="titulo">
+            {{despesa.Nome}} - {{despesa.Valor | currency}}
+            <button class="btn btn-sm btn-warning" (click)="soma(despesa)"></button>
+          </div>
+          <div class="detalhe">{{despesa.Detalhes}}</div>
+        </div>
+      </div>
+    </div> 
+
+  </div>

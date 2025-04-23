@@ -5,7 +5,6 @@
     'side bar'
     'side info';
     grid-template-columns: auto 1fr;
-    grid-template-rows: 70px 1fr;
     overflow-x: auto;
     overflow-y: auto;
     height: 100vh;

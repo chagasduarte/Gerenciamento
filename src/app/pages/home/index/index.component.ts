@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { SystemService } from '../../shared/services/system.service';
-import { Ano, Mes } from '../../utils/meses';
+import { SystemService } from '../../../shared/services/system.service';
+import { Ano, Mes } from '../../../utils/meses';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 

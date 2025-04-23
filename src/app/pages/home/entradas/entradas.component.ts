@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Entrada } from '../../shared/models/entradas';
-import { EntradasService } from '../../shared/services/entradas.service';
+import { Entrada } from '../../../shared/models/entradas';
+import { EntradasService } from '../../../shared/services/entradas.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { GetSalarioLiquido } from '../../utils/functions/salario';
-import { ContasService } from '../../shared/services/contas.service';
-import { Conta } from '../../shared/models/conta';
-import { SystemService } from '../../shared/services/system.service';
+import { GetSalarioLiquido } from '../../../utils/functions/salario';
+import { ContasService } from '../../../shared/services/contas.service';
+import { Conta } from '../../../shared/models/conta';
+import { SystemService } from '../../../shared/services/system.service';
 
 @Component({
     selector: 'app-entradas',

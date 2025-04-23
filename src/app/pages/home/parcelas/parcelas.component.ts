@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { ContasService } from '../../shared/services/contas.service';
+import { ContasService } from '../../../shared/services/contas.service';
 import { ActivatedRoute, Route, Router, RouterLinkActive } from '@angular/router';
-import { ParcelasService } from '../../shared/services/parcelas.service';
-import { Parcela } from '../../shared/models/parcela';
+import { ParcelasService } from '../../../shared/services/parcelas.service';
+import { Parcela } from '../../../shared/models/parcela';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Conta } from '../../shared/models/conta';
+import { Conta } from '../../../shared/models/conta';
 import { ToastrService } from 'ngx-toastr';
-import { DespesasService } from '../../shared/services/despesas.service';
-import { Despesa } from '../../shared/models/despesa';
+import { DespesasService } from '../../../shared/services/despesas.service';
+import { Despesa } from '../../../shared/models/despesa';
 import { forkJoin } from 'rxjs';
-import { SystemService } from '../../shared/services/system.service';
+import { SystemService } from '../../../shared/services/system.service';
+import { Pagamento } from '../../../shared/models/pagamentos';
 
 @Component({
     selector: 'app-parcelas',
@@ -25,13 +26,14 @@ import { SystemService } from '../../shared/services/system.service';
 export class ParcelasComponent implements OnInit {
 
   parcelas!: Parcela[];
-  parcelasPagas!: Parcela[]
+  parcelasPagas!: Parcela[];
   contas!: Conta[];
   idConta: number = 1;
   listaPagamento: Parcela[] = [];
   nomeDespesa!: string;
   despesa!: Despesa;
   totalPagar: number = 0;
+  pagamentos!: Pagamento[];
 
   constructor(
       private readonly parcelasService: ParcelasService,
@@ -73,8 +75,11 @@ export class ParcelasComponent implements OnInit {
       this.contas = x;
     })
   }
-
-  pagar() {
+  pagar(){
+    this.systemService.pagamentosParcelas = this.listaPagamento;
+    this.route.navigate(["pagamentos"])
+  }
+  pagarOld() {
     let cont = this.contas.find(x => x.Id == this.idConta);
     if (cont) {
       if (this.listaPagamento.length > 0){
@@ -126,6 +131,7 @@ export class ParcelasComponent implements OnInit {
   adicionaLista(parcela: Parcela){
     this.totalPagar += parseFloat(parcela.Valor.toString());
     this.listaPagamento.push(parcela);
+    this.pagamentos.push({TipoPagamento: 1, IdPagamento: parcela.Id});
   }
 
   Voltar() {

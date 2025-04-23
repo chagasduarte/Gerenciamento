@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
-import { Despesa } from '../../shared/models/despesa';
-import { DespesasService } from '../../shared/services/despesas.service';
+import { Despesa } from '../../../shared/models/despesa';
+import { DespesasService } from '../../../shared/services/despesas.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ParcelasService } from '../../shared/services/parcelas.service';
-import { ParcelaRequest } from '../../shared/models/parcela';
-import { ContasService } from '../../shared/services/contas.service';
-import { Conta } from '../../shared/models/conta';
-import { FormataDespesa } from '../../utils/functions/despesa';
+import { ParcelasService } from '../../../shared/services/parcelas.service';
+import { ParcelaRequest } from '../../../shared/models/parcela';
+import { ContasService } from '../../../shared/services/contas.service';
+import { Conta } from '../../../shared/models/conta';
+import { FormataDespesa } from '../../../utils/functions/despesa';
 
 @Component({
     selector: 'app-despesas',

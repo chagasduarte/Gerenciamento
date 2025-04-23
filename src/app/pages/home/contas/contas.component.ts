@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Conta } from '../../shared/models/conta';
-import { ContasService } from '../../shared/services/contas.service';
+import { Conta } from '../../../shared/models/conta';
+import { ContasService } from '../../../shared/services/contas.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';

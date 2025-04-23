@@ -11,7 +11,7 @@ import { ContasService } from "../../shared/services/contas.service";
 import { TipoDespesa } from "../../shared/models/tipoDespesa";
 import { LogMensalService } from "../../shared/services/log-mensal.service";
 import { LogMensal } from "../../shared/models/logMensal";
-import { forkJoin } from "rxjs";
+import { combineLatest, forkJoin } from "rxjs";
 import { drawSaidas } from "./drawcharts/progressao.coloumn";
 import { drawCategoriaPie } from "./drawcharts/categorias.pie";
 import { drawMediasBar } from "./drawcharts/medias.bar";
@@ -52,23 +52,27 @@ export class DashboardComponent implements  OnInit {
     }
 
     buscaDados(){
-         forkJoin([
-            this.graficosService.GetGraficos(this.systemService.ano.valor),
-            this.despesasService.GetDespesasAdicionais(this.systemService.ano.valor),
-            this.logsService.getAllLogs(this.systemService.ano.valor),
-            this.parcelasService.GetParcelasByAno(this.systemService.ano.valor)
-        ]).subscribe({
-            next: (success) => {
-                this.graficos = success[0];
-                this.despesas = success[1];
-                this.logs = success[2];
-                this.parcelas = success[3];
+        combineLatest([
+            this.systemService.ano$,
+            this.systemService.mes$
+        ]).subscribe(([ano, mes]) => {
+            forkJoin([
+                this.graficosService.GetGraficos(ano.valor),
+                this.despesasService.GetDespesasAdicionais(ano.valor),
+                this.logsService.getAllLogs(ano.valor),
+                this.parcelasService.GetParcelasByAno(ano.valor)
+            ]).subscribe({
+                next: (success) => {
+                    this.graficos = success[0];
+                    this.despesas = success[1];
+                    this.logs = success[2];
+                    this.parcelas = success[3];
 
-                this.agruparDespesas();
-                this.loadGoogleCharts();
-            }
+                    this.agruparDespesas();
+                    this.loadGoogleCharts();
+                }
+            });
         });
-        
     }
 
     agruparDespesas(){
@@ -99,7 +103,7 @@ export class DashboardComponent implements  OnInit {
         this.router.navigate(['home'])
     }
     mudaAno(ano: number){
-        this.systemService.ano = new Ano(ano);
+        this.systemService.setAno(new Ano(ano));
         this.buscaDados();
     }
 

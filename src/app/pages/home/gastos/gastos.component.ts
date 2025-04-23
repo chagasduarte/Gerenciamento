@@ -1,17 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { DespesasService } from '../../shared/services/despesas.service';
-import { Despesa } from '../../shared/models/despesa';
-import { Ano, Mes } from '../../utils/meses';
+import { DespesasService } from '../../../shared/services/despesas.service';
+import { Despesa } from '../../../shared/models/despesa';
+import { Ano, Mes } from '../../../utils/meses';
 import { Router } from '@angular/router';
-import { SystemService } from '../../shared/services/system.service';
-import { ContasService } from '../../shared/services/contas.service';
+import { SystemService } from '../../../shared/services/system.service';
+import { ContasService } from '../../../shared/services/contas.service';
 import { ToastrService } from 'ngx-toastr';
-import { Conta } from '../../shared/models/conta';
+import { Conta } from '../../../shared/models/conta';
 import { DespesasComponent } from "../despesas/despesas.component";
-import { ParcelasService } from '../../shared/services/parcelas.service';
-import { Parcela } from '../../shared/models/parcela';
+import { ParcelasService } from '../../../shared/services/parcelas.service';
+import { Parcela } from '../../../shared/models/parcela';
 
 @Component({
     selector: 'app-gastos',
