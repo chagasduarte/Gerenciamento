@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { SystemService } from '../../../shared/services/system.service';
 import { Ano, Mes } from '../../../utils/meses';
+import { combineLatest } from 'rxjs';
 
 @Component({
     selector: 'app-contas-detalhe',
@@ -36,7 +37,12 @@ export class ContasDetalheComponent {
   }
  
   buscaContas(){
-    this.contaService.GetContaByMes(this.systemService.mes.valor + 1, this.systemService.ano.valor).subscribe(contas => this.contas = contas);
+    combineLatest([
+      this.systemService.ano$,
+      this.systemService.mes$
+    ]).subscribe(([ano, mes]) => {
+        this.contaService.GetContaByMes(mes.valor + 1, ano.valor).subscribe(contas => this.contas = contas);
+    });
     // this.contaService.GetContas().subscribe(contas => this.contas = contas);
 
   }

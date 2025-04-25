@@ -219,7 +219,9 @@ export class DadosComponent implements OnInit {
           } 
           //calcula saldo do mes
           const contas = success[6].sort((a, b) => {return a.Id - b.Id});
-          if (contas.length> 0) {
+          if (contas.length > 0) {
+            contas[0].Debito = this.aindaPossoGastar;
+            console.log()
             if (contas[0].Mes > new Date().getUTCMonth() + 1 || contas[0].Ano > new Date().getUTCFullYear()){
               this.contasService.PutConta(contas[0]).subscribe(x => {});
             }
@@ -387,6 +389,7 @@ export class DadosComponent implements OnInit {
   }
 
   gravaLog(){
+    console.log(this.log);
     if (!(this.log.mes < new Date().getUTCMonth()+ 1 && this.log.ano <= new Date().getUTCFullYear())){
       this.logService.postLog(this.log).subscribe(x => {});
     }

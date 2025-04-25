@@ -44,15 +44,16 @@ export class EntradaDetalhesComponent implements OnInit{
   }
 
   buscaEntradas() {
-    this.recebidos = 0;
-    this.areceber = 0;
-    this.entradasFuturas = [];
-    this.entradasRecebidas = [];
+   
     combineLatest([
       this.systemsService.ano$,
       this.systemsService.mes$
     ]).subscribe(([ano, mes]) => {
       this.entradaService.GetEntradas().subscribe( x => {
+        this.recebidos = 0;
+        this.areceber = 0;
+        this.entradasFuturas = [];
+        this.entradasRecebidas = [];
         x.map(entrada => {
           entrada.DataDebito = new Date(entrada.DataDebito);
           if (entrada.DataDebito.getUTCMonth() == mes.valor && entrada.DataDebito.getUTCFullYear() == ano.valor){
