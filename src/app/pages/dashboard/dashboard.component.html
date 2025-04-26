@@ -1,25 +1,4 @@
 
-<div class="pagina-dash">
-  <nav class="barra_navegacao"> 
-    <ul class="meses">
-      <li class="d-flex" *ngFor="let ano of anosDeDivida">
-        <div class="d-flex justify-content-center">
-          <button 
-            style="border-radius: 20px;
-                   background: linear-gradient(to right, #9e3776, #214b5c, #09293f);
-                   color: antiquewhite;
-                   font-weight: 900;
-                   border: none;"
-            
-            class="me-2 sombra mt-3" 
-            (click)="mudaAno(ano)">{{ano}}</button>
-        </div>
-      </li>
-      <button class="btn btn-sm btn-success" (click)="voltar()">voltar</button>
-
-    </ul>
-  </nav>
-  
   <div class="dashboard" id="dashboard">
     <div class="chart progressao" >
       <div id="progressao"></div>
@@ -35,6 +14,4 @@
   <div class="rodape">
 
   </div>
-</div>
-
   

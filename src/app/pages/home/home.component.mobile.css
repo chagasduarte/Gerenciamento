@@ -1,4 +1,12 @@
 @media screen  and (max-width: 900px) {
+    .mobile {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+        row-gap: 5px;
+        width: 100%;
+        place-items: center;
+        margin-top: 10px;
+    }
     .grafico-card {
         grid-template-areas: 
         "grafico"

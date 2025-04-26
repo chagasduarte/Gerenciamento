@@ -29,9 +29,7 @@
     padding: 15px;
 }
 
-.info-1 .data-grafico {
-    display: none;
-}
+
 .data-grafico {
     grid-area: dataGrafico;
     display: grid;
@@ -67,7 +65,7 @@
     grid-area: linha;
     background-color: aliceblue;
     width: 100%;
-    height: 3px;
+    height: 1px;
     border-radius: 15px;
 }
 main {
@@ -81,4 +79,18 @@ main {
 svg {
     width: 25px;
     height: 25px;
+}
+
+
+.up-hover {
+    transition: transform 0.3s;
+}
+
+.up-hover:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+.mobile {
+    display: none;
 }

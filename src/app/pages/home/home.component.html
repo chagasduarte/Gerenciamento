@@ -42,8 +42,12 @@
       
               <div class="graficos up-hover">
                 <div class="grafico-pizza sombra" [style]="{'--porcentagem': (somaDespesasMes*100/totalEntradas).toString()}" (click)="dashboard()">
-                  <div class="legenda">
-                    {{somaDespesasMes*100/totalEntradas * 10 | percent }}
+                  <div class="legenda d-flex flex-column" >
+                    <div class="d-flex" style="font-size: medium;">
+                      <div>{{totalEntradas - somaDespesasMes | currency }} </div>
+                      | 
+                      <div>{{somaDespesasMes/totalEntradas | percent: '1.0-0' }}</div>
+                    </div>
                     <div class="linha"></div>
                     {{aindaPossoGastar | currency}}
                   </div>
@@ -109,11 +113,45 @@
         <div class="abrev-mes"(click)="mudaMes(mes)">{{mes.nomeAbrev}}</div>
       </li>
     </ul>
-    <div class="usuario">
-
-    </div>
   </nav>
-  
+
+  <div class="mobile" >
+      <div 
+        style="font-weight: 900;"
+        class="data">
+        <div class="mes">
+          {{systemService.mes.nome}}
+        </div>
+        <div class="linha"></div>
+        <div class="ano">
+          {{systemService.ano.valor}}
+        </div>
+      </div>
+
+      <div class="graficos up-hover">
+        <div class="grafico-pizza sombra" [style]="{'--porcentagem': (somaDespesasMes*100/totalEntradas).toString()}" (click)="dashboard()">
+          <div class="legenda d-flex flex-column" >
+            <div class="d-flex" style="font-size: medium;">
+              <div>{{totalEntradas - somaDespesasMes | currency }} </div>
+              | 
+              <div>{{somaDespesasMes/totalEntradas | percent: '1.0-0' }}</div>
+            </div>
+            <div class="linha"></div>
+            {{aindaPossoGastar | currency}}
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex flex-center text-white up-hover" (click)="contasDetalhes()">
+        <div class="circle">
+          <img src="/assets/img/money-bag.svg"/>
+        </div>
+        <div class="valores" style="font-size: 25px;">
+          <div class="valor"> {{saldoAtual | currency}} </div>
+        </div>
+      </div>    
+  </div>
+
   <router-outlet hidden></router-outlet>
 
   <nav class="anos-rodape"> 

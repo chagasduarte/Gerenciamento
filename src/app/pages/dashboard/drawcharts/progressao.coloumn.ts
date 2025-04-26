@@ -31,15 +31,13 @@ export function drawSaidas(log: MesGrafico[]){
 }
 
 function saidasToArray(logs: MesGrafico[]): (any)[][]{
-    let mesAtual = new Date().getUTCMonth() + 1;
     let dados: (any)[][] = [];    
     dados.push(['Mês','Progressão', 'Entradas',  'Saídas']);
     logs = logs.sort((a, b) => {return a.id - b.id})
     logs.forEach(x => {
-        if (x.id >= mesAtual - 2 && x.id <= mesAtual + 3) {
+        // if (x.id >= mesAtual - 2 && x.id <= mesAtual + 3) {
             dados.push([x.nomeabrev, parseFloat(x.progressao.toString()), parseFloat(x.entrada.toString()), parseFloat(x.saida.toString())]);
-        }
+        // }
     })
-    console.log(dados)
     return dados;
 }

@@ -218,14 +218,7 @@ export class DadosComponent implements OnInit {
             });
           } 
           //calcula saldo do mes
-          const contas = success[6].sort((a, b) => {return a.Id - b.Id});
-          if (contas.length > 0) {
-            contas[0].Debito = this.aindaPossoGastar;
-            console.log()
-            if (contas[0].Mes > new Date().getUTCMonth() + 1 || contas[0].Ano > new Date().getUTCFullYear()){
-              this.contasService.PutConta(contas[0]).subscribe(x => {});
-            }
-          } 
+          
           aux.forEach( parcela => {
             const gasto = success[0].find(x => x.Id == parcela.idDespesa);
             try {  
@@ -244,9 +237,17 @@ export class DadosComponent implements OnInit {
             this.somaDespesasMes += parseFloat(parcela.valorParcela.toString());
           })
 
+          this.aindaPossoGastar = (this.saldoAtual + this.aReceber) - (this.gastoTotalMes + this.gastosAdicionais);
           //definir cor do gráfico de pizza
           this.corGrafico = DefineCor(this.aindaPossoGastar);
-
+          const contas = success[6].sort((a, b) => {return a.Id - b.Id});
+          if (contas.length > 0) {
+            contas[0].Debito = this.aindaPossoGastar;
+            console.log(contas[0])
+            if (contas[0].Mes > new Date().getUTCMonth() + 1 || contas[0].Ano > new Date().getUTCFullYear()){
+              this.contasService.PutConta(contas[0]).subscribe(x => {});
+            }
+          } 
 
           this.despesasFiltradas = this.despesasMes.sort((a,b) => {
             return a.DataCompra.getUTCDate() - b.DataCompra.getUTCDate();
