@@ -42,8 +42,8 @@
       
               <div class="graficos up-hover">
                 <div class="grafico-pizza sombra" [style]="{'--porcentagem': (somaDespesasMes*100/totalEntradas).toString()}" (click)="dashboard()">
-                  <div class="legenda d-flex flex-column" >
-                    <div class="d-flex" style="font-size: medium;">
+                  <div class="legenda d-flex flex-column" style="font-size: medium; font-weight: 1000;" >
+                    <div class="d-flex">
                       <div>{{totalEntradas - somaDespesasMes | currency }} </div>
                       | 
                       <div>{{somaDespesasMes/totalEntradas | percent: '1.0-0' }}</div>
@@ -116,9 +116,7 @@
   </nav>
 
   <div class="mobile" >
-      <div 
-        style="font-weight: 900;"
-        class="data">
+      <div style="font-weight: 900; font-size: 30px;" class="data">
         <div class="mes">
           {{systemService.mes.nome}}
         </div>
@@ -142,7 +140,7 @@
         </div>
       </div>
 
-      <div class="d-flex flex-center text-white up-hover" (click)="contasDetalhes()">
+      <div class="d-flex flex-center text-white up-hover conta" (click)="contasDetalhes()">
         <div class="circle">
           <img src="/assets/img/money-bag.svg"/>
         </div>

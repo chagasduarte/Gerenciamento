@@ -1,11 +1,19 @@
 @media screen  and (max-width: 900px) {
     .mobile {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-        row-gap: 5px;
+        grid-template-areas: 
+        "data grafico"
+        "conta conta";
+        gap: 20px;
         width: 100%;
         place-items: center;
         margin-top: 10px;
+    }
+    .conta {
+        grid-area: conta;
+        background-color: #465272;
+        width: 100%;
+        
     }
     .grafico-card {
         grid-template-areas: 
