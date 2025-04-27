@@ -1,4 +1,7 @@
 @media screen  and (max-width: 900px) {
+    .meses {
+        width: 100%;
+    }
     .mobile {
         display: grid;
         grid-template-areas: 
