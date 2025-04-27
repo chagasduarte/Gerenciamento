@@ -31,6 +31,7 @@ export class GastosComponent implements OnInit{
   gastosPagos!: Despesa[];
   contas!: Conta[];
   listaPagamento: Despesa[] = [];
+  mostrarSelecionadas = false;
 
   
   parcelas: {parcela: Parcela, despesa:Despesa}[] = [];
@@ -253,4 +254,9 @@ export class GastosComponent implements OnInit{
   objetivos(){
     this.router.navigate(['objetivos'])
   }
+
+  abrirSelecionadas() {
+    this.mostrarSelecionadas = !this.mostrarSelecionadas;
+  }
+
 }

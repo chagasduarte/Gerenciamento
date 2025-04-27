@@ -198,3 +198,34 @@ background: #ededed;
 .usuario {
   background-color: #4d7e75;
 }
+
+
+.fab {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #6200ea;
+  color: white;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  border: none;
+  cursor: pointer;
+  z-index: 1000;
+}
+.painel-selecionadas {
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  width: 300px;
+  max-height: 400px;
+  padding: 16px;
+  overflow-y: auto;
+  z-index: 1001;
+  border-radius: 8px;
+}
