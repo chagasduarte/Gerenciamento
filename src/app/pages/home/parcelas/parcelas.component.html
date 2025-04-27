@@ -7,63 +7,29 @@
     <button class="btn btn-sm btn-primary" (click)="ApagarConta()">Deletar</button>
 </div>
   <div class="linha"></div>
-  <div class="secoes">
-    <section>
-      <h3>Abertos:</h3>
-      <div class="parcelas">
-        <div *ngFor="let parcela of parcelas">
-          <div class="card card-sm" >
-            <div class="card-header text-break d-flex row">
-              <input type="date" [(ngModel)]="parcela.DataVencimentoString" class="form-control form-control-sm col-1">
-              <button class="btn btn-success btn-sm" (click)="AtualizaParcela(parcela)">Up</button>
-            </div>
-            <div class="card-body">
-              <div class="d-flex">
-                <div>Valor:</div>
-                <div>{{(parcela.Valor) | currency}}</div>
-              </div>
-              <div class="row">
-                <button class="btn btn-sm btn-primary" (click)="adicionaLista(parcela)"> Adicionar </button>
-              </div>
-            </div>
+  <h3>Abertos:</h3>
+  <div class="parcelas">
+    <div *ngFor="let parcela of parcelas">
+      <div class="card card-sm" >
+        <div class="card-header text-break d-flex row">
+          <input type="date" [(ngModel)]="parcela.DataVencimentoString" class="form-control form-control-sm col-1">
+          <button class="btn btn-success btn-sm" (click)="AtualizaParcela(parcela)">Up</button>
+        </div>
+        <div class="card-body">
+          <div class="d-flex">
+            <div>Valor:</div>
+            <div>{{(parcela.Valor) | currency}}</div>
+          </div>
+          <div class="d-flex">
+            <div>Juros:</div>
+            <input type="number" [(ngModel)]="parcela.Juros" class="form-control form-control-sm">
+          </div>
+          <div class="row">
+            <button class="btn btn-sm btn-primary" (click)="adicionaLista(parcela)"> Adicionar </button>
           </div>
         </div>
       </div>
-    </section>
-     
-    <section>
-      <h3>Área de pagamentos</h3>
-      <div class="div">
-        <div class="card bg-sucess">
-          <select name="conta" id="conta" class="form-select" [(ngModel)]="idConta">
-            <option [value]="conta.Id" *ngFor="let conta of contas" class="form-control">{{conta.Nome}}</option>
-          </select>
-          <div class="card-body">
-            <table class="table table-rover">
-              <thead>
-                <tr>
-                  <td>id</td>
-                  <td>Data</td>
-                  <td>valor</td>
-                  <td>remover</td>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let item of listaPagamento">
-                  <td>{{item.Id}}</td>
-                  <td>{{item.DataVencimento | date}}</td>
-                  <td>{{item.Valor | currency}}</td>
-                  <td><button class="btn btn-sm btn-success" (click)="removedaListaPagamento(item)">-</button></td>
-                </tr>
-              </tbody>
-            </table>
-            <div><span>Total: </span>{{totalPagar | currency}}</div>
-          </div>
-          <button class="btn btn-sm btn-success" (click)="pagar()">Pagar</button>
-        </div>
-      </div>
-    </section>
-
+    </div>
   </div>
   <div class="linha"></div>
 
@@ -85,4 +51,50 @@
       </div>
     </div>
   </div>
+</div>
+
+<button class="fab" (click)="abrirSelecionadas()">
+  <img src="/assets/img/shopping-cart.svg"/>
+</button>
+
+<div class="painel-selecionadas" *ngIf="mostrarSelecionadas">
+  <h3>Área de pagamentos</h3>
+  
+  <div class="div">
+    <div class="card" style="width: 18rem;">
+      <div class="card-header">
+        <select name="conta" id="conta" class="form-select" [(ngModel)]="idConta">
+          <option [value]="conta.Id" *ngFor="let conta of contas" class="form-control">{{conta.Nome}}</option>
+        </select>
+      </div>
+      <div class="card-body">
+        <table class="table table-rover">
+          <thead>
+            <tr>
+              <td>id</td>
+              <td>Data</td>
+              <td>valor</td>
+              <td>Juros</td>
+              <td>remover</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of listaPagamento">
+              <td>{{item.Id}}</td>
+              <td>{{item.DataVencimento | date}}</td>
+              <td>{{item.Valor | currency}}</td>
+              <td>{{item.Juros}}</td>
+              <td><button class="btn btn-sm btn-success" (click)="removedaListaPagamento(item)">-</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <div><span>Total: </span>{{totalPagar | currency}}</div>
+      </div>
+      <div class="card-footer">
+        <button class="btn btn-sm btn-success" (click)="pagar()">Pagar</button>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn btn-sm btn-danger" (click)="abrirSelecionadas()">Fechar</button>
 </div>

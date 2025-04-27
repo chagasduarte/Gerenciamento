@@ -34,6 +34,7 @@ export class ParcelasComponent implements OnInit {
   despesa!: Despesa;
   totalPagar: number = 0;
   pagamentos!: Pagamento[];
+  mostrarSelecionadas = false;
 
   constructor(
       private readonly parcelasService: ParcelasService,
@@ -126,6 +127,7 @@ export class ParcelasComponent implements OnInit {
     this.totalPagar = 0;
   } 
   adicionaLista(parcela: Parcela){
+    console.log(parcela)
     this.totalPagar += parseFloat(parcela.Valor.toString());
     this.listaPagamento.push(parcela);
     this.pagamentos.push({TipoPagamento: 1, IdPagamento: parcela.Id});
@@ -173,4 +175,8 @@ export class ParcelasComponent implements OnInit {
       console.log(x);
     })
   }
+  abrirSelecionadas() {
+    this.mostrarSelecionadas = !this.mostrarSelecionadas;
+  }
+
 }
