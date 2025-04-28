@@ -2,6 +2,10 @@
     .meses {
         width: 100%;
     }
+    #accordionExample{
+        display: flex;
+        flex-direction: column;
+    }
     .mobile {
         display: grid;
         grid-template-areas: 
@@ -72,6 +76,14 @@
         font-size: 25px;
         padding: 5px;
         width: 100%;
+    }
+    .accordion-button {
+        background-color: #333f5f00;
+        height: 100%;
+    }
+    
+    .accordion-header {
+        background-color: #333f5f00;
     }
 }
 
