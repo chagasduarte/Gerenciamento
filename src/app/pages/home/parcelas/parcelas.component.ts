@@ -33,7 +33,7 @@ export class ParcelasComponent implements OnInit {
   nomeDespesa!: string;
   despesa!: Despesa;
   totalPagar: number = 0;
-  pagamentos!: Pagamento[];
+  pagamentos: Pagamento[] = [];
   mostrarSelecionadas = false;
 
   constructor(
@@ -63,9 +63,9 @@ export class ParcelasComponent implements OnInit {
           this.parcelas = parcelas.filter(filtradas => filtradas.IsPaga != 1 && new Date(filtradas.DataVencimento).getUTCFullYear() == this.systemService.ano.valor);
           this.parcelas.map(x => {
             x.DataVencimentoString = x.DataVencimento.toString().split('T')[0];
-            x.Juros = 0;
           })
           this.parcelasPagas = parcelas.filter(x => x.IsPaga == 1);
+          console.log(this.parcelas)
         });
       }
     });
@@ -78,6 +78,7 @@ export class ParcelasComponent implements OnInit {
   }
 
   pagar() {
+    console.log(this.listaPagamento);
     let cont = this.contas.find(x => x.Id == this.idConta);
     if (cont) {
       if (this.listaPagamento.length > 0){
@@ -130,7 +131,8 @@ export class ParcelasComponent implements OnInit {
     console.log(parcela)
     this.totalPagar += parseFloat(parcela.Valor.toString());
     this.listaPagamento.push(parcela);
-    this.pagamentos.push({TipoPagamento: 1, IdPagamento: parcela.Id});
+    // this.pagamentos.push({TipoPagamento: 1, IdPagamento: parcela.Id});
+    console.log(this.listaPagamento)
   }
 
   Voltar() {
@@ -166,10 +168,10 @@ export class ParcelasComponent implements OnInit {
   removedaListaPagamento(parcela: Parcela) {
     this.totalPagar -= parseFloat(parcela.Valor.toString());
     this.listaPagamento = this.listaPagamento.filter( x => x.Id != parcela.Id);
-    console.log(this.listaPagamento)
   }   
 
   AtualizaParcela(parcela: Parcela){
+    console.log(parcela)
     parcela.DataVencimento = new Date(parcela.DataVencimentoString)
     this.parcelasService.PutParcela(parcela).subscribe(x => {
       console.log(x);
@@ -178,5 +180,7 @@ export class ParcelasComponent implements OnInit {
   abrirSelecionadas() {
     this.mostrarSelecionadas = !this.mostrarSelecionadas;
   }
-
+  DefineCorParcela(parcela: Parcela): string {
+    return new Date(parcela.DataVencimento) < new Date()? "#af6e6e" : "#b1ca78";
+  }
 }

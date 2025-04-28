@@ -207,8 +207,7 @@ export class GastosComponent implements OnInit{
         this.listaParcelasPagar = [];
         this.aindaFaltaParcelado = 0;
         parcelas.map( parcela => {
-          parcela.DataVencimento = new Date(parcela.DataVencimento);
-          
+          parcela.DataVencimentoString = parcela.DataVencimento.toString().split('T')[0];
           this.despesaService.GetDespesasById(parcela.DespesaId).subscribe({
             next: (despesa: Despesa) => {
               if(parcela.IsPaga == 1) {

@@ -7,27 +7,35 @@
     <div class="col butao">
         <button class="btn btn-sm btn-primary" (click)="AdicionaGasto()">Add</button>
     </div>
-</div>  
+  </div>  
 
   <div class="linha"></div>
   <h3>Abertos Previstos: {{aindaFaltaParcelado | currency}}</h3>
-  
-  <div class="card-parcelas">
-    <div class="parcela" *ngFor="let parcela of parcelas" [ngStyle]="{'background-color': DefineCorParcela(parcela.parcela)}">
-      <div class="card-header">
-          <b>{{parcela.despesa.Nome}}</b>
-      </div>
-      <div class="card-body">
-          <div class="salario d-flex">
-              <div class="data me-2"><b>{{parcela.parcela.DataVencimento| date}}:</b></div>
-              <div class="valor"><b>{{ parcela.parcela.Valor | currency }}</b></div>
+  <div class="parcelas">
+    <div *ngFor="let parcela of parcelas">
+      <div class="card card-sm"  [ngStyle]="{'background-color': DefineCorParcela(parcela.parcela)}">
+        <div class="card-header text-break d-flex row">
+          <label for="">{{parcela.despesa.Nome}}</label>
+          <input type="date" [(ngModel)]="parcela.parcela.DataVencimentoString" class="form-control form-control-sm col-1">
+          <button class="btn btn-success btn-sm col">Up</button>
+        </div>
+        <div class="card-body">
+          <div class="d-flex">
+            <div>Valor:</div>
+            <div>{{(parcela.parcela.Valor) | currency}}</div>
           </div>
-          <button class="btn btn-sm btn-primary gap-5" (click)="adicionarParcelasLista(parcela.parcela, parcela.despesa)">Adicionar</button>
-          <button class="btn btn-sm btn-warning">Edit</button>
+          <div class="d-flex">
+            <div>Juros:</div>
+            <input type="number" [(ngModel)]="parcela.parcela.juros" class="form-control form-control-sm">
+            <button class="btn btn-sm btn-success">up</button>
+          </div>
+          <div class="row">
+            <button class="btn btn-sm btn-primary" (click)="adicionarParcelasLista(parcela.parcela, parcela.despesa)"> Adicionar </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-
   <div class="card mb-3"></div>
   <h3>Abertos Adicionais: {{aindafalta | currency}}</h3>
   <div class="card-parcelas">
@@ -101,7 +109,7 @@
               <td>{{item.parcela.Id}}</td>
               <td>{{ item.parcela.DataVencimento | date }}</td>
               <td>{{item.parcela.Valor | currency}}</td>
-              <td> {{item.parcela.Juros | currency}} </td>
+              <td> {{item.parcela.juros | currency}} </td>
               <td><button class="btn btn-sm btn-success">-</button></td>
             </tr>
           </tbody>

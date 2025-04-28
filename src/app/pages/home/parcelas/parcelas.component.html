@@ -1,16 +1,19 @@
 <div class="container">
   <h1>Parcelas {{nomeDespesa}}</h1>
-  <div class="voltar">
-    <button class="btn btn-sm btn-warning" (click)="Voltar()">Voltar</button>
-</div>
-<div class="adicionar">
-    <button class="btn btn-sm btn-primary" (click)="ApagarConta()">Deletar</button>
-</div>
+  <div class="botoes row">
+    <div class="voltar col">
+      <button class="btn btn-sm btn-warning" (click)="Voltar()">Voltar</button>
+    </div>
+    <div class="adicionar col">
+      <button class="btn btn-sm btn-primary" (click)="ApagarConta()">Deletar</button>
+    </div>
+  </div>
+  
   <div class="linha"></div>
   <h3>Abertos:</h3>
   <div class="parcelas">
     <div *ngFor="let parcela of parcelas">
-      <div class="card card-sm" >
+      <div class="card card-sm"  [ngStyle]="{'background-color': DefineCorParcela(parcela)}">
         <div class="card-header text-break d-flex row">
           <input type="date" [(ngModel)]="parcela.DataVencimentoString" class="form-control form-control-sm col-1">
           <button class="btn btn-success btn-sm" (click)="AtualizaParcela(parcela)">Up</button>
@@ -22,7 +25,8 @@
           </div>
           <div class="d-flex">
             <div>Juros:</div>
-            <input type="number" [(ngModel)]="parcela.Juros" class="form-control form-control-sm">
+            <input type="number" [(ngModel)]="parcela.juros" class="form-control form-control-sm">
+            <button class="btn btn-sm btn-success" (click)="AtualizaParcela(parcela)">up</button>
           </div>
           <div class="row">
             <button class="btn btn-sm btn-primary" (click)="adicionaLista(parcela)"> Adicionar </button>
@@ -45,7 +49,7 @@
         <div class="card-body">
           <div class="d-flex">
             <div>Valor:</div>
-            <div>{{(+parcela.Valor + (+parcela.Juros || 0) ) | currency}}</div>
+            <div>{{(+parcela.Valor + (+parcela.juros || 0) ) | currency}}</div>
           </div>
         </div>
       </div>
@@ -83,7 +87,7 @@
               <td>{{item.Id}}</td>
               <td>{{item.DataVencimento | date}}</td>
               <td>{{item.Valor | currency}}</td>
-              <td>{{item.Juros}}</td>
+              <td>{{item.juros}}</td>
               <td><button class="btn btn-sm btn-success" (click)="removedaListaPagamento(item)">-</button></td>
             </tr>
           </tbody>
