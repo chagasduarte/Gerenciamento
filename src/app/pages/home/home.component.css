@@ -94,3 +94,7 @@ svg {
 .mobile {
     display: none;
 }
+
+.accordion-button {
+    background-color: #333f5f00;
+}

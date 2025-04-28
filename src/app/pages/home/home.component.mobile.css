@@ -14,9 +14,8 @@
     }
     .conta {
         grid-area: conta;
-        background-color: #465272;
+        background-color: #46527200;
         width: 100%;
-        
     }
     .grafico-card {
         grid-template-areas: 
