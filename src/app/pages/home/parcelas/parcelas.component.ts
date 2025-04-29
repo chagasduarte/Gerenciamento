@@ -78,7 +78,6 @@ export class ParcelasComponent implements OnInit {
   }
 
   pagar() {
-    console.log(this.listaPagamento);
     let cont = this.contas.find(x => x.Id == this.idConta);
     if (cont) {
       if (this.listaPagamento.length > 0){

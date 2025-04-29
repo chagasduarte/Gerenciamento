@@ -94,11 +94,12 @@
         </table>
         <div><span>Total: </span>{{totalPagar | currency}}</div>
       </div>
-      <div class="card-footer">
+      <div class="card-footer d-flex">
+        <button class="btn btn-sm btn-danger" (click)="abrirSelecionadas()">Fechar</button>
+
         <button class="btn btn-sm btn-success" (click)="pagar()">Pagar</button>
       </div>
     </div>
   </div>
 
-  <button class="btn btn-sm btn-danger" (click)="abrirSelecionadas()">Fechar</button>
 </div>
