@@ -30,7 +30,7 @@
       <div class="grafico-card">
         <div class="cards">
                
-          <div class="card-button bg-vermelho-pastel text-white sombra up-hover" (click)="gastos()">
+          <div class="card-button bg-vermelho-pastel text-white sombra up-hover" (click)="gastos()" *ngIf="(gastosAdicionais + gastoTotalMes) > 0">
             <div class="circle">
               <img src="/assets/img/bitcoin-cash-money.svg"/>
             </div>
@@ -42,7 +42,7 @@
             
           </div>
           
-          <div class="card-button bg-azul-pastel text-white sombra up-hover" (click)="entradaDetalhes()">
+          <div class="card-button bg-azul-pastel text-white sombra up-hover" (click)="entradaDetalhes()" *ngIf="aReceber > 0">
             <div class="circle">
               <img src="/assets/img/dollar-banknote.svg"/>
             </div>
@@ -55,7 +55,7 @@
           </div>
         </div>
         
-        <div class="grafico sombra  up-hover">
+        <div class="grafico sombra  up-hover" *ngIf="despesasParceladas.length > 0">
           <div class="grafico-header">
             <h5>Despesas Parcelas: {{gastoTotalMes | currency}}</h5>
             <button class="btn btn-success btn-sm" (click)="adicionarDespesa()">add</button>
