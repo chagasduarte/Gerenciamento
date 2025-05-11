@@ -1,43 +1,47 @@
-
-.info-2 {
-   width: 95%;
-   height: 500px;
-   margin-left: 5%;
+.grid-temporal {
+  display: grid;
+  place-items: center;
+  width: 100%;
 }
 
-.janela1{
-    grid-area: janela1;
-    background-color: aliceblue;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    width: 8rem;
-    height: 30px;
+.grid-doze {
+  display: grid;
+  grid-template-areas: "jan fev mar abr mai jun jul ago set out nov dex";
+  grid-template-columns: repeat(12, 100px);
+  font-size: large;
 }
-.janela2{
-    grid-area: janela2;
-    background-color: rgb(118, 141, 161);
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    width: 8rem;
-    height: 30px;
-    margin-left: 5px;
-}
-.janela3{
-    grid-area: janela3;
-    background-color: rgb(118, 141, 161);
 
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    width: 8rem;
-    height: 30px;
-    margin-left: 5px;
+.despesa {
+  display: flex;
+  align-items: center;
+  background-color: rgb(75, 131, 112);
+  height: 25px;
+  padding-left: 10px;
+  margin-top: 5px;
+  text-wrap: nowrap;
+  border-radius: 15px;
 }
-.info{
-    grid-area: info;
-    background-color: rgb(118, 141, 161);
-    border-color: aliceblue;
-    border-style: solid;
-    border-width: 8px;
+
+.bola {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: aqua;
+}
+
+.temp-meses {
+    text-align: center;
     width: 100%;
-    height: 50%;
+}
+.grid-temporal {
+  display: grid;
+  place-items: end;
+  width: 100%;
+  background-image: repeating-linear-gradient(
+    to right,
+    #ccc,
+    #ccc 1px,
+    transparent 1px,
+    transparent 100px
+  );
 }
