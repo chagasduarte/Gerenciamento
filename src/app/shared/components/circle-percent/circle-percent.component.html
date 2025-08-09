@@ -1,0 +1,10 @@
+
+<div class="progress-circle">
+    <svg width="150" height="150">
+        <circle class="bg" cx="75" cy="75" [attr.r]="radius" />
+        <circle class="progress" cx="75" cy="75" [attr.r]="radius"
+        [attr.stroke-dasharray]="circumference"
+        [attr.stroke-dashoffset]="strokeDashoffset" />
+    </svg>
+    <div class="percent-text">{{ percent }}%</div>
+</div>

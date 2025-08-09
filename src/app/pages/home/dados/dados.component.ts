@@ -25,13 +25,16 @@ import { GraficoService } from '../../../shared/services/graficos.service';
 import { FormsModule } from '@angular/forms';
 import { LogMensal } from '../../../shared/models/logMensal';
 import { LogMensalService } from '../../../shared/services/log-mensal.service';
+import { CirclePercentComponent } from "../../../shared/components/circle-percent/circle-percent.component";
 
 @Component({
   selector: 'app-dados',
   imports: [
-        CommonModule,
-        FormsModule
-    ],
+    CommonModule,
+    FormsModule,
+    CirclePercentComponent,
+    CirclePercentComponent
+],
   templateUrl: './dados.component.html',
   styleUrl: './dados.component.css'
 })
