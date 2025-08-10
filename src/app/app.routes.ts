@@ -22,8 +22,7 @@ export const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: "", component: HomeComponent, 
       children: [
-        { path: "", redirectTo: "home", pathMatch: "full" },
-        { path: "home", component: DadosComponent, canActivate: [AuthGuard] },
+        { path: "", component: DadosComponent, canActivate: [AuthGuard] },
         { path: "despesas", component: DespesasComponent, canActivate: [AuthGuard] },
         { path: "entradas", component: EntradasComponent, canActivate: [AuthGuard] },
         { path: "contas", component: ContasComponent, canActivate: [AuthGuard] },
