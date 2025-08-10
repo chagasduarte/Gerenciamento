@@ -32,8 +32,6 @@ import { CirclePercentComponent } from "../../../shared/components/circle-percen
   imports: [
     CommonModule,
     FormsModule,
-    CirclePercentComponent,
-    CirclePercentComponent
 ],
   templateUrl: './dados.component.html',
   styleUrl: './dados.component.css'

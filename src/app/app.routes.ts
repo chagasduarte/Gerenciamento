@@ -18,11 +18,11 @@ import { PagamentosComponent } from './pages/home/pagamentos/pagamentos.componen
 import { DadosComponent } from './pages/home/dados/dados.component';
 
 export const routes: Routes = [
-    { path: '', component: HomeComponent, canActivate: [AuthGuard] },
     { path: 'login', component: LoginComponent },
     { path: "", component: HomeComponent, 
       children: [
-        { path: "", component: DadosComponent, canActivate: [AuthGuard] },
+        { path: "", redirectTo: "home", pathMatch: "full" },
+        { path: "home", component: DadosComponent, canActivate: [AuthGuard] },
         { path: "despesas", component: DespesasComponent, canActivate: [AuthGuard] },
         { path: "entradas", component: EntradasComponent, canActivate: [AuthGuard] },
         { path: "contas", component: ContasComponent, canActivate: [AuthGuard] },
