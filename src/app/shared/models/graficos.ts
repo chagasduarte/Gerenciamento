@@ -19,7 +19,6 @@ export interface MesGrafico {
 }
 
 export interface TipoDespesaGrafico {
-  id: number;
-  TipoDespesa: TipoDespesa;
-  saida: number;
+  categoria: TipoDespesa;
+  media_mensal: number;
 }

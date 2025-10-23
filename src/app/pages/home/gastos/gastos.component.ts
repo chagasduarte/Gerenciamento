@@ -13,6 +13,7 @@ import { DespesasComponent } from "../despesas/despesas.component";
 import { ParcelasService } from '../../../shared/services/parcelas.service';
 import { Parcela } from '../../../shared/models/parcela';
 import { combineLatest } from 'rxjs';
+import { Transacoes } from '../../../shared/models/despesa.model';
 
 @Component({
     selector: 'app-gastos',
@@ -47,6 +48,8 @@ export class GastosComponent implements OnInit{
   aindaFaltaParcelado: number = 0;
   totalPagos: number =0;
 
+  novo!: Transacoes;
+
   constructor(
    private readonly despesaService: DespesasService,
    private readonly contasService: ContasService,
@@ -55,40 +58,22 @@ export class GastosComponent implements OnInit{
    private readonly toastService: ToastrService,
    private readonly parcelasService: ParcelasService,
   ){
-    this.calculaGastosDoMes();
+    this.listaDespesas();
     this.buscaContas();
   }
   ngOnInit(): void {
     this.buscaParcelas();
   }
-  calculaGastosDoMes(){
+  listaDespesas(){
     combineLatest([
       this.systemsService.ano$,
       this.systemsService.mes$
     ]).subscribe(([ano, mes]) => {
-      this.despesaService.GetDespesasAdicionais(ano.valor).subscribe({
-        next: (success: Despesa[]) => {
-          this.gastos = [];
-          this.gastosPagos = [];
-          this.contas = [];
-          this.listaPagamento = [];
-          this.totalPagar = 0;
-          this.idConta = 0;
-          this.aindafalta = 0;
-          this.totalPagos = 0;
-          this.gastos = success.filter(x => !x.IsPaga).filter(x => new Date(x.DataCompra).getUTCMonth() == mes.valor);
-          this.gastosPagos = success.filter(x => x.IsPaga).filter(x => new Date(x.DataCompra).getUTCMonth() == mes.valor);
-          this.gastos.forEach(x => {
-            this.aindafalta += parseFloat(x.ValorTotal.toString());
-          })
-          this.gastosPagos.forEach(x => {
-            this.totalPagos += parseFloat(x.ValorTotal.toString());
-          })
-        },
-        error: (err: any) => {
-          this.toastService.error("Errou, Porraaaa... Burro!!!", "Erro");
+      this.despesaService.GetDespesas(mes.valor + 1, ano.valor).subscribe({
+        next: (success) => {
+          this.novo = success;
         }
-      });
+      })
     });
   }
 
@@ -153,7 +138,7 @@ export class GastosComponent implements OnInit{
         this.toastService.warning("Aviso", "Selecione uma despesa para ser paga");
       }
     }
-    this.calculaGastosDoMes();
+    this.listaDespesas();
     this.buscaContas();
     this.listaPagamento = [];
     this.totalPagar = 0;
@@ -174,7 +159,7 @@ export class GastosComponent implements OnInit{
   apagarGasto(id: number) {
     if (confirm("deseja realmente apagar essa despesa").valueOf()) {
       this.despesaService.DeleteDespesa(id).subscribe(x => {
-        this.calculaGastosDoMes();
+        this.listaDespesas();
         this.buscaContas();
       });
     }
@@ -185,7 +170,7 @@ export class GastosComponent implements OnInit{
     this.despesaService.PutDespesa(gasto).subscribe({
       next: (success: Despesa) => {
         this.toastService.success("Sucesso", "Despesa de volta a lista de não pagas sucesso");
-        this.calculaGastosDoMes();
+        this.listaDespesas();
         this.buscaContas();
       },
       error: (err: any) => {
@@ -232,8 +217,8 @@ export class GastosComponent implements OnInit{
     });
   }
 
-  DefineCorParcela(parcela: Parcela): string {
-    return new Date(parcela.DataVencimento) < new Date()? "#af6e6e" : "#b1ca78";
+  DefineCorParcela(parcela: Date): string {
+    return new Date(parcela) < new Date()? "#af6e6e" : "#b1ca78";
   }
 
   adicionarParcelasLista(parcela: Parcela, despesa:Despesa){

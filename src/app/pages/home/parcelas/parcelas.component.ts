@@ -116,10 +116,6 @@ export class ParcelasComponent implements OnInit {
         });
         this.despesa.ValorPago = parseFloat(this.despesa.ValorPago.toString());
         this.despesa.ValorPago += parseFloat(parcela.Valor.toString());
-        this.despesaService.PutDespesa(this.despesa).subscribe(x => {
-          this.despesa = x;
-          this.toastr.success("Sucesso", "Valor Total da Despesa Atualizado com sucesso.");
-        });
       });
     }
     this.buscaParcelas();

@@ -1,32 +1,50 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, combineLatest, switchMap, tap, catchError, of } from 'rxjs';
 import { Ano, Mes } from '../../utils/meses';
-import { Pagamento } from '../models/pagamentos';
+import { ResumoMensal } from '../models/resumo.model';
+import { DespesasService } from './despesas.service';
 import { Parcela } from '../models/parcela';
-import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SystemService {
-  private _mes = new BehaviorSubject<Mes>(new Mes(new Date().getUTCMonth(), new Date().getUTCFullYear()));
-  mes$ = this._mes.asObservable();
+  private readonly _mes = new BehaviorSubject<Mes>(
+    new Mes(new Date().getUTCMonth(), new Date().getUTCFullYear())
+  );
+  private readonly _ano = new BehaviorSubject<Ano>(
+    new Ano(new Date().getUTCFullYear())
+  );
+  private readonly _resumo = new BehaviorSubject<ResumoMensal | null>(null);
 
-  private _ano = new BehaviorSubject<Ano>(new Ano(new Date().getUTCFullYear()));
-  ano$ = this._ano.asObservable();  entradas: number[] = [];
+  readonly mes$ = this._mes.asObservable();
+  readonly ano$ = this._ano.asObservable();
+  readonly resumo$ = this._resumo.asObservable();
 
-  saidas: number[] = [];
-  graficos: boolean = false;
-  pagamentosParcelas!: Parcela[];
-  pagamentosDespesas!: Parcela[]
-  
-  constructor() { 
-    for (let i = 0; i < 12; i++){
-      this.entradas[i] = 0;
-      this.saidas[i] = 0;
-    }
-    this.pagamentosParcelas = [];
-    this.pagamentosDespesas = [];
+  entradas: number[] = Array(12).fill(0);
+  saidas: number[] = Array(12).fill(0);
+  graficos = false;
+  pagamentosParcelas: Parcela[] = [];
+  pagamentosDespesas: Parcela[] = [];
+
+  constructor(private readonly infoService: DespesasService) {
+    // Atualiza o resumo automaticamente quando mês ou ano mudam
+    combineLatest([this.mes$, this.ano$])
+      .pipe(
+        switchMap(([mes, ano]) =>
+          this.infoService.GetResumoMensal(mes.valor+1, ano.valor).pipe(
+            tap((resumo) => this._resumo.next(resumo)),
+            catchError((err) => {
+              console.error('Erro ao buscar resumo mensal:', err);
+              this._resumo.next(null);
+              return of(null);
+            })
+          )
+        )
+      )
+      .subscribe();
   }
+
   get mes(): Mes {
     return this._mes.value;
   }
@@ -35,11 +53,11 @@ export class SystemService {
     return this._ano.value;
   }
 
-  setMes(mes: Mes) {
+  setMes(mes: Mes): void {
     this._mes.next(mes);
   }
 
-  setAno(ano: Ano) {
+  setAno(ano: Ano): void {
     this._ano.next(ano);
   }
 }

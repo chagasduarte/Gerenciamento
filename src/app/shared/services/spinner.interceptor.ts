@@ -9,7 +9,7 @@ import { SystemService } from './system.service';
 @Injectable()
 export class HttpRequestInterceptor implements HttpInterceptor {
 
-  constructor(private spinner: NgxSpinnerService, private toastr: ToastrService, private readonly system:SystemService) {}
+  constructor(private spinner: NgxSpinnerService, private toastr: ToastrService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     this.spinner.show();
@@ -24,7 +24,6 @@ export class HttpRequestInterceptor implements HttpInterceptor {
       finalize(() => {
         setTimeout(() => {
           this.spinner.hide();
-          this.system.graficos = true;
         }, 1000);
       })
     );

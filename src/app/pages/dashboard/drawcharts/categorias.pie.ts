@@ -28,8 +28,8 @@ function despesaAgrupadaToArray(tipoDespesaAgrupada: TipoDespesaGrafico[]): (str
     dados.push(['Categoria', 'Valor']);
     for(const tipo in  TipoDespesa) {
         if(!isNaN(Number(tipo))) {
-            const valor = tipoDespesaAgrupada.find(x => x.TipoDespesa == Number(tipo))?.saida || 0;
-            dados.push([TipoDespesa[tipo], valor])
+            const valor = tipoDespesaAgrupada.find(x => x.categoria == Number(tipo))?.media_mensal || 0;
+            dados.push([TipoDespesa[tipo], parseInt(valor.toString())])
         }
     }
     return dados;

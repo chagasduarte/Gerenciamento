@@ -35,23 +35,7 @@ export class ObjetivosComponent implements OnInit, AfterViewInit{
   }
 
   ngOnInit(): void {
-    this.despesaService.GetDespesas(this.systemService.ano.valor).subscribe({
-      next: (success: Despesa[]) => {
-        const despesasParceladas = success.filter(filtro => filtro.IsParcelada );
-        console.log(despesasParceladas)
-        despesasParceladas.forEach( parcelada => {
-          this.parcelasService.GetParcelasByDespesa(parcelada.Id).subscribe( x => {
-            console.log(x);
-            parcelada.DataCompra = new Date(parcelada.DataCompra);
-            this.despesas.push({despesa: parcelada, qtdParcelas: x.length, dataFinal: this.calcularDataFinal(parcelada.DataCompra.toISOString(), x.length)});
-          });
-        });
-        console.log(this.despesas)
-       },
-      error: (err:any) => {
-        this.toastrService.error("não foi possível buscar as despesas", "Erro")
-      }
-    })
+    
   }
    
   calcularDataFinal(dataInicio: string, parcelas: number): Date {

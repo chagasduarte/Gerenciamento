@@ -16,6 +16,7 @@ import { ObjetivosComponent } from './pages/home/objetivos/objetivos.component';
 import { Pagamento } from './shared/models/pagamentos';
 import { PagamentosComponent } from './pages/home/pagamentos/pagamentos.component';
 import { DadosComponent } from './pages/home/dados/dados.component';
+import { InvestimentosComponent } from './pages/home/investimentos/investimentos.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -34,7 +35,8 @@ export const routes: Routes = [
         { path: "dash", component: DashboardComponent, canActivate: [AuthGuard]},
         { path: "index", component: IndexComponent, canActivate: [AuthGuard]},
         { path: "objetivos", component: ObjetivosComponent, canActivate: [AuthGuard]},
-        { path: "pagamentos", component: PagamentosComponent, canActivate: [AuthGuard]}
+        { path: "pagamentos", component: PagamentosComponent, canActivate: [AuthGuard]},
+        { path: "investimentos", component: InvestimentosComponent, canActivate: [AuthGuard]}
       ],
       canActivate: [AuthGuard]
     }

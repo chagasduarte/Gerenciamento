@@ -36,7 +36,7 @@ function despesaAgrupadaToArray(tipoDespesaAgrupada: TipoDespesaGrafico[], ano: 
     dados.push(['Categoria', 'Valor']);
     for(const tipo in  TipoDespesa) {
         if(!isNaN(Number(tipo))) {
-            const valor = tipoDespesaAgrupada.find(x => x.TipoDespesa == Number(tipo))?.saida || 0;
+            const valor = tipoDespesaAgrupada.find(x => x.categoria == Number(tipo))?.media_mensal || 0;
             let meses = 0;
             if(Number(tipo) == 2 || Number(tipo) == 6){
                 meses = 12;

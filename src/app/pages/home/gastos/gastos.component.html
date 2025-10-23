@@ -3,68 +3,64 @@
     <div class="col voltar">
         <button class="btn btn-sm btn-warning" (click)="Voltar()">Voltar</button>
     </div>
-    <h1 class="col">{{aindaFaltaParcelado + aindafalta | currency}}</h1>
+    <h1 class="col">{{novo.soma_parcelados + novo.soma_adicionais | currency}}</h1>
     <div class="col butao">
         <button class="btn btn-sm btn-primary" (click)="AdicionaGasto()">Add</button>
     </div>
   </div>  
 
   <div class="linha"></div>
-  <h3>Abertos Previstos: {{aindaFaltaParcelado | currency}}</h3>
+  <h3>Abertos Previstos: {{novo.soma_parcelados | currency}}</h3>
   <div class="parcelas">
-    <div *ngFor="let parcela of parcelas">
-      <div class="card card-sm"  [ngStyle]="{'background-color': DefineCorParcela(parcela.parcela)}">
+    <div *ngFor="let parcela of novo.parceladas">
+      <div class="card card-sm"  [ngStyle]="{'background-color': DefineCorParcela(parcela.data)}">
         <div class="card-header text-break d-flex row">
-          <label for="">{{parcela.despesa.Nome}}</label>
-          <input type="date" [(ngModel)]="parcela.parcela.DataVencimentoString" class="form-control form-control-sm col-1">
+          <label for="">{{parcela.descricao.replace(' - Parcela', '')}}</label>
+          <input type="date" [(ngModel)]="parcela.data" class="form-control form-control-sm col-1">
           <button class="btn btn-success btn-sm col">Up</button>
         </div>
         <div class="card-body">
           <div class="d-flex">
             <div>Valor:</div>
-            <div>{{(parcela.parcela.Valor) | currency}}</div>
+            <div>{{(parcela.valor) | currency}}</div>
           </div>
-          <div class="d-flex">
-            <div>Juros:</div>
-            <input type="number" [(ngModel)]="parcela.parcela.juros" class="form-control form-control-sm">
-            <button class="btn btn-sm btn-success">up</button>
-          </div>
+          
           <div class="row">
-            <button class="btn btn-sm btn-primary" (click)="adicionarParcelasLista(parcela.parcela, parcela.despesa)"> Adicionar </button>
+            <button class="btn btn-sm btn-primary" > Adicionar </button>
           </div>
         </div>
       </div>
     </div>
   </div>
   <div class="card mb-3"></div>
-  <h3>Abertos Adicionais: {{aindafalta | currency}}</h3>
+  <h3>Abertos Adicionais: {{novo.soma_adicionais | currency}}</h3>
   <div class="card-parcelas">
-    <div *ngFor="let gasto of gastos" class="parcela bg-verde-pastel" >
+    <div *ngFor="let gasto of novo.adicionais" class="parcela bg-verde-pastel" >
       <div class="text-break card-header">
-        <b>{{gasto.Nome}}</b>
-        <button class="btn btn-sm" (click)="apagarGasto(gasto.Id)"><img src="/assets/img/user-trash.svg" alt=""></button>
+        <b>{{gasto.descricao}}</b>
+        <button class="btn btn-sm" (click)="apagarGasto(gasto.id)"><img src="/assets/img/user-trash.svg" alt=""></button>
       </div> 
       <div class="card-body">
         <div class="d-flex">
-          <div class="me-2">{{gasto.DataCompra | date}}:</div>
-          <div>{{gasto.ValorTotal | currency}}</div>
+          <div class="me-2">{{gasto.data | date}}:</div>
+          <div>{{gasto.valor | currency}}</div>
         </div>
-        <button class="btn btn-sm btn-primary" (click)="adicionarListaPagamento(gasto)"> Adicionar </button>
+        <button class="btn btn-sm btn-primary"> Adicionar </button>
       </div>
     </div>
   </div>
   <div class="card mb-3"></div>
-  <h3>Pagos: {{totalPagos | currency}}</h3>
+  <h3>Pagos: {{novo.soma_pagos | currency}}</h3>
   <div class="card-parcelas">
-    <div *ngFor="let gasto of gastosPagos" class="parcela bg-verde-pastel">
+    <div *ngFor="let gasto of novo.pagos" class="parcela bg-verde-pastel">
         <div class="card-header text-break">
-            <b (click)="objetivos()">{{gasto.Nome}}</b> 
+            <b (click)="objetivos()">{{gasto.descricao}}</b> 
         </div>
         <div class="card-body">
           <div class="d-flex">
             <div>Valor:</div>
-            <div>{{gasto.ValorTotal | currency}}</div>
-            <button class="btn btn-sm btn-success" (click)="despagar(gasto)">-</button>
+            <div>{{gasto.valor | currency}}</div>
+            <button class="btn btn-sm btn-success">-</button>
           </div>
         </div>
       </div>

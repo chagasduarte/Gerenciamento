@@ -1,15 +1,11 @@
 <form id="despesaForm" class="despesaForm" (submit)="OnSubmit()">
     <div class="form-group">
         <label for="nome">Nome</label>
-        <input type="text" id="nome" name="nome" required [(ngModel)]="despesa.Nome">
-    </div>
-    <div class="form-group">
-        <label for="descricao">Descrição</label>
-        <textarea id="descricao" name="descricao" rows="4" [(ngModel)]="despesa.Descricao"></textarea>
+        <input type="text" id="nome" name="nome" required [(ngModel)]="novaDespesa.descricao">
     </div>
     <div class="form-group">
         <label for="tipoDespesa">Tipo de Despesa</label>
-        <select type="number" id="tipoDespesa" name="tipoDespesa" required [(ngModel)]="despesa.TipoDespesa">
+        <select type="number" id="tipoDespesa" name="tipoDespesa" required [(ngModel)]="novaDespesa.categoria">
             <option value=1>Alimentação</option>
             <option value=2>Transporte</option>
             <option value=3>Saúde</option>
@@ -23,7 +19,7 @@
     </div>
     <div class="form-group">
         <label for="valorTotal">Valor Total</label>
-        <input type="number" id="valorTotal" name="valorTotal" step="1" required [(ngModel)]="despesa.ValorTotal">
+        <input type="number" id="valorTotal" name="valorTotal" step="1" required [(ngModel)]="novaDespesa.valor">
     </div>
     <div class="flex">
         <div class="form-group">
