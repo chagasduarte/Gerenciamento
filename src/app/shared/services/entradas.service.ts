@@ -4,6 +4,7 @@ import { AppSettingsService } from './app-settings.service';
 import { Entrada } from '../models/entradas';
 import { Observable } from 'rxjs';
 import { FormataEntrada } from '../../utils/functions/entrada';
+import { EntradasResponse } from '../models/entradas.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +15,11 @@ export class EntradasService {
     private readonly http: HttpClient,
     private readonly appSettingService: AppSettingsService 
   ) {
-    this.api = appSettingService.get().WebApi + "/Entradas";
+    this.api = appSettingService.get().WebApi + "/transacoes";
   }
   
-  GetEntradas(): Observable<Entrada[]>{
-     return this.http.get<Entrada[]>(`${this.api}`);
+  GetEntradas(mes: number, ano: number): Observable<EntradasResponse>{
+     return this.http.get<EntradasResponse>(`${this.api}/entradas?mes=${mes}&ano=${ano}`);
   }
   
   PostEntrada(entrada: Entrada): Observable<Entrada> {
@@ -26,8 +27,8 @@ export class EntradasService {
     return this.http.post<Entrada>(`${this.api}`, entrpost);
   }
 
-  PutEntrada(entrada: Entrada) : Observable<Entrada> {
-    return this.http.put<Entrada>(`${this.api}/${entrada.Id}`, entrada);
+  PutEntrada(id: number) : Observable<Entrada> {
+    return this.http.put<Entrada>(`${this.api}/topago/${id}`, id);
   }
 
   DeleteEntrada(id: number) {

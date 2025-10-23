@@ -21,12 +21,6 @@ export class SystemService {
   readonly ano$ = this._ano.asObservable();
   readonly resumo$ = this._resumo.asObservable();
 
-  entradas: number[] = Array(12).fill(0);
-  saidas: number[] = Array(12).fill(0);
-  graficos = false;
-  pagamentosParcelas: Parcela[] = [];
-  pagamentosDespesas: Parcela[] = [];
-
   constructor(private readonly infoService: DespesasService) {
     // Atualiza o resumo automaticamente quando mês ou ano mudam
     combineLatest([this.mes$, this.ano$])
