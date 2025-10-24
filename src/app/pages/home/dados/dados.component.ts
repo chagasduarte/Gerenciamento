@@ -68,9 +68,10 @@ export class DadosComponent implements OnInit {
     this.router.navigate(["despesas"]);
   }
 
-  parcelas(despesa: Despesa) {
-    this.router.navigate(["parcelas"], { queryParams: {id: despesa.Id, nome: despesa.Nome}})
+  parcelas(descricao: string) {
+    this.router.navigate(["parcelas"], { queryParams: {descricao: descricao}})
   }
+
   gastos() {
     this.router.navigate(["gastos"]);
   }

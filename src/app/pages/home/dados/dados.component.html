@@ -61,7 +61,7 @@
           </div>
           <div class="grafico-body" (click)="previstos()">
             <div class="porcentagem-despesa" *ngFor="let despesa of novasParcelas.parcelas">
-              <div class="barra-progressao up-hover">
+              <div class="barra-progressao up-hover" (click)="parcelas(despesa.descricao)">
                 <div class="progressao-barra" 
                      [ngStyle]="{
                        'width': ( despesa.total_pago * 150)/ despesa.total_parcelado + 'px',
