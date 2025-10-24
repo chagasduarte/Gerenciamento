@@ -2,8 +2,6 @@ import { AfterViewInit, Component, OnChanges, OnInit, SimpleChanges } from '@ang
 import { EChartsOption } from 'echarts';
 import { ToastrService } from 'ngx-toastr';
 import { Despesa } from '../../../shared/models/despesa';
-import { DespesasService } from '../../../shared/services/despesas.service';
-import { ParcelasService } from '../../../shared/services/parcelas.service';
 import { SystemService } from '../../../shared/services/system.service';
 import { Ano } from '../../../utils/meses';
 import { CommonModule } from '@angular/common';
@@ -23,9 +21,7 @@ export class ObjetivosComponent implements OnInit, AfterViewInit{
   ano: Ano = new Ano(this.systemService.ano.valor);
 
   constructor(
-    private readonly despesaService: DespesasService,
     private readonly toastrService: ToastrService,
-    private readonly parcelasService: ParcelasService,
     private readonly systemService: SystemService
   ){}
   ngAfterViewInit(): void {

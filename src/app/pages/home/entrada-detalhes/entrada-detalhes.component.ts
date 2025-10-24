@@ -1,16 +1,15 @@
-import { Component, LOCALE_ID, OnInit } from '@angular/core';
-import { EntradasService } from '../../../shared/services/entradas.service';
+import { Component, OnInit } from '@angular/core';
 import { Entrada } from '../../../shared/models/entradas';
 import { FormsModule } from '@angular/forms';
-import { CommonModule, registerLocaleData } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { GetSalarioLiquido } from '../../../utils/functions/salario';
 import { Router } from '@angular/router';
-import { ContasService } from '../../../shared/services/contas.service';
 import { ToastrService } from 'ngx-toastr';
 import { SystemService } from '../../../shared/services/system.service';
-import { Ano, Mes } from '../../../utils/meses';
+import { Ano } from '../../../utils/meses';
 import { combineLatest } from 'rxjs';
 import { EntradasResponse } from '../../../shared/models/entradas.model';
+import { TransacoesService } from '../../../shared/services/transacoes.service';
 
 @Component({
     selector: 'app-entrada-detalhes',
@@ -30,8 +29,7 @@ export class EntradaDetalhesComponent implements OnInit{
   resumoEntradas!: EntradasResponse;
 
   constructor(
-    private readonly entradaService: EntradasService,
-    private readonly contaService: ContasService,
+    private readonly entradaService: TransacoesService,
     private readonly router: Router,
     private readonly toastrService: ToastrService,
     private systemsService: SystemService

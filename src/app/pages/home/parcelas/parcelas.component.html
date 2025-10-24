@@ -5,7 +5,7 @@
       <button class="btn btn-sm btn-warning" (click)="Voltar()">Voltar</button>
     </div>
     <div class="adicionar col">
-      <button class="btn btn-sm btn-primary" (click)="ApagarConta()">Deletar</button>
+      <button class="btn btn-sm btn-primary" >Deletar</button>
     </div>
   </div>
   
@@ -16,7 +16,7 @@
       <div class="card card-sm"  [ngStyle]="{'background-color': DefineCorParcela(parcela)}">
         <div class="card-header text-break d-flex row">
           <input type="date" [(ngModel)]="parcela.DataVencimentoString" class="form-control form-control-sm col-1">
-          <button class="btn btn-success btn-sm" (click)="AtualizaParcela(parcela)">Up</button>
+          <button class="btn btn-success btn-sm" >Up</button>
         </div>
         <div class="card-body">
           <div class="d-flex">
@@ -26,10 +26,10 @@
           <div class="d-flex">
             <div>Juros:</div>
             <input type="number" [(ngModel)]="parcela.juros" class="form-control form-control-sm">
-            <button class="btn btn-sm btn-success" (click)="AtualizaParcela(parcela)">up</button>
+            <button class="btn btn-sm btn-success">up</button>
           </div>
           <div class="row">
-            <button class="btn btn-sm btn-primary" (click)="adicionaLista(parcela)"> Adicionar </button>
+            <button class="btn btn-sm btn-primary"> Adicionar </button>
           </div>
         </div>
       </div>
@@ -44,7 +44,7 @@
       <div class="card card-sm me-2" >
         <div class="card-header text-break">
           <b>{{parcela.DataVencimento | date}}</b> 
-          <button class="btn btn-sm btn-danger" (click)="despagar(parcela)">-</button>
+          <button class="btn btn-sm btn-danger" >-</button>
         </div>
         <div class="card-body">
           <div class="d-flex">
@@ -84,11 +84,10 @@
           </thead>
           <tbody>
             <tr *ngFor="let item of listaPagamento">
-              <td>{{item.Id}}</td>
-              <td>{{item.DataVencimento | date}}</td>
-              <td>{{item.Valor | currency}}</td>
-              <td>{{item.juros}}</td>
-              <td><button class="btn btn-sm btn-success" (click)="removedaListaPagamento(item)">-</button></td>
+              <td>{{item.id}}</td>
+              <td>{{item.data | date}}</td>
+              <td>{{item.valor | currency}}</td>
+              <td><button class="btn btn-sm btn-success"  >-</button></td>
             </tr>
           </tbody>
         </table>

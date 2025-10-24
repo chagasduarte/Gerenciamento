@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, combineLatest, switchMap, tap, catchError, of } from 'rxjs';
 import { Ano, Mes } from '../../utils/meses';
 import { ResumoMensal } from '../models/resumo.model';
-import { DespesasService } from './despesas.service';
-import { Parcela } from '../models/parcela';
+import { TransacoesService } from './transacoes.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +20,7 @@ export class SystemService {
   readonly ano$ = this._ano.asObservable();
   readonly resumo$ = this._resumo.asObservable();
 
-  constructor(private readonly infoService: DespesasService) {
+  constructor(private readonly infoService: TransacoesService) {
     // Atualiza o resumo automaticamente quando mês ou ano mudam
     combineLatest([this.mes$, this.ano$])
       .pipe(

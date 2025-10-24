@@ -1,33 +1,18 @@
 <form id="entradaForm" class="entradasForm" (submit)="OnSubmit()">
     <div class="form-group">
         <label for="nome">Nome:</label>
-        <select type="text" id="nome" name="nome" required [(ngModel)]="entrada.Nome">
+        <select type="text" id="nome" name="nome" required [(ngModel)]="entrada.descricao">
             <option [value]="entrada" *ngFor="let entrada of entradas">{{entrada}}</option>
         </select>
     </div>
     <div class="form-group">
         <label for="valor">Valor:</label>
-        <input type="number" id="valor" name="valor" step="0.01" required [(ngModel)]="entrada.Valor">
+        <input type="number" id="valor" name="valor" step="0.01" required [(ngModel)]="entrada.valor">
     </div>
     <div class="form-group">
         <label for="data">Data Débito:</label>
-        <input type="date" class="form-input" id="data" name="data" [(ngModel)]="dataDebito" (change)="filtraContas()"/>
-    </div>
-    <div class="form-group">
-        <label for="contaId">Conta ID:</label>
-        <div class="d-flex">
-            <select class="col" name="contaId" id="contaId" [(ngModel)]="entrada.ContaId">
-                <option [value]="conta.Id" *ngFor="let conta of contasFiltradas"> {{conta.Nome}} - {{conta.Descricao}} </option>
-            </select>
-            <button class="btn btn-primary btn-sm" (click)="novaConta()">Nova Conta</button>
-        </div>
-        
-    </div>
-    <div class="form-group">
-        <label for="fixo">Fixo:</label>
-        <input type="checkbox" class="form-input" id="data" name="data" [(ngModel)]="entrada.IsFixo"/>
-    </div>
-    
+        <input type="date" class="form-input" id="data" name="data" [(ngModel)]="dataDebito"/>
+    </div>    
     <div class="form-group">
         <button class="btn btn-primary btn-sm" type="submit">Enviar</button>
     </div>

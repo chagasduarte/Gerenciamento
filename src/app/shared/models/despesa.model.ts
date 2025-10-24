@@ -1,6 +1,6 @@
 import { StringDecoder } from "string_decoder"
 
-export interface DespesaModel {
+export interface TransacaoModel {
     id: number
     descricao: string
     tipo: string
@@ -15,7 +15,7 @@ export interface Transacoes {
     soma_parcelados: number;
     soma_adicionais: number;
     soma_pagos: number;
-    parceladas: DespesaModel[];
-    adicionais: DespesaModel[];
-    pagos: DespesaModel[];
+    parceladas: TransacaoModel[];
+    adicionais: TransacaoModel[];
+    pagos: TransacaoModel[];
 }

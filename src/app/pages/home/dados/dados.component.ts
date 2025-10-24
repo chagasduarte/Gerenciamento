@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Ano } from '../../../utils/meses';
 import { CommonModule } from '@angular/common';
 import { Despesa } from '../../../shared/models/despesa';
-import { DespesasService } from '../../../shared/services/despesas.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { SystemService } from '../../../shared/services/system.service';
@@ -12,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { DespesasParceladasResponse } from '../../../shared/models/despesasParceladas.model';
 import { ResumoMensal } from '../../../shared/models/resumo.model';
 import { AgrupamentoResponse } from '../../../shared/models/agrupamento';
+import { TransacoesService } from '../../../shared/services/transacoes.service';
 
 @Component({
   selector: 'app-dados',
@@ -29,7 +29,7 @@ export class DadosComponent implements OnInit {
   novoAgrupamento!: AgrupamentoResponse;
 
   constructor(
-    private readonly despesaService: DespesasService,
+    private readonly despesaService: TransacoesService,
     private readonly toastService: ToastrService,
     private readonly router: Router,
     public readonly systemService: SystemService,

@@ -1,16 +1,13 @@
 import { Component } from '@angular/core';
 import { Despesa } from '../../../shared/models/despesa';
-import { DespesasService } from '../../../shared/services/despesas.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ParcelasService } from '../../../shared/services/parcelas.service';
 import { ParcelaRequest } from '../../../shared/models/parcela';
-import { ContasService } from '../../../shared/services/contas.service';
 import { Conta } from '../../../shared/models/conta';
-import { FormataDespesa } from '../../../utils/functions/despesa';
-import { DespesaModel } from '../../../shared/models/despesa.model';
+import { TransacaoModel } from '../../../shared/models/despesa.model';
 import { ToastrService } from 'ngx-toastr';
+import { TransacoesService } from '../../../shared/services/transacoes.service';
 
 @Component({
     selector: 'app-despesas',
@@ -28,16 +25,15 @@ export class DespesasComponent {
   requestParcela: ParcelaRequest; 
 
   dataCompra: Date = new Date();
-  novaDespesa!: DespesaModel;
+  novaDespesa!: TransacaoModel;
 
   constructor(
-    private readonly despesaService: DespesasService,
-    private readonly parcelaService: ParcelasService,
+    private readonly despesaService: TransacoesService,
     private readonly route: Router,
     private readonly toastService: ToastrService             
   ){
     this.despesa = {} as Despesa;
-    this.novaDespesa = {} as DespesaModel;
+    this.novaDespesa = {} as TransacaoModel;
     this.requestParcela = {} as ParcelaRequest;
   }
   OnSubmit() {
@@ -45,8 +41,8 @@ export class DespesasComponent {
     this.novaDespesa.categoria = parseInt(this.novaDespesa.categoria.toString());
     this.novaDespesa.tipo = 'saida';
     this.novaDespesa.status = 'pendente';
-    this.despesaService.PostDespesa(this.novaDespesa).subscribe({
-      next: (success: DespesaModel) => {
+    this.despesaService.PostTransacao(this.novaDespesa).subscribe({
+      next: (success: TransacaoModel) => {
           this.toastService.success("Gravado");
           this.route.navigate(["home"]);
       },

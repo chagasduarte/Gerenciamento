@@ -1,19 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { DespesasService } from '../../../shared/services/despesas.service';
 import { Despesa } from '../../../shared/models/despesa';
-import { Ano, Mes } from '../../../utils/meses';
+import { Ano } from '../../../utils/meses';
 import { Router } from '@angular/router';
 import { SystemService } from '../../../shared/services/system.service';
-import { ContasService } from '../../../shared/services/contas.service';
 import { ToastrService } from 'ngx-toastr';
 import { Conta } from '../../../shared/models/conta';
-import { DespesasComponent } from "../despesas/despesas.component";
-import { ParcelasService } from '../../../shared/services/parcelas.service';
 import { Parcela } from '../../../shared/models/parcela';
 import { combineLatest } from 'rxjs';
 import { Transacoes } from '../../../shared/models/despesa.model';
+import { TransacoesService } from '../../../shared/services/transacoes.service';
 
 @Component({
     selector: 'app-gastos',
@@ -51,25 +48,22 @@ export class GastosComponent implements OnInit{
   novo!: Transacoes;
 
   constructor(
-   private readonly despesaService: DespesasService,
-   private readonly contasService: ContasService,
    private readonly router: Router,
    private readonly systemsService: SystemService,
    private readonly toastService: ToastrService,
-   private readonly parcelasService: ParcelasService,
+   private readonly transacoesService: TransacoesService
   ){
-    this.listaDespesas();
-    this.buscaContas();
   }
   ngOnInit(): void {
-    this.buscaParcelas();
+    this.listaDespesas();
   }
+
   listaDespesas(){
     combineLatest([
       this.systemsService.ano$,
       this.systemsService.mes$
     ]).subscribe(([ano, mes]) => {
-      this.despesaService.GetDespesas(mes.valor + 1, ano.valor).subscribe({
+      this.transacoesService.GetDespesas(mes.valor + 1, ano.valor).subscribe({
         next: (success) => {
           this.novo = success;
         }
@@ -87,136 +81,19 @@ export class GastosComponent implements OnInit{
     this.listaPagamento = this.listaPagamento.filter( x => x.Id != despesa.Id );
   }
   pagar(){
-    this.pagarDespesa();
-    this.pagarParcelas();
-  }
-  pagarDespesa() {
-    let contaput = this.contas.find(x => x.Id == this.idConta);
-    if(contaput){
-      if(this.listaPagamento.length > 0) {
-        this.listaPagamento.map(despesa => {
-          if ((contaput.Debito - despesa.ValorTotal) >= 0) {
-            contaput.Debito -= despesa.ValorTotal
-            despesa.IsPaga = true;
-            this.despesaService.PutDespesa(despesa).subscribe({
-              next: (success: Despesa) => {
-                this.toastService.success("Sucesso", "Despesa paga com sucesso");
-              },
-              error: (err: any) => {
-                this.toastService.error("Erro", "Ocorreu algum erro no processo de atualização.")
-              }
-            })
-           
-          }
-          else {
-            this.toastService.warning("Você é pobre de mais para comprar isso, então não gaste mais", "Aviso");
-          }
-        });
-        this.contasService.PutConta(contaput).subscribe( x => {
-          this.toastService.success("conta atualizada com sucesso;", "Ok");
-        })
-      }
-      else {
-        this.toastService.warning("Aviso", "Selecione uma despesa para ser paga");
-      }
-    }
-    else {
-      if(this.listaPagamento.length > 0) {
-        this.listaPagamento.map(despesa => {
-          despesa.IsPaga = true;
-          this.despesaService.PutDespesa(despesa).subscribe({
-            next: (success: Despesa) => {
-              this.toastService.success("Sucesso", "Despesa paga com sucesso");
-            },
-            error: (err: any) => {
-              this.toastService.error("Erro", "Ocorreu algum erro no processo de atualização.")
-            }
-          })          
-        });
-      }
-      else {
-        this.toastService.warning("Aviso", "Selecione uma despesa para ser paga");
-      }
-    }
-    this.listaDespesas();
-    this.buscaContas();
-    this.listaPagamento = [];
-    this.totalPagar = 0;
-  }
 
+  }
+  
   Voltar() {
     this.router.navigate(["home"]);
   }
 
-  buscaContas(){
-    this.contasService.GetContaByMes(new Date().getUTCMonth() + 1, new Date().getUTCFullYear()).subscribe(x => this.contas = x );
-  }
 
   AdicionaGasto() {
     this.router.navigate(["despesas"]);
   }
-    
-  apagarGasto(id: number) {
-    if (confirm("deseja realmente apagar essa despesa").valueOf()) {
-      this.despesaService.DeleteDespesa(id).subscribe(x => {
-        this.listaDespesas();
-        this.buscaContas();
-      });
-    }
-  }
-  
-  despagar(gasto: Despesa){
-    gasto.IsPaga = false;
-    this.despesaService.PutDespesa(gasto).subscribe({
-      next: (success: Despesa) => {
-        this.toastService.success("Sucesso", "Despesa de volta a lista de não pagas sucesso");
-        this.listaDespesas();
-        this.buscaContas();
-      },
-      error: (err: any) => {
-        this.toastService.error("Erro", "Ocorreu algum erro no processo de atualização.")
-      }
-    })
-  }
 
   
-  buscaParcelas(){
-    combineLatest([
-      this.systemsService.ano$,
-      this.systemsService.mes$
-    ]).subscribe(([ano, mes]) => {
-
-      this.parcelasService.GetParcelasByMes(mes.valor + 1, ano.valor).subscribe(parcelas => {
-        this.parcelas = [];
-        this.parcelasPagas = [];
-        this.listaParcelasPagar = [];
-        this.aindaFaltaParcelado = 0;
-        parcelas.map( parcela => {
-          parcela.DataVencimentoString = parcela.DataVencimento.toString().split('T')[0];
-          this.despesaService.GetDespesasById(parcela.DespesaId).subscribe({
-            next: (despesa: Despesa) => {
-              if(parcela.IsPaga == 1) {
-                this.parcelasPagas.push({parcela: parcela, despesa: despesa});
-              }
-              else {
-                this.parcelas.push({parcela: parcela, despesa: despesa});
-                this.aindaFaltaParcelado += parseFloat(parcela.Valor.toString());
-              }
-            },
-            error: (err: any) => {
-              console.log(err.status)
-              if (err.status == 404){
-                this.parcelasService.DeleteParcelasByDespesa(parcela.DespesaId).subscribe( x => {
-                  this.toastService.warning('Aviso', 'Como essa despesa não foi encontrada, apagamos todas as parcelas referentes a ela.')
-                });
-              }  
-            }
-          })
-        });
-      });
-    });
-  }
-
   DefineCorParcela(parcela: Date): string {
     return new Date(parcela) < new Date()? "#af6e6e" : "#b1ca78";
   }
