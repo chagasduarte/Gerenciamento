@@ -6,13 +6,25 @@ import { title } from "node:process";
 
 export function drawMediasBar(tipoDespesaAgrupada: TipoDespesaGrafico[], ano: Ano){
     const google = (window as any).google;
-    google.charts.load('current', {'packages': ['corechart']});
+    google.charts.load('current', {
+        packages: ['corechart'],
+        language: 'pt-BR' // garante formatação BR (vírgula decimal, R$, etc)
+    });    
     const dados = despesaAgrupadaToArray(tipoDespesaAgrupada, ano);
     var dash = document.getElementById('dashboard');
 
     google.charts.setOnLoadCallback(() => {
         const data = new google.visualization.arrayToDataTable(dados);
-        
+                
+        // 🟢 Aplica o formato monetário na coluna de valores
+        const formatter = new google.visualization.NumberFormat({
+            prefix: 'R$ ',
+            decimalSymbol: ',',
+            groupingSymbol: '.',
+            fractionDigits: 2
+        });
+        formatter.format(data, 1); // aplica na coluna 1 (ajuste se sua coluna de valores for outra)
+
         var options = {
             title: "Médias",
             backgroundColor: {fill: "none"},
@@ -20,9 +32,10 @@ export function drawMediasBar(tipoDespesaAgrupada: TipoDespesaGrafico[], ano: An
             width: (dash!.offsetWidth / 10) * 9,
             height: 300,
             vAxis: {
-                format: '$.00'
+                format: 'decimal'
             }
         };
+        
         var chart = new google.visualization.ColumnChart(document.getElementById('medias'));
 
         chart.draw(data, options);
@@ -44,7 +57,7 @@ function despesaAgrupadaToArray(tipoDespesaAgrupada: TipoDespesaGrafico[], ano: 
             else {
                 meses = ano.meses.length
             }
-            dados.push([TipoDespesa[tipo], valor/meses])
+            dados.push([TipoDespesa[tipo], valor/meses  ])
         }
     }
     return dados;
