@@ -3,10 +3,22 @@ import { TipoDespesa } from "../../../shared/models/tipoDespesa";
 
 export function drawCategoriaPie(tipoDespesaAgrupada: TipoDespesaGrafico[]){
     const google = (window as any).google;
-    google.charts.load('current', {'packages': ['corechart']});
+    google.charts.load('current', {
+        packages: ['corechart'],
+        language: 'pt-BR' // garante formatação BR (vírgula decimal, R$, etc)
+    });        
     var dash = document.getElementById('dashboard');
     google.charts.setOnLoadCallback(() => {
         const data = new google.visualization.arrayToDataTable(despesaAgrupadaToArray(tipoDespesaAgrupada));
+        
+        const formatter = new google.visualization.NumberFormat({
+            prefix: 'R$ ',
+            decimalSymbol: ',',
+            groupingSymbol: '.',
+            fractionDigits: 2
+        });
+        formatter.format(data, 1); // aplica na coluna 1 (ajuste se sua coluna de valores for outra)
+
         var options = {
             title: "Categorias",
             backgroundColor: {fill: "none"},
@@ -14,7 +26,7 @@ export function drawCategoriaPie(tipoDespesaAgrupada: TipoDespesaGrafico[]){
             width: (dash!.offsetWidth / 10) * 9,
             height:300,
             vAxis: {
-                format: '$.00'
+                format: 'decimal'
             }
         };
         var chart = new google.visualization.PieChart(document.getElementById('pizza'));

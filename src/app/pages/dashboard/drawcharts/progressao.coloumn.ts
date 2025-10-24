@@ -3,15 +3,27 @@ import { Projecao } from "../../../shared/models/projecao.model";
 
 export function drawProjecoes(log: Projecao[]){
     const google = (window as any).google;
-    google.charts.load('current', {'packages': ['corechart']});
-
+    google.charts.load('current', {
+        packages: ['corechart'],
+        language: 'pt-BR' // garante formatação BR (vírgula decimal, R$, etc)
+    });    
+    var dash = document.getElementById('dashboard');
 
     google.charts.setOnLoadCallback(() => {
         const data = google.visualization.arrayToDataTable(saidasToArray(log));
         
-        var view = new google.visualization.DataView(data);
-        var dash = document.getElementById('dashboard');
-        console.log(dash!.offsetWidth);
+        const formatter = new google.visualization.NumberFormat({
+            prefix: 'R$ ',
+            decimalSymbol: ',',
+            groupingSymbol: '.',
+            fractionDigits: 2
+        });
+
+        // 🧮 Aplica o formato em todas as colunas numéricas (exceto a primeira, que é o eixo X)
+        const numCols = data.getNumberOfColumns();
+        for (let i = 1; i < numCols; i++) {
+            formatter.format(data, i);
+        }
         var options = {
             title: 'Progressão',
             backgroundColor: {fill: "none"},
@@ -21,13 +33,13 @@ export function drawProjecoes(log: Projecao[]){
             height: 300,
             colors: ['red', 'blue', '#1b9e77', 'orange'],
             vAxis: {
-                format: '$.00'
+                format: 'decimal'
             }
         };
 
         var chart = new google.visualization.ComboChart(document.getElementById('progressao'));
         
-        chart.draw(view, options);
+        chart.draw(data, options);
     })
 }
 
