@@ -28,7 +28,7 @@ export class TransacoesService {
   }
 
   GetDespesas(mes: number, ano: number): Observable<Transacoes> {
-    return this.http.get<Transacoes>(`${this.api}/transacoes/despesas?mes=${mes}&ano=${ano}`)
+    return this.http.get<Transacoes>(`${this.api}/transacoes?mes=${mes}&ano=${ano}`)
   }
 
   GetResumoMensal(mes: number, ano: number): Observable<ResumoMensal> {
