@@ -31,9 +31,12 @@ export class EntradasComponent {
     
     OnSubmit(){
       this.entrada.data = new Date(this.dataDebito);
+      this.entrada.tipo = 'entrada';
+      this.entrada.status = 'pendente';
 
       this.entradaService.PostTransacao(this.entrada).subscribe({
         next: (success: TransacaoModel) => {
+          this.systemService.atualizarResumo();
            this.router.navigate(["entradas-detalhe"]);
         }
       });

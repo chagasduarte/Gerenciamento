@@ -3,7 +3,6 @@ import { BehaviorSubject, combineLatest, switchMap, tap, catchError, of } from '
 import { Ano, Mes } from '../../utils/meses';
 import { ResumoMensal } from '../models/resumo.model';
 import { TransacoesService } from './transacoes.service';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -21,21 +20,32 @@ export class SystemService {
   readonly resumo$ = this._resumo.asObservable();
 
   constructor(private readonly infoService: TransacoesService) {
-    // Atualiza o resumo automaticamente quando mês ou ano mudam
+    // Mantém a atualização automática reativa
     combineLatest([this.mes$, this.ano$])
       .pipe(
         switchMap(([mes, ano]) =>
-          this.infoService.GetResumoMensal(mes.valor+1, ano.valor).pipe(
-            tap((resumo) => this._resumo.next(resumo)),
-            catchError((err) => {
-              console.error('Erro ao buscar resumo mensal:', err);
-              this._resumo.next(null);
-              return of(null);
-            })
-          )
+          this.carregarResumo(mes.valor + 1, ano.valor)
         )
       )
       .subscribe();
+  }
+
+  /** 🔹 Atualiza manualmente o resumo com base no mês/ano atual */
+  public atualizarResumo(): void {
+    this.carregarResumo(this.mes.valor + 1, this.ano.valor)
+      .subscribe();
+  }
+
+  /** 🔸 Método central usado pelas duas formas (reativa e manual) */
+  private carregarResumo(mes: number, ano: number) {
+    return this.infoService.GetResumoMensal(mes, ano).pipe(
+      tap((resumo) => this._resumo.next(resumo)),
+      catchError((err) => {
+        console.error('Erro ao buscar resumo mensal:', err);
+        this._resumo.next(null);
+        return of(null);
+      })
+    );
   }
 
   get mes(): Mes {
@@ -54,3 +64,4 @@ export class SystemService {
     this._ano.next(ano);
   }
 }
+

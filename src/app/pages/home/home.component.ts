@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
   colorMensal = '#fff';
   colorAnual = '#768da1';
   resumoMensal$ = this.systemService.resumo$; // <-- agora é reativo
-  anosDeDivida: number[] = [2024, 2025, 2026, 2027];
+  anosDeDivida: number[] = [2024, 2025, 2026, 2027, 2028];
 
   constructor(
     @Inject(DOCUMENT) private readonly document: Document,
