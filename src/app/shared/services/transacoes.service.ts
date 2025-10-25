@@ -61,4 +61,8 @@ export class TransacoesService {
   GetGraficosPizza(ano: number): Observable<TipoDespesaGrafico[] >{
     return this.http.get<TipoDespesaGrafico[] >(`${this.api}/dashboard/agrupamento?ano=${ano}`)
   }
+
+  GetParcelas(descricao: string): Observable<TransacaoModel[]>{
+    return this.http.get<TransacaoModel[]>(`${this.api}/transacoes/despesa?descricao=${descricao}`)
+  }
 }
