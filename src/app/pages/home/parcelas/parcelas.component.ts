@@ -80,6 +80,13 @@ export class ParcelasComponent implements OnInit {
       this.toastr.error("Erro ao pagar despesas");
     }
   }
+  apagar(id: number) {
+    this.transacoesService.DeleteTransacao(id).subscribe(x => {
+      this.toastr.success("Parcela deletada!");
+      this.systemService.atualizarResumo();
+      this.buscaParcelas();
+    })
+  }
 
   adicionaLista(parcela: TransacaoModel){
     console.log(parcela)

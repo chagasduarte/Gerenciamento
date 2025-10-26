@@ -44,7 +44,7 @@ export class DespesasComponent {
     this.despesaService.PostTransacao(this.novaDespesa).subscribe({
       next: (success: TransacaoModel) => {
           this.toastService.success("Gravado");
-          this.route.navigate(["home"]);
+          this.route.navigate(["gastos"]);
       },
       error: (err: any) => {
         this.toastService.error(err.message);

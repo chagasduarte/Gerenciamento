@@ -42,7 +42,7 @@ export class TransacoesService {
     return this.http.get<Entrada>(`${this.api}/transacoes/topago/${id}`);
   }
 
-  DeleteEntrada(id: number) {
+  DeleteTransacao(id: number) {
     return this.http.delete(`${this.api}/transacoes/${id}`)
   }
 

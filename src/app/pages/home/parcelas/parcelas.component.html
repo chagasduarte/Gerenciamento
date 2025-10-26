@@ -40,7 +40,7 @@
       <div class="card card-sm me-2" >
         <div class="card-header text-break">
           <b>{{ parcela.data | date}}</b> 
-          <button class="btn btn-sm btn-danger" >-</button>
+          <button class="btn btn-sm btn-danger" (click)="apagar(parcela.id)">-</button>
         </div>
         <div class="card-body">
           <div class="d-flex">

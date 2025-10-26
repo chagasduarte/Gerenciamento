@@ -8,7 +8,7 @@ import { SystemService } from '../../../shared/services/system.service';
 import { ToastrService } from 'ngx-toastr';
 import { Conta } from '../../../shared/models/conta';
 import { Parcela } from '../../../shared/models/parcela';
-import { combineLatest } from 'rxjs';
+import { combineLatest, lastValueFrom } from 'rxjs';
 import { TransacaoModel, Transacoes } from '../../../shared/models/despesa.model';
 import { TransacoesService } from '../../../shared/services/transacoes.service';
 
@@ -69,12 +69,30 @@ export class GastosComponent implements OnInit{
     this.listaPagamento = this.listaPagamento.filter( x => x.id != despesa.id );
   }
   
-  apagar(){
-
+  apagar(id: number){
+    this.transacoesService.DeleteTransacao(id).subscribe(x => {
+      this.toastService.success("Despesa deletada!!");
+      this.systemsService.atualizarResumo();
+      this.listaDespesas();
+    })
   }
-  pagar(){
-
-  }
+  async pagar() {
+      if (this.listaPagamento.length === 0) return;
+  
+      try {
+        const promises = this.listaPagamento.map(item =>
+          lastValueFrom(this.transacoesService.PutEntrada(item.id))
+        );
+  
+        await Promise.all(promises);
+  
+        this.toastService.success("Despesas pagas");
+        this.systemsService.atualizarResumo();
+      } catch (error) {
+        console.error(error);
+        this.toastService.error("Erro ao pagar despesas");
+      }
+    }
   Voltar() {
     this.router.navigate(["home"]);
   }
