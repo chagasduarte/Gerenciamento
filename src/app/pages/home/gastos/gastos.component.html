@@ -38,7 +38,7 @@
     <div *ngFor="let gasto of novo.adicionais" class="parcela bg-verde-pastel" >
       <div class="text-break card-header">
         <b>{{gasto.descricao}}</b>
-        <button class="btn btn-sm" ><img src="/assets/img/user-trash.svg" alt=""></button>
+        <button class="btn btn-sm" (click)="apagar()"><img src="/assets/img/user-trash.svg" alt=""></button>
       </div> 
       <div class="card-body">
         <div class="d-flex">
@@ -77,11 +77,6 @@
   
   <div class="div">
     <div class="card" style="width: 18rem;">
-      <div class="card-header">
-        <select name="conta" id="conta" class="form-select" [(ngModel)]="idConta">
-          <option [value]="conta.Id" *ngFor="let conta of contas" class="form-control">{{conta.Nome}}</option>
-        </select>
-      </div>
       <div class="card-body">
         <table class="table table-rover">
           <thead>
@@ -95,18 +90,11 @@
           </thead>
           <tbody>
             <tr *ngFor="let item of listaPagamento">
-              <td>{{item.Id}}</td>
-              <td>{{item.DataCompra| date}}</td>
-              <td>{{item.ValorTotal | currency}}</td>
+              <td>{{item.id}}</td>
+              <td>{{item.data| date}}</td>
+              <td>{{item.valor | currency}}</td>
               <td> </td>
               <td><button class="btn btn-sm btn-success" (click)="removedaListaPagamento(item)">-</button></td>
-            </tr>
-            <tr *ngFor="let item of listaParcelasPagar">
-              <td>{{item.parcela.Id}}</td>
-              <td>{{ item.parcela.DataVencimento | date }}</td>
-              <td>{{item.parcela.Valor | currency}}</td>
-              <td> {{item.parcela.juros | currency}} </td>
-              <td><button class="btn btn-sm btn-success">-</button></td>
             </tr>
           </tbody>
         </table>

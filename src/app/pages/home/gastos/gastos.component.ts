@@ -9,7 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Conta } from '../../../shared/models/conta';
 import { Parcela } from '../../../shared/models/parcela';
 import { combineLatest } from 'rxjs';
-import { Transacoes } from '../../../shared/models/despesa.model';
+import { TransacaoModel, Transacoes } from '../../../shared/models/despesa.model';
 import { TransacoesService } from '../../../shared/services/transacoes.service';
 
 @Component({
@@ -25,27 +25,15 @@ import { TransacoesService } from '../../../shared/services/transacoes.service';
 export class GastosComponent implements OnInit{
 
 
-  gastos!: Despesa[];
-  gastosPagos!: Despesa[];
-  contas!: Conta[];
-  listaPagamento: Despesa[] = [];
+  gastos!: TransacaoModel[];
+  gastosPagos!: TransacaoModel[];
+  listaPagamento: TransacaoModel[] = [];
   mostrarSelecionadas = false;
-
-  
-  parcelas: {parcela: Parcela, despesa:Despesa}[] = [];
-  parcelasPagas: {parcela: Parcela, despesa:Despesa}[] = [];
-  listaParcelasPagar: {parcela: Parcela, despesa:Despesa}[] = [];
 
   ano!: Ano;
   totalPagar: number = 0;
-  conta!: Conta;
-  idConta!: number;
-  adicionar: any;
-  aindafalta:number = 0;
-  aindaFaltaParcelado: number = 0;
-  totalPagos: number =0;
 
-  novo!: Transacoes;
+  novo: Transacoes = {} as Transacoes;
 
   constructor(
    private readonly router: Router,
@@ -71,19 +59,22 @@ export class GastosComponent implements OnInit{
     });
   }
 
-  adicionarListaPagamento(despesa: Despesa){
-    this.totalPagar += parseFloat(despesa.ValorTotal.toString());
+  adicionarListaPagamento(despesa: TransacaoModel){
+    this.totalPagar += parseFloat(despesa.valor.toString());
     this.listaPagamento.push(despesa);
   }
   
-  removedaListaPagamento(despesa: Despesa){
-    this.totalPagar -= parseFloat(despesa.ValorTotal.toString());
-    this.listaPagamento = this.listaPagamento.filter( x => x.Id != despesa.Id );
+  removedaListaPagamento(despesa: TransacaoModel){
+    this.totalPagar -= parseFloat(despesa.valor.toString());
+    this.listaPagamento = this.listaPagamento.filter( x => x.id != despesa.id );
+  }
+  
+  apagar(){
+
   }
   pagar(){
 
   }
-  
   Voltar() {
     this.router.navigate(["home"]);
   }
@@ -98,20 +89,6 @@ export class GastosComponent implements OnInit{
     return new Date(parcela) < new Date()? "#af6e6e" : "#b1ca78";
   }
 
-  adicionarParcelasLista(parcela: Parcela, despesa:Despesa){
-    this.listaParcelasPagar.push({parcela, despesa});
-    this.totalPagar += parseFloat(parcela.Valor.toString());
-  }
-
-  removedaListaPagamentoParcelas(parcela: Parcela, despesa:Despesa){
-    this.totalPagar -= parseFloat(parcela.Valor.toString());
-    this.listaParcelasPagar = this.listaParcelasPagar.filter( x => x.parcela.Id != parcela.Id );
-  }
-
-  pagarParcelas() {
-    
-        
-  } 
   objetivos(){
     this.router.navigate(['objetivos'])
   }
