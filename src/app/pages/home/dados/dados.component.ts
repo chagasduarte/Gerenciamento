@@ -12,6 +12,11 @@ import { DespesasParceladasResponse } from '../../../shared/models/despesasParce
 import { ResumoMensal } from '../../../shared/models/resumo.model';
 import { AgrupamentoResponse } from '../../../shared/models/agrupamento';
 import { TransacoesService } from '../../../shared/services/transacoes.service';
+import { Projecao } from '../../../shared/models/projecao.model';
+import { TipoDespesaGrafico } from '../../../shared/models/graficos';
+import { drawCategoriaPie } from '../../dashboard/drawcharts/categorias.pie';
+import { drawProjecoes } from '../../dashboard/drawcharts/progressao.coloumn';
+import { drawMediasBar } from '../../dashboard/drawcharts/medias.bar';
 
 @Component({
   selector: 'app-dados',
@@ -27,6 +32,8 @@ export class DadosComponent implements OnInit {
   novasParcelas!: DespesasParceladasResponse;
   resumoMensal$ = this.systemService.resumo$; // <-- agora é reativo
   novoAgrupamento!: AgrupamentoResponse;
+  projecoes!: Projecao[]; 
+  tipoDespesaAgrupada: TipoDespesaGrafico[] = [];
 
   constructor(
     private readonly despesaService: TransacoesService,
@@ -50,11 +57,16 @@ export class DadosComponent implements OnInit {
       this.ano = ano;
       forkJoin([
         this.despesaService.GetDespesasParceladas(mes.valor + 1, ano.valor),
-        this.despesaService.GetAgrupamento(mes.valor + 1, ano.valor)
+        this.despesaService.GetAgrupamento(mes.valor + 1, ano.valor),
+        this.despesaService.GetProjecao(ano.valor),
+        this.despesaService.GetGraficosPizza(ano.valor)
       ]).subscribe({
         next: (success) => {
           this.novasParcelas = success[0];
           this.novoAgrupamento = success[1];
+          this.projecoes = success[2];
+          this.tipoDespesaAgrupada = success[3];
+          this.loadGoogleCharts();
         },
         error: (err: any) => {
           this.toastService.error("Error", `Alguma coisa deu errado: ${err.mesage}`);
@@ -62,7 +74,6 @@ export class DadosComponent implements OnInit {
       });
     });
   }
-
 
   adicionarDespesa() {
     this.router.navigate(["despesas"]);
@@ -132,6 +143,17 @@ export class DadosComponent implements OnInit {
   }
   dashboard(){
     this.router.navigate(['dash'])
+  }
+  
+  loadGoogleCharts() {
+      const script = document.createElement('script');
+      script.src = 'https://www.gstatic.com/charts/loader.js';
+      script.onload = () => {
+        drawCategoriaPie(this.tipoDespesaAgrupada);
+        drawProjecoes(this.projecoes);
+        drawMediasBar(this.tipoDespesaAgrupada, this.systemService.ano);
+      };
+      document.body.appendChild(script);
   }
 }
 

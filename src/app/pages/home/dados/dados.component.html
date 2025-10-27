@@ -37,9 +37,7 @@
             <div class="valores">
               <div class="valor"> {{ resumo.gastos_mensal_pendente | currency}} </div>
               <span class="text">Gastos</span>
-            </div>
-            <div class="bg-icon"><img src="/assets/img/bitcoin-cash-money.svg"/></div>
-            
+            </div>            
           </div>
           
           <div class="card-button bg-azul-pastel text-white sombra up-hover" (click)="entradaDetalhes()">
@@ -48,13 +46,12 @@
             </div>
             <div class="valores">
               <div class="valor">{{resumo.receita_mensal_pendente | currency}}</div>
-              <span class="text">Valores à receber</span>
+              <span class="text">Receitas</span>
             </div>
-            <div class="bg-icon"><img src="/assets/img/dollar-banknote.svg" alt=""></div>            
           </div>
         </div>
         
-        <div class="grafico sombra  up-hover" >
+        <!-- <div class="grafico sombra  up-hover" >
           <div class="grafico-header">
             <h5>Despesas Parcelas: {{novasParcelas.mensal.pendente | currency}}</h5>
             <button class="btn btn-success btn-sm" (click)="adicionarDespesa()">add</button>
@@ -75,24 +72,37 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
 
     </div>
-    <hr>
     <div class="info-3">
       <div class="d-flex">
         <div class="col" style="font-size: 25px; font-weight: bolder;">{{novoAgrupamento.soma.soma | currency}}</div>
       </div>
       <div class="agrupamento">
         <div class="pagas">
-          <div class="paga sombra  up-hover" *ngFor="let paga of novoAgrupamento!.agrupamento">
+          <div class="paga sombra up-hover" *ngFor="let paga of novoAgrupamento!.agrupamento">
             <img [src]="defineImagem(paga.categoria)" style="width: 50px; height: 50px;" alt="">
             {{paga.total_tipo| currency}}
           </div>
         </div>
       </div>
-         
+    </div> 
+    <br>
+    <br>
+    <div class="info-3">
+          <div class="dashboard" id="dashboard">
+            <div class="chart progressao" >
+              <div id="progressao"></div>
+            </div>
+            <div class="chart pizza" >
+              <div id="pizza"></div>
+            </div>
+            <div class="chart medias" >
+              <div id="medias"></div>
+            </div>
+          </div>
     </div> 
 
 </div>

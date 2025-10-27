@@ -6,8 +6,6 @@
     'side info';
     grid-template-columns: auto 1fr;
     grid-template-rows: 70px 1fr;
-    overflow-x: auto;
-    overflow-y: auto;
     height: 100vh;
 }
 
@@ -22,8 +20,6 @@
     display: grid;
     gap: 5px;
     width: 1fr;
-    overflow-y: auto;
-    overflow-x: auto;
     margin: 5px;
     border-radius: 15px;
     padding: 15px;
@@ -95,5 +91,6 @@ svg {
     display: none;
 }
 
-
-
+.router-outlet {
+    overflow-y: auto;
+}

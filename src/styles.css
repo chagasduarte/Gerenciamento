@@ -6,19 +6,6 @@ body {
     height: 100vh;
 }
 
-html::-webkit-scrollbar {
-    width: 10px;
-}
-  
-html::-webkit-scrollbar-thumb {
-  border-radius: 50px;
-  background: #6e6ece;
-}
-  
-html::-webkit-scrollbar-track {
-  background: #ededed;
-} 
-
 .linha{
   background-color: aliceblue;
   width: 1fr;
@@ -99,8 +86,6 @@ img {
   display: flex;
   background-color: #69B6A8;
   height: 55px;
-  overflow-x: auto;
-  overflow-y: hidden;
   justify-content: center;
   border-radius: 15px;
   margin: 5px;
@@ -125,7 +110,7 @@ img {
   width: 100%;
   & .pagas {
     display: grid;
-    grid-template-columns: repeat(8, 65px);
+    grid-template-columns: repeat(8, 70px);
     overflow-x: auto; /* Permite rolar horizontalmente */
     height: 100px;
 
