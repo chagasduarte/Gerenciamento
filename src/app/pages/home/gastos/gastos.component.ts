@@ -44,6 +44,7 @@ export class GastosComponent implements OnInit{
   }
   ngOnInit(): void {
     this.listaDespesas();
+    this.systemsService.atualizarResumo();
   }
 
   listaDespesas(){
