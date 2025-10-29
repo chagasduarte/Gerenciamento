@@ -92,9 +92,9 @@
               </li>
           </ul>
       </div>
-      <nav class="d-flex"> 
-        <ul class="meses">
-          <li class="d-flex" *ngFor="let ano of anosDeDivida">
+      <div class="d-flex"> 
+        <div class="anos d-flex">
+          <div  *ngFor="let ano of anosDeDivida">
             <div class="d-flex justify-content-center">
               <button 
                 style="border-radius: 20px;
@@ -106,9 +106,9 @@
                 class="me-2 sombra mt-3" 
                 (click)="mudaAno(ano)">{{ano}}</button>
             </div>
-          </li>
-        </ul>
-      </nav>
+          </div>
+        </div>
+      </div>
     </main>
   </div>
 
