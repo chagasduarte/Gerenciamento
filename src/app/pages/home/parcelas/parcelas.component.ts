@@ -75,6 +75,9 @@ export class ParcelasComponent implements OnInit {
       await Promise.all(promises);
 
       this.toastr.success("Despesas pagas");
+      this.systemService.atualizarResumo();
+      this.buscaParcelas();
+
     } catch (error) {
       console.error(error);
       this.toastr.error("Erro ao pagar despesas");
