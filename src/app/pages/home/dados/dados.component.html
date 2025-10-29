@@ -15,17 +15,7 @@
             {{systemService.ano.valor}}
           </div>
         </div>
-  
-        <!-- <div class="graficos">
-          <div class="grafico-pizza sombra" [style]="{'--porcentagem': (somaDespesasMes*100/totalEntradas).toString()}" (click)="dashboard()">
-            <div class="legenda">
-              {{somaDespesasMes*100/totalEntradas * 10 | percent }}
-              <div class="linha"></div>
-              {{aindaPossoGastar | currency}}
-            </div>
-          </div>
-        </div> -->
-        
+       
       </div>
       <div class="grafico-card">
         <div class="cards">
@@ -51,7 +41,7 @@
           </div>
         </div>
         
-        <!-- <div class="grafico sombra  up-hover" >
+        <div class="grafico sombra  up-hover" >
           <div class="grafico-header">
             <h5>Despesas Parcelas: {{novasParcelas.mensal.pendente | currency}}</h5>
             <button class="btn btn-success btn-sm" (click)="adicionarDespesa()">add</button>
@@ -72,7 +62,7 @@
               </div>
             </div>
           </div>
-        </div> -->
+        </div>
       </div>
 
     </div>
@@ -89,20 +79,6 @@
         </div>
       </div>
     </div> 
-    <br>
-    <br>
-    <div class="info-3">
-          <div class="dashboard" id="dashboard">
-            <div class="chart progressao" >
-              <div id="progressao"></div>
-            </div>
-            <div class="chart pizza" >
-              <div id="pizza"></div>
-            </div>
-            <div class="chart medias" >
-              <div id="medias"></div>
-            </div>
-          </div>
-    </div> 
+
 
 </div>

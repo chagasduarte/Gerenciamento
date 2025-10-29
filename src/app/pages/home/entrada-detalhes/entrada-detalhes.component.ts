@@ -67,6 +67,7 @@ export class EntradaDetalhesComponent implements OnInit{
     this.entradaService.DeleteTransacao(id).subscribe(x => {
       this.toastrService.success("Entrada deletada","OK");
       this.buscaEntradas();
+      this.systemsService.atualizarResumo();
     })
   }
 
