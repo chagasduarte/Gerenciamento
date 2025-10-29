@@ -66,7 +66,6 @@ export class DadosComponent implements OnInit {
           this.novoAgrupamento = success[1];
           this.projecoes = success[2];
           this.tipoDespesaAgrupada = success[3];
-          this.loadGoogleCharts();
         },
         error: (err: any) => {
           this.toastService.error("Error", `Alguma coisa deu errado: ${err.mesage}`);
@@ -145,15 +144,5 @@ export class DadosComponent implements OnInit {
     this.router.navigate(['dash'])
   }
   
-  loadGoogleCharts() {
-      const script = document.createElement('script');
-      script.src = 'https://www.gstatic.com/charts/loader.js';
-      script.onload = () => {
-        drawCategoriaPie(this.tipoDespesaAgrupada);
-        drawProjecoes(this.projecoes);
-        drawMediasBar(this.tipoDespesaAgrupada, this.systemService.ano);
-      };
-      document.body.appendChild(script);
-  }
 }
 

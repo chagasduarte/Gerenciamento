@@ -88,6 +88,9 @@ export class GastosComponent implements OnInit{
   
         this.toastService.success("Despesas pagas");
         this.systemsService.atualizarResumo();
+        this.listaPagamento = [];
+        this.listaDespesas();
+
       } catch (error) {
         console.error(error);
         this.toastService.error("Erro ao pagar despesas");

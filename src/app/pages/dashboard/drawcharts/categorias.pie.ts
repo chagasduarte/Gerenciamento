@@ -1,7 +1,7 @@
 import { TipoDespesaGrafico } from "../../../shared/models/graficos";
 import { TipoDespesa } from "../../../shared/models/tipoDespesa";
 
-export function drawCategoriaPie(tipoDespesaAgrupada: TipoDespesaGrafico[]){
+export function drawCategoriaPie(tipoDespesaAgrupada: TipoDespesaGrafico[], element: string){
     const google = (window as any).google;
     google.charts.load('current', {
         packages: ['corechart'],
@@ -29,7 +29,7 @@ export function drawCategoriaPie(tipoDespesaAgrupada: TipoDespesaGrafico[]){
                 format: 'decimal'
             }
         };
-        var chart = new google.visualization.PieChart(document.getElementById('pizza'));
+        var chart = new google.visualization.PieChart(document.getElementById(element));
 
         chart.draw(data, options);
     })

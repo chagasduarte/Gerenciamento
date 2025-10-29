@@ -38,6 +38,7 @@ export class EntradaDetalhesComponent implements OnInit{
   }
   ngOnInit(): void {
     this.buscaEntradas();
+    this.systemsService.atualizarResumo();
   }
 
   buscaEntradas() {
@@ -58,6 +59,7 @@ export class EntradaDetalhesComponent implements OnInit{
     next: (success) => {
       this.toastrService.success("Recebido!!!");
       this.buscaEntradas()
+      this.systemsService.atualizarResumo();
     }
    })
     

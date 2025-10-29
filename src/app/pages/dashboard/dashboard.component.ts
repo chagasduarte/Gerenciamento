@@ -25,7 +25,16 @@ export class DashboardComponent implements  OnInit {
     tipoDespesaAgrupada: TipoDespesaGrafico[] = [];
     anosDeDivida: number[] = [2024, 2025, 2026, 2027];
     projecoes!: Projecao[]; 
- 
+    recomendados = [
+            {categoria: 1, media_mensal: 12} as TipoDespesaGrafico,
+            {categoria: 2, media_mensal: 10} as TipoDespesaGrafico,
+            {categoria: 3, media_mensal: 7} as TipoDespesaGrafico,
+            {categoria: 4, media_mensal: 5} as TipoDespesaGrafico,
+            {categoria: 5, media_mensal: 6} as TipoDespesaGrafico,
+            {categoria: 6, media_mensal: 28} as TipoDespesaGrafico,
+            {categoria: 7, media_mensal: 7} as TipoDespesaGrafico,
+            {categoria: 9, media_mensal: 25} as TipoDespesaGrafico
+        ];
 
     constructor(
         public systemService: SystemService,
@@ -67,9 +76,8 @@ export class DashboardComponent implements  OnInit {
         const script = document.createElement('script');
         script.src = 'https://www.gstatic.com/charts/loader.js';
         script.onload = () => {
-        //   this.drawChartInOut();
-        //   this.drawChart();
-            drawCategoriaPie(this.tipoDespesaAgrupada);
+            drawCategoriaPie(this.tipoDespesaAgrupada, 'pizza');
+            drawCategoriaPie(this.recomendados, 'pizza2');
             drawProjecoes(this.projecoes);
             drawMediasBar(this.tipoDespesaAgrupada, this.systemService.ano);
         };
