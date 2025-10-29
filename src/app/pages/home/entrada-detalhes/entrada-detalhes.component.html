@@ -32,7 +32,7 @@
         <div class="card bg-success text-white" *ngFor="let entrada of resumoEntradas.entradas_recebidas">
             <div class="card-header">
                 <b>{{entrada.descricao}}</b> 
-                <button class="btn btn-sm" (click)="deleteEntrada(entrada.id)" ><img src="/assets/img/user-trash.svg"/></button>
+                <button class="btn btn-sm" (click)="deleteEntrada(entrada.id)"><img src="/assets/img/user-trash.svg" /></button>
             </div>
             <div class="card-body">
                 <div class="row">
