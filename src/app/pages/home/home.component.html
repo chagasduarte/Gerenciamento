@@ -57,7 +57,7 @@
             </div>
           </div>
           <hr>
-          <div class="d-flex flex-center text-white up-hover" (click)="contasDetalhes()">
+          <div class="d-flex flex-center text-white up-hover">
             <div class="circle">
               <img src="/assets/img/money-bag.svg"/>
             </div>
@@ -114,13 +114,13 @@
 
   <app-nav-bar style="overflow-y: auto;"></app-nav-bar>
   <div class="accordion" id="accordionExample">
-    <div class="d-flex">
+    <div class="d-flex justify-content-between">
       <div class="d-flex flex-center up-hover conta">
         <div class="circle">
           <img src="/assets/img/money-bag.svg"/>
         </div>
         <div class="valores" style="font-size: 35px;">
-          <div class="valor" (click)="contasDetalhes()"> {{resumo.saldo_atual| currency}} </div>
+          <div class="valor"> {{resumo.saldo_atual| currency}} </div>
         </div>
       </div>  
       <h2 class="accordion-header">
