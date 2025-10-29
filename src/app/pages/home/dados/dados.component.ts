@@ -25,7 +25,7 @@ import { drawMediasBar } from '../../dashboard/drawcharts/medias.bar';
     FormsModule,
   ],
   templateUrl: './dados.component.html',
-  styleUrls: ['./dados.component.css']
+  styleUrls: ['./dados.component.css', './dados.component.mobile.css']
 })
 export class DadosComponent implements OnInit {
   ano!: Ano;

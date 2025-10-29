@@ -6,11 +6,16 @@ import { SystemService } from '../../shared/services/system.service';
 import { Ano, Mes } from '../../utils/meses';
 import { ResumoMensal } from '../../shared/models/resumo.model';
 import { ToastrService } from 'ngx-toastr';
+import { NavBarComponent } from "./nav-bar/nav-bar.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterOutlet],
+  imports: [
+    CommonModule, 
+    FormsModule, 
+    RouterOutlet, 
+    NavBarComponent],
   templateUrl: './home.component.html',
   styleUrls: [
     './home.component.css',

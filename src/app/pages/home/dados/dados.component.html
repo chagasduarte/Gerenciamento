@@ -51,7 +51,7 @@
               <div class="barra-progressao up-hover" (click)="parcelas(despesa.descricao)">
                 <div class="progressao-barra" 
                      [ngStyle]="{
-                       'width': ( despesa.total_pago * 150)/ despesa.total_parcelado + 'px',
+                       'width': ( despesa.total_pago * 100)/ despesa.total_parcelado + 'px',
                        'background-color': despesa.status == 'pago' ? '#7ac27a' : '#355f70;'
                       }">
                      {{despesa.descricao.replace(' - Parcela','')}}

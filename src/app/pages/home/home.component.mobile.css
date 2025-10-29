@@ -1,7 +1,4 @@
 @media screen  and (max-width: 900px) {
-    .meses {
-        width: 100%;
-    }
     #accordionExample{
         display: flex;
         flex-direction: column;

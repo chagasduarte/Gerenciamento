@@ -112,13 +112,7 @@
     </main>
   </div>
 
-  <nav class="barra_navegacao"> 
-    <ul class="meses">
-      <li class="d-flex" *ngFor="let mes of ano.meses; let i = index">
-        <div class="abrev-mes"(click)="mudaMes(mes)">{{mes.nomeAbrev}}</div>
-      </li>
-    </ul>
-  </nav>
+  <app-nav-bar style="overflow-y: auto;"></app-nav-bar>
   <div class="accordion" id="accordionExample">
     <div class="d-flex">
       <div class="d-flex flex-center up-hover conta">

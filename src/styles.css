@@ -75,34 +75,6 @@ img {
   gap: 10px;
 }
 
-.meses{
-  display: flex;
-  margin: 0.5rem;
-  text-align: top;
-  font-size: 20px;
-}
-
-.barra_navegacao {
-  display: flex;
-  background-color: #69B6A8;
-  height: 55px;
-  justify-content: center;
-  border-radius: 15px;
-  margin: 5px;
-}
-
-.abrev-mes{
-  margin-right: 12px;
-  transition: transform 0.3s;
-  font-size: 25px;
-  font-weight: bold;
-}
-
-.abrev-mes:hover{
-    transform: scale(1.2);
-    cursor: pointer;
-}
-
 .agrupamento {
   display: grid;
   overflow-x: auto; /* Permite rolar horizontalmente */

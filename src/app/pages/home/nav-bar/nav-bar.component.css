@@ -1,0 +1,29 @@
+
+.meses{
+  display: flex;
+  margin: 0.5rem;
+  font-size: 20px;
+  overflow-y: auto;
+  padding-left: 10px;
+}
+
+.barra_navegacao {
+  display: flex;
+  background-color: #69B6A8;
+  height: 55px;
+  justify-content: center;
+  border-radius: 15px;
+  width: 100%;
+}
+
+.abrev-mes{
+  margin-right: 12px;
+  transition: transform 0.3s;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.abrev-mes:hover{
+    transform: scale(1.2);
+    cursor: pointer;
+}
