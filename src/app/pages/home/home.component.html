@@ -57,13 +57,14 @@
             </div>
           </div>
           <hr>
-          <div class="d-flex flex-center text-white up-hover">
+          <div class="d-flex flex-center text-white">
             <div class="circle">
-              <img src="/assets/img/money-bag.svg"/>
+              <img [src]="'/assets/avatar/' + usuario?.avatar"/>
             </div>
             <div class="valores">
               <div class="valor"> {{ resumo.saldo_atual | currency}} </div>
             </div>
+            <a class="up-hover">Sair</a>
           </div>
           <ul class="nav nav-pills flex-column mb-auto">
               <li class="nav-item">
@@ -117,10 +118,10 @@
     <div class="d-flex justify-content-between">
       <div class="d-flex flex-center up-hover conta">
         <div class="circle">
-          <img src="/assets/img/money-bag.svg"/>
+          <img src="/assets/avatar/lu.png"/>
         </div>
         <div class="valores" style="font-size: 35px;">
-          <div class="valor"> {{resumo.saldo_atual| currency}} </div>
+          <div class="valor"> {{resumo.saldo_atual| currency}} lu {{usuario?.nome}}</div>
         </div>
       </div>  
       <h2 class="accordion-header">

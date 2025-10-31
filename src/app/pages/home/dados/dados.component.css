@@ -76,9 +76,9 @@
     display: grid;
     grid-template-areas: 
     "circle valores"
-    "vazio bg-icon";
+    "circle bg-icon";
     grid-template-rows: auto auto;
-    grid-template-columns: 30% 70%;
+    grid-template-columns: 40% 70%;
     width: 175px;
     height: 100px;
     border-radius: 15px;

@@ -26,10 +26,14 @@ export class LoginComponent {
   ) {}
 
   onLogin() {
-    if (this.authService.login(this.username, this.password)) {
-      this.router.navigate(['home']); // Redireciona para a página principal ou dashboard
-    } else {
-      this.toastrService.error("Usuário ou senha inválido");
-    }
+    this.authService.login(this.username, this.password).subscribe({
+      next: () => {
+        this.router.navigate(['home']); // Redireciona para a página principal ou dashboard
+      },
+      error: (err) => {
+        this.toastrService.error(err.message);
+      }
+    })
+    
   }
 }

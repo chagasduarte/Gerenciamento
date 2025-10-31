@@ -39,6 +39,16 @@
               <span class="text">Receitas</span>
             </div>
           </div>
+          
+          <div class="card-button bg-laranja-pastel text-white sombra up-hover" (click)="entradaDetalhes()">
+            <div class="circle">
+              <img src="/assets/img/cartao-de-credito.png"/>
+            </div>
+            <div class="valores">
+              <div class="valor">{{resumo.receita_mensal_pendente | currency}}</div>
+              <span class="text">Crédito</span>
+            </div>
+          </div>
         </div>
         
         <div class="grafico sombra  up-hover" >

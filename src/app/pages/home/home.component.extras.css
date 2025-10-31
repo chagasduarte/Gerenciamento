@@ -72,19 +72,6 @@
     margin-top: 10px;
 }
 
-.card-button {
-    display: grid;
-    grid-template-areas: 
-    "circle valores"
-    "vazio bg-icon";
-    grid-template-rows: auto auto;
-    grid-template-columns: 30% 70%;
-    width: 175px;
-    height: 100px;
-    border-radius: 15px;
-    transition: transform 0.3s;
-}
-
 .valores {
     grid-area: valores;
     text-align: left;
@@ -174,3 +161,6 @@ svg {
     width: 100;
 }
 
+.circle img {
+    border-radius: 50%;
+}

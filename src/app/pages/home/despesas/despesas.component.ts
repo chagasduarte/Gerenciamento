@@ -8,6 +8,7 @@ import { Conta } from '../../../shared/models/conta';
 import { TransacaoModel } from '../../../shared/models/despesa.model';
 import { ToastrService } from 'ngx-toastr';
 import { TransacoesService } from '../../../shared/services/transacoes.service';
+import { CartaoCredito } from '../../../shared/models/cartao-credito.model';
 
 @Component({
     selector: 'app-despesas',
@@ -21,35 +22,40 @@ import { TransacoesService } from '../../../shared/services/transacoes.service';
 })
 export class DespesasComponent {
   contas: Conta[] = []
-  despesa: Despesa;
+  isCartao: boolean = false;
   requestParcela: ParcelaRequest; 
 
   dataCompra: Date = new Date();
   novaDespesa!: TransacaoModel;
+  transacaoCartao!: CartaoCredito 
 
   constructor(
     private readonly despesaService: TransacoesService,
     private readonly route: Router,
-    private readonly toastService: ToastrService             
+    private readonly toastService: ToastrService,
   ){
-    this.despesa = {} as Despesa;
     this.novaDespesa = {} as TransacaoModel;
     this.requestParcela = {} as ParcelaRequest;
   }
   OnSubmit() {
     this.novaDespesa.data = new Date(this.dataCompra);
     this.novaDespesa.categoria = parseInt(this.novaDespesa.categoria.toString());
-    this.novaDespesa.tipo = 'saida';
     this.novaDespesa.status = 'pendente';
-    this.despesaService.PostTransacao(this.novaDespesa).subscribe({
-      next: (success: TransacaoModel) => {
-          this.toastService.success("Gravado");
-          this.route.navigate(["gastos"]);
-      },
-      error: (err: any) => {
-        this.toastService.error(err.message);
-        this.route.navigate(["home"]);
-      }
-    })
+    if(this.isCartao) {
+      this.novaDespesa.tipo = 'cartao';
+    }
+    else {
+      this.novaDespesa.tipo = 'saida';
+      this.despesaService.PostTransacao(this.novaDespesa).subscribe({
+        next: (success: TransacaoModel) => {
+            this.toastService.success("Gravado");
+            this.route.navigate(["gastos"]);
+        },
+        error: (err: any) => {
+          this.toastService.error(err.message);
+          this.route.navigate(["home"]);
+        }
+      })
+    }
   }
 }

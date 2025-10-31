@@ -4,7 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map, finalize } from 'rxjs/operators';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { SystemService } from './system.service';
+import { SystemService } from '../services/system.service';
 
 @Injectable()
 export class HttpRequestInterceptor implements HttpInterceptor {

@@ -7,6 +7,8 @@ import { Ano, Mes } from '../../utils/meses';
 import { ResumoMensal } from '../../shared/models/resumo.model';
 import { ToastrService } from 'ngx-toastr';
 import { NavBarComponent } from "./nav-bar/nav-bar.component";
+import { AuthService } from '../../shared/services/auth.service';
+import { Usuario } from '../../shared/models/user.model';
 
 @Component({
   selector: 'app-home',
@@ -30,16 +32,20 @@ export class HomeComponent implements OnInit {
   colorAnual = '#768da1';
   resumoMensal$ = this.systemService.resumo$; // <-- agora é reativo
   anosDeDivida: number[] = [2024, 2025, 2026, 2027, 2028];
+  usuario!: Usuario | null;
 
   constructor(
     @Inject(DOCUMENT) private readonly document: Document,
     private readonly router: Router,
     private readonly toastService: ToastrService,
-    public readonly systemService: SystemService
+    public readonly systemService: SystemService,
+    private readonly authService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.ano = this.systemService.ano;
+    this.authService.usuario$.subscribe(user => this.usuario = user);
+
   }
 
   mudaMes(mes: Mes) {
