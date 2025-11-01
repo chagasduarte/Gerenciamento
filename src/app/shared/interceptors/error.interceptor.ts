@@ -7,8 +7,8 @@ import {
   HttpErrorResponse
 } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
-import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
@@ -20,25 +20,18 @@ export class ErrorInterceptor implements HttpInterceptor {
       catchError((error: HttpErrorResponse) => {
 
         let mensagem = 'Ocorreu um erro inesperado.';
-
-        if (error.error?.erro) {
-          mensagem = error.error.erro;
-        } else if (error.status === 0) {
+       //// Implementar chain of reponsability
+        if (error.status === 0) {
           mensagem = 'Falha na comunicação com o servidor.';
-        } else if (error.status === 401) {
+        } else if (error.status === 401 || error.status == 403) {
           mensagem = 'Sessão expirada. Faça login novamente.';
-          this.router.navigate(['/login']);
+          this.router.navigate(['login']);
         } else if (error.status === 404) {
           mensagem = 'Recurso não encontrado.';
         } else if (error.status === 500) {
           mensagem = 'Erro interno do servidor.';
         }
-
-        console.error('Erro interceptado:', error);
-
-        // opcional: pode mostrar um toast global
-        this.toastService.error(mensagem);
-
+        
         return throwError(() => new Error(mensagem));
       })
     );

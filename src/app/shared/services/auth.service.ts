@@ -28,7 +28,6 @@ export class AuthService {
       { nome, senha }
     ).pipe(
       tap(response => {
-        console.log(response)
         localStorage.setItem(this.TOKEN_KEY, response.token);
         localStorage.setItem(this.USER_KEY, JSON.stringify(response.usuario));
         this.usuarioSubject.next(response.usuario);

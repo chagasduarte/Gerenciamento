@@ -68,7 +68,7 @@ export class DadosComponent implements OnInit {
           this.tipoDespesaAgrupada = success[3];
         },
         error: (err: any) => {
-          this.toastService.error("Error", `Alguma coisa deu errado: ${err.mesage}`);
+          
         }
       });
     });

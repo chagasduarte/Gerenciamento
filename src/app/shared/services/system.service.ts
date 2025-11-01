@@ -41,7 +41,6 @@ export class SystemService {
     return this.infoService.GetResumoMensal(mes, ano).pipe(
       tap((resumo) => this._resumo.next(resumo)),
       catchError((err) => {
-        console.error('Erro ao buscar resumo mensal:', err);
         this._resumo.next(null);
         return of(null);
       })
