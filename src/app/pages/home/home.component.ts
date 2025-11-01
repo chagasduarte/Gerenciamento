@@ -62,7 +62,10 @@ export class HomeComponent implements OnInit {
     this.systemService.setMes(new Mes(mesAtual, ano));
     this.ano = new Ano(ano);
   }
-
+  logout(){
+    this.authService.logout();
+    this.router.navigate(["login"])
+  }
   // Navegação
   adicionarDespesa() { this.router.navigate(['despesas']); }
   parcelas() { this.router.navigate(['parcelas']); }
