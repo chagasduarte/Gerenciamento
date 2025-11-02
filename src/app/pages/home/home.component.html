@@ -116,13 +116,14 @@
   <app-nav-bar style="overflow-y: auto;"></app-nav-bar>
   <div class="accordion" id="accordionExample">
     <div class="d-flex justify-content-between">
-      <div class="d-flex flex-center up-hover conta">
+      <div class="d-flex flex-center conta">
         <div class="circle">
-          <img src="/assets/avatar/lu.png"/>
+          <img [src]="'/assets/avatar/' + usuario?.avatar"/>
         </div>
         <div class="valores" style="font-size: 35px;">
-          <div class="valor"> {{resumo.saldo_atual| currency}} lu {{usuario?.nome}}</div>
+          <div class="valor"> {{resumo.saldo_atual| currency}} {{usuario?.nome}}</div>
         </div>
+        <a class="up-hover"         (click)="logout()">Sair</a>
       </div>  
       <h2 class="accordion-header">
         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
