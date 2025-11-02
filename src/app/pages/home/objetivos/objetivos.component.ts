@@ -5,6 +5,9 @@ import { Despesa } from '../../../shared/models/despesa';
 import { SystemService } from '../../../shared/services/system.service';
 import { Ano } from '../../../utils/meses';
 import { CommonModule } from '@angular/common';
+import { TransacaoModel } from '../../../shared/models/despesa.model';
+import { TransacoesService } from '../../../shared/services/transacoes.service';
+import { LinhaTemporal } from '../../../shared/models/linha-temporal.model';
 
 @Component({
   selector: 'app-objetivos',
@@ -14,24 +17,27 @@ import { CommonModule } from '@angular/common';
   templateUrl: './objetivos.component.html',
   styleUrl: './objetivos.component.css'
 })
-export class ObjetivosComponent implements OnInit, AfterViewInit{
+export class ObjetivosComponent implements OnInit {
 
   chartAnualOption!: EChartsOption;
-  despesas: {despesa: Despesa, qtdParcelas: number, dataFinal: Date}[] = [];
+  despesas: LinhaTemporal[] = [];
   ano: Ano = new Ano(this.systemService.ano.valor);
 
   constructor(
     private readonly toastrService: ToastrService,
-    private readonly systemService: SystemService
+    private readonly systemService: SystemService,
+    private readonly transacao: TransacoesService
   ){}
-  ngAfterViewInit(): void {
-    this.despesas.sort((a, b) => {
-      return a.despesa.DataCompra.getUTCMonth() - b.despesa.DataCompra.getUTCMonth()
-    })
-  }
 
   ngOnInit(): void {
-    
+     this.transacao.GetLinhaTemporal(this.systemService.ano.valor).subscribe({
+      next: (success) => {
+        this.despesas = success;
+      },
+      error: (err:any) => {
+        this.toastrService.error("não foi possível buscar as despesas", "Erro")
+      }
+    })
   }
    
   calcularDataFinal(dataInicio: string, parcelas: number): Date {
@@ -41,6 +47,9 @@ export class ObjetivosComponent implements OnInit, AfterViewInit{
   }
   
   calculaInicioFim(datainicio: Date = new Date(), datafim:Date = new Date()): string {
+    datainicio = new Date(datainicio);
+    datafim = new Date(datafim);
+    
     let inicio = datainicio.getUTCMonth() + 1;
     let fim = 0;
     if(datainicio.getUTCFullYear()  < datafim.getUTCFullYear()) {

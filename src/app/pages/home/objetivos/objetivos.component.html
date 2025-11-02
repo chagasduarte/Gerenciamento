@@ -5,8 +5,8 @@
     </div>
   </div>
   <div class="grid-doze" *ngFor="let despesa of despesas">
-    <div class="despesa" [ngStyle]="{'grid-column': calculaInicioFim(despesa.despesa.DataCompra, despesa.dataFinal)}">
-      {{despesa.despesa.Nome}} 
+    <div class="despesa" [ngStyle]="{'grid-column': calculaInicioFim(despesa.data_inicio, despesa.data_fim)}">
+      {{despesa.descricao}} 
     </div>
   </div>
 </div>

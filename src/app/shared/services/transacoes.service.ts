@@ -10,6 +10,7 @@ import { DespesasParceladasResponse } from '../models/despesasParceladas.model';
 import { AgrupamentoResponse } from '../models/agrupamento';
 import { Projecao } from '../models/projecao.model';
 import { TipoDespesaGrafico } from '../models/graficos';
+import { LinhaTemporal } from '../models/linha-temporal.model';
 
 @Injectable({
   providedIn: 'root'
@@ -64,5 +65,9 @@ export class TransacoesService {
 
   GetParcelas(descricao: string): Observable<TransacaoModel[]>{
     return this.http.get<TransacaoModel[]>(`${this.api}/transacoes/despesa?descricao=${descricao}`)
+  }
+
+  GetLinhaTemporal(ano: number): Observable<LinhaTemporal[]>{
+    return this.http.get<LinhaTemporal[]>(`${this.api}/transacoes/linhatemporal?ano=${ano}`)
   }
 }

@@ -60,7 +60,7 @@
           <div class="d-flex">
             <div>Valor:</div>
             <div>{{gasto.valor | currency}}</div>
-            <button class="btn btn-sm btn-success">-</button>
+            <button class="btn btn-sm btn-success" (click)="apagar(gasto.id)">-</button>
           </div>
         </div>
       </div>
