@@ -89,6 +89,7 @@ export class DadosComponent implements OnInit {
   contasDetalhes() {
     this.router.navigate(["contas-detalhe"])
   }
+  objetivos() { this.router.navigate(['objetivos']); }
 
   entradaDetalhes() {
     this.router.navigate(["entradas-detalhe"])

@@ -21,8 +21,7 @@ export class ObjetivosComponent implements OnInit {
 
   chartAnualOption!: EChartsOption;
   despesas: LinhaTemporal[] = [];
-  ano: Ano = new Ano(this.systemService.ano.valor);
-
+  ano$ = this.systemService.ano$;
   constructor(
     private readonly toastrService: ToastrService,
     private readonly systemService: SystemService,
@@ -30,7 +29,13 @@ export class ObjetivosComponent implements OnInit {
   ){}
 
   ngOnInit(): void {
-     this.transacao.GetLinhaTemporal(this.systemService.ano.valor).subscribe({
+    this.buscaLinhadoTempo();
+    this.ano$.subscribe(ano => {
+      this.buscaLinhadoTempo();
+    })
+  }
+  buscaLinhadoTempo(){
+    this.transacao.GetLinhaTemporal(this.systemService.ano.valor).subscribe({
       next: (success) => {
         this.despesas = success;
       },
@@ -39,7 +44,6 @@ export class ObjetivosComponent implements OnInit {
       }
     })
   }
-   
   calcularDataFinal(dataInicio: string, parcelas: number): Date {
     const data = new Date(dataInicio);
     data.setMonth(data.getMonth() + parcelas - 1);
