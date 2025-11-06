@@ -3,9 +3,9 @@
     <div class="col voltar">
         <button class="btn btn-sm btn-warning" (click)="Voltar()">Voltar</button>
     </div>
-    <h1 class="col">
-      <button class="btn" (click)="showCard = !showCard">{{novo.soma_parcelados + novo.soma_adicionais | currency}}</button>
-    </h1>
+    <div class="col">
+      <button class="btn" (click)="showCard = !showCard"> <h1>{{novo.soma_parcelados + novo.soma_adicionais | currency}}</h1></button>
+    </div>
     <div class="col butao">
         <button class="btn btn-sm btn-primary" (click)="AdicionaGasto()">Add</button>
     </div>
@@ -41,17 +41,11 @@
       <div class="card card-sm"  [ngStyle]="{'background-color': DefineCorParcela(parcela.data)}">
         <div class="card-header text-break d-flex row">
           <label for="">{{parcela.descricao.replace(' - Parcela', '')}}</label>
-          <input type="date" [(ngModel)]="parcela.data" class="form-control form-control-sm col-1">
-          <button class="btn btn-success btn-sm col">Up</button>
         </div>
         <div class="card-body">
           <div class="d-flex">
             <div>Valor:</div>
             <div>{{(parcela.valor) | currency}}</div>
-          </div>
-          
-          <div class="row">
-            <button class="btn btn-sm btn-primary" (click)="adicionarListaPagamento(parcela)"> Adicionar </button>
           </div>
         </div>
       </div>
