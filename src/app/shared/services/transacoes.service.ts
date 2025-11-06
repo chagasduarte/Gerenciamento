@@ -11,6 +11,7 @@ import { AgrupamentoResponse } from '../models/agrupamento';
 import { Projecao } from '../models/projecao.model';
 import { TipoDespesaGrafico } from '../models/graficos';
 import { LinhaTemporal } from '../models/linha-temporal.model';
+import { PordiaResponse } from '../models/PorDiaResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -69,5 +70,9 @@ export class TransacoesService {
 
   GetLinhaTemporal(ano: number): Observable<LinhaTemporal[]>{
     return this.http.get<LinhaTemporal[]>(`${this.api}/transacoes/linhatemporal?ano=${ano}`)
+  }
+
+  GetByDay(dia: number, mes: number, ano: number): Observable<PordiaResponse> {
+    return this.http.get<PordiaResponse>(`${this.api}/transacoes/pordia?dia=${dia}&mes=${mes}&ano=${ano}`)
   }
 }

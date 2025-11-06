@@ -13,7 +13,17 @@ export class SystemService {
   private readonly _ano = new BehaviorSubject<Ano>(
     new Ano(new Date().getUTCFullYear())
   );
-  private readonly _resumo = new BehaviorSubject<ResumoMensal | null>(null);
+
+  private readonly _resumo = new BehaviorSubject<ResumoMensal | null>(
+    {
+    saldo_atual: 0,
+    gastos_mensal: 0,
+    receita_mensal: 0,
+    gastos_mensal_pendente: 0,
+    receita_mensal_pendente: 0,
+    saldo_acumuldado: 0
+    } as ResumoMensal
+  );
 
   readonly mes$ = this._mes.asObservable();
   readonly ano$ = this._ano.asObservable();

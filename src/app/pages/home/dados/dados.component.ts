@@ -29,8 +29,14 @@ import { drawMediasBar } from '../../dashboard/drawcharts/medias.bar';
 })
 export class DadosComponent implements OnInit {
   ano!: Ano;
-  novasParcelas!: DespesasParceladasResponse;
-  resumoMensal$ = this.systemService.resumo$; // <-- agora é reativo
+  novasParcelas: DespesasParceladasResponse = 
+  {
+    parcelas: [],
+      mensal: {
+        pendente: 0
+      }
+  } as DespesasParceladasResponse;
+  resumoMensal$ = this.systemService.resumo$; // <-- é reativo
   novoAgrupamento!: AgrupamentoResponse;
   projecoes!: Projecao[]; 
   tipoDespesaAgrupada: TipoDespesaGrafico[] = [];

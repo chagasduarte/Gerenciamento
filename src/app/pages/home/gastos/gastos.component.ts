@@ -11,6 +11,7 @@ import { Parcela } from '../../../shared/models/parcela';
 import { combineLatest, lastValueFrom } from 'rxjs';
 import { TransacaoModel, Transacoes } from '../../../shared/models/despesa.model';
 import { TransacoesService } from '../../../shared/services/transacoes.service';
+import { PordiaResponse } from '../../../shared/models/PorDiaResponse';
 
 @Component({
     selector: 'app-gastos',
@@ -34,6 +35,8 @@ export class GastosComponent implements OnInit{
   totalPagar: number = 0;
 
   novo: Transacoes = {} as Transacoes;
+  showCard = false;
+  cartao!: PordiaResponse;
 
   constructor(
    private readonly router: Router,
@@ -55,6 +58,11 @@ export class GastosComponent implements OnInit{
       this.transacoesService.GetDespesas(mes.valor + 1, ano.valor).subscribe({
         next: (success) => {
           this.novo = success;
+        }
+      });
+      this.transacoesService.GetByDay(28, mes.valor + 1, ano.valor).subscribe({
+        next: (success) => {
+          this.cartao = success;
         }
       })
     });
@@ -107,7 +115,7 @@ export class GastosComponent implements OnInit{
   }
 
   
-  DefineCorParcela(parcela: Date): string {
+  DefineCorParcela(parcela: Date | string): string {
     return new Date(parcela) < new Date()? "#af6e6e" : "#b1ca78";
   }
 
