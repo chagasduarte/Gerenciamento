@@ -10,7 +10,7 @@
   </div>
   
   <div class="linha"></div>
-  <h3>Abertos:</h3>
+  <h3>Abertos: {{ somaAbertos | currency}}</h3>
   <div class="parcelas">
     <div *ngFor="let parcela of parcelas">
       <div class="card card-sm"  [ngStyle]="{'background-color': DefineCorParcela(parcela.data)}">
@@ -33,7 +33,7 @@
   </div>
   <div class="linha"></div>
 
-  <h3>Pagos:</h3>
+  <h3>Pagos: {{somaPagos | currency}}</h3>
   <div class="parcelas">
     
     <div *ngFor="let parcela of parcelasPagas">

@@ -37,7 +37,8 @@ export class ParcelasComponent implements OnInit {
   totalPagar: number = 0;
   pagamentos: Pagamento[] = [];
   mostrarSelecionadas = false;
-
+  somaAbertos: number = 0;
+  somaPagos: number = 0;
   constructor(
       private readonly activeRouter: ActivatedRoute,
       private readonly route: Router,
@@ -59,6 +60,14 @@ export class ParcelasComponent implements OnInit {
         this.transacoesService.GetParcelas(this.nomeDespesa).subscribe(x => {
           this.parcelasPagas = x.filter(x => x.status == 'pago');
           this.parcelas = x.filter(x => x.status == 'pendente' && new Date(x.data).getUTCFullYear() == this.ano.valor);
+          
+          this.somaAbertos = this.parcelas.reduce((acc, p) => ({
+            soma: acc.soma + parseFloat(p.valor.toString())
+          }), { soma: 0  }).soma;
+
+          this.somaPagos = this.parcelasPagas.reduce((acc, p) => ({
+            soma: acc.soma + parseFloat(p.valor.toString())
+          }), { soma: 0  }).soma;
         });
       }
     });
@@ -77,7 +86,7 @@ export class ParcelasComponent implements OnInit {
       this.toastr.success("Despesas pagas");
       this.systemService.atualizarResumo();
       this.buscaParcelas();
-
+      this.totalPagar = 0;
     } catch (error) {
       console.error(error);
       this.toastr.error("Erro ao pagar despesas");
@@ -96,15 +105,14 @@ export class ParcelasComponent implements OnInit {
     this.totalPagar += parseFloat(parcela.valor.toString());
     this.listaPagamento.push(parcela);
     // this.pagamentos.push({TipoPagamento: 1, IdPagamento: parcela.Id});
-    console.log(this.listaPagamento)
   }
 
   Voltar() {
     this.route.navigate(["home"]);
   }
   
-  removedaListaPagamento(parcela: Parcela) {
-    this.totalPagar -= parseFloat(parcela.Valor.toString());
+  removedaListaPagamento(parcela: TransacaoModel) {
+    this.totalPagar -= parseFloat(parcela.valor.toString());
   }   
 
   abrirSelecionadas() {
