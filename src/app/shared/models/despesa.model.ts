@@ -19,3 +19,8 @@ export interface Transacoes {
     adicionais: TransacaoModel[];
     pagos: TransacaoModel[];
 }
+
+export interface Parcelas {
+    despesa: TransacaoModel[];
+    soma: number;
+}

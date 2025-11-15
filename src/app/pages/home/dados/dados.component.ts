@@ -17,6 +17,7 @@ import { TipoDespesaGrafico } from '../../../shared/models/graficos';
 import { drawCategoriaPie } from '../../dashboard/drawcharts/categorias.pie';
 import { drawProjecoes } from '../../dashboard/drawcharts/progressao.coloumn';
 import { drawMediasBar } from '../../dashboard/drawcharts/medias.bar';
+import { TransacaoModel } from '../../../shared/models/despesa.model';
 
 @Component({
   selector: 'app-dados',
@@ -36,11 +37,24 @@ export class DadosComponent implements OnInit {
         pendente: 0
       }
   } as DespesasParceladasResponse;
+
   resumoMensal$ = this.systemService.resumo$; // <-- é reativo
   novoAgrupamento!: AgrupamentoResponse;
   projecoes!: Projecao[]; 
   tipoDespesaAgrupada: TipoDespesaGrafico[] = [];
+  novaDespesa = {
+    descricao: '',
+    categoria: '',
+    valor: null
+  };
+  dataCompra: string = '';
+  isCartao: boolean = false;
+  isParcelado: boolean = false;
 
+  requestParcela = {
+    QtdParcelas: null,
+    Valor: null
+  };
   constructor(
     private readonly despesaService: TransacoesService,
     private readonly toastService: ToastrService,
@@ -80,6 +94,47 @@ export class DadosComponent implements OnInit {
     });
   }
 
+  salvarTransacao() {
+    const payload = {
+      ...this.novaDespesa,
+      dataCompra: this.dataCompra,
+      cartao: this.isCartao,
+      parcelado: this.isParcelado,
+      parcelas: this.isParcelado ? this.requestParcela : null
+    };
+
+    this.despesaService.PostTrasacoesParceladas(payload).subscribe({
+      next: (success: TransacaoModel[]) => {
+        if (success) {
+          this.toastService.success("Parcelas Gravadas");
+        }
+      },
+      error: (err) => {
+        console.log(err);
+        this.toastService.error(err.message);
+      },
+    });
+    // aqui você pode chamar seu serviço:
+    // this.transacoesService.adicionar(payload).subscribe(() => {
+    //   this.fecharModal();
+    //   this.carregarTransacoes();
+    // });
+
+    this.fecharModal();
+  }
+
+  fecharModal() {
+    const modal = document.getElementById('addTransacaoModal');
+    if (modal) {
+      const backdrop = document.querySelector('.modal-backdrop');
+      modal.classList.remove('show');
+      modal.setAttribute('aria-hidden', 'true');
+      modal.removeAttribute('aria-modal');
+      modal.style.display = 'none';
+      backdrop?.remove();
+      document.body.classList.remove('modal-open');
+    }
+  }
   adicionarDespesa() {
     this.router.navigate(["despesas"]);
   }

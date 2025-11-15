@@ -17,9 +17,9 @@ import { PordiaResponse } from '../../../shared/models/PorDiaResponse';
     selector: 'app-gastos',
     standalone: true,
     imports: [
-      CommonModule,
-      FormsModule
-    ],
+    CommonModule,
+    FormsModule
+],
     templateUrl: './gastos.component.html',
     styleUrl: './gastos.component.css'
 })
@@ -37,6 +37,25 @@ export class GastosComponent implements OnInit{
   novo: Transacoes = {} as Transacoes;
   showCard = false;
   cartao!: PordiaResponse;
+  novaDespesa: TransacaoModel = 
+  {
+    categoria: 0,
+    descricao: '',
+    criado_em: new Date(),
+    data: new Date(),
+    id: 0,
+    status: '',
+    tipo: '',
+    valor: 0
+  };
+  dataCompra: string = '';
+  isCartao: boolean = false;
+  isParcelado: boolean = false;
+
+  requestParcela = {
+    QtdParcelas: null,
+    Valor: null
+  };
 
   constructor(
    private readonly router: Router,
@@ -50,6 +69,41 @@ export class GastosComponent implements OnInit{
     this.systemsService.atualizarResumo();
   }
 
+  salvarTransacao() {
+    const payload = {
+      ...this.novaDespesa,
+      dataCompra: this.dataCompra,
+      cartao: this.isCartao,
+      parcelado: this.isParcelado,
+      parcelas: this.isParcelado ? this.requestParcela : null
+    };
+    this.transacoesService.PostTrasacoesParceladas(payload).subscribe({
+      next: (success: TransacaoModel[]) => {
+        if (success) {
+          this.toastService.success("Parcelas Gravadas");
+        }
+      },
+      error: (err) => {
+        console.log(err);
+        this.toastService.error(err.message);
+      },
+    })
+
+    this.fecharModal();
+  }
+
+  fecharModal() {
+    const modal = document.getElementById('addTransacaoModal');
+    if (modal) {
+      const backdrop = document.querySelector('.modal-backdrop');
+      modal.classList.remove('show');
+      modal.setAttribute('aria-hidden', 'true');
+      modal.removeAttribute('aria-modal');
+      modal.style.display = 'none';
+      backdrop?.remove();
+      document.body.classList.remove('modal-open');
+    }
+  }
   listaDespesas(){
     combineLatest([
       this.systemsService.ano$,

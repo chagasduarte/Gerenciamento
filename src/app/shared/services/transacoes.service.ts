@@ -5,7 +5,7 @@ import { AppSettingsService } from './app-settings.service';
 import { Entrada } from '../models/entradas';
 import { Observable } from 'rxjs';
 import { ResumoMensal } from '../models/resumo.model';
-import { TransacaoModel, Transacoes } from '../models/despesa.model';
+import { Parcelas, TransacaoModel, Transacoes } from '../models/despesa.model';
 import { DespesasParceladasResponse } from '../models/despesasParceladas.model';
 import { AgrupamentoResponse } from '../models/agrupamento';
 import { Projecao } from '../models/projecao.model';
@@ -26,7 +26,11 @@ export class TransacoesService {
   }
 
   PostTransacao(entrada: TransacaoModel): Observable<TransacaoModel> {
-    return this.http.post<TransacaoModel>(`${this.api}/transacoes`, entrada)
+    return this.http.post<TransacaoModel>(`${this.api}/transacoes`, entrada);
+  }
+
+  PostTrasacoesParceladas(payload: any): Observable<TransacaoModel[]> {
+    return this.http.post<TransacaoModel[]>(`${this.api}/transacoes/parceladas`, payload);
   }
 
   GetDespesas(mes: number, ano: number): Observable<Transacoes> {
@@ -64,8 +68,8 @@ export class TransacoesService {
     return this.http.get<TipoDespesaGrafico[] >(`${this.api}/dashboard/agrupamento?ano=${ano}`)
   }
 
-  GetParcelas(descricao: string): Observable<TransacaoModel[]>{
-    return this.http.get<TransacaoModel[]>(`${this.api}/transacoes/despesa?descricao=${descricao}`)
+  GetParcelas(descricao: string): Observable<Parcelas>{
+    return this.http.get<Parcelas>(`${this.api}/transacoes/despesa?descricao=${descricao}`)
   }
 
   GetLinhaTemporal(ano: number): Observable<LinhaTemporal[]>{
