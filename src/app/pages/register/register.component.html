@@ -1,0 +1,77 @@
+<div class="register-container animate-fade-in">
+  <div class="register-card">
+    <h2 class="title">Criar Conta</h2>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <!-- Nome -->
+      <div class="form-group">
+        <div class="account-container-avatar">
+            <div class="cropper-wrapper">
+                <img #image [src]="imagePreview" class="account-avatar preview-image"/>
+                <div class="cropper-mask"></div>
+            </div>
+
+            <div class="account-footer">
+                <button class="button-zoom" (click)="zoomOut()">−</button>
+                <input type="range" id="zoomSlider" min="0.1" max="3" step="0.01" value="1">
+                <button class="button-zoom" (click)="zoomIn()">+</button>
+            </div>
+
+            <div id="loading" class="dataTables_processing" *ngIf="carregandoImg">
+                <div class="table__overlay" id="overlay"></div>
+                <div class="processing-div">
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 45 45" fill="none" style="-webkit-animation: spin 1s linear infinite; animation: spin 1s linear infinite;">
+                            <path d="M44.5 22.5C44.5 34.6503 34.6503 44.5 22.5 44.5C10.3497 44.5 0.5 34.6503 0.5 22.5C0.5 10.3497 10.3497 0.5 22.5 0.5C34.6503 0.5 44.5 10.3497 44.5 22.5ZM4.9 22.5C4.9 32.2202 12.7798 40.1 22.5 40.1C32.2202 40.1 40.1 32.2202 40.1 22.5C40.1 12.7798 32.2202 4.9 22.5 4.9C12.7798 4.9 4.9 12.7798 4.9 22.5Z" fill="white" />
+                            <path d="M2.7 22.5C1.48498 22.5 0.488609 23.4874 0.609912 24.6964C0.824192 26.832 1.35026 28.9288 2.17465 30.919C3.28026 33.5882 4.90077 36.0135 6.94365 38.0564C8.98654 40.0992 11.4118 41.7198 14.081 42.8254C16.0712 43.6497 18.168 44.1758 20.3037 44.3901C21.5126 44.5114 22.5 43.515 22.5 42.3C22.5 41.085 21.5113 40.1142 20.3057 39.9627C18.7484 39.767 17.2209 39.3634 15.7648 38.7603C13.6294 37.8758 11.6892 36.5794 10.0549 34.9451C8.42061 33.3108 7.12421 31.3706 6.23972 29.2352C5.63656 27.7791 5.23301 26.2516 5.03733 24.6943C4.88584 23.4888 3.91503 22.5 2.7 22.5Z" fill="#105E3F" />
+                        </svg>
+                        <span>Carregando</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="account-footer">
+          <button class="btn btn-danger" (click)="removeImage()">Remover foto</button>
+          <div>
+            <label for="inputFile" class="btn btn-dark">Selecionar arquivo</label>
+            <input type="file" id="inputFile" accept="image/*" style="display: none;" (change)="onFileSelected($event)" />
+          </div>
+        </div>
+      </div>
+      <!-- Nome -->
+      <div class="form-group">
+        <label for="nome">Nome</label>
+        <input id="nome" type="text" formControlName="nome" />
+        <small *ngIf="submitted && form.controls['nome'].invalid" class="error">
+          Informe seu nome.
+        </small>
+      </div>
+
+      <!-- Senha -->
+      <div class="form-group">
+        <label for="senha">Senha</label>
+        <input id="senha" type="password" formControlName="senha" />
+        <small *ngIf="submitted && form.controls['senha'].invalid" class="error">
+          A senha deve ter ao menos 6 caracteres.
+        </small>
+      </div>
+
+
+      <!-- Confirmar Senha -->
+      <div class="form-group">
+        <label for="confirmarSenha">Confirmar Senha</label>
+        <input id="confirmarSenha" type="password" formControlName="confirmarSenha" />
+        <small *ngIf="submitted && form.errors?.['notMatch']" class="error">
+          As senhas não conferem.
+        </small>
+      </div> 
+      <button class="btn btn-success" type="submit">Registrar</button>
+    </form>
+
+
+    <p >
+    Já possui conta?
+    <a href="/login" >Entrar</a>
+    </p>
+  </div>
+</div>

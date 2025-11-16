@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { AuthResponse, Usuario } from '../models/user.model';
 import { AppSettingsService } from './app-settings.service';
 
@@ -8,7 +8,7 @@ import { AppSettingsService } from './app-settings.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-    apiUrl: string;
+  apiUrl: string;
 
   private usuarioSubject = new BehaviorSubject<Usuario | null>(null);
   usuario$ = this.usuarioSubject.asObservable();
@@ -18,13 +18,13 @@ export class AuthService {
 
   constructor(private http: HttpClient, private configService: AppSettingsService) {
     this.carregarUsuario();
-    this.apiUrl = this.configService.get().WebApi + "/auth";  
+    this.apiUrl = this.configService.get().WebApi;  
 
   }
 
   login(nome: string, senha: string) {
     return this.http.post<AuthResponse>(
-      `${this.apiUrl}/login`,
+      `${this.apiUrl}/auth/login`,
       { nome, senha }
     ).pipe(
       tap(response => {
@@ -40,7 +40,10 @@ export class AuthService {
     localStorage.removeItem(this.USER_KEY);
     this.usuarioSubject.next(null);
   }
-
+  register(data: Usuario): Observable<Usuario> {
+    return this.http.post<Usuario>(`${this.apiUrl}/user`, data);
+  }
+  
   get token(): string | null {
     return localStorage.getItem(this.TOKEN_KEY);
   }

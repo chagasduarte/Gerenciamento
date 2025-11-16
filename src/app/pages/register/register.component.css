@@ -1,0 +1,331 @@
+
+/* Container centralizado */
+.register-container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--pastel-bg);
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Card branco */
+.register-card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--pastel-card);
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+  text-align: center;
+  animation: fadeIn 0.5s ease;
+}
+
+/* Titulos */
+.title {
+  font-size: 26px;
+  margin-bottom: 6px;
+  color: var(--pastel-text);
+  font-weight: 700;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 24px;
+}
+
+/* Form group estilo */
+.form-group {
+  text-align: left;
+  margin-bottom: 18px;
+}
+
+/* Label */
+.register-card label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: var(--pastel-text);
+}
+
+/* Inputs */
+.register-card input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #dcdcdc;
+  background: #fafafa;
+  font-size: 14px;
+  outline: none;
+  transition: 0.2s;
+  box-sizing: border-box;
+}
+
+.register-card input:focus {
+  border-color: var(--pastel-accent);
+  background: #fff;
+  box-shadow: 0 0 0 6px rgba(179,199,230,0.12);
+}
+
+/* Mensagem de erro */
+.error {
+  color: var(--pastel-error);
+  font-size: 12px;
+  margin-top: 4px;
+  display: block;
+}
+
+/* Botão */
+.btn-submit {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  background: var(--pastel-accent);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-submit:hover {
+  opacity: 0.95;
+  transform: translateY(-1px);
+}
+
+/* Texto rodapé */
+.footer-text {
+  margin-top: 18px;
+  font-size: 14px;
+  color: #666;
+}
+
+/* Link */
+.link {
+  color: var(--pastel-accent);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+/* Animação fadeIn */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsividade pequena ajuste */
+@media (max-width: 420px) {
+  .register-card { padding: 20px; border-radius: 12px; }
+  .title { font-size: 22px; }
+}
+
+
+.change-avatar {
+    position: relative;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin: 0 !important;
+}
+
+.change-avatar .avatar {
+    margin: 0 !important;
+}
+
+.change-avatar .img-responsive {
+    width: 40%;
+}
+
+.change-avatar:hover:before {
+    position: absolute;
+    text-align: center;
+    background-color: rgba(0,0,0,.7);
+    border: .25rem solid #FFD000;
+    border-radius: .2rem;
+    padding: 5.5rem 2rem 0;
+    cursor: pointer;
+    content: "";
+    color: white;
+    font-weight: 700;
+    font-size: 225%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 60%;
+    vertical-align: middle;
+    height: 140px;
+}
+
+
+/*.change-avatar:hover:after {
+    position: absolute;
+    content: "\f030 \a\a" attr(data-legend) "";
+        white-space: pre;
+    font: normal normal normal 14px/1 FontAwesome;
+    color: #fff;  
+    font-weight: 700;
+    font-size: 225%;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align:center;
+    width: 100%;
+}*/
+
+
+.change-avatar:hover .avatar-legend {
+    display: block;
+    color: #fff;
+    font-weight: 700;
+    font-size: 225%;
+    top: 50%;
+    transform: translateY(-50%);
+    position: absolute;
+    text-align: center;
+    width: 100%;
+}
+
+.avatar-legend {
+    display: none;
+}
+
+.avatar-legend > i {
+    font-size: 300%;
+}
+
+/*#### REFATORAMENTO DA TELA DE CONFIGURAÇÕES GERIAS ####*/
+.account-container {
+    padding: 30px 150px 0 150px;
+}
+
+.section-account, .account-container-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.account-container-list {
+    box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    padding: 0;
+    margin-bottom: 30px;
+}
+.account-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* alinha verticalmente se precisar */
+}
+
+.codigo {
+    color: var(--search-color, #108D62);
+}
+
+.font-billing {
+    color: var(--billing-color, #1D7279);
+}
+
+.account-container-item {
+    list-style: none;
+    padding: 12px 20px 12px 20px;
+    border-bottom: 1px solid #ccc;
+}
+
+.account-container-item a:hover {
+    text-decoration: underline;
+}
+.account-container-item:last-child {
+    border-bottom: none;
+}
+
+.account-container-item::after {
+    content: "❯";
+    float: right;
+    color: #888;
+    font-size: 16px;
+}
+
+.font-color-account {
+    color: #58656F !important;
+}
+
+.account-avatar {
+    width: 250px;
+    height: 250px;
+}
+
+.account-container-avatar {
+    align-items: center;
+    margin: 25px;
+}
+
+.button-account {
+    width: 110px;
+}
+.cropper-wrapper {
+    position: relative;
+    width: 250px;
+    height: 250px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+/* Máscara circular com borda sutil */
+.cropper-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.3) inset;
+    pointer-events: none; /* não interfere com interação */
+}
+
+
+.cropper-wrapper::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient( circle at center, transparent 70%, 
+    rgba(255, 255, 255, 0.7) 46%, rgba(255, 255, 255, 0.7) 100% );
+    pointer-events: none;
+}
+
+.button-zoom {
+    border-radius: 50%;
+    border: none;
+    margin: 5px;
+    background-color: var(--billing-color);
+    color: white;
+    font-weight: 700;
+}
+
+button.close {
+    appearance: none;
+    cursor: pointer;
+    padding: 0px;
+    background: 0px 0px;
+    border-width: 0px;
+    border-style: initial;
+    border-color: initial;
+    border-image: initial;
+}
+
+.close {
+    float: right;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1;
+    color: rgb(0, 0, 0);
+    text-shadow: rgb(255, 255, 255) 0px 1px 0px;
+}
+
+a:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}

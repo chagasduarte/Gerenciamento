@@ -14,9 +14,11 @@ import { Pagamento } from './shared/models/pagamentos';
 import { PagamentosComponent } from './pages/home/pagamentos/pagamentos.component';
 import { DadosComponent } from './pages/home/dados/dados.component';
 import { InvestimentosComponent } from './pages/home/investimentos/investimentos.component';
+import { RegisterComponent } from './pages/register/register.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
+    { path: 'register', component: RegisterComponent },
     { path: "", component: HomeComponent, 
       children: [
         { path: "", redirectTo: "home", pathMatch: "full" },
