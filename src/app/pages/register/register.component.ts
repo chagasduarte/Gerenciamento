@@ -5,7 +5,8 @@ import { Router, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import Cropper from 'cropperjs';
 import { UsuarioService } from '../../shared/services/usuario.service';
-
+import { isPlatformBrowser } from '@angular/common';
+import { Inject, PLATFORM_ID } from '@angular/core';
 
 @Component({
   selector: 'app-register',
@@ -31,7 +32,8 @@ export class RegisterComponent implements AfterViewInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private userSerice: UsuarioService,
-    private router: Router
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.form = this.fb.group({
       nome: ['', Validators.required],
@@ -41,7 +43,9 @@ export class RegisterComponent implements AfterViewInit {
     },{ validators: this.passwordMatchValidator });
   }
   ngAfterViewInit(): void {
-    this.carregarImagem();
+    if (isPlatformBrowser(this.platformId)) {
+      this.carregarImagem();
+    }
   }
 
 
@@ -126,6 +130,7 @@ export class RegisterComponent implements AfterViewInit {
           this.croppedImage = canvas.toDataURL();
         }
       });
+
     }
   }
 
