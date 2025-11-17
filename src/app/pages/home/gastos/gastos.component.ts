@@ -75,8 +75,8 @@ export class GastosComponent implements OnInit{
     if (this.isParcelado) {
       const payload = {
         ...this.novaDespesa,
-        dataCompra: this.dataCompra,
-        cartao: this.isCartao,
+        data: this.dataCompra,
+        ispaycart: this.isCartao,
         parcelado: this.isParcelado,
         parcelas: this.isParcelado ? this.requestParcela : null
       };
@@ -93,6 +93,8 @@ export class GastosComponent implements OnInit{
       })
     }
     else {
+      this.novaDespesa.data = new Date(this.dataCompra);
+      this.novaDespesa.ispaycart = this.isCartao;
       this.transacoesService.PostTransacao(this.novaDespesa).subscribe(x => {
         this.listaDespesas();
         this.toastService.success("Despesa Gravada");

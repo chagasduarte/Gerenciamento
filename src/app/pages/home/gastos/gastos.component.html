@@ -73,7 +73,11 @@
           <div class="me-2">{{gasto.data | date}}:</div>
           <div>{{gasto.valor | currency}}</div>
         </div>
-        <button class="btn btn-sm btn-primary" (click)="adicionarListaPagamento(gasto)"> Adicionar </button>
+        <button class="btn btn-sm btn-primary"
+                *ngIf="!gasto.adicionada"
+                (click)="adicionarListaPagamento(gasto)">
+          Adicionar
+        </button>         
       </div>
     </div>
   </div>
