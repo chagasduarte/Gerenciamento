@@ -98,7 +98,7 @@ export class GastosComponent implements OnInit{
       this.transacoesService.PostTransacao(this.novaDespesa).subscribe(x => {
         this.listaDespesas();
         this.toastService.success("Despesa Gravada");
-      })
+      });
     }
     this.fecharModal();
   }

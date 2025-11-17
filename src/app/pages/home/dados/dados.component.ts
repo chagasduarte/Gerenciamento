@@ -104,8 +104,8 @@ export class DadosComponent implements OnInit {
     if (this.isParcelado) {
       const payload = {
         ...this.novaDespesa,
-        dataCompra: this.dataCompra,
-        cartao: this.isCartao,
+        data: this.dataCompra,
+        ispaycart: this.isCartao,
         parcelado: this.isParcelado,
         parcelas: this.isParcelado ? this.requestParcela : null
       };
@@ -122,11 +122,12 @@ export class DadosComponent implements OnInit {
       })
     }
     else {
+      this.novaDespesa.data = new Date(this.dataCompra);
       this.novaDespesa.ispaycart = this.isCartao;
       this.despesaService.PostTransacao(this.novaDespesa).subscribe(x => {
         this.preencheInformacoes();
         this.toastService.success("Despesa Gravada");
-      })
+      });
     }
     this.fecharModal();
   }
