@@ -5,4 +5,5 @@ export interface ResumoMensal {
     gastos_mensal_pendente: number;
     receita_mensal_pendente: number;
     saldo_acumuldado: number;
+    gastos_cartao: number;
 }

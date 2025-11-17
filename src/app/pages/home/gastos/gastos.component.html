@@ -42,6 +42,7 @@
     </div>
   </div>
 
+  <!--cartão-->
   <h3 *ngIf="showCard">Cartões: {{cartao.soma.soma | currency}}</h3>
   <div class="parcelas" *ngIf="showCard">
     <div *ngFor="let parcela of cartao.result">
