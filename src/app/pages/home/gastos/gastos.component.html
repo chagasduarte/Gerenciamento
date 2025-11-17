@@ -17,7 +17,10 @@
     <div *ngFor="let parcela of novo.parceladas">
       <div class="card card-sm"  [ngStyle]="{'background-color': DefineCorParcela(parcela.data)}">
         <div class="card-header text-break d-flex row">
-          <label for="">{{parcela.descricao.replace(' - Parcela', '')}}</label>
+          <label for="">
+            {{parcela.descricao.replace(' - Parcela', '')}}
+            <img *ngIf="parcela.ispaycart" src="/assets/img/card.png" alt="">
+          </label>
           <input type="date" [(ngModel)]="parcela.data" class="form-control form-control-sm col-1">
           <button class="btn btn-success btn-sm col">Up</button>
         </div>
@@ -62,6 +65,7 @@
     <div *ngFor="let gasto of novo.adicionais" class="parcela bg-verde-pastel" >
       <div class="text-break card-header">
         <b>{{gasto.descricao}}</b>
+        <img *ngIf="gasto.ispaycart" src="/assets/img/card.png" alt="">
         <button class="btn btn-sm" (click)="apagar(gasto.id)"><img src="/assets/img/user-trash.svg" alt=""></button>
       </div> 
       <div class="card-body">
