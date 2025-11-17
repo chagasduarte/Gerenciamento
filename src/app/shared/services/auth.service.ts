@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
-import { AuthResponse, Usuario } from '../models/user.model';
+import { AuthResponse, UserRequest, Usuario } from '../models/user.model';
 import { AppSettingsService } from './app-settings.service';
 
 
@@ -40,8 +40,17 @@ export class AuthService {
     localStorage.removeItem(this.USER_KEY);
     this.usuarioSubject.next(null);
   }
-  register(data: Usuario): Observable<Usuario> {
-    return this.http.post<Usuario>(`${this.apiUrl}/user`, data);
+
+  register(data: UserRequest): Observable<UserRequest> {
+    const formData = new FormData();
+    formData.append('nome', data.nome);
+    formData.append('senha', data.senha);
+    formData.append('confirmarSenha', data.confirmarSenha);
+
+    if(data.avatar) {
+      formData.append('avatar', data.avatar);
+    }
+    return this.http.post<UserRequest>(`${this.apiUrl}/user`, formData);
   }
   
   get token(): string | null {

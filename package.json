@@ -27,7 +27,7 @@
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
     "chart.js": "^4.4.4",
-    "cropperjs": "^1.6.1",
+    "cropperjs": "^1.6.2",
     "echarts": "^5.5.1",
     "express": "^4.18.2",
     "json-server": "^0.17.4",

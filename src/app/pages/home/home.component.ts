@@ -9,6 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 import { NavBarComponent } from "./nav-bar/nav-bar.component";
 import { AuthService } from '../../shared/services/auth.service';
 import { Usuario } from '../../shared/models/user.model';
+import { UsuarioService } from '../../shared/services/usuario.service';
 
 @Component({
   selector: 'app-home',
@@ -33,19 +34,22 @@ export class HomeComponent implements OnInit {
   resumoMensal$ = this.systemService.resumo$; // <-- agora é reativo
   anosDeDivida: number[] = [2024, 2025, 2026, 2027, 2028];
   usuario!: Usuario | null;
-
+  avatarUrl: string = "";
   constructor(
     @Inject(DOCUMENT) private readonly document: Document,
     private readonly router: Router,
     private readonly toastService: ToastrService,
     public readonly systemService: SystemService,
-    private readonly authService: AuthService
+    private readonly authService: AuthService,
+    private readonly userService: UsuarioService
   ) {}
 
   ngOnInit(): void {
     this.ano = this.systemService.ano;
     this.authService.usuario$.subscribe(user => this.usuario = user);
-
+    this.userService.getAvatar(this.usuario!.id).subscribe({
+      next: (success) => {this.avatarUrl = success.avatarUrl;}
+    })
   }
 
   mudaMes(mes: Mes) {

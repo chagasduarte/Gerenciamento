@@ -3,10 +3,11 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { AuthService } from '../../shared/services/auth.service';
 import { Router, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import Cropper from 'cropperjs';
+import 'cropperjs/dist/cropper.css';
 import { UsuarioService } from '../../shared/services/usuario.service';
 import { isPlatformBrowser } from '@angular/common';
 import { Inject, PLATFORM_ID } from '@angular/core';
+import { UserRequest, Usuario } from '../../shared/models/user.model';
 
 @Component({
   selector: 'app-register',
@@ -22,7 +23,7 @@ export class RegisterComponent implements AfterViewInit {
   submitted = false;
   exibirModal: any;
   @ViewChild('image') imageElement!: ElementRef<HTMLImageElement>;
-  cropper!: Cropper;
+  cropper: Cropper | null = null;
   imagePreview: string | null = null;
   croppedImage: string | null = null;carregandoImg: any;
   isSaveEnabled: any;
@@ -57,9 +58,17 @@ export class RegisterComponent implements AfterViewInit {
 
 
   onSubmit() {
+    this.saveCroppedImage()
     this.submitted = true;
     if (this.form.invalid) return;
-    this.authService.register(this.form.value).subscribe({
+    const request: UserRequest = {
+      nome: this.form.value.nome,
+      senha: this.form.value.senha,
+      confirmarSenha: this.form.value.confirmarSenha,
+      avatar: this.form.value.image,
+    }
+  
+    this.authService.register(request).subscribe({
       next: () => this.router.navigate(['/login']),
       error: err => console.error('Erro ao registrar:', err)
     });
@@ -103,43 +112,48 @@ export class RegisterComponent implements AfterViewInit {
       const file = new File([blob], 'avatar.png', { type: 'image/png' });
       
       this.form.patchValue({
-        imagem: file
+        image: file
       });
+      console.log(this.form.value)
     }, 'image/png');
   }
 
-  private initCropper(): void {
-    if(this.imageElement) {
-      const image = this.imageElement.nativeElement;
-    
-      if (this.cropper) {
-        this.cropper.destroy();
-      }
+  private async initCropper(): Promise<void> {
+    if (!isPlatformBrowser(this.platformId)) return;
+    const CropperModule: any = await import('cropperjs');
 
-      this.cropper = new Cropper(image, {
-        aspectRatio: 1,
-        viewMode: 1,
-        dragMode: 'move',
-        cropBoxResizable: false,
-        cropBoxMovable: false,
-        background: false,
-        guides: false,
-        zoomOnWheel: true,
-        ready: () => {
-          const canvas = this.cropper.getCroppedCanvas();
-          this.croppedImage = canvas.toDataURL();
-        }
-      });
+    // VERDADEIRA classe construtora
+    const CropperClass = CropperModule.Cropper || CropperModule.default || CropperModule;
 
+
+    const image = this.imageElement.nativeElement;
+
+    if (this.cropper) {
+      this.cropper.destroy();
     }
+
+    this.cropper = new CropperClass(image, {
+      aspectRatio: 1,
+      viewMode: 1,
+      dragMode: 'move',
+      cropBoxResizable: false,
+      cropBoxMovable: false,
+      background: false,
+      guides: false,
+      zoomOnWheel: true,
+      ready: () => {
+        const canvas = this.cropper!.getCroppedCanvas();
+        this.croppedImage = canvas.toDataURL();
+      }
+    });
   }
+
 
   
   async carregarImagem(): Promise<void> {
     try {
       this.userSerice.getAvatar(null).subscribe({
         next: (success) => {
-          console.log(success)
           this.imagePreview = success.avatarUrl;
           setTimeout(() => this.initCropper(), 0); // Esperar renderizar o <img>
         }

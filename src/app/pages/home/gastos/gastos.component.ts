@@ -70,25 +70,32 @@ export class GastosComponent implements OnInit{
   }
 
   salvarTransacao() {
-    const payload = {
-      ...this.novaDespesa,
-      dataCompra: this.dataCompra,
-      cartao: this.isCartao,
-      parcelado: this.isParcelado,
-      parcelas: this.isParcelado ? this.requestParcela : null
-    };
-    this.transacoesService.PostTrasacoesParceladas(payload).subscribe({
-      next: (success: TransacaoModel[]) => {
-        if (success) {
-          this.toastService.success("Parcelas Gravadas");
-        }
-      },
-      error: (err) => {
-        console.log(err);
-        this.toastService.error(err.message);
-      },
-    })
-
+    if (this.isParcelado) {
+      const payload = {
+        ...this.novaDespesa,
+        dataCompra: this.dataCompra,
+        cartao: this.isCartao,
+        parcelado: this.isParcelado,
+        parcelas: this.isParcelado ? this.requestParcela : null
+      };
+      this.transacoesService.PostTrasacoesParceladas(payload).subscribe({
+        next: (success: TransacaoModel[]) => {
+          if (success) {
+            this.listaDespesas();
+            this.toastService.success("Parcelas Gravadas");
+          }
+        },
+        error: (err) => {
+          this.toastService.error(err.message);
+        },
+      })
+    }
+    else {
+      this.transacoesService.PostTransacao(this.novaDespesa).subscribe(x => {
+        this.listaDespesas();
+        this.toastService.success("Despesa Gravada");
+      })
+    }
     this.fecharModal();
   }
 
