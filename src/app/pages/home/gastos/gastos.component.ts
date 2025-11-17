@@ -44,7 +44,7 @@ export class GastosComponent implements OnInit{
     criado_em: new Date(),
     data: new Date(),
     id: 0,
-    status: '',
+    status: 'pendente',
     tipo: 'saida',
     valor: 0
   };
@@ -112,6 +112,7 @@ export class GastosComponent implements OnInit{
       document.body.classList.remove('modal-open');
     }
   }
+
   listaDespesas(){
     combineLatest([
       this.systemsService.ano$,

@@ -48,7 +48,7 @@ export class DadosComponent implements OnInit {
     criado_em: new Date(),
     data: new Date(),
     id: 0,
-    status: '',
+    status: 'pendente',
     tipo: 'saida',
     valor: 0
   };
