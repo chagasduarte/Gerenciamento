@@ -101,20 +101,22 @@ export class ParcelasComponent implements OnInit {
     })
   }
 
-  adicionaLista(parcela: TransacaoModel){
-    console.log(parcela)
-    this.totalPagar += parseFloat(parcela.valor.toString());
-    this.listaPagamento.push(parcela);
-    // this.pagamentos.push({TipoPagamento: 1, IdPagamento: parcela.Id});
+  adicionarListaPagamento(despesa: TransacaoModel){
+    this.totalPagar += parseFloat(despesa.valor.toString());
+    this.listaPagamento.push(despesa);
+    despesa.adicionada = true;
   }
-
+  
+  removedaListaPagamento(despesa: TransacaoModel){
+    this.totalPagar -= parseFloat(despesa.valor.toString());
+    this.listaPagamento = this.listaPagamento.filter( x => x.id != despesa.id );
+    despesa.adicionada = false;
+  }
+  
   Voltar() {
     this.route.navigate(["home"]);
   }
   
-  removedaListaPagamento(parcela: TransacaoModel) {
-    this.totalPagar -= parseFloat(parcela.valor.toString());
-  }   
 
   abrirSelecionadas() {
     this.mostrarSelecionadas = !this.mostrarSelecionadas;

@@ -25,7 +25,11 @@
           </div>
           
           <div class="row">
-            <button class="btn btn-sm btn-primary" (click)="adicionaLista(parcela)"> Adicionar </button>
+            <button class="btn btn-sm btn-primary"
+                    *ngIf="!parcela.adicionada"
+                    (click)="adicionarListaPagamento(parcela)">
+              Adicionar
+            </button>
           </div>
         </div>
       </div>

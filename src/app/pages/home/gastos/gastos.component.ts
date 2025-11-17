@@ -134,11 +134,13 @@ export class GastosComponent implements OnInit{
   adicionarListaPagamento(despesa: TransacaoModel){
     this.totalPagar += parseFloat(despesa.valor.toString());
     this.listaPagamento.push(despesa);
+    despesa.adicionada = true;
   }
   
   removedaListaPagamento(despesa: TransacaoModel){
     this.totalPagar -= parseFloat(despesa.valor.toString());
     this.listaPagamento = this.listaPagamento.filter( x => x.id != despesa.id );
+    despesa.adicionada = false;
   }
   
   apagar(id: number){

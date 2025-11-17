@@ -9,6 +9,7 @@ export interface TransacaoModel {
     data: Date
     status: string
     criado_em: Date
+    adicionada?: boolean;
 }
 
 export interface Transacoes {
