@@ -104,7 +104,7 @@ export class DadosComponent implements OnInit {
     if (this.isParcelado) {
       const payload = {
         ...this.novaDespesa,
-        data: new Date(this.dataCompra),
+        data: new Date(this.dataCompra).toString(),
         ispaycart: this.isCartao,
         parcelado: this.isParcelado,
         parcelas: this.isParcelado ? this.requestParcela : null
