@@ -42,10 +42,15 @@ export class DadosComponent implements OnInit {
   novoAgrupamento!: AgrupamentoResponse;
   projecoes!: Projecao[]; 
   tipoDespesaAgrupada: TipoDespesaGrafico[] = [];
-  novaDespesa = {
+  novaDespesa: TransacaoModel = {
+    categoria: 0,
     descricao: '',
-    categoria: '',
-    valor: null
+    criado_em: new Date(),
+    data: new Date(),
+    id: 0,
+    status: '',
+    tipo: 'saida',
+    valor: 0
   };
   dataCompra: string = '';
   isCartao: boolean = false;
@@ -95,34 +100,35 @@ export class DadosComponent implements OnInit {
   }
 
   salvarTransacao() {
-    const payload = {
-      ...this.novaDespesa,
-      dataCompra: this.dataCompra,
-      cartao: this.isCartao,
-      parcelado: this.isParcelado,
-      parcelas: this.isParcelado ? this.requestParcela : null
-    };
-
-    this.despesaService.PostTrasacoesParceladas(payload).subscribe({
-      next: (success: TransacaoModel[]) => {
-        if (success) {
-          this.toastService.success("Parcelas Gravadas");
-        }
-      },
-      error: (err) => {
-        console.log(err);
-        this.toastService.error(err.message);
-      },
-    });
-    // aqui você pode chamar seu serviço:
-    // this.transacoesService.adicionar(payload).subscribe(() => {
-    //   this.fecharModal();
-    //   this.carregarTransacoes();
-    // });
-
+    if (this.isParcelado) {
+      const payload = {
+        ...this.novaDespesa,
+        dataCompra: this.dataCompra,
+        cartao: this.isCartao,
+        parcelado: this.isParcelado,
+        parcelas: this.isParcelado ? this.requestParcela : null
+      };
+      this.despesaService.PostTrasacoesParceladas(payload).subscribe({
+        next: (success: TransacaoModel[]) => {
+          if (success) {
+            this.preencheInformacoes();
+            this.toastService.success("Parcelas Gravadas");
+          }
+        },
+        error: (err) => {
+          this.toastService.error(err.message);
+        },
+      })
+    }
+    else {
+      this.despesaService.PostTransacao(this.novaDespesa).subscribe(x => {
+        this.preencheInformacoes();
+        this.toastService.success("Despesa Gravada");
+      })
+    }
     this.fecharModal();
   }
-
+  
   fecharModal() {
     const modal = document.getElementById('addTransacaoModal');
     if (modal) {

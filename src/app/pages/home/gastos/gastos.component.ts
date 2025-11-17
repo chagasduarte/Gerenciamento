@@ -45,7 +45,7 @@ export class GastosComponent implements OnInit{
     data: new Date(),
     id: 0,
     status: '',
-    tipo: '',
+    tipo: 'saida',
     valor: 0
   };
   dataCompra: string = '';
@@ -70,6 +70,7 @@ export class GastosComponent implements OnInit{
   }
 
   salvarTransacao() {
+    
     if (this.isParcelado) {
       const payload = {
         ...this.novaDespesa,
