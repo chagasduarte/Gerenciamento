@@ -32,7 +32,10 @@ export const appConfig: ApplicationConfig = {
                   preventDuplicates: true,
                 }),
                 NgxSpinnerModule.forRoot({}),
-                ServiceWorkerModule.register('ngsw-worker.js', {  })
+                ServiceWorkerModule.register('ngsw-worker.js', {
+                  enabled: !isDevMode(),
+                  registrationStrategy: 'registerImmediately'
+                }),
               )
               
             ]
