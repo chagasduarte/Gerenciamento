@@ -9,6 +9,7 @@ export interface TransacaoModel {
     data: Date
     status: string
     criado_em: Date
+    ispaycart: boolean;
     adicionada?: boolean;
 }
 

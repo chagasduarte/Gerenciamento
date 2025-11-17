@@ -45,6 +45,7 @@ export class GastosComponent implements OnInit{
     data: new Date(),
     id: 0,
     status: 'pendente',
+    ispaycart: false,
     tipo: 'saida',
     valor: 0
   };

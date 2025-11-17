@@ -50,6 +50,7 @@ export class DadosComponent implements OnInit {
     id: 0,
     status: 'pendente',
     tipo: 'saida',
+    ispaycart: false,
     valor: 0
   };
   dataCompra: string = '';
@@ -121,6 +122,7 @@ export class DadosComponent implements OnInit {
       })
     }
     else {
+      this.novaDespesa.ispaycart = this.isCartao;
       this.despesaService.PostTransacao(this.novaDespesa).subscribe(x => {
         this.preencheInformacoes();
         this.toastService.success("Despesa Gravada");
