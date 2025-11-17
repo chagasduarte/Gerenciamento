@@ -82,7 +82,10 @@
   <div class="card-parcelas">
     <div *ngFor="let gasto of novo.pagos" class="parcela bg-verde-pastel">
         <div class="card-header text-break">
-            <b (click)="objetivos()">{{gasto.descricao}}</b> 
+          <b (click)="objetivos()">
+            {{gasto.descricao}}<br>
+            <img *ngIf="gasto.ispaycart" src="/assets/img/card.png" alt="">
+          </b> 
         </div>
         <div class="card-body">
           <div class="d-flex">
