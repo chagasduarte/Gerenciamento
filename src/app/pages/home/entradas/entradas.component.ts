@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { SystemService } from '../../../shared/services/system.service';
 import { TransacaoModel } from '../../../shared/models/despesa.model';
 import { TransacoesService } from '../../../shared/services/transacoes.service';
+import { Mes } from '../../../utils/meses';
 
 @Component({
     selector: 'app-entradas',
@@ -19,8 +20,7 @@ import { TransacoesService } from '../../../shared/services/transacoes.service';
 export class EntradasComponent {
     entrada: TransacaoModel;
     dataDebito!: Date
-    entradas: string[] = ["Salário SmartHint", "Salário F5", "Benefícios SmartHint", "Benefício F5", "PLR", "Décimo Terceiro", "Recisão", "Seguro Desemprego"];
-    
+    fixo!: boolean
     constructor(
         private readonly entradaService: TransacoesService,
         private readonly router: Router,
@@ -33,13 +33,16 @@ export class EntradasComponent {
       this.entrada.data = new Date(this.dataDebito);
       this.entrada.tipo = 'entrada';
       this.entrada.status = 'pendente';
-
-      this.entradaService.PostTransacao(this.entrada).subscribe({
-        next: (success: TransacaoModel) => {
-          this.systemService.atualizarResumo();
-           this.router.navigate(["entradas-detalhe"]);
-        }
-      });
+      if (this.fixo) {
+        for(let i = this.systemService.mes.valor; i <= 12 ; i++)
+        this.entradaService.PostTransacao(this.entrada).subscribe({
+          next: (success: TransacaoModel) => {
+            this.systemService.atualizarResumo();
+            this.router.navigate(["entradas-detalhe"]);
+          }
+        });
+      }
+      
     }
 
 

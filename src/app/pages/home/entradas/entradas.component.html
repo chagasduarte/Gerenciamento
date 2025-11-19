@@ -8,6 +8,10 @@
         <input type="number" id="valor" name="valor" step="0.01" required [(ngModel)]="entrada.valor">
     </div>
     <div class="form-group">
+        <label for="data">Fixo</label>
+        <input type="checkbox" class="form-input" id="data" name="data" [(ngModel)]="fixo"/>
+    </div>    
+    <div class="form-group">
         <label for="data">Data Débito:</label>
         <input type="date" class="form-input" id="data" name="data" [(ngModel)]="dataDebito"/>
     </div>    

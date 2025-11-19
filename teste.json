@@ -1,0 +1,111 @@
+{
+    [
+        {
+            "OverlayUserId": 53380,
+            "Title": "ÚLTIMA CHANCE!",
+            "Message": "Ei, ainda dá tempo!\nSeu cupom BLACKIDE está prestes a expirar!\nFinalize sua compra (mínimo de R$50,00) e garanta 5% OFF agora mesmo!",
+            "Discount": 5.000,
+            "DiscountCoupon": "BLACKIDE",
+            "CurrencySymbol": "R$",
+            "Logo": "0d0781bd-effc-4090-ab14-e2431301bc1d.png",
+            "ButtonText": "Garantir o cupom",
+            "Analytics": true,
+            "BoxId": 0,
+            "CSS": "/* ESTILOS PADRÃO (NÃO MODIFICAR) */\n@import url(\"https://service.smarthint.co/plugins/fonts/Fonts.css\");\n@import url('https://fonts.googleapis.com/css2?family=Anton&family=Fredoka+One&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Orbitron:wght@400..900&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');\n\n.title {\n    margin-bottom: 20px\n}\n\n.info h2 {\n    min-height: 57px\n}\n\n.main-line {\n    margin-bottom: 20px\n}\n\n.products {\n    margin-left: 0 !important;\n    margin-right: 0 !important\n}\n\n.logo {\n    vertical-align: middle\n}\n\n.logo img {\n    max-height: 150px;\n    max-width: 100%\n}\n\n.product {\n    width: 24%;\n    float: left;\n    margin-bottom: 10px\n}\n\n.product .product-inner {\n    border: 1px solid;\n    border-radius: 10px;\n    margin-left: 5px;\n    margin-right: 5px;\n    min-height: 385px\n}\n\n.product .info {\n    min-height: 50px\n}\n\n.product .name a:hover {\n    text-decoration: none\n}\n\n.product .ms-vip-price-container {\n    min-height: 50px\n}\n\n.product .button {\n    margin-bottom: 10px\n}\n\n.image {\n    width: 100%\n}\n\nbody {\n    background-color: transparent !important;\n    text-align: center\n}\n\n.modal-body {\n    margin: 15px;\n    padding: 0 !important\n}\n\n.btn-lg {\n    font-size: 25px !important\n}\n\n.discount-coupon {\n    font-weight: bold;\n    border-radius: 3px;\n    color: white;\n    padding: 3px;\n    background-color: #f20000\n}\n\n.close {\n    position: fixed;\n    top: 10;\n    right: 10;\n    font-size: 40px;\n    z-index: 99999\n}\n\n.slick-dotted.slick-slider {\n    margin-top: 10px\n}\n\n.slick-slide {\n    height: auto !important\n}\n\n.slick-next {\n    right: -16px !important\n}\n\n.slick-prev {\n    left: -16px !important\n}\n\n.image {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    height: 200px;\n    width: 190px;\n    margin: 0 auto\n}\n\n.modal-content .slick-prev:before {\n    content: '\\f104' !important;\n}\n\n.modal-content .slick-next:before {\n    content: '\\f105' !important;\n}\n\n.image img {\n    width: auto;\n    height: auto;\n    max-height: 200px;\n    max-width: 190px\n}\n\n.slick-prev {\n    z-index: 3\n}\n\n.modal-content .slick-prev:before,\n.modal-content .slick-next:before,\n.modal-content .slick-dots li button:before,\n.modal-content .slick-dots li.slick-active button:before {\n    color: #080808\n}\n\n.modal-content button.close {\n    opacity: .8\n}\n\n.modal-content button.close:hover {\n    opacity: .2\n}\n\n.modal-content button.close,\n.modal-content button.close:hover {\n    color: #080808;\n    text-shadow: 0 1px 0 #080808\n}\n\n\n/*  */\n.modal-open .counter-box {\n    text-align: center;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    flex-direction: column;\n}\n\n.modal-open div#counter-box {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n}\n\n.modal-open .btn-success {\n    white-space: normal;\n}\n\n.modal-open .logo {\n    max-width: 80%;\n    width: 100%;\n}\n\n.modal-open .row.title {\n    margin: 0 auto 20px;\n    max-width: 88%;\n}\n\n.modal-open .main-line,\n.modal-open .title {\n    margin-inline: 0;\n}\n\n.modal-open .row-button {\n    align-items: center !important;\n    flex-direction: column;\n    gap: 10px;\n}\n\n.modal-open .btn-i-want {\n    width: 100%;\n}\n\n/* --- COLE AQUI O CSS CUSTOMIZADO SMARTHINT --- */\n\n/* --- INÍCIO DO CSS CUSTOMIZADO SMARTHINT --- */\n.modal-body {\n    position: relative\n}\n\n.modal-open .modal-content {\n    background-color: #111111;\n    border: 3px solid #ffd700;\n    font-family: 'Lato';\n  \tbackground-image: url(none);\n    box-shadow: 0 0 25px rgba(255, 215, 0, .5);\n    border-radius: 8px;\n    min-height: 400px\n}\n\n.modal-open .overlay-title {\n    font-family: 'Adelle_ExtraBoldItalic';\n    color: #ffd700;\n    font-size: 36px;\n    text-align: center;\n    font-weight: normal;\n    text-transform: uppercase;\n    letter-spacing: 1.5px;\n    text-shadow: 0 0 8px #ffd700\n}\n\n.modal-open .overlay-message {\n    font-family: 'Adelle_Reg';\n    color: #ffffff;\n    font-size: 18px;\n    text-align: justify;\n    font-weight: normal;\n    margin-bottom: 15px\n}\n\n.modal-open .counter-box {\n    width: 100%;\n    text-align: left\n}\n\n.modal-open .counter-box span {\n    color: #ffffff;\n    font-family: 'Adelle_ExtraBold';\n    font-weight: normal;\n    text-transform: uppercase;\n    font-size: 14px\n}\n\n.modal-open .flip-clock-wrapper ul li a div div.inn {\n    background-color: #ffd700;\n    color: #111111;\n    font-size: 36px;\n    text-shadow: none\n}\n\n.modal-open .flip-clock-wrapper {\n    margin: 10px 0\n}\n\n.modal-open .flip-clock-wrapper .flip-clock-label {\n    display: none !important\n}\n\n.modal-open .row-button {\n    display: flex;\n    justify-content: space-between;\n    align-items: flex-end\n}\n\n.modal-open .btn-success {\n    background-color: #ffd700;\n    color: #111111;\n    border: 2px solid #ffd700;\n    font-family: 'Adelle_ExtraBold';\n    font-size: 18px !important;\n    font-weight: normal;\n    text-transform: uppercase;\n    padding: 10px 20px;\n    border-radius: 5px;\n    letter-spacing: 1px;\n    transition: all .3s ease;\n    width: auto;\n    display: inline-block\n}\n\n.modal-open .btn-success:hover {\n    background-color: #ffffff;\n    border-color: #ffffff;\n    color: #111111\n}\n\n.modal-open .close {\n    position: absolute;\n    top: 15px;\n    right: 15px;\n    color: #ffd700 !important;\n    text-shadow: 0 1px 2px #000;\n    opacity: .9;\n    font-size: 30px\n}\n\n@media screen and (max-width:767px) {\n    .modal-open .overlay-title {\n        font-size: 28px\n    }\n\n    .modal-open .overlay-message {\n        font-size: 16px;\n        text-align: center\n    }\n\n    .modal-open .main-line {\n        flex-direction: column\n    }\n\n    .modal-open #counter-box,\n    .modal-open .product-data {\n        text-align: center\n    }\n\n    .modal-open .product-data {\n        margin-top: 20px\n    }\n\n    .modal-open .row-button {\n        flex-direction: column;\n        align-items: center\n    }\n\n    .modal-open .row-button .logo {\n        margin-bottom: 15px\n    }  \n  \t.modal-open .modal-content {\n      \tbackground-image: url(none)\n    }\n}\n\n/* --- FIM DO CSS CUSTOMIZADO SMARTHINT --- */",
+            "DiscountType": 1,
+            "GoogleAnalyticsIntegrationType": 2,
+            "AdditionalCSS": "",
+            "OverlayPositionId": 1,
+            "PriceType": 1,
+            "StartDate": "2025-11-10T00:00:00",
+            "EndDate": "2025-11-16T00:00:00",
+            "BoxCustom": false,
+            "IsComponent": true,
+            "OverlayRules": {
+                "OverlayUserRulesId": 52691,
+                "OverlayUserId": 53380,
+                "OnExit": true,
+                "ByTime": true,
+                "ByTimeMobile": true,
+                "PromotionBlock": false,
+                "TimeInSeconds": 30,
+                "TimeInSecondsMobile": 30,
+                "UrlFilter": null,
+                "UrlExclusionFilter": null,
+                "OverlayPeriodId": 1,
+                "PromotionControl": 0
+            },
+            "Days": [
+                {
+                    "OverlayUserDayOfWeekId": 20616,
+                    "OverlayUserId": 53380,
+                    "Sunday": true,
+                    "Monday": true,
+                    "Tuesday": true,
+                    "Wednesday": true,
+                    "Thursday": true,
+                    "Friday": true,
+                    "Saturday": true,
+                    "Hours": []
+                }
+            ]
+        },
+        {
+            "OverlayUserId": 53454,
+            "Title": "Oferta exclusiva só para você!",
+            "Message": "Seu cupom BLACKIDE está terminando.\nFinalize sua compra mínima de R$50,00 e aproveite 5% OFF.",
+            "Discount": 5.000,
+            "DiscountCoupon": "BLACKIDE",
+            "CurrencySymbol": "R$",
+            "Logo": "6af6b8bc-45af-49a4-91ba-8d82dcf2f1ea.png",
+            "ButtonText": "APROVEITAR",
+            "Analytics": true,
+            "BoxId": 0,
+            "CSS": "/* ESTILOS PADRÃO (NÃO MODIFICAR) */\n@import url(\"https://service.smarthint.co/plugins/fonts/Fonts.css\");\n@import url('https://fonts.googleapis.com/css2?family=Anton&family=Fredoka+One&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Orbitron:wght@400..900&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');\n\n.title {\n    margin-bottom: 20px\n}\n\n.info h2 {\n    min-height: 57px\n}\n\n.main-line {\n    margin-bottom: 20px\n}\n\n.products {\n    margin-left: 0 !important;\n    margin-right: 0 !important\n}\n\n.logo {\n    vertical-align: middle\n}\n\n.logo img {\n    max-height: 150px;\n    max-width: 100%\n}\n\n.product {\n    width: 24%;\n    float: left;\n    margin-bottom: 10px\n}\n\n.product .product-inner {\n    border: 1px solid;\n    border-radius: 10px;\n    margin-left: 5px;\n    margin-right: 5px;\n    min-height: 385px\n}\n\n.product .info {\n    min-height: 50px\n}\n\n.product .name a:hover {\n    text-decoration: none\n}\n\n.product .ms-vip-price-container {\n    min-height: 50px\n}\n\n.product .button {\n    margin-bottom: 10px\n}\n\n.image {\n    width: 100%\n}\n\nbody {\n    background-color: transparent !important;\n    text-align: center\n}\n\n.modal-body {\n    margin: 15px;\n    padding: 0 !important\n}\n\n.btn-lg {\n    font-size: 25px !important\n}\n\n.discount-coupon {\n    font-weight: bold;\n    border-radius: 3px;\n    color: white;\n    padding: 3px;\n    background-color: #f20000\n}\n\n.close {\n    position: fixed;\n    top: 10;\n    right: 10;\n    font-size: 40px;\n    z-index: 99999\n}\n\n.slick-dotted.slick-slider {\n    margin-top: 10px\n}\n\n.slick-slide {\n    height: auto !important\n}\n\n.slick-next {\n    right: -16px !important\n}\n\n.slick-prev {\n    left: -16px !important\n}\n\n.image {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    height: 200px;\n    width: 190px;\n    margin: 0 auto\n}\n\n.modal-content .slick-prev:before {\n    content: '\\f104' !important;\n}\n\n.modal-content .slick-next:before {\n    content: '\\f105' !important;\n}\n\n.image img {\n    width: auto;\n    height: auto;\n    max-height: 200px;\n    max-width: 190px\n}\n\n.slick-prev {\n    z-index: 3\n}\n\n.modal-content .slick-prev:before,\n.modal-content .slick-next:before,\n.modal-content .slick-dots li button:before,\n.modal-content .slick-dots li.slick-active button:before {\n    color: #080808\n}\n\n.modal-content button.close {\n    opacity: .8\n}\n\n.modal-content button.close:hover {\n    opacity: .2\n}\n\n.modal-content button.close,\n.modal-content button.close:hover {\n    color: #080808;\n    text-shadow: 0 1px 0 #080808\n}\n\n\n/*  */\n.modal-open .counter-box {\n    text-align: center;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    flex-direction: column;\n}\n\n.modal-open div#counter-box {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n}\n\n.modal-open .btn-success {\n    white-space: normal;\n}\n\n.modal-open .logo {\n    max-width: 80%;\n    width: 100%;\n}\n\n.modal-open .row.title {\n    margin: 0 auto 20px;\n    max-width: 88%;\n}\n\n.modal-open .main-line,\n.modal-open .title {\n    margin-inline: 0;\n}\n\n.modal-open .row-button {\n    align-items: center !important;\n    flex-direction: column;\n    gap: 10px;\n}\n\n.modal-open .btn-i-want {\n    width: 100%;\n}\n\n/* --- COLE AQUI O CSS CUSTOMIZADO SMARTHINT --- */\n\n/* --- INÍCIO DO CSS CUSTOMIZADO SMARTHINT --- */\n.modal-body {\n    position: relative\n}\n\n.modal-open .modal-content {\n    background-color: #111111;\n    border: 3px solid #ffd700;\n    font-family: 'Lato';\n  \tbackground-image: url(none);\n    box-shadow: 0 0 25px rgba(255, 215, 0, .5);\n    border-radius: 8px;\n    min-height: 400px\n}\n\n.modal-open .overlay-title {\n    font-family: 'Lato-Regular';\n    color: #ffd700;\n    font-size: 25px;\n    text-align: center;\n    font-weight: normal;\n    text-transform: uppercase;\n    letter-spacing: 1.5px;\n    text-shadow: 0 0 8px #ffd700\n}\n\n.modal-open .overlay-message {\n    font-family: 'Lato';\n    color: #ffffff;\n    font-size: 19px;\n    text-align: justify;\n    font-weight: normal;\n    margin-bottom: 15px\n}\n\n.modal-open .counter-box {\n    width: 100%;\n    text-align: left\n}\n\n.modal-open .counter-box span {\n    color: #ffffff;\n    font-family: 'Lato';\n    font-weight: normal;\n    text-transform: uppercase;\n    font-size: 14px\n}\n\n.modal-open .flip-clock-wrapper ul li a div div.inn {\n    background-color: #ffd700;\n    color: #111111;\n    font-size: 36px;\n    text-shadow: none\n}\n\n.modal-open .flip-clock-wrapper {\n    margin: 10px 0\n}\n\n.modal-open .flip-clock-wrapper .flip-clock-label {\n    display: none !important\n}\n\n.modal-open .row-button {\n    display: flex;\n    justify-content: space-between;\n    align-items: flex-end\n}\n\n.modal-open .btn-success {\n    background-color: #ffd700;\n    color: #111111;\n    border: 2px solid #ffd700;\n    font-family: 'Anton';\n    font-size: 18px !important;\n    font-weight: normal;\n    text-transform: uppercase;\n    padding: 10px 20px;\n    border-radius: 5px;\n    letter-spacing: 1px;\n    transition: all .3s ease;\n    width: auto;\n    display: inline-block\n}\n\n.modal-open .btn-success:hover {\n    background-color: #ffffff;\n    border-color: #ffffff;\n    color: #111111\n}\n\n.modal-open .close {\n    position: absolute;\n    top: 15px;\n    right: 15px;\n    color: #ffd700 !important;\n    text-shadow: 0 1px 2px #000;\n    opacity: .9;\n    font-size: 30px\n}\n\n@media screen and (max-width:767px) {\n    .modal-open .overlay-title {\n        font-size: 28px\n    }\n\n    .modal-open .overlay-message {\n        font-size: 16px;\n        text-align: center\n    }\n\n    .modal-open .main-line {\n        flex-direction: column\n    }\n\n    .modal-open #counter-box,\n    .modal-open .product-data {\n        text-align: center\n    }\n\n    .modal-open .product-data {\n        margin-top: 20px\n    }\n\n    .modal-open .row-button {\n        flex-direction: column;\n        align-items: center\n    }\n\n    .modal-open .row-button .logo {\n        margin-bottom: 15px\n    }  \n  \t.modal-open .modal-content {\n      \tbackground-image: url(none)\n    }\n}\n\n/* --- FIM DO CSS CUSTOMIZADO SMARTHINT --- */",
+            "DiscountType": 1,
+            "GoogleAnalyticsIntegrationType": 2,
+            "AdditionalCSS": "",
+            "OverlayPositionId": 1,
+            "PriceType": 1,
+            "StartDate": "2025-11-17T00:00:00",
+            "EndDate": "2025-11-30T00:00:00",
+            "BoxCustom": false,
+            "IsComponent": true,
+            "OverlayRules": {
+                "OverlayUserRulesId": 52757,
+                "OverlayUserId": 53454,
+                "OnExit": true,
+                "ByTime": true,
+                "ByTimeMobile": true,
+                "PromotionBlock": false,
+                "TimeInSeconds": 30,
+                "TimeInSecondsMobile": 30,
+                "UrlFilter": null,
+                "UrlExclusionFilter": null,
+                "OverlayPeriodId": 1,
+                "PromotionControl": 0
+            },
+            "Days": [
+                {
+                    "OverlayUserDayOfWeekId": 20793,
+                    "OverlayUserId": 53454,
+                    "Sunday": true,
+                    "Monday": true,
+                    "Tuesday": true,
+                    "Wednesday": true,
+                    "Thursday": true,
+                    "Friday": true,
+                    "Saturday": true,
+                    "Hours": [
+                        {
+                            "OverlayUserTimeForDayOfWeekId": 6795,
+                            "OverlayUserDayOfWeekId": 20793,
+                            "StartTime": "2025-11-18T14:30:00",
+                            "EndTime": "2025-11-18T18:59:00"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
