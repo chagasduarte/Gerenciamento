@@ -13,5 +13,4 @@ export interface UserRequest {
     nome: string;
     senha: string;
     confirmarSenha: string;
-    avatar: File
 }

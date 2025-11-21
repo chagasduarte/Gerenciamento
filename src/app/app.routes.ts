@@ -10,15 +10,16 @@ import { AuthGuard } from './shared/guard/auth.guard';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { IndexComponent } from './pages/home/index/index.component';
 import { ObjetivosComponent } from './pages/home/objetivos/objetivos.component';
-import { Pagamento } from './shared/models/pagamentos';
 import { PagamentosComponent } from './pages/home/pagamentos/pagamentos.component';
 import { DadosComponent } from './pages/home/dados/dados.component';
 import { InvestimentosComponent } from './pages/home/investimentos/investimentos.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { ConfigComponent } from './pages/config/config.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
+    { path: 'config', component: ConfigComponent, canActivate: [AuthGuard]  },
     { path: "", component: HomeComponent, 
       children: [
         { path: "", redirectTo: "home", pathMatch: "full" },

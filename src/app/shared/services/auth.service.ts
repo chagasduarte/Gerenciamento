@@ -46,10 +46,6 @@ export class AuthService {
     formData.append('nome', data.nome);
     formData.append('senha', data.senha);
     formData.append('confirmarSenha', data.confirmarSenha);
-
-    if(data.avatar) {
-      formData.append('avatar', data.avatar);
-    }
     return this.http.post<UserRequest>(`${this.apiUrl}/user`, formData);
   }
   

@@ -30,8 +30,11 @@ export class ErrorInterceptor implements HttpInterceptor {
           mensagem = 'Recurso não encontrado.';
         } else if (error.status === 500) {
           mensagem = 'Erro interno do servidor.';
+        } else if ( error.status == 405){
+          this.toastService.warning("Preencha os dados")
+          mensagem = error.error
+          this.router.navigate(["config"]);
         }
-        
         return throwError(() => new Error(mensagem));
       })
     );

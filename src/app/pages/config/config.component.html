@@ -1,0 +1,76 @@
+<div class="container mt-4">
+
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link" [class.active]="tab === 'entrada'" (click)="tab = 'entrada'">
+        Entradas Fixas
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [class.active]="tab === 'saida'" (click)="tab = 'saida'">
+        Saídas Fixas
+      </a>
+    </li>
+  </ul>
+
+  <!-- ENTRADAS -->
+  <div *ngIf="tab === 'entrada'" class="mt-3">
+    <div *ngFor="let ent of entradas; let i = index" class="card p-3 mb-2">
+      <div class="d-flex gap-2">
+        <input class="form-control" placeholder="Descrição"
+          [(ngModel)]="ent.description">
+
+        <input class="form-control" type="number"
+          placeholder="Valor" [(ngModel)]="ent.value">
+
+        <input class="form-control" type="number" min="1" max="31"
+          placeholder="Dia" [(ngModel)]="ent.day_of_month">
+
+        <button class="btn btn-danger" (click)="removeEntrada(i)">X</button>
+      </div>
+    </div>
+
+    <button class="btn btn-primary" (click)="addEntrada()">Adicionar Entrada</button>
+  </div>
+
+  <!-- SAIDAS -->
+  <div *ngIf="tab === 'saida'" class="mt-3">
+
+    <label class="mb-2">Adicionar despesa padrão:</label>
+    <select class="form-control w-50 mb-3" (change)="addSaidaPadrao($event)">
+      <option value="">Selecione...</option>
+      <option value="Aluguel">Aluguel</option>
+      <option value="Água">Água</option>
+      <option value="Energia">Energia</option>
+      <option value="Internet">Internet</option>
+      <option value="Comida">Comida</option>
+    </select>
+
+    <div *ngFor="let sai of saidas; let i = index" class="card p-3 mb-2">
+      <div class="d-flex gap-2">
+        <input class="form-control" placeholder="Descrição"
+          [(ngModel)]="sai.description">
+
+        <input class="form-control" type="number"
+          placeholder="Valor" [(ngModel)]="sai.value">
+
+        <input class="form-control" type="number" min="1" max="31"
+          placeholder="Dia" [(ngModel)]="sai.day_of_month">
+
+        <button class="btn btn-danger" (click)="removeSaida(i)">X</button>
+      </div>
+    </div>
+
+    <button class="btn btn-secondary" (click)="addSaidaCustom()">Adicionar Despesa Personalizada</button>
+  </div>
+
+  <!-- BOTÃO SALVAR -->
+  <div class="mt-4 text-end">
+    <button class="btn btn-success"
+      [disabled]="entradas.length === 0 || saidas.length === 0"
+      (click)="salvar()">
+      Salvar Lançamentos Fixos
+    </button>
+  </div>
+
+</div>

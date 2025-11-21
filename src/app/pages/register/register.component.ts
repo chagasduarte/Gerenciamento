@@ -65,11 +65,16 @@ export class RegisterComponent implements AfterViewInit {
       nome: this.form.value.nome,
       senha: this.form.value.senha,
       confirmarSenha: this.form.value.confirmarSenha,
-      avatar: this.form.value.image,
     }
   
     this.authService.register(request).subscribe({
-      next: () => this.router.navigate(['/login']),
+      next: () => {
+        this.authService.login(request.nome, request.senha).subscribe({
+          next: () => {
+            this.router.navigate(['/config'])
+          }
+        });
+      },
       error: err => console.error('Erro ao registrar:', err)
     });
   }
