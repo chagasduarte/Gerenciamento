@@ -43,7 +43,8 @@ export class ConfigComponent {
       description: nome,
       value: null,
       type: nome.toLowerCase(),
-      day_of_month: null
+      day_of_month: null,
+      categoria: 6
     });
 
     event.target.value = '';
@@ -54,7 +55,8 @@ export class ConfigComponent {
       description: '',
       value: null,
       type: 'custom',
-      day_of_month: null
+      day_of_month: null,
+      categoria: 6
     });
   }
 
