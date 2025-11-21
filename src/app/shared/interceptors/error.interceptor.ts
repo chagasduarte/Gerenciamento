@@ -18,13 +18,13 @@ export class ErrorInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
-
+        console.log(error.error.error)
         let mensagem = 'Ocorreu um erro inesperado.';
        //// Implementar chain of reponsability
         if (error.status === 0) {
           mensagem = 'Falha na comunicação com o servidor.';
         } else if (error.status === 401 || error.status == 403) {
-          mensagem = error.error;
+          mensagem = error.error.error;
           this.router.navigate(['login']);
         } else if (error.status === 404) {
           mensagem = 'Recurso não encontrado.';

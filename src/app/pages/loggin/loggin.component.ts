@@ -31,7 +31,8 @@ export class LoginComponent {
         this.router.navigate(['home']); // Redireciona para a página principal ou dashboard
       },
       error: (err) => {
-        this.toastrService.error(err.message);
+        console.log(err)
+        this.toastrService.error(err);
       }
     })
     
