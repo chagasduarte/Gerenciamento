@@ -1,3 +1,4 @@
+
 <div class="login-container">
   <div class="login-card">
     <div class="login-left">
@@ -8,7 +9,7 @@
 
     <div class="login-right">
       <h2>Entrar</h2>
-      <form>
+      <form (ngSubmit)="onLogin()" #loginForm="ngForm" class="form">
         <div class="input-group">
           <label>Nome/Login</label>
           <input type="text" id="username" placeholder="Usuário" required [(ngModel)]="username" name="username">
