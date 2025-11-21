@@ -1,22 +1,31 @@
-<!-- login.component.html -->
-<div class="login-container bg-login">
-    <form (ngSubmit)="onLogin()" #loginForm="ngForm" class="form">
-        <div class="input">
-            <div class="username me-2">
-                <img src="/assets/img/user-login.svg" alt="">
-            </div>
-            <input type="text" id="username" placeholder="Usuário" required [(ngModel)]="username" name="username">
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-left">
+      <h1>Finanças Pro</h1>
+      <p>Gerencie suas despesas, receitas e metas com eficiência.</p>
+      <img src="https://cdn-icons-png.flaticon.com/512/1170/1170576.png" alt="Finance Icon">
+    </div>
+
+    <div class="login-right">
+      <h2>Entrar</h2>
+      <form>
+        <div class="input-group">
+          <label>Nome/Login</label>
+          <input type="text" id="username" placeholder="Usuário" required [(ngModel)]="username" name="username">
         </div>
-        <div class="input">
-            <div class="password me-2">
-                <img src="/assets/img/lock-password.svg" alt="">
-            </div>
-            <input type="password" placeholder="Senha" id="password" required [(ngModel)]="password" name="password">
+
+        <div class="input-group">
+          <label>Senha</label>
+          <input type="password" placeholder="Senha" id="password" required [(ngModel)]="password" name="password">
         </div>
+
         <div class="button">
             <button type="submit" class="btn-login">Login</button>
             <button type="button" (click)="registrar()" class="btn-login">Cadastrar</button>
         </div>
-    </form>
+
+        <a class="forgot" href="#">Esqueci minha senha</a>
+      </form>
+    </div>
+  </div>
 </div>
-  
