@@ -42,6 +42,14 @@ export class EntradasComponent {
           }
         });
       }
+      else {
+        this.entradaService.PostTransacao(this.entrada).subscribe({
+          next: (success: TransacaoModel) => {
+            this.systemService.atualizarResumo();
+            this.router.navigate(["entradas-detalhe"]);
+          }
+        });
+      }
       
     }
 
