@@ -24,7 +24,7 @@ export class ErrorInterceptor implements HttpInterceptor {
         if (error.status === 0) {
           mensagem = 'Falha na comunicação com o servidor.';
         } else if (error.status === 401 || error.status == 403) {
-          mensagem = 'Sessão expirada. Faça login novamente.';
+          mensagem = error.error;
           this.router.navigate(['login']);
         } else if (error.status === 404) {
           mensagem = 'Recurso não encontrado.';

@@ -1,0 +1,135 @@
+/* Container geral */
+.container {
+  color: #fff;
+  font-family: "Poppins", sans-serif;
+}
+
+/* ====== NAV TABS ====== */
+.nav-tabs {
+  border-bottom: 1px solid #2c2f36 !important;
+}
+
+.nav-tabs .nav-link {
+  background: #181b23;
+  color: #ccc;
+  border: none;
+  border-radius: 10px 10px 0 0;
+  margin-right: 5px;
+  padding: 12px 20px;
+  transition: 0.3s;
+}
+
+.nav-tabs .nav-link:hover {
+  background: #1f222b;
+  color: #fff;
+}
+
+.nav-tabs .nav-link.active {
+  background: #4ade80;
+  color: #000 !important;
+  font-weight: bold;
+}
+
+/* ====== CARDS ====== */
+.card {
+  background: #181b23 !important;
+  border: 1px solid #2a2d37;
+  border-radius: 16px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  transition: 0.25s;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+}
+
+/* ====== INPUTS ====== */
+input.form-control,
+select.form-control {
+  background: #2a2d37 !important;
+  border: none !important;
+  color: #fff !important;
+  border-radius: 12px !important;
+  padding: 10px 12px !important;
+  transition: 0.2s;
+}
+
+input.form-control:focus,
+select.form-control:focus {
+  background: #323645 !important;
+  box-shadow: 0 0 0 2px #4ade8075 !important;
+  color: #fff !important;
+}
+
+/* ====== Buttons ====== */
+
+.btn-primary,
+.btn-secondary,
+.btn-success,
+.btn-danger {
+  border-radius: 12px !important;
+  font-weight: 600;
+  padding: 10px 16px;
+  border: none !important;
+  transition: 0.25s;
+}
+
+/* Azul */
+.btn-primary {
+  background: #2563eb;
+}
+
+.btn-primary:hover {
+  background: #1e40af;
+}
+
+/* Cinza */
+.btn-secondary {
+  background: #475569;
+}
+
+.btn-secondary:hover {
+  background: #334155;
+}
+
+/* Verde (principal) */
+.btn-success {
+  background: #4ade80;
+  color: #000;
+}
+
+.btn-success:hover {
+  background: #22c55e;
+}
+
+/* Vermelho */
+.btn-danger {
+  background: #ef4444;
+}
+
+.btn-danger:hover {
+  background: #b91c1c;
+}
+
+/* Botão salvar desabilitado */
+button[disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Espaçamento entre inputs */
+.d-flex.gap-2 {
+  gap: 12px;
+}
+
+/* Ajuste de select padrão */
+select {
+  cursor: pointer;
+}
+
+/* Texto */
+label {
+  color: #ccc;
+  font-size: 14px;
+}

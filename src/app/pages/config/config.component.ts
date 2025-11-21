@@ -65,17 +65,41 @@ export class ConfigComponent {
   }
 
   salvar() {
-    const payload = {
-      entradas: this.entradas,
-      saidas: this.saidas
-    };
-    
-    this.fixedService.save(payload).subscribe({
-      next: () => {
-        this.toastService.success('Configurações salvas!');
-        this.router.navigate(["home"]);
-      },
-      error: () => this.toastService.error('Erro ao salvar')
-    });
+    if(this.validaDados()) {
+      const payload = {
+        entradas: this.entradas,
+        saidas: this.saidas
+      };
+      this.fixedService.save(payload).subscribe({
+        next: () => {
+          this.toastService.success('Configurações salvas!');
+          this.router.navigate(["home"]);
+        },
+        error: () => this.toastService.error('Erro ao salvar')
+      });
+    }
   }
+
+  validaDados(): boolean {
+    const temEntradaInvalida = this.entradas.some((x: any) => {
+      return !x.description || x.description.trim() === '';
+    });
+
+    if (temEntradaInvalida) {
+      this.toastService.warning("Preencha todos os campos ou delete a Receita que não irá usar");
+      return false;
+    }
+    const temSaidaInvalida = this.saidas.some((x: any) => {
+      return !x.description || x.description.trim() === '';
+    });
+
+    if (temSaidaInvalida) {
+      this.toastService.warning("Preencha todos os campos ou delete a Receita que não irá usar");
+      return false;
+    }
+
+    return true;
+  }
+
+  
 }
