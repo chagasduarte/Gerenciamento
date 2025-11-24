@@ -75,7 +75,7 @@ export class GastosComponent implements OnInit{
     if (this.isParcelado) {
       const payload = {
         ...this.novaDespesa,
-        data: new Date(this.dataCompra).toString(),
+        data: new Date(this.dataCompra),
         ispaycart: this.isCartao,
         parcelado: this.isParcelado,
         parcelas: this.isParcelado ? this.requestParcela : null
