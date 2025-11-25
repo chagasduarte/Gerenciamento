@@ -33,8 +33,12 @@ export class TransacoesService {
     return this.http.post<TransacaoModel[]>(`${this.api}/transacoes/parceladas`, payload);
   }
 
-  GetDespesas(mes: number, ano: number): Observable<Transacoes> {
-    return this.http.get<Transacoes>(`${this.api}/transacoes?mes=${mes}&ano=${ano}`)
+  GetDespesas(mes: number, ano: number, cardid: number | null): Observable<Transacoes> {
+    let query = `${this.api}/transacoes?mes=${mes}&ano=${ano}`;
+    if(cardid != null && cardid > 0){
+      query += `&cardId=${cardid}`;
+    }
+    return this.http.get<Transacoes>(query);
   }
 
   GetResumoMensal(mes: number, ano: number): Observable<ResumoMensal> {

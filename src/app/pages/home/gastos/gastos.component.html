@@ -4,7 +4,11 @@
         <button class="btn btn-sm btn-warning" (click)="Voltar()">Voltar</button>
     </div>
     <div class="col">
-      <button class="btn" (click)="showCard = !showCard"> <h1>{{novo.soma_parcelados + novo.soma_adicionais | currency}}</h1></button>
+      <select class="my-form-select" (change)="listaDespesas($any($event.target).value)"> 
+        <option value="0">Total:</option>
+        <option [value]="card.id" *ngFor="let card of cartao"><h1>{{card.nome}}:</h1></option>
+      </select>
+      {{novo.soma_parcelados + novo.soma_adicionais | currency}}
     </div>
     <div class="col butao">
         <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#addTransacaoModal">Add</button>
@@ -12,8 +16,8 @@
   </div>  
 
   <div class="linha"></div>
-  <h3 *ngIf="!showCard">Abertos Previstos: {{novo.soma_parcelados | currency}}</h3>
-  <div class="parcelas" *ngIf="!showCard">
+  <h3>Abertos Previstos: {{novo.soma_parcelados | currency}}</h3>
+  <div class="parcelas">
     <div *ngFor="let parcela of novo.parceladas">
       <div class="card card-sm"  [ngStyle]="{'background-color': DefineCorParcela(parcela.data)}">
         <div class="card-header text-break d-flex row">
@@ -36,24 +40,6 @@
                     (click)="adicionarListaPagamento(parcela)">
               Adicionar
             </button>          
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!--cartão-->
-  <h3 *ngIf="showCard">Cartões: {{cartao.soma.soma | currency}}</h3>
-  <div class="parcelas" *ngIf="showCard">
-    <div *ngFor="let parcela of cartao.result">
-      <div class="card card-sm"  [ngStyle]="{'background-color': DefineCorParcela(parcela.data)}">
-        <div class="card-header text-break d-flex row">
-          <label for="">{{parcela.descricao.replace(' - Parcela', '')}}</label>
-        </div>
-        <div class="card-body">
-          <div class="d-flex">
-            <div>Valor:</div>
-            <div>{{(parcela.valor) | currency}}</div>
           </div>
         </div>
       </div>
