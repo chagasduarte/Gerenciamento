@@ -51,7 +51,8 @@ export class DadosComponent implements OnInit {
     status: 'pendente',
     tipo: 'saida',
     ispaycart: false,
-    valor: 0
+    valor: 0,
+    cartaoid: null
   };
   dataCompra: string = '';
   isCartao: boolean = false;

@@ -10,6 +10,7 @@ export interface TransacaoModel {
     status: string
     criado_em: Date
     ispaycart: boolean;
+    cartaoid: number | null;
     adicionada?: boolean;
 }
 

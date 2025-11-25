@@ -48,7 +48,8 @@ export class GastosComponent implements OnInit{
     status: 'pendente',
     ispaycart: false,
     tipo: 'saida',
-    valor: 0
+    valor: 0,
+    cartaoid: null
   };
   dataCompra: string = '';
   isCartao: boolean = false;
@@ -59,7 +60,8 @@ export class GastosComponent implements OnInit{
     Valor: null
   };
   cartao!: Cartao[];
-  cardId: number | null = null
+  cardId: number = 0;
+  
   constructor(
    private readonly router: Router,
    private readonly systemsService: SystemService,
@@ -82,7 +84,8 @@ export class GastosComponent implements OnInit{
         data: new Date(this.dataCompra),
         ispaycart: this.isCartao,
         parcelado: this.isParcelado,
-        parcelas: this.isParcelado ? this.requestParcela : null
+        parcelas: this.isParcelado ? this.requestParcela : null,
+        cartaoid: this.cardId
       };
       this.transacoesService.PostTrasacoesParceladas(payload).subscribe({
         next: (success: TransacaoModel[]) => {
@@ -99,6 +102,8 @@ export class GastosComponent implements OnInit{
     else {
       this.novaDespesa.data = new Date(this.dataCompra);
       this.novaDespesa.ispaycart = this.isCartao;
+      this.novaDespesa.cartaoid = this.cardId;
+
       this.transacoesService.PostTransacao(this.novaDespesa).subscribe(x => {
         this.listaDespesas(null);
         this.toastService.success("Despesa Gravada");

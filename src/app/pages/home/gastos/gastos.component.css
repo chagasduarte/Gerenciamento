@@ -44,3 +44,7 @@ h1 {
   font-size: 32px;
   width: auto;
 }
+
+.valor {
+    color: #ddd;
+}
