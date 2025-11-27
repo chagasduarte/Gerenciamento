@@ -21,7 +21,7 @@
 
   <div class="linha"></div>
   <h3>Abertos Previstos: {{novo.soma_parcelados | currency}}</h3>
-  <div class="parcelas">
+  <div class="parcelas" *ngIf="novo.parceladas.length > 0">
     <div *ngFor="let parcela of novo.parceladas">
       <div class="card card-sm"  [ngStyle]="{'background-color': DefineCorParcela(parcela.data)}">
         <div class="card-header text-break d-flex row">
@@ -52,7 +52,7 @@
 
   <div class="card mb-3"></div>
   <h3>Abertos Adicionais: {{novo.soma_adicionais | currency}}</h3>
-  <div class="card-parcelas">
+  <div class="card-parcelas" *ngIf="novo.adicionais.length > 0">
     <div *ngFor="let gasto of novo.adicionais" class="parcela bg-verde-pastel" >
       <div class="text-break card-header">
         <b>{{gasto.descricao}}</b>
@@ -74,7 +74,7 @@
   </div>
   <div class="card mb-3"></div>
   <h3>Pagos: {{novo.soma_pagos | currency}}</h3>
-  <div class="card-parcelas">
+  <div class="card-parcelas" *ngIf="novo.pagos.length > 0">
     <div *ngFor="let gasto of novo.pagos" class="parcela bg-verde-pastel">
         <div class="card-header text-break">
           <b (click)="objetivos()">
