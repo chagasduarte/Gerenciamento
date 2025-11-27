@@ -9,14 +9,10 @@ import { combineLatest, forkJoin } from 'rxjs';
 import { DefineCor } from '../../../utils/functions/defineCorGrafico';
 import { FormsModule } from '@angular/forms';
 import { DespesasParceladasResponse } from '../../../shared/models/despesasParceladas.model';
-import { ResumoMensal } from '../../../shared/models/resumo.model';
 import { AgrupamentoResponse } from '../../../shared/models/agrupamento';
 import { TransacoesService } from '../../../shared/services/transacoes.service';
 import { Projecao } from '../../../shared/models/projecao.model';
 import { TipoDespesaGrafico } from '../../../shared/models/graficos';
-import { drawCategoriaPie } from '../../dashboard/drawcharts/categorias.pie';
-import { drawProjecoes } from '../../dashboard/drawcharts/progressao.coloumn';
-import { drawMediasBar } from '../../dashboard/drawcharts/medias.bar';
 import { TransacaoModel } from '../../../shared/models/despesa.model';
 
 @Component({
@@ -40,8 +36,7 @@ export class DadosComponent implements OnInit {
 
   resumoMensal$ = this.systemService.resumo$; // <-- é reativo
   novoAgrupamento!: AgrupamentoResponse;
-  projecoes!: Projecao[]; 
-  tipoDespesaAgrupada: TipoDespesaGrafico[] = [];
+
   novaDespesa: TransacaoModel = {
     categoria: 0,
     descricao: '',
@@ -85,14 +80,11 @@ export class DadosComponent implements OnInit {
       forkJoin([
         this.despesaService.GetDespesasParceladas(mes.valor + 1, ano.valor),
         this.despesaService.GetAgrupamento(mes.valor + 1, ano.valor),
-        this.despesaService.GetProjecao(ano.valor),
-        this.despesaService.GetGraficosPizza(ano.valor)
+       
       ]).subscribe({
         next: (success) => {
           this.novasParcelas = success[0];
           this.novoAgrupamento = success[1];
-          this.projecoes = success[2];
-          this.tipoDespesaAgrupada = success[3];
         },
         error: (err: any) => {
           
