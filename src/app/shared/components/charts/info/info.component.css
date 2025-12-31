@@ -1,0 +1,21 @@
+.grafico-pizza {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: conic-gradient(
+      rgb(146, 51, 13) 0%, 
+      rgb(150, 34, 34) calc(var(--porcentagem) * 1%),
+      rgb(65, 161, 161) calc(var(--porcentagem) * 1%),
+      rgb(60, 141, 123) 100%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  font-weight: 900;
+  font-size: 18px;
+}
+
+.grafico-pizza::before {
+  background-color: azure;
+}

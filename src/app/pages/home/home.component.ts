@@ -10,15 +10,18 @@ import { NavBarComponent } from "./nav-bar/nav-bar.component";
 import { AuthService } from '../../shared/services/auth.service';
 import { Usuario } from '../../shared/models/user.model';
 import { UsuarioService } from '../../shared/services/usuario.service';
+import { SideBarComponent } from "./side-bar/side-bar.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
-    CommonModule, 
-    FormsModule, 
-    RouterOutlet, 
-    NavBarComponent],
+    CommonModule,
+    FormsModule,
+    RouterOutlet,
+    NavBarComponent,
+    SideBarComponent
+],
   templateUrl: './home.component.html',
   styleUrls: [
     './home.component.css',

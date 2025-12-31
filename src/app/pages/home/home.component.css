@@ -11,7 +11,6 @@
 
 .side-bar {
     grid-area:  side;
-    margin: 5px;
     border-radius: 15px;
     height: 99vh;
 }
@@ -93,11 +92,4 @@ svg {
 
 .router-outlet {
     overflow-y: auto;
-}
-
-app-nav-bar {
-    overflow-y: auto;
-    background-color: #69B6A8;
-    height: 3rem;
-    border-radius: 10px;
 }

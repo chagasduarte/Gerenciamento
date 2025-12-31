@@ -1,57 +1,41 @@
 <div class="infos" *ngIf="resumoMensal$ | async as resumo">
-    <!-- <div class="valor-conta-mobile up-hover" (click)="contasDetalhes()">
-     Saldo:  {{saldoAtual | currency}}
-    </div> -->
-    <div id="info-1" name="info-1" class="info-1">
+
+    <div class="info-0">
       <div class="data-grafico">
-        <div 
-          style="font-weight: 900;"
-          class="data">
-          <div class="mes">
-            {{systemService.mes.nome}}
-          </div>
-          <div class="linha"></div>
-          <div class="ano">
-            {{systemService.ano.valor}}
-          </div>
+        <div style="font-weight: 900;"
+            class="data">
+            <div class="mes">
+                {{systemService.mes.nome}} | {{systemService.ano.valor}}
+            </div>
         </div>
-       
       </div>
+    </div>
+
+    <div id="info-1" name="info-1" class="info-1">
+      
       <div class="grafico-card">
         <div class="cards">
-               
-          <div class="card-button bg-vermelho-pastel text-white sombra up-hover" (click)="gastos()">
-            <div class="circle">
-              <img src="/assets/img/bitcoin-cash-money.svg"/>
-            </div>
-            <div class="valores">
-              <div class="valor"> {{ resumo.gastos_mensal_pendente | currency}} </div>
-              <span class="text">Gastos</span>
-            </div>            
-          </div>
-          
-          <div class="card-button bg-azul-pastel text-white sombra up-hover" (click)="entradaDetalhes()">
-            <div class="circle">
-              <img src="/assets/img/dollar-banknote.svg"/>
-            </div>
-            <div class="valores">
-              <div class="valor">{{resumo.receita_mensal_pendente | currency}}</div>
-              <span class="text">Receitas</span>
-            </div>
-          </div>
-          
-          <div class="card-button bg-laranja-pastel text-white sombra up-hover" (click)="objetivos()">
-            <div class="circle">
-              <img src="/assets/img/cartao-de-credito.png"/>
-            </div>
-            <div class="valores">
-              <div class="valor">{{resumo.gastos_cartao | currency}}</div>
-              <span class="text">Crédito</span>
-            </div>
-          </div>
+          <app-cards 
+            titulo="Gastos" 
+            [valor]="resumo.gastos_mensal_pendente"
+            tipo="saida">
+          </app-cards>
+
+          <app-cards 
+            titulo="Receitas" 
+            [valor]="resumo.receita_mensal_pendente"
+            tipo="entrada">
+          </app-cards>
+
+          <app-cards 
+            titulo="Saldo" 
+            [valor]="resumo.saldo_atual"
+            tipo="saldo">
+          </app-cards>
         </div>
+        <app-extrato></app-extrato>
         
-        <div class="grafico sombra up-hover" >
+        <div class="grafico sombra up-hover" hidden>
           <div class="grafico-header">
             <h5>Despesas Parcelas: {{novasParcelas.mensal.pendente | currency}}</h5>
             <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addTransacaoModal">add</button>
@@ -76,7 +60,8 @@
       </div>
 
     </div>
-    <div class="info-3">
+
+    <div class="info-3" hidden>
       <div class="d-flex">
         <div class="col" style="font-size: 25px; font-weight: bolder;">{{novoAgrupamento.soma.soma | currency}}</div>
       </div>

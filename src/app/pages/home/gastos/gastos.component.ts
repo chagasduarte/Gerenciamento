@@ -87,6 +87,7 @@ export class GastosComponent implements OnInit{
         parcelas: this.isParcelado ? this.requestParcela : null,
         cartaoid: this.cardId
       };
+      console.log(payload)
       this.transacoesService.PostTrasacoesParceladas(payload).subscribe({
         next: (success: TransacaoModel[]) => {
           if (success) {
@@ -95,7 +96,7 @@ export class GastosComponent implements OnInit{
           }
         },
         error: (err) => {
-          this.toastService.error(err.message);
+          this.toastService.error(err.erro);
         },
       })
     }

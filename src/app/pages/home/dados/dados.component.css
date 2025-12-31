@@ -1,3 +1,9 @@
+.info-0 {
+    display: flex;
+    margin: 3%;
+    font-size: 35px;
+}
+
 .info-1 .data-grafico {
     display: none;
 }
@@ -65,7 +71,7 @@
 
 .cards {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     row-gap: 5px;
     width: 100%;
     place-items: center;

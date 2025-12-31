@@ -99,27 +99,6 @@ img {
   
 }
 
-
-
-.grafico-pizza {
-  width: 115px;
-  height: 115px;
-  border-radius: 50%;
-  background: conic-gradient(
-      rgb(146, 51, 13) 0%, 
-      rgb(150, 34, 34) calc(var(--porcentagem) * 1%),
-      rgb(65, 161, 161) calc(var(--porcentagem) * 1%),
-      rgb(60, 141, 123) 100%
-  );
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
-.grafico-pizza::before {
-  background-color: azure;
-}
 .sombra {
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5); /* x-offset, y-offset, blur-radius, color */
 }
@@ -155,7 +134,6 @@ background: #ededed;
 .usuario {
   background-color: #4d7e75;
 }
-
 
 .fab {
   position: fixed;

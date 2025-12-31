@@ -1,0 +1,12 @@
+<div class="card">
+  <div class="header">
+    <div class="icone" [ngClass]="tipo">
+      {{ icone }}
+    </div>
+    <span class="titulo">{{ titulo }}</span>
+  </div>
+
+  <div class="valor">
+    {{ valor | currency:'BRL' }}
+  </div>
+</div>
