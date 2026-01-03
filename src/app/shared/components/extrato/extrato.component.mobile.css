@@ -11,9 +11,10 @@
   .row-item {
     display: grid;
     grid-template-areas: 
-    "icon categoria tipo"
+    "icon descricao tipo"
     "icon descricao valor";
-    grid-template-columns: 10% 80% 10%;
+    grid-template-columns: 15% 60% 25%;
+    height: 60px;
   }
   .icon {
     grid-area: icon;
@@ -28,5 +29,11 @@
   }
   .date-label {
     display: none;
+  }
+  .description {
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    grid-area: descricao ;
   }
 }
