@@ -74,11 +74,15 @@ export class EvolucaoComponent  implements AfterViewInit, OnInit, OnDestroy {
                 const metade = Math.floor(this.intervalo / 2);
                 const mesInicial = mesAtual - metade;
                 const mesFinal = mesAtual + metade;
-
-                const meses = success[0]
-                .filter(x => x.mes >= mesInicial && x.mes <= mesFinal)
-                .sort((a, b) => a.mes - b.mes);
-                
+                let meses = []
+                if(this.intervalo > 6) {
+                  meses = success[0];
+                }
+                else {
+                  meses = success[0]
+                  .filter(x => x.mes >= mesInicial && x.mes <= mesFinal)
+                  .sort((a, b) => a.mes - b.mes);
+                }
                 this.dados = meses.map(p => (
                 {
                   coluna: this.getNameMes(parseInt(p.mes.toString())),
@@ -144,6 +148,21 @@ export class EvolucaoComponent  implements AfterViewInit, OnInit, OnDestroy {
         })
       })
     );
+    entradasSeries.bullets.push(() => {
+      return am5.Bullet.new(this.root, {
+        locationY: 1,
+        sprite: am5.Label.new(this.root, {
+          text: "{valueY.formatNumber('#,###.00')}",
+          populateText: true, // 🔥 ESSENCIAL
+          centerY: am5.p100,
+          centerX: am5.p50,
+          dy: -5,
+          fontSize: 10,
+          fill: am5.color(0x000000)
+        })
+      });
+    });
+
     entradasSeries.columns.template.setAll({cornerRadiusTL: 6, cornerRadiusTR: 6, strokeOpacity: 0 })
   
     entradasSeries.data.setAll(this.dados);
@@ -160,6 +179,21 @@ export class EvolucaoComponent  implements AfterViewInit, OnInit, OnDestroy {
         })
       })
     );
+    saidasSeries.bullets.push(() => {
+      return am5.Bullet.new(this.root, {
+        locationY: 1,
+        sprite: am5.Label.new(this.root, {
+          text: "{valueY.formatNumber('#,###.00')}",
+          populateText: true, // 🔥 ESSENCIAL
+          centerY: am5.p100,
+          centerX: am5.p50,
+          dy: -5,
+          fontSize: 10,
+          fill: am5.color(0x000000)
+        })
+      });
+    });
+
     saidasSeries.columns.template.setAll({cornerRadiusTL: 6, cornerRadiusTR: 6, strokeOpacity: 0 })
     saidasSeries.data.setAll(this.dados);
 
@@ -177,6 +211,22 @@ export class EvolucaoComponent  implements AfterViewInit, OnInit, OnDestroy {
         })
       })
     );
+    progressaoLine.bullets.push(() => {
+      return am5.Bullet.new(this.root, {
+        sprite: am5.Label.new(this.root, {
+          text: "{valueY.formatNumber('#,###.00')}",
+          populateText: true, // 🔥 ESSENCIAL
+          centerX: am5.p50,
+          centerY: am5.p100,
+          dy: -10,
+          fontSize: 10,
+          fontWeight: "100",
+          fill: am5.color(0x000000),
+          
+        })
+      });
+    });
+
     progressaoLine.strokes.template.setAll({
       strokeWidth: 3
     });
