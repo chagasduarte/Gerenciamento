@@ -1,6 +1,8 @@
 @media screen  and (max-width: 400px) {
   .transactions-card {
     width: 100%;
+    padding: 20px;
+
   }
   .actions, .table-header, .row-item input, .row-actions {
     display: none;
@@ -11,7 +13,7 @@
     grid-template-areas: 
     "icon categoria tipo"
     "icon descricao valor";
-    grid-template-columns: auto auto auto;
+    grid-template-columns: 10% 80% 10%;
   }
   .icon {
     grid-area: icon;

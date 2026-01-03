@@ -5,21 +5,30 @@
         'bar'
         'info'
         'side';
-        grid-template-rows: 8% 84% 8%;
+        grid-template-rows: 4rem 1fr 4rem;
         height: 100vh;
+        width: 100%;
     }
+
     app-nav-bar {
         grid-area: bar;
+        overflow: auto;
+        margin-bottom: 0;
     }
+
     .side-bar {
+        display: block;
         grid-area: side;
+        width: 100%;
+        height: auto;
     }
 
     .cards_resumo {
-        display:grid;
+        display: grid;
         grid-template-areas: 
         "saldo_atual saldo_atual"
         "gastos receitas";
+        width: 100%;
     }
     .saldo {
         grid-area: saldo_atual;
@@ -34,5 +43,7 @@
     .router-outlet {
         grid-area: info;
         padding: 0;
+        overflow-y: auto;
+        width: 100%;
     }
 }

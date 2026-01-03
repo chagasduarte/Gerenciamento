@@ -78,7 +78,6 @@
 /* Footer */
 .footer {
   margin-top: auto;
-  padding: 12px;
   display: flex;
   flex-direction: column;
   gap: 8px;

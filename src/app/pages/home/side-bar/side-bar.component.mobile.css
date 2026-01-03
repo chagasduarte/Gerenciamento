@@ -9,6 +9,7 @@
     .menu {
         display: flex;
         flex-direction: row;
+        justify-content: center;
     }
 
     .sidebar {
@@ -27,7 +28,8 @@
         padding: 0;
     }
     .item svg {
-        width: 25px;
+        width: 20px;
+        justify-content: center;
     }
     .item a span {
         font-size: 10px;

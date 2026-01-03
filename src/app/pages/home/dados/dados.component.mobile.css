@@ -3,11 +3,15 @@
     display: none;
   }
 
-  .evolução {
+  .evolucao {
     width: 100%;
   }
 
   .grafico-card {
     padding: 0;
+  }
+  .extrato {
+    width: 100%;
+    display: block;
   }
 }

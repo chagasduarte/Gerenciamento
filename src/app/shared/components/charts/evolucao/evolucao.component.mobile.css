@@ -2,11 +2,9 @@
     .chart-card {
         padding: 15px;
         width: 100%;
-        max-width: 400px;
     }
 
     .chart-container {
         width: 100%;
-        max-width: 400px;
     }
 }
