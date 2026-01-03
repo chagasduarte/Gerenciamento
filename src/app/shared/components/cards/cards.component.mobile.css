@@ -3,13 +3,12 @@
         background-color: rgb(48, 73, 97);
         border: none;
         color: aliceblue;
-          font-weight: bold;
-
+        font-weight: bold;
     }
 
     .valor {
         color:white;
-        font-size: 16px;
+        font-size: 20px;
     }
     .titulo {
         color: rgb(63, 180, 180);
@@ -22,7 +21,6 @@
         background-color: unset;
 
     }
-
     /* Saída */
     .icone.saida {      
         background-color: unset;
