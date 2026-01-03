@@ -5,12 +5,14 @@ import { CommonModule } from '@angular/common';
 import { SystemService } from '../../services/system.service';
 import { combineLatest, forkJoin } from 'rxjs';
 import { Router } from '@angular/router';
+import { ModalNovaTransacaoComponent } from "../modal-nova-transacao/modal-nova-transacao.component";
 
 @Component({
   selector: 'app-extrato',
   imports: [
-    CommonModule
-  ],
+    CommonModule,
+    ModalNovaTransacaoComponent
+],
   templateUrl: './extrato.component.html',
   styleUrls: [
     './extrato.component.css',

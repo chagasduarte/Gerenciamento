@@ -2,9 +2,11 @@
   .transactions-card {
     width: 100%;
     padding: 20px;
-
   }
-  .actions, .table-header, .row-item input, .row-actions {
+
+  .ver_extrato, .table-header, 
+  .row-item input, .row-actions, 
+  .icon {
     display: none;
   }
 
@@ -27,13 +29,14 @@
     grid-area: tipo;
     text-align: end;
   }
-  .date-label {
-    display: none;
-  }
+
   .description {
     display: flex;
     justify-content: center;
     align-items: end;
     grid-area: descricao ;
+  }
+  .add_transacao {
+    padding: 3px;
   }
 }

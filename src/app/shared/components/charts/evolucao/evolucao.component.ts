@@ -111,9 +111,6 @@ export class EvolucaoComponent  implements AfterViewInit, OnInit, OnDestroy {
         panY: false
       })
     );
-
-    var cursor = chart.set("cursor", am5xy.XYCursor.new(this.root, {}));
-    cursor.lineY.set("visible", false);
     
     // 3️⃣ Eixo X (MÊS)
     const xAxis = chart.xAxes.push(

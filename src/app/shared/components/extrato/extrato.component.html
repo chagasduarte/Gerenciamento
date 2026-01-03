@@ -5,9 +5,9 @@
     <h3>Últimas transações</h3>
 
     <div class="actions">
-      <button class="btn-outline" (click)="toEstrato()">Ver extrato</button>
-      <button class="btn-outline">Adicionar Transação</button>
-      <button class="btn-outline icon">
+      <button class="ver_extrato btn btn-outline" (click)="toEstrato()">Ver extrato</button>
+      <button class="add_transacao btn btn-outline" data-bs-toggle="modal" data-bs-target="#addTransacaoModal">Nova Transação</button>
+      <button class="icon btn-outline icon">
         <i class="bi bi-grid"></i>
         Gerenciar categorias
       </button>
@@ -70,3 +70,5 @@
   </ng-container>
 
 </div>
+
+<app-modal-nova-transacao></app-modal-nova-transacao>
