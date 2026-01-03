@@ -1,0 +1,38 @@
+@media screen  and (max-width: 400px) {
+    .top, app-resumo, app-anos, .footer {
+        display: none;
+    }
+    .nav {
+        display: flex;
+    }
+
+    .menu {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        background-color: rgba(236, 236, 236, 0);
+    }
+    
+    .item a {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        gap: 2px;
+        padding: 0;
+    }
+    .item svg {
+        width: 20px;
+        justify-content: center;
+    }
+    .item a span {
+        font-size: 10px;
+        text-align: center;
+    }
+} 

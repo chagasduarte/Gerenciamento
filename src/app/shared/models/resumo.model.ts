@@ -4,7 +4,7 @@ export interface ResumoMensal {
     receita_mensal: number;
     gastos_mensal_pendente: number;
     receita_mensal_pendente: number;
-    saldo_acumuldado: number;
+    saldo_acumulado: number;
     gastos_cartao: number;
     hasSome: boolean;
 }

@@ -95,7 +95,7 @@ export class GastosComponent implements OnInit{
           }
         },
         error: (err) => {
-          this.toastService.error(err.message);
+          this.toastService.error(err.erro);
         },
       })
     }

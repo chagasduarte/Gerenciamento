@@ -1,3 +1,9 @@
+.info-0 {
+    display: flex;
+    margin: 3%;
+    font-size: 35px;
+}
+
 .info-1 .data-grafico {
     display: none;
 }
@@ -27,10 +33,12 @@
 
 .grafico-card{
     grid-area: graficoCards;
-    display: grid;
-    place-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;   
     width: 100%;
     gap: 20px;
+    padding: 15px;
 }
 
 .grafico {
@@ -56,7 +64,7 @@
 .grafico-body {
     display: grid;
     grid-area: graficobody;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(auto, 1fr));
     grid-template-rows: repeat(auto-fill, minmax(50px, 1fr));
     place-items: center;
     padding: 5px;
@@ -65,7 +73,7 @@
 
 .cards {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     row-gap: 5px;
     width: 100%;
     place-items: center;
@@ -173,4 +181,3 @@ svg {
 .accordion {
     width: 400px;
 }
-

@@ -9,7 +9,10 @@ import { Ano, Mes } from '../../../utils/meses';
     CommonModule
   ],
   templateUrl: './nav-bar.component.html',
-  styleUrl: './nav-bar.component.css'
+  styleUrls: [
+    './nav-bar.component.css',
+    './nav-bar.component.mobile.css'
+  ]
 })
 export class NavBarComponent {
   ano: Ano

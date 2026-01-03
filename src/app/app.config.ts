@@ -1,4 +1,4 @@
-import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection, isDevMode } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection, isDevMode, LOCALE_ID } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -12,6 +12,10 @@ import { HttpRequestInterceptor } from './shared/interceptors/spinner.intercepto
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
 import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
+import { registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
+
+registerLocaleData(localePt);
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }), 
@@ -36,7 +40,8 @@ export const appConfig: ApplicationConfig = {
                   enabled: !isDevMode(),
                   registrationStrategy: 'registerImmediately'
                 }),
-              )
+              ),
+               { provide: LOCALE_ID, useValue: 'pt-BR' }
               
             ]
 };

@@ -1,11 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ViewChild, ViewContainerRef } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NgxSpinnerComponent } from 'ngx-spinner';
-import { SystemService } from './shared/services/system.service';
 import { AuthService } from './shared/services/auth.service';
 import { HomeComponent } from "./pages/home/home.component";
-import { LoginComponent } from "./pages/loggin/loggin.component";
 
 @Component({
     selector: 'app-root',

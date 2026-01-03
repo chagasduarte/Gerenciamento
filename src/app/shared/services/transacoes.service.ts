@@ -83,7 +83,12 @@ export class TransacoesService {
   GetByDay(dia: number, mes: number, ano: number): Observable<PordiaResponse> {
     return this.http.get<PordiaResponse>(`${this.api}/transacoes/pordia?dia=${dia}&mes=${mes}&ano=${ano}`)
   }
+  
   save(pay: any): Observable<boolean>{
     return this.http.post<boolean>(`${this.api}/transacoes/save`, pay);
+  }
+
+  Extrato(limit: number, mes: number, ano: number): Observable<TransacaoModel[]>{
+    return this.http.get<TransacaoModel[]>(`${this.api}/transacoes/extrato?limit=${limit}&mes=${mes}&ano=${ano}`);
   }
 }

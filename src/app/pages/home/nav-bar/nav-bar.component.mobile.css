@@ -1,0 +1,10 @@
+@media screen  and (max-width: 400px) {
+  .barra_navegacao {
+    margin-bottom: 0;
+    height: fit-content;
+
+  }
+  .meses {
+    margin-bottom: 0;
+  }
+}

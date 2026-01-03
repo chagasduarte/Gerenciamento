@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Ano } from '../../../utils/meses';
 import { CommonModule } from '@angular/common';
-import { Despesa } from '../../../shared/models/despesa';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { SystemService } from '../../../shared/services/system.service';
@@ -11,16 +10,20 @@ import { FormsModule } from '@angular/forms';
 import { DespesasParceladasResponse } from '../../../shared/models/despesasParceladas.model';
 import { AgrupamentoResponse } from '../../../shared/models/agrupamento';
 import { TransacoesService } from '../../../shared/services/transacoes.service';
-import { Projecao } from '../../../shared/models/projecao.model';
-import { TipoDespesaGrafico } from '../../../shared/models/graficos';
 import { TransacaoModel } from '../../../shared/models/despesa.model';
+import { ExtratoComponent } from "../../../shared/components/extrato/extrato.component";
+import { PlanejamentoComponent } from "../../../shared/components/planejamento/planejamento.component";
+import { EvolucaoComponent } from "../../../shared/components/charts/evolucao/evolucao.component";
 
 @Component({
   selector: 'app-dados',
   imports: [
     CommonModule,
     FormsModule,
-  ],
+    ExtratoComponent,
+    PlanejamentoComponent,
+    EvolucaoComponent
+],
   templateUrl: './dados.component.html',
   styleUrls: ['./dados.component.css', './dados.component.mobile.css']
 })
@@ -80,7 +83,7 @@ export class DadosComponent implements OnInit {
       forkJoin([
         this.despesaService.GetDespesasParceladas(mes.valor + 1, ano.valor),
         this.despesaService.GetAgrupamento(mes.valor + 1, ano.valor),
-       
+        this.despesaService.GetProjecao(ano.valor)
       ]).subscribe({
         next: (success) => {
           this.novasParcelas = success[0];

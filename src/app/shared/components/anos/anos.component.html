@@ -1,0 +1,17 @@
+<div class="d-flex justify-content-center"> 
+    <div class="d-flex">
+        <div  *ngFor="let ano of anosDeDivida">
+        <div class="d-flex justify-content-center">
+            <button 
+            style="border-radius: 20px;
+                   background: linear-gradient(to right, #9e3776, #214b5c, #09293f);
+                   color: antiquewhite;
+                   font-weight: 900;
+                   border: none;
+                   font-size: 20px"            
+            class="me-2 mt-3" 
+            (click)="mudaAno(ano)">{{ano}}</button>
+        </div>
+        </div>
+    </div>
+</div>

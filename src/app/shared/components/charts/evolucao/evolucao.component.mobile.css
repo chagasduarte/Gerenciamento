@@ -1,0 +1,10 @@
+@media screen  and (max-width: 400px) {
+    .chart-card {
+        padding: 15px;
+        width: 100%;
+    }
+
+    .chart-container {
+        width: 100%;
+    }
+}

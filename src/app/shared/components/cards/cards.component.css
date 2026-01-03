@@ -1,0 +1,55 @@
+.card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 16px 20px;
+  width: 100%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* Ícone + título lado a lado */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.titulo {
+  font-size: 18px;
+  color: #6b7280;
+}
+
+/* Valor embaixo */
+.valor {
+  margin-top: 8px;
+  font-size: 30px;
+  font-weight: bold;
+  color: #111827;
+  margin-right: 20px;
+}
+
+.icone {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+/* Entrada */
+.icone.entrada {
+  background-color: #e6f4ea;
+  color: #2e7d32;
+}
+
+/* Saída */
+.icone.saida {
+  background-color: #fdecea;
+  color: #c62828;
+}
+
+.width100 {
+  width: 100%;
+}

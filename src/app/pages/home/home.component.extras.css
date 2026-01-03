@@ -63,15 +63,6 @@
     height: auto;
 }
 
-.cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
-    row-gap: 5px;
-    width: 100%;
-    place-items: center;
-    margin-top: 10px;
-}
-
 .valores {
     grid-area: valores;
     text-align: left;
