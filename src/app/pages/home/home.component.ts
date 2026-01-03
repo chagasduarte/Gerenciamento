@@ -11,6 +11,7 @@ import { AuthService } from '../../shared/services/auth.service';
 import { Usuario } from '../../shared/models/user.model';
 import { UsuarioService } from '../../shared/services/usuario.service';
 import { SideBarComponent } from "./side-bar/side-bar.component";
+import { CardsComponent } from "../../shared/components/cards/cards.component";
 
 @Component({
   selector: 'app-home',
@@ -20,7 +21,8 @@ import { SideBarComponent } from "./side-bar/side-bar.component";
     FormsModule,
     RouterOutlet,
     NavBarComponent,
-    SideBarComponent
+    SideBarComponent,
+    CardsComponent
 ],
   templateUrl: './home.component.html',
   styleUrls: [

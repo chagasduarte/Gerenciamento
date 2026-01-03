@@ -1,14 +1,14 @@
 
 .meses{
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 7px;
+  justify-content: center;
+  gap: 20px;
   font-size: 20px;
   padding: 25px;
   width: 100%;
   background: linear-gradient(180deg, #021c22, #011418);
   height: 4rem;
+  overflow-y: auto;
 }
 
 .barra_navegacao {

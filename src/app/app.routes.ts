@@ -15,6 +15,7 @@ import { DadosComponent } from './pages/home/dados/dados.component';
 import { InvestimentosComponent } from './pages/home/investimentos/investimentos.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { ConfigComponent } from './pages/config/config.component';
+import { ExtratoComponent } from './shared/components/extrato/extrato.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -33,7 +34,8 @@ export const routes: Routes = [
         { path: "index", component: IndexComponent, canActivate: [AuthGuard]},
         { path: "objetivos", component: ObjetivosComponent, canActivate: [AuthGuard]},
         { path: "pagamentos", component: PagamentosComponent, canActivate: [AuthGuard]},
-        { path: "investimentos", component: InvestimentosComponent, canActivate: [AuthGuard]}
+        { path: "investimentos", component: InvestimentosComponent, canActivate: [AuthGuard]},
+        { path: "extrato", component: ExtratoComponent, canActivate: [AuthGuard]}
       ],
       canActivate: [AuthGuard]
     }

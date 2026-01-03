@@ -41,7 +41,6 @@
     "mes mes"
     "linha linha"
     "ano ano";
-    width: 170px;
     height: 100px;
 }
 .anos-rodape{
@@ -91,5 +90,15 @@ svg {
 }
 
 .router-outlet {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
     overflow-y: auto;
+}
+
+.cards_resumo {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 5px;
+    margin-top: 3px;
 }

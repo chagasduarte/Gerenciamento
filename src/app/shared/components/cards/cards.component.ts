@@ -5,12 +5,14 @@ import { Component, Input } from '@angular/core';
   selector: 'app-cards',
   imports: [CommonModule],
   templateUrl: './cards.component.html',
-  styleUrl: './cards.component.css'
+  styleUrls: [
+    './cards.component.css',
+    './cards.component.mobile.css',
+  ]
 })
 export class CardsComponent {
   @Input() titulo: string = '';
   @Input() valor: number = 0;
-   // 'entrada' | 'saida'
   @Input() tipo: 'entrada' | 'saida' | 'saldo' = 'entrada';
 
   get icone(): string {

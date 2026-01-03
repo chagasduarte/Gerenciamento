@@ -11,16 +11,18 @@ import { DespesasParceladasResponse } from '../../../shared/models/despesasParce
 import { AgrupamentoResponse } from '../../../shared/models/agrupamento';
 import { TransacoesService } from '../../../shared/services/transacoes.service';
 import { TransacaoModel } from '../../../shared/models/despesa.model';
-import { CardsComponent } from "../../../shared/components/cards/cards.component";
 import { ExtratoComponent } from "../../../shared/components/extrato/extrato.component";
+import { PlanejamentoComponent } from "../../../shared/components/planejamento/planejamento.component";
+import { EvolucaoComponent } from "../../../shared/components/charts/evolucao/evolucao.component";
 
 @Component({
   selector: 'app-dados',
   imports: [
     CommonModule,
     FormsModule,
-    CardsComponent,
-    ExtratoComponent
+    ExtratoComponent,
+    PlanejamentoComponent,
+    EvolucaoComponent
 ],
   templateUrl: './dados.component.html',
   styleUrls: ['./dados.component.css', './dados.component.mobile.css']
@@ -81,7 +83,7 @@ export class DadosComponent implements OnInit {
       forkJoin([
         this.despesaService.GetDespesasParceladas(mes.valor + 1, ano.valor),
         this.despesaService.GetAgrupamento(mes.valor + 1, ano.valor),
-       
+        this.despesaService.GetProjecao(ano.valor)
       ]).subscribe({
         next: (success) => {
           this.novasParcelas = success[0];

@@ -42,6 +42,7 @@ export class DashboardComponent implements  OnInit {
         private readonly transacoesService: TransacoesService
     ){
     }
+    
     ngOnInit(): void {
         this.buscaDados();
     }

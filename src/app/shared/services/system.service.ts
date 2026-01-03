@@ -16,12 +16,12 @@ export class SystemService {
 
   private readonly _resumo = new BehaviorSubject<ResumoMensal | null>(
     {
-    saldo_atual: 0,
-    gastos_mensal: 0,
-    receita_mensal: 0,
-    gastos_mensal_pendente: 0,
-    receita_mensal_pendente: 0,
-    saldo_acumuldado: 0
+      saldo_atual: 0,
+      gastos_mensal: 0,
+      receita_mensal: 0,
+      gastos_mensal_pendente: 0,
+      receita_mensal_pendente: 0,
+      saldo_acumulado: 0
     } as ResumoMensal
   );
 

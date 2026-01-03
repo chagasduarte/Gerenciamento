@@ -1,11 +1,11 @@
-<div class="transactions-card">
+<div class="transactions-card sombra">
 
   <!-- Header -->
   <div class="header">
     <h3>Últimas transações</h3>
 
     <div class="actions">
-      <button class="btn-outline">Ver extrato</button>
+      <button class="btn-outline" (click)="toEstrato()">Ver extrato</button>
       <button class="btn-outline">Adicionar Transação</button>
       <button class="btn-outline icon">
         <i class="bi bi-grid"></i>
@@ -42,10 +42,6 @@
         <div class="icon">
             <img [src]="defineImagem(item.categoria)" style="width: 50px; height: 50px;" alt="">
         </div>
-        <div>
-          <strong>{{ item.descricao }}</strong>
-          <small>{{ item.categoria }}</small>
-        </div>
       </div>
 
       <div class="description">
@@ -60,7 +56,7 @@
         {{ item.ispaycart }}
       </div>
 
-      <div class="value">
+      <div class="value" [ngClass]="item.tipo" >
         R$ {{ item.valor | number:'1.2-2' }}
       </div>
 

@@ -1,96 +1,38 @@
-@media screen  and (max-width: 900px) {
-    #accordionExample{
-        display: flex;
-        flex-direction: column;
-    }
-    .mobile {
+@media screen  and (max-width: 400px) {
+    .pagina {
         display: grid;
-        grid-template-areas: 
-        "data grafico"
-        "conta conta";
-        gap: 20px;
-        width: 100%;
-        place-items: center;
-        margin-top: 10px;
-    }
-    .conta {
-        grid-area: conta;
-        background-color: #46527200;
-    }
-    .grafico-card {
-        grid-template-areas: 
-        "grafico"
-        "cards";
-    }
-    .pagina  {
         grid-template-areas: 
         'bar'
         'info'
-        'anos-rodape';
-        grid-template-columns: 1fr;
-        grid-template-rows: auto 1fr auto;
-        overflow-x: auto;
-        overflow-y: auto;
+        'side';
+        grid-template-rows: 8% 84% 8%;
         height: 100vh;
     }
-
+    app-nav-bar {
+        grid-area: bar;
+    }
     .side-bar {
-        display: none;
+        grid-area: side;
     }
-        
-    .info-1 .data-grafico {
-        grid-area: dataGrafico;
-        display: grid;
+
+    .cards_resumo {
+        display:grid;
         grid-template-areas: 
-        "data graficos";
-        grid-template-columns: 11rem 115px;
-        gap: 20px;
-        place-items: center;
-        padding: 15px;
+        "saldo_atual saldo_atual"
+        "gastos receitas";
     }
-
-    .anos-rodape {
-        display: grid;
-        place-items: center;
-        width: 100%;
-        height: 50px;
-    }
-
-    .infos {
-        display: grid;
-        gap: 5px;
-        overflow-y: auto;
-        overflow-x: auto;
-        margin: 0px;
-        padding: 0px;
-    }
-    .valor-conta-mobile {
-        display: grid;
-        place-items: left;
-        background-color: #465272;
-        border-radius: 15px;
-        font-size: 25px;
-        padding: 5px;
+    .saldo {
+        grid-area: saldo_atual;
         width: 100%;
     }
-    .accordion-button {
-        background-color: #333f5f00;
-        height: 100%;
+    .gastos {
+        grid-area: gastos;
     }
-    
-    .accordion-header {
-        background-color: #333f5f00;
+    .receitas {
+        grid-area: receitas;
     }
-}
-
-.legenda {
-    position: absolute;
-    text-align: center;
-    font-weight: bold;
-    font-size: 20px;
-    color: black;
-}
-
-.meses-rodape {
-    display: flex;
+    .router-outlet {
+        grid-area: info;
+        padding: 0;
+    }
 }

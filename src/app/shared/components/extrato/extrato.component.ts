@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { TransacaoModel } from '../../models/despesa.model';
 import { TransacoesService } from '../../services/transacoes.service';
 import { CommonModule } from '@angular/common';
 import { SystemService } from '../../services/system.service';
 import { combineLatest, forkJoin } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-extrato',
@@ -11,61 +12,60 @@ import { combineLatest, forkJoin } from 'rxjs';
     CommonModule
   ],
   templateUrl: './extrato.component.html',
-  styleUrl: './extrato.component.css'
+  styleUrls: [
+    './extrato.component.css',
+    './extrato.component.mobile.css',
+  ]
 })
 export class ExtratoComponent implements OnInit{
   transacoes!: TransacaoModel[];
+  @Input() limit: number = 0;
+  @Input() pagina: boolean = false;
 
   constructor(
     private readonly transacoesService: TransacoesService,
-    private readonly systemService: SystemService
+    private readonly systemService: SystemService, 
+    private readonly router: Router
   ){}
 
   ngOnInit(): void {
     combineLatest([
-          this.systemService.ano$,
-          this.systemService.mes$
-        ]).subscribe(([ano, mes]) => {
-          forkJoin([
-            this.transacoesService.GetDespesasParceladas(mes.valor + 1, ano.valor),
-            this.transacoesService.GetAgrupamento(mes.valor + 1, ano.valor),
-          ]).subscribe({
-            next: (success) => {
-              
-            },
-            error: (err: any) => {
-              
-            }
-          });
-        });
+      this.systemService.ano$,
+      this.systemService.mes$
+    ]).subscribe(([ano, mes]) => {
+      forkJoin([
+        this.transacoesService.Extrato(this.limit, mes.valor + 1, ano.valor)
+      ]).subscribe({
+        next: (success) => {
+          this.transacoes = success[0];
+        },
+        error: (err: any) => {
+          
+        }
+      });
+    });
   }
 
   trackByIndex(index: number) {
     return index;
   }
 
+  private imagens: Record<number, string> = {
+    1: 'assets/img/food-wine-cheese-bread-national-culture-paris.svg',
+    2: 'assets/img/sport-utility-vehicle.svg',
+    3: 'assets/img/health.svg',
+    4: 'assets/img/books.svg',
+    5: 'assets/img/beach.svg',
+    6: 'assets/img/house-with-garden.svg',
+    7: 'assets/img/customer-service.svg',
+    8: 'assets/img/tools-chainsaw.svg',
+    9: 'assets/img/revenue.svg'
+  };
+
   defineImagem(tipoDespesa: number): string {
-   
-    switch(tipoDespesa) {
-      case 1:
-        return "/assets/img/food-wine-cheese-bread-national-culture-paris.svg";
-      case 2:
-        return "/assets/img/sport-utility-vehicle.svg";
-      case 3: 
-        return "/assets/img/health.svg";
-      case 4: 
-        return "/assets/img/books.svg";
-      case 5:
-        return "/assets/img/beach.svg";
-      case 6:
-        return "/assets/img/house-with-garden.svg";
-      case 7:
-        return "/assets/img/customer-service.svg";
-      case 8: 
-        return "/assets/img/tools-chainsaw.svg";
-      case 9: 
-        return "/assets/img/revenue.svg";
-    }
-    return "";
+    return this.imagens[tipoDespesa] ?? 'assets/img/money-bag.svg';
+  }
+  toEstrato() {
+    this.router.navigate(['extrato']);
   }
 }

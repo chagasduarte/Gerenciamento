@@ -6,17 +6,20 @@ import { Router } from '@angular/router';
 import { UsuarioService } from '../../../shared/services/usuario.service';
 import { Usuario } from '../../../shared/models/user.model';
 import { AnosComponent } from "../../../shared/components/anos/anos.component";
-import { InfoComponent } from "../../../shared/components/charts/info/info.component";
+import { ResumoComponent } from "../../../shared/components/charts/resumo/resumo.component";
 
 @Component({
   selector: 'app-side-bar',
   imports: [
-    CommonModule, 
-    AnosComponent, 
-    InfoComponent
-  ],
+    CommonModule,
+    AnosComponent,
+    ResumoComponent
+],
   templateUrl: './side-bar.component.html',
-  styleUrl: './side-bar.component.css'
+  styleUrls: [
+    './side-bar.component.css',
+    './side-bar.component.mobile.css'
+  ]
 })
 export class SideBarComponent implements OnInit{
   resumoMensal$ = this.systemService.resumo$; // <-- agora é reativo

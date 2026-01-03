@@ -33,10 +33,12 @@
 
 .grafico-card{
     grid-area: graficoCards;
-    display: grid;
-    place-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;   
     width: 100%;
     gap: 20px;
+    padding: 15px;
 }
 
 .grafico {
@@ -62,7 +64,7 @@
 .grafico-body {
     display: grid;
     grid-area: graficobody;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(auto, 1fr));
     grid-template-rows: repeat(auto-fill, minmax(50px, 1fr));
     place-items: center;
     padding: 5px;
@@ -179,4 +181,3 @@ svg {
 .accordion {
     width: 400px;
 }
-

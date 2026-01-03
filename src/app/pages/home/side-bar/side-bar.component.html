@@ -24,15 +24,20 @@
 
 <aside class="sidebar sombra" [class.collapsed]="collapsed"  *ngIf="resumoMensal$ | async as resumo">
   <div class="top">
-    <div class="logo">Maglory</div>
+    <div class="logo d-flex gap-2">
+        <span  *ngIf="!collapsed">FIDELIS</span>
+        <img src="assets/img/fidelis.png" alt="" width="15" height="55">
+    </div>
     <button class="toggle" (click)="toggle()">
       <span *ngIf="!collapsed">◄</span>
       <span *ngIf="collapsed">►</span>
     </button>
   </div>
   
-  <ul class="nav nav-pills flex-column mb-auto">
-    <app-info *ngIf="!collapsed" type="button"></app-info>
+  <ul class="nav nav-pills menu">
+    
+    <app-resumo *ngIf="!collapsed"></app-resumo>
+    
     <li class="item">
         <a href="home" class="nav-link text-whit">
             <svg class="bi pe-none me-2" width="28" height="28"><use xlink:href="#home"/></svg>

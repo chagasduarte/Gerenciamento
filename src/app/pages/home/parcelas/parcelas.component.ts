@@ -58,7 +58,6 @@ export class ParcelasComponent implements OnInit {
       next: (success: any) => {
         this.nomeDespesa = success.descricao
         this.transacoesService.GetParcelas(this.nomeDespesa).subscribe(x => {
-          console.log(x);
           this.parcelasPagas = x.despesa.filter(x => x.status == 'pago');
           this.parcelas = x.despesa.filter(x => x.status == 'pendente' && new Date(x.data).getUTCFullYear() == this.ano.valor);
           

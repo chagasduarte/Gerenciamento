@@ -2,9 +2,8 @@
   background: #ffffff;
   border-radius: 14px;
   padding: 16px 20px;
-  width: fit-content;
+  width: 100%;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-  font-family: Arial, Helvetica, sans-serif;
 }
 
 /* Ícone + título lado a lado */
@@ -12,19 +11,6 @@
   display: flex;
   align-items: center;
   gap: 8px;
-}
-
-.icone {
-  width: 28px;
-  height: 28px;
-  background-color: #e6f4ea;
-  color: #2e7d32;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  font-size: 14px;
 }
 
 .titulo {
@@ -62,4 +48,8 @@
 .icone.saida {
   background-color: #fdecea;
   color: #c62828;
+}
+
+.width100 {
+  width: 100%;
 }

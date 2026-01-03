@@ -3,42 +3,32 @@
   <app-side-bar class="side-bar"></app-side-bar>
   <app-nav-bar></app-nav-bar>
 
-  <div class="accordion" id="accordionExample">
-    <div class="d-flex justify-content-between">
-      <div class="d-flex">
-        <div class="circle">
-          <img [src]="avatarUrl"/>
-        </div>
-        <div class="valores" style="font-size: 35px;">
-          <div class="valor"> {{resumo.saldo_atual| currency}}</div>
-        </div>
-        <a class="up-hover" (click)="logout()">Sair</a>
-      </div>  
-      <h2 class="accordion-header">
-        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-        </button>
-      </h2>    
-    </div>
-    
-    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-        <div class="mobile" >
-          <div style="font-weight: 900; font-size: 30px;" class="data">
-            <div class="mes">
-              {{systemService.mes.nome}}
-            </div>
-            <div class="linha"></div>
-            <div class="ano">
-              {{systemService.ano.valor}}
-            </div>
-          </div>
-
-          
-        </div>
+  <div class="router-outlet">
+    <div class="data">
+      <div class="d-flex" style="font-weight: 900 !important; font-size: 42px;">
+        {{systemService.mes.nome}} | {{systemService.ano.valor}}
       </div>
     </div>
-  </div>
-  <div class="router-outlet">
+
+    <div class="cards_resumo">
+      <app-cards class="gastos"
+        titulo="Gastos" 
+        [valor]="resumo.gastos_mensal_pendente"
+        tipo="saida">
+      </app-cards>
+
+      <app-cards class="receitas"
+        titulo="Receitas" 
+        [valor]="resumo.receita_mensal_pendente"
+        tipo="entrada">
+      </app-cards>
+
+      <app-cards class="saldo"
+        titulo="Saldo Atual" 
+        [valor]="resumo.saldo_atual"
+        tipo="saldo">
+      </app-cards>
+    </div>
     <router-outlet></router-outlet>
   </div>
 

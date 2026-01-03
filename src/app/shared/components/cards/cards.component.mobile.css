@@ -1,0 +1,30 @@
+@media screen  and (max-width: 400px) {
+    .card {
+        background-color: rgb(38, 51, 63);
+        border: none;
+        color: aliceblue;
+          font-weight: bold;
+
+    }
+
+    .valor {
+        color:white;
+        font-size: 16px;
+    }
+    .titulo {
+        color: rgb(54, 117, 93);
+        font-size: 14px;
+    }
+    .icone {
+        background-color: unset;
+    }
+    .icone.entrada {      
+        background-color: unset;
+
+    }
+
+    /* Saída */
+    .icone.saida {      
+        background-color: unset;
+    }
+}
