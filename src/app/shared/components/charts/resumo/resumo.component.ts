@@ -185,14 +185,9 @@ export class ResumoComponent implements AfterViewInit, OnInit, OnDestroy {
     const saldoAcumulado = this.saldoAcumulado ?? 0;
     
     const livre = salario - valorComprometido;
-    
-    console.log("acumulado", this.saldoAcumulado);
-    console.log("comprometido", valorComprometido);
     const percentual = salario > 0
       ? ((valorComprometido / salario) * 100)
       : 0;
-    console.log("percent", percentual);
-    console.log("livre", livre);
     
     this.labels[0].set(
       'text',

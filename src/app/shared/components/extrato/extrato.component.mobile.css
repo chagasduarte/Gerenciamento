@@ -5,15 +5,15 @@
   }
 
   .ver_extrato, .table-header, 
-  .row-item input, .row-actions, 
+  .row-item input, .bi-eye, 
   .icon {
     display: none;
   }
-
+ 
   .row-item {
     display: grid;
     grid-template-areas: 
-    "icon descricao tipo"
+    "icon tipo action"
     "icon descricao valor";
     grid-template-columns: 15% 60% 25%;
     height: 60px;
@@ -38,5 +38,8 @@
   }
   .add_transacao {
     padding: 3px;
+  }
+  .row-actions {
+    grid-area: action;
   }
 }

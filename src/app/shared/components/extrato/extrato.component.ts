@@ -6,6 +6,7 @@ import { SystemService } from '../../services/system.service';
 import { combineLatest, forkJoin } from 'rxjs';
 import { Router } from '@angular/router';
 import { ModalNovaTransacaoComponent } from "../modal-nova-transacao/modal-nova-transacao.component";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-extrato',
@@ -27,7 +28,8 @@ export class ExtratoComponent implements OnInit{
   constructor(
     private readonly transacoesService: TransacoesService,
     private readonly systemService: SystemService, 
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly toast: ToastrService
   ){}
 
   ngOnInit(): void {
@@ -69,5 +71,14 @@ export class ExtratoComponent implements OnInit{
   }
   toEstrato() {
     this.router.navigate(['extrato']);
+  }
+  apagar(id: number) {
+    this.transacoesService.DeleteTransacao(id).subscribe({
+      next: () => {
+        this.toast.success("Deletado");
+        this.ngOnInit()
+      
+      }
+    })
   }
 }
