@@ -78,6 +78,7 @@ export class ModalNovaTransacaoComponent implements OnInit{
           if (success) {
             this.preencheInformacoes();
             this.toastService.success("Parcelas Gravadas");
+            this.systemService.atualizarResumo();
           }
         },
         error: (err) => {
@@ -91,6 +92,7 @@ export class ModalNovaTransacaoComponent implements OnInit{
       this.despesaService.PostTransacao(this.novaDespesa).subscribe(x => {
         this.preencheInformacoes();
         this.toastService.success("Despesa Gravada");
+        this.systemService.atualizarResumo();
       });
     }
     this.fecharModal();

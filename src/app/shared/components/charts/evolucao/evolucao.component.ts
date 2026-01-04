@@ -163,7 +163,12 @@ export class EvolucaoComponent  implements AfterViewInit, OnInit, OnDestroy {
       });
     });
 
-    entradasSeries.columns.template.setAll({cornerRadiusTL: 6, cornerRadiusTR: 6, strokeOpacity: 0 })
+    entradasSeries.columns.template.setAll({
+      cornerRadiusTL: 6, 
+      cornerRadiusTR: 6, 
+      strokeOpacity: 0,
+      width: am5.percent(50)
+    })
   
     entradasSeries.data.setAll(this.dados);
     // 6️⃣ Série SAÍDAS
@@ -194,7 +199,13 @@ export class EvolucaoComponent  implements AfterViewInit, OnInit, OnDestroy {
       });
     });
 
-    saidasSeries.columns.template.setAll({cornerRadiusTL: 6, cornerRadiusTR: 6, strokeOpacity: 0 })
+    saidasSeries.columns.template.setAll({
+      cornerRadiusTL: 6, 
+      cornerRadiusTR: 6, 
+      strokeOpacity: 0,
+      width: am5.percent(50)
+    });
+    
     saidasSeries.data.setAll(this.dados);
 
     const progressaoLine = chart.series.push(

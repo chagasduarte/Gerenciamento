@@ -76,8 +76,8 @@ export class ExtratoComponent implements OnInit{
     this.transacoesService.DeleteTransacao(id).subscribe({
       next: () => {
         this.toast.success("Deletado");
-        this.ngOnInit()
-      
+        this.ngOnInit();
+        this.systemService.atualizarResumo();
       }
     })
   }
