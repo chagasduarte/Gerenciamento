@@ -220,7 +220,7 @@ export class EvolucaoComponent  implements AfterViewInit, OnInit, OnDestroy {
           centerY: am5.p100,
           dy: -10,
           fontSize: 10,
-          fontWeight: "100",
+          fontWeight: "400",
           fill: am5.color(0x000000),
           
         })
