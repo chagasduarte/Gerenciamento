@@ -36,7 +36,7 @@ interface AgrupadoPorCategoriaMap {
     './planejamento.component.mobile.css',
   ]
 })
-export class PlanejamentoComponent implements OnInit, AfterViewInit{
+export class PlanejamentoComponent implements OnInit{
 
   tipo: string = "Saídas";
   planejados: number = 0;
@@ -46,7 +46,8 @@ export class PlanejamentoComponent implements OnInit, AfterViewInit{
   planejamentos: PlanejamentoAgrupadoTipo[] = [];
   resumoMensal$ = this.systemService.resumo$; // <-- agora é reativo
   resumoMensal!: ResumoMensal;
-  agrupamento!: AgrupamentoResponse;
+  agrupamentoSaidas!: AgrupamentoResponse;
+  agrupamentoEntradas!: AgrupamentoResponse;
   agrupamentoCategoria: any;
 
   constructor(
@@ -59,10 +60,6 @@ export class PlanejamentoComponent implements OnInit, AfterViewInit{
   ngOnInit(): void {
     this.requisicoesApi()
   }
-  ngAfterViewInit(): void {
-    this.requisicoesApi();
-  }
-
   requisicoesApi(){
     combineLatest([
         this.systemService.ano$,
@@ -70,16 +67,16 @@ export class PlanejamentoComponent implements OnInit, AfterViewInit{
     ]).subscribe(([ano, mes]) => {
         forkJoin([
             this.planejamentoService.listar(),
-            this.transacoesService.GetAgrupamento(mes.valor + 1, ano.valor),
+            this.transacoesService.GetAgrupamento(mes.valor + 1, ano.valor, 'saida'),
+            this.transacoesService.GetAgrupamento(mes.valor + 1, ano.valor, 'entrada'),
         ]).subscribe({
           next: (success) => {
             this.planejamentos = success[0];
             this.planejados = this.planejamentos.find(x => x.tipo == this.abaAtiva)?.soma!;
-            this.agrupamento = success[1];
-
-            this.valor = this.agrupamento.soma.soma??0;
-            console.log(this.valor)
-            this.agrupamentoCategoria = agruparPorCategoria(this.agrupamento);
+            this.agrupamentoSaidas = success[1];
+            this.agrupamentoEntradas = success[2];
+            this.valor = this.agrupamentoSaidas.soma.soma??0;
+            this.agrupamentoCategoria = agruparPorCategoria(this.agrupamentoSaidas);
           },
           error: (err) => {
             console.error(err);
@@ -94,6 +91,6 @@ export class PlanejamentoComponent implements OnInit, AfterViewInit{
     this.abaAtiva = tab;
     this.tipo = tab == 'entradas'? 'Entradas' : 'Saídas';
     this.planejados = this.planejamentos.find(x => x.tipo == tab)?.soma!;
-    this.valor = this.abaAtiva == 'entradas'? this.agrupamento.soma.soma??0 : 0
+    this.valor = this.abaAtiva == 'entradas'?  this.agrupamentoEntradas?.soma.soma??0 : this.agrupamentoSaidas?.soma.soma??0 
   }
 }

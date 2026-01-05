@@ -82,7 +82,7 @@ export class DadosComponent implements OnInit {
       this.ano = ano;
       forkJoin([
         this.despesaService.GetDespesasParceladas(mes.valor + 1, ano.valor),
-        this.despesaService.GetAgrupamento(mes.valor + 1, ano.valor),
+        this.despesaService.GetAgrupamento(mes.valor + 1, ano.valor, 'saida'),
         this.despesaService.GetProjecao(ano.valor)
       ]).subscribe({
         next: (success) => {
