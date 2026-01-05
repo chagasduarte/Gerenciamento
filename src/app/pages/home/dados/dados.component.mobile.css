@@ -1,6 +1,6 @@
 @media screen  and (max-width: 400px) {
   .planejamento {
-    display: none;
+    display: block;
   }
 
   .evolucao {

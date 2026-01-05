@@ -4,12 +4,11 @@
       
       <div class="grafico-card">
         
-        <div class="d-flex">
+        <div class="d-flex flex-column gap-1">
           <app-planejamento class="planejamento"></app-planejamento>
           <app-evolucao [intervalo]="5" class="evolucao"></app-evolucao>
         </div>
         <app-extrato [limit]="5" class="extrato"></app-extrato>
-        
         <div class="grafico sombra up-hover" hidden>
           <div class="grafico-header">
             <h5>Despesas Parcelas: {{novasParcelas.mensal.pendente | currency}}</h5>

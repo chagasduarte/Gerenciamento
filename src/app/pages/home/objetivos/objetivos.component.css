@@ -9,6 +9,8 @@
   );
   background-size: 100px 100%;
   background-repeat: repeat-x;
+  overflow-x: auto;
+  width: 100%;
 }
 
 .grid-doze {

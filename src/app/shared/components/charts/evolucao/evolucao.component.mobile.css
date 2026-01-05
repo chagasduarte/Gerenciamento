@@ -1,6 +1,6 @@
 @media screen  and (max-width: 400px) {
     .chart-card {
-        padding: 0;
+        padding: unset;
         width: 100%;
     }
 

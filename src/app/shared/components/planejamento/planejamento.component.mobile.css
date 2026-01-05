@@ -1,0 +1,44 @@
+@media screen  and (max-width: 400px) {
+  .cards_planejamento {
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(0, 0, 0, 0);
+    gap:5px;
+    padding: 0px;
+    height: fit-content;
+    margin-bottom: 10px;
+  }
+
+  .planejadas, .entradas_saidas {
+    background-color: aliceblue;
+    border-radius: 20px;
+    color: black;
+    padding: 10px;
+  }
+
+  .planejadas {
+    font-size: 14px;
+  }
+  
+  .entradas_saidas, .cards_planejamento, .tabs {
+    width: 100%;
+  }
+
+  .tab {
+    width: 50%;
+  }
+
+  .tipo {
+    width: 100%;
+    display: flex;
+    gap: 3px;
+    flex-direction: column;
+  }
+
+  .button_tipo {
+    width: 100%;
+    border: none;
+    text-align: start;
+  }
+
+}

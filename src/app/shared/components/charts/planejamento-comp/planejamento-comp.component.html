@@ -1,0 +1,13 @@
+<div class="progress-wrapper">
+  <div class="label">
+    <span>{{ nome }}</span>
+    <span class="percentual">{{ percentual }}%</span>
+  </div>
+
+  <div class="bar">
+    <div
+      class="fill"
+      [style.width.%]="percentual">
+    </div>
+  </div>
+</div>

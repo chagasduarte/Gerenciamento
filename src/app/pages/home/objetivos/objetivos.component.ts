@@ -8,12 +8,14 @@ import { CommonModule } from '@angular/common';
 import { TransacaoModel } from '../../../shared/models/despesa.model';
 import { TransacoesService } from '../../../shared/services/transacoes.service';
 import { LinhaTemporal } from '../../../shared/models/linha-temporal.model';
+import { PlanejamentoComponent } from "../../../shared/components/planejamento/planejamento.component";
 
 @Component({
   selector: 'app-objetivos',
   imports: [
-    CommonModule
-  ],
+    CommonModule,
+    PlanejamentoComponent
+],
   templateUrl: './objetivos.component.html',
   styleUrl: './objetivos.component.css'
 })
