@@ -13,6 +13,7 @@ import { AgrupamentoResponse } from '../../models/agrupamento';
 import { combineLatest, forkJoin } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { Planejamento } from '../../models/planejamento';
+import { agruparPorCategoria } from '../../../utils/functions/agruparPorCategoria';
 
 interface AgrupadoPorCategoriaMap {
   [categoria: number]: {
@@ -46,7 +47,7 @@ export class PlanejamentoComponent implements OnInit, AfterViewInit{
   resumoMensal$ = this.systemService.resumo$; // <-- agora é reativo
   resumoMensal!: ResumoMensal;
   agrupamento!: AgrupamentoResponse;
-  agrupamentoCategoria!: AgrupadoPorCategoriaMap;
+  agrupamentoCategoria: any;
 
   constructor(
     private readonly planejamentoService: PlanejamentoService,
@@ -77,11 +78,9 @@ export class PlanejamentoComponent implements OnInit, AfterViewInit{
             this.agrupamento = success[1];
 
             this.valor = this.agrupamento.soma.soma;
-            this.agrupamentoCategoria = this.agrupamento.agrupamento.reduce((acc, item) => {
-              acc[item.categoria] = item;
-              return acc;
-            }, {} as any)
-            console.log(this.agrupamentoCategoria)
+            this.agrupamentoCategoria = agruparPorCategoria(this.agrupamento);
+            console.log("agrupamento de transacoes",this.agrupamentoCategoria)
+            console.log("agrupamento de planejamento",this.planejamentos)
           },
           error: (err) => {
             console.error(err);

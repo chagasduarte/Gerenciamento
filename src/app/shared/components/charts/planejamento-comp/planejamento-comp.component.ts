@@ -20,7 +20,6 @@ export class PlanejamentoCompComponent implements OnChanges {
   }
   
   preencherPlanejamento(){
-    console.log(this.valorReal)
     if (this.planejado > 0) {
       this.percentual = Math.min(
         Math.round((this.valorReal / this.planejado) * 100),

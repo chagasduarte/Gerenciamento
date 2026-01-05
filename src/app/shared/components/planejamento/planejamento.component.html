@@ -6,7 +6,7 @@
             {{valor | currency:'BRL'}}
             de {{planejados | currency:'BRL'}}( {{ (valor / planejados) | percent}} )
             planejadas
-            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addPlanejamentoModal">+</button>
+            <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#addPlanejamentoModal">+</button>
         </div>
         
         <div class="categorias">
@@ -23,9 +23,7 @@
                             [planejado]="tipoPlan.soma"
                             [valorReal]="valor">
                         </app-planejamento-comp>
-                    
                     </button>
-
                     <div class="collapse" [id]="tipoPlan.tipo">
                         <div class="categoria" *ngFor="let categoria of tipoPlan.agrupamentoTipo">
                             <button class="button_tipo"
@@ -36,12 +34,16 @@
                                 <app-planejamento-comp 
                                     [nome]="categoria.categoria" 
                                     [planejado]="categoria.soma"
-                                    [valorReal]="agrupamentoCategoria[2].total_tipo">
+                                    [valorReal]="agrupamentoCategoria[categoria.categoriaid]?.soma??0">
                                 </app-planejamento-comp>
                             </button>
                             <div class="collapse" [id]="categoria.categoria">
                                 <div class="subcategoria" *ngFor="let sub of categoria.planejamento">
-                                    {{sub.subcategoria}}
+                                    <app-planejamento-comp 
+                                        [nome]="sub.subcategoria!" 
+                                        [planejado]="sub.valor"
+                                        [valorReal]="agrupamentoCategoria[sub.categoriaid]?.subcategorias[sub.subcategoriaid]?.soma??0">
+                                    </app-planejamento-comp>
                                 </div>
                             </div>
                         </div>

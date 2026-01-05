@@ -8,6 +8,10 @@ export interface PlanejamentoAgrupadoTipo {
 
 export interface PlanejamentoAgrupadoCategoria {
     categoria: string;
+    subcategoria:string;
+    valor: number;
+    categoriaid: number;
+    subcategoriaid: number;
     planejamento: Planejamento[]
     soma: number;
 }
