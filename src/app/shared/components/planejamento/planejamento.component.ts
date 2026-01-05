@@ -77,10 +77,9 @@ export class PlanejamentoComponent implements OnInit, AfterViewInit{
             this.planejados = this.planejamentos.find(x => x.tipo == this.abaAtiva)?.soma!;
             this.agrupamento = success[1];
 
-            this.valor = this.agrupamento.soma.soma;
+            this.valor = this.agrupamento.soma.soma??0;
+            console.log(this.valor)
             this.agrupamentoCategoria = agruparPorCategoria(this.agrupamento);
-            console.log("agrupamento de transacoes",this.agrupamentoCategoria)
-            console.log("agrupamento de planejamento",this.planejamentos)
           },
           error: (err) => {
             console.error(err);
@@ -95,6 +94,6 @@ export class PlanejamentoComponent implements OnInit, AfterViewInit{
     this.abaAtiva = tab;
     this.tipo = tab == 'entradas'? 'Entradas' : 'Saídas';
     this.planejados = this.planejamentos.find(x => x.tipo == tab)?.soma!;
-    this.valor = this.abaAtiva == 'entradas'? this.resumoMensal?.receita_mensal! : this.resumoMensal?.gastos_mensal!
+    this.valor = this.abaAtiva == 'entradas'? this.agrupamento.soma.soma??0 : 0
   }
 }

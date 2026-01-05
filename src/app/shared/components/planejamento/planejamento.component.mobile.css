@@ -10,7 +10,7 @@
   }
 
   .planejadas, .entradas_saidas {
-    background-color: aliceblue;
+    background-color:white;
     border-radius: 20px;
     color: black;
     padding: 10px;
@@ -40,5 +40,26 @@
     border: none;
     text-align: start;
   }
+  
+  .categoria {
+    margin-bottom: 5px;
+    width: 100%;
+  }
 
+  .button_tipo {
+    width: 100%;
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+    justify-content: end;
+  }
+  .separation {
+    padding-left: 10px;
+    width: 100%;
+  }
+
+  .collapse {
+    width: 100%;
+  }
+  
 }

@@ -1,15 +1,14 @@
 
 <div class="cards_planejamento d-flex" >
     <div class="planejadas">
-        <div class="d-flex gap-1">
+        <div class="d-flex gap-1 ">
             <strong>{{ tipo }}</strong> 
             {{valor | currency:'BRL'}}
             de {{planejados | currency:'BRL'}}( {{ (valor / planejados) | percent}} )
-            planejadas
             <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#addPlanejamentoModal">+</button>
         </div>
         
-        <div class="categorias">
+        <div class="tipos">
             <div class="tipo" *ngFor="let tipoPlan of planejamentos">
                 <div class="separation" *ngIf="tipoPlan.tipo == abaAtiva">
                     <button
@@ -18,32 +17,41 @@
                         [attr.data-bs-target]="'#' + tipoPlan.tipo"
                         aria-expanded="false"
                         [attr.aria-controls]="tipoPlan.tipo">
+
                         <app-planejamento-comp 
-                            [nome]="tipoPlan.tipo" 
+                            [nome]="tipoPlan.tipo.toLocaleUpperCase()" 
                             [planejado]="tipoPlan.soma"
                             [valorReal]="valor">
                         </app-planejamento-comp>
                     </button>
                     <div class="collapse" [id]="tipoPlan.tipo">
+                        <div class="separation">
                         <div class="categoria" *ngFor="let categoria of tipoPlan.agrupamentoTipo">
-                            <button class="button_tipo"
-                                    data-bs-toggle="collapse"
-                                    [attr.data-bs-target]="'#' + categoria.categoria"
-                                    aria-expanded="false"
-                                    [attr.aria-controls]="categoria.categoria">
-                                <app-planejamento-comp 
-                                    [nome]="categoria.categoria" 
-                                    [planejado]="categoria.soma"
-                                    [valorReal]="agrupamentoCategoria[categoria.categoriaid]?.soma??0">
-                                </app-planejamento-comp>
-                            </button>
-                            <div class="collapse" [id]="categoria.categoria">
-                                <div class="subcategoria" *ngFor="let sub of categoria.planejamento">
+                                <button class="button_tipo"
+                                        data-bs-toggle="collapse"
+                                        [attr.data-bs-target]="'#' + categoria.categoria"
+                                        aria-expanded="false"
+                                        [attr.aria-controls]="categoria.categoria">
                                     <app-planejamento-comp 
-                                        [nome]="sub.subcategoria!" 
-                                        [planejado]="sub.valor"
-                                        [valorReal]="agrupamentoCategoria[sub.categoriaid]?.subcategorias[sub.subcategoriaid]?.soma??0">
+                                        [nome]="categoria.categoria" 
+                                        [planejado]="categoria.soma"
+                                        [valorReal]="agrupamentoCategoria[categoria.categoriaid]?.soma??0">
                                     </app-planejamento-comp>
+                                </button>
+                                <div class="collapse" [id]="categoria.categoria">
+                                    <div class="subcategoria separation" *ngFor="let sub of categoria.planejamento">
+                                        <button class="button_tipo"
+                                        data-bs-toggle="collapse"
+                                        [attr.data-bs-target]="'#' + categoria.categoria"
+                                        aria-expanded="false"
+                                        [attr.aria-controls]="categoria.categoria">
+                                            <app-planejamento-comp 
+                                                [nome]="sub.subcategoria!" 
+                                                [planejado]="sub.valor"
+                                                [valorReal]="agrupamentoCategoria[sub.categoriaid]?.subcategorias[sub.subcategoriaid]?.soma??0">
+                                            </app-planejamento-comp>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
