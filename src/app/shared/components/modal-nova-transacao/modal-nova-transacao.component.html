@@ -26,14 +26,20 @@
             </select>
           </div>
           <!-- Categoria -->
-          <div class="mb-3" *ngIf="novaDespesa.tipo == 'saida'">
+          <div class="mb-3">
             <label for="categoria" class="form-label">Categoria</label>
-            <select id="categoria" name="categoria" class="form-select" required [(ngModel)]="novaDespesa.categoria">
-              <option value=1 *ngFor="let categoria of categorias">{{categoria.nome}}</option>
-              
+            <select id="categoria" name="categoria" class="form-select" [(ngModel)]="categoriaId" required (change)="buscarsubcategoria(categoriaId)">
+              <option [value]="categoria.id" *ngFor="let categoria of categorias">{{categoria.nome}}</option>
             </select>
           </div>
 
+          <!-- SubCategoria -->
+          <div class="mb-3" >
+            <label for="subcategoria" class="form-label">Subcategoria</label>
+            <select id="subcategoria" name="subcategoria" class="form-select" required [(ngModel)]="novaDespesa.categoria">
+              <option [value]="categoria.id" *ngFor="let categoria of subcategorias">{{categoria.nome}}</option>
+            </select>
+          </div>
           <!-- Valor -->
           <div class="mb-3">
             <label for="valor" class="form-label">Valor Total</label>

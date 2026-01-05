@@ -10,6 +10,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CategoriaService } from '../../services/categoria.service';
 import { Categoria } from '../../models/categoria.model';
+import { SubcategoriaService } from '../../services/subcategoria.service';
+import { Subcategoria } from '../../models/subcategoria.model';
 
 @Component({
   selector: 'app-modal-nova-transacao',
@@ -49,12 +51,14 @@ export class ModalNovaTransacaoComponent implements OnInit{
   } as DespesasParceladasResponse;
   novoAgrupamento!: AgrupamentoResponse;
   categorias!: Categoria[]; 
-
+  subcategorias!: Subcategoria[];
+  categoriaId!: number;
   constructor(
     private readonly despesaService: TransacoesService,
     private readonly toastService: ToastrService,
     public readonly systemService: SystemService,
-    private readonly categoriaService: CategoriaService
+    private readonly categoriaService: CategoriaService,
+    private readonly subcategoriaService: SubcategoriaService
   ){}
 
   ngOnInit(): void {
@@ -130,6 +134,14 @@ export class ModalNovaTransacaoComponent implements OnInit{
             
         }
       });
+    });
+  }
+
+  buscarsubcategoria(id: number) {
+    this.subcategoriaService.listar(id).subscribe({
+      next: (success) => {
+        this.subcategorias = success;
+      }
     });
   }
 }

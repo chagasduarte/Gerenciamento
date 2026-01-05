@@ -33,7 +33,6 @@ export class ErrorInterceptor implements HttpInterceptor {
         } else if ( error.status == 405){
           this.toastService.warning("Preencha os dados")
           mensagem = error.error
-          this.router.navigate(["config"]);
         }
         return throwError(() => new Error(mensagem));
       })
