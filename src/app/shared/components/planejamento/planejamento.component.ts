@@ -77,6 +77,9 @@ export class PlanejamentoComponent implements OnInit{
             this.agrupamentoEntradas = success[2];
             this.valor = this.agrupamentoSaidas.soma.soma??0;
             this.agrupamentoCategoria = agruparPorCategoria(this.agrupamentoSaidas);
+
+            console.log("planos", success[0])
+            console.log("entradas", success[2])
           },
           error: (err) => {
             console.error(err);
@@ -90,6 +93,8 @@ export class PlanejamentoComponent implements OnInit{
   selecionar(tab: 'entradas' | 'saidas') {
     this.abaAtiva = tab;
     this.tipo = tab == 'entradas'? 'Entradas' : 'Saídas';
+    this.agrupamentoCategoria = agruparPorCategoria(tab == 'entradas'? this.agrupamentoEntradas : this.agrupamentoSaidas);
+
     this.planejados = this.planejamentos.find(x => x.tipo == tab)?.soma!;
     this.valor = this.abaAtiva == 'entradas'?  this.agrupamentoEntradas?.soma.soma??0 : this.agrupamentoSaidas?.soma.soma??0 
   }
