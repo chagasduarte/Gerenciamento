@@ -181,3 +181,10 @@ svg {
 .accordion {
     width: 400px;
 }
+
+.planejamento {
+    width: 60%;
+}
+.evolucao {
+    width: 40%
+}

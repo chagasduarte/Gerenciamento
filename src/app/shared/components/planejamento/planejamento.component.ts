@@ -157,9 +157,8 @@ export class PlanejamentoComponent implements OnInit{
     // Data
     series.data.setAll(array);
     series.labels.template.setAll({
-      fontSize: '10px'
+      fontSize: '12px'
     });
-
     // Animation
     series.appear(1000, 100);
   }
