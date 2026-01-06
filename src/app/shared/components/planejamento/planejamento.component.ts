@@ -157,18 +157,14 @@ export class PlanejamentoComponent implements OnInit{
     // Data
     series.data.setAll(array);
     series.labels.template.setAll({
-      forceHidden: true
+      fontSize: '10px'
     });
 
-    series.ticks.template.setAll({
-      forceHidden: true
-    });
     // Animation
     series.appear(1000, 100);
   }
 
   categoriaNome(id: number): string {
-    console.log(id)
     return this.categorias.find(x => x.id == id)?.nome!;
   }
 }
