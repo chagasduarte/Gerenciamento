@@ -84,6 +84,7 @@ export class ExtratoComponent implements OnInit{
       }
     });
   }
+  
   restituir(item: TransacaoModel) {
     item.status = 'pendente'
   }

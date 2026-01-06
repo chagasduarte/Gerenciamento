@@ -6,7 +6,7 @@
         'info'
         'side';
         grid-template-rows: 4rem 1fr 4rem;
-        height: 92.3vh;
+        height: 95vh;
         width: 100%;
     }
 
