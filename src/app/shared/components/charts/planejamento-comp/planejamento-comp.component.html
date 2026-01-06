@@ -1,7 +1,8 @@
 <div class="progress-wrapper">
   <div class="label">
     <span>{{ nome }}</span>
-    <span class="percentual">{{ percentual }}%</span>
+    <span class="valores">{{ valorReal | currency: 'BRL' }}/{{ planejado | currency:'BRL'}}</span>
+    <span class="percentual">{{ percentReal | percent}}</span>
   </div>
 
   <div class="bar">

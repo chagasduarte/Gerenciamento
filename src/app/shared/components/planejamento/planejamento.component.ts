@@ -21,6 +21,7 @@ import * as am5percent from '@amcharts/amcharts5/percent';
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
 import { number } from 'echarts';
 import { ResumoComponent } from "../charts/resumo/resumo.component";
+import { SubcategoriaService } from '../../services/subcategoria.service';
 
 
 interface AgrupadoPorCategoriaMap {
@@ -72,7 +73,7 @@ export class PlanejamentoComponent implements OnInit{
     private readonly systemService: SystemService,
     private readonly transacoesService: TransacoesService,
     private readonly toast: ToastrService,
-    private readonly categoriaService: CategoriaService
+    private readonly categoriaService: SubcategoriaService
   ){}
 
   ngOnInit(): void {
@@ -84,14 +85,15 @@ export class PlanejamentoComponent implements OnInit{
         this.systemService.mes$
     ]).subscribe(([ano, mes]) => {
         forkJoin([
-            this.planejamentoService.listar(),
+            this.planejamentoService.listar(mes.valor + 1, ano.valor),
             this.transacoesService.GetAgrupamento(mes.valor + 1, ano.valor, 'saida'),
             this.transacoesService.GetAgrupamento(mes.valor + 1, ano.valor, 'entrada'),
-            this.categoriaService.listar()
+            this.categoriaService.listarAll()
           ]).subscribe({
           next: (success) => {
+            console.log(success);
             this.planejamentos = success[0];
-            this.planejados = this.planejamentos.find(x => x.tipo == this.abaAtiva)?.soma!;
+            this.planejados = this.planejamentos.find(x => x.tipo == this.abaAtiva)?.soma!??0;
             this.agrupamentoSaidas = success[1];
             this.agrupamentoEntradas = success[2];
             this.valor = this.agrupamentoSaidas.soma.soma??0;
@@ -151,7 +153,7 @@ export class PlanejamentoComponent implements OnInit{
     );
 
     const array = dados.agrupamento.map(x => ({
-      categoria: this.categoriaNome(x.idcategoria),
+      categoria: this.categoriaNome(x.categoria),
       total_tipo: Number(x.total_tipo)
     }));
     // Data

@@ -3,10 +3,13 @@ import * as am5 from '@amcharts/amcharts5';
 import * as am5xy from '@amcharts/amcharts5/xy';
 import * as am5percent from "@amcharts/amcharts5/percent";
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-planejamento-comp',
-  imports: [],
+  imports: [
+    CommonModule
+  ],
   templateUrl: './planejamento-comp.component.html',
   styleUrl: './planejamento-comp.component.css'
 })
@@ -15,6 +18,7 @@ export class PlanejamentoCompComponent implements OnChanges {
   @Input() valorReal: number = 10;
   @Input() nome: string = "Entrada";
   percentual = 0;
+  percentReal = 0;
   ngOnChanges(): void {
     this.preencherPlanejamento();
   }
@@ -25,6 +29,7 @@ export class PlanejamentoCompComponent implements OnChanges {
         Math.round((this.valorReal / this.planejado) * 100),
         100
       );
+      this.percentReal = this.valorReal / this.planejado
     } else {
       this.percentual = 0;
     }
