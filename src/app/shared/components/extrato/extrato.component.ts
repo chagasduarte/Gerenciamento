@@ -74,4 +74,17 @@ export class ExtratoComponent implements OnInit{
       }
     })
   }
+
+  efetivar(item: TransacaoModel) {
+    item.status = 'pago'
+    this.transacoesService.PutEntrada(item.id).subscribe({
+      next: (success) => {
+        this.toast.success("Tudo Ok");
+        this.systemService.atualizarResumo();
+      }
+    });
+  }
+  restituir(item: TransacaoModel) {
+    item.status = 'pendente'
+  }
 }

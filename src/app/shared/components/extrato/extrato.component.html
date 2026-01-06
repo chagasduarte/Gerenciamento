@@ -61,9 +61,9 @@
       </div>
 
       <div class="row-actions">
-        <i class="bi bi-eye"></i>
         <i class="bi bi-trash" (click)="apagar(item.id)"></i>
-        <i class="bi bi-pencil"></i>
+        <i class="bi bi-currency-exchange"  (click)="efetivar(item)" *ngIf="item.status == 'pendente'"></i>
+        <i class="bi bi-check-all text-success"  (click)="restituir(item)" *ngIf="item.status == 'pago'"></i>
       </div>
     </div>
 
