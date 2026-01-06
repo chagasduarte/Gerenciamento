@@ -104,13 +104,21 @@ input {
 
 @media (max-width: 768px) {
   .login-card {
+    display: flex;
     flex-direction: column;
     text-align: center;
   }
+  
   .login-left {
+    display: flex;
     align-items: center;
   }
-  .login-left img, p {
+  
+  .login-left p {
     display: none;
+  }
+
+  .login-left img {
+    width: 40px;
   }
 }
