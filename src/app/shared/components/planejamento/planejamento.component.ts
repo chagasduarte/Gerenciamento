@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, OnInit} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { CategoriaService } from '../../services/categoria.service';
 import { Categoria } from '../../models/categoria.model';
 import { PlanejamentoAgrupadoTipo } from '../../models/planejamentoagrupado';
@@ -15,6 +15,14 @@ import { ToastrService } from 'ngx-toastr';
 import { Planejamento } from '../../models/planejamento';
 import { agruparPorCategoria } from '../../../utils/functions/agruparPorCategoria';
 
+import * as am5 from '@amcharts/amcharts5';
+import * as am5xy from '@amcharts/amcharts5/xy';
+import * as am5percent from '@amcharts/amcharts5/percent';
+import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
+import { number } from 'echarts';
+import { ResumoComponent } from "../charts/resumo/resumo.component";
+
+
 interface AgrupadoPorCategoriaMap {
   [categoria: number]: {
     categoria: number;
@@ -22,13 +30,18 @@ interface AgrupadoPorCategoriaMap {
   };
 }
 
+interface PieData {
+  categoria: string;
+  total_tipo: number;
+}
+ 
 
 @Component({
   selector: 'app-planejamento',
   imports: [
     CommonModule,
     PlanejamentoCompComponent,
-    ModalNovoPlanejamentoComponent
+    ModalNovoPlanejamentoComponent,
 ],
   templateUrl: './planejamento.component.html',
   styleUrls: [
@@ -37,6 +50,7 @@ interface AgrupadoPorCategoriaMap {
   ]
 })
 export class PlanejamentoComponent implements OnInit{
+  @ViewChild('chartDiv', { static: true }) chartDiv!: ElementRef<HTMLDivElement>;
 
   tipo: string = "Saídas";
   planejados: number = 0;
@@ -49,12 +63,16 @@ export class PlanejamentoComponent implements OnInit{
   agrupamentoSaidas!: AgrupamentoResponse;
   agrupamentoEntradas!: AgrupamentoResponse;
   agrupamentoCategoria: any;
+  private root!: am5.Root;
+  private labels: am5.Label[] = [];
+  categorias!: Categoria[]
 
   constructor(
     private readonly planejamentoService: PlanejamentoService,
     private readonly systemService: SystemService,
     private readonly transacoesService: TransacoesService,
-    private readonly toast: ToastrService
+    private readonly toast: ToastrService,
+    private readonly categoriaService: CategoriaService
   ){}
 
   ngOnInit(): void {
@@ -69,7 +87,8 @@ export class PlanejamentoComponent implements OnInit{
             this.planejamentoService.listar(),
             this.transacoesService.GetAgrupamento(mes.valor + 1, ano.valor, 'saida'),
             this.transacoesService.GetAgrupamento(mes.valor + 1, ano.valor, 'entrada'),
-        ]).subscribe({
+            this.categoriaService.listar()
+          ]).subscribe({
           next: (success) => {
             this.planejamentos = success[0];
             this.planejados = this.planejamentos.find(x => x.tipo == this.abaAtiva)?.soma!;
@@ -77,9 +96,9 @@ export class PlanejamentoComponent implements OnInit{
             this.agrupamentoEntradas = success[2];
             this.valor = this.agrupamentoSaidas.soma.soma??0;
             this.agrupamentoCategoria = agruparPorCategoria(this.agrupamentoSaidas);
-
-            console.log("planos", success[0])
-            console.log("entradas", success[2])
+            this.categorias = success[3];
+            // this.criarGrafico(this.agrupamentoEntradas);
+            this.createChart(this.agrupamentoSaidas);
           },
           error: (err) => {
             console.error(err);
@@ -97,5 +116,59 @@ export class PlanejamentoComponent implements OnInit{
 
     this.planejados = this.planejamentos.find(x => x.tipo == tab)?.soma!;
     this.valor = this.abaAtiva == 'entradas'?  this.agrupamentoEntradas?.soma.soma??0 : this.agrupamentoSaidas?.soma.soma??0 
+    this.createChart(this.abaAtiva == 'entradas'?  this.agrupamentoEntradas : this.agrupamentoSaidas );
+
+  }
+
+  private createChart(dados: AgrupamentoResponse): void {
+    if (this.root) {
+      this.root.dispose(); // 🔥 remove gráfico antigo
+    }
+
+    // Root
+    this.root = am5.Root.new(this.chartDiv.nativeElement);
+    /* REMOVE O LOGO DO AMCHARTS */
+    (this.root as any)._logo?.dispose();
+    // Theme
+    this.root.setThemes([
+      am5themes_Animated.new(this.root)
+    ]);
+
+    // Chart
+    const chart = this.root.container.children.push(
+      am5percent.PieChart.new(this.root, {
+        layout: this.root.verticalLayout,
+        innerRadius: am5.percent(50)
+      })
+    );
+
+    // Series
+    const series = chart.series.push(
+      am5percent.PieSeries.new(this.root, {
+        valueField: "total_tipo",
+        categoryField: "categoria"
+      })
+    );
+
+    const array = dados.agrupamento.map(x => ({
+      categoria: this.categoriaNome(x.idcategoria),
+      total_tipo: Number(x.total_tipo)
+    }));
+    // Data
+    series.data.setAll(array);
+    series.labels.template.setAll({
+      forceHidden: true
+    });
+
+    series.ticks.template.setAll({
+      forceHidden: true
+    });
+    // Animation
+    series.appear(1000, 100);
+  }
+
+  categoriaNome(id: number): string {
+    console.log(id)
+    return this.categorias.find(x => x.id == id)?.nome!;
   }
 }
