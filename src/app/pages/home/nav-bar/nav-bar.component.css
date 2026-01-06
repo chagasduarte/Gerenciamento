@@ -8,7 +8,7 @@
   width: 100%;
   background: linear-gradient(180deg, #021c22, #011418);
   height: 4rem;
-
+  margin-bottom: 0;
   overflow-x: auto;                /* 🔴 scroll horizontal */
   overflow-y: hidden;
 
