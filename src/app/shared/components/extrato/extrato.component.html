@@ -45,7 +45,7 @@
       </div>
 
       <div class="description">
-        {{ item.descricao || '-' }}
+        {{ item.descricao.replace(" - Parcela","") || '-' }}
       </div>
 
       <div class="type">
