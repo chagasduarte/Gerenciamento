@@ -1,9 +1,18 @@
-@media screen  and (max-width: 400px) {
+@media screen and (max-width: 400px) {
+
   .barra_navegacao {
+    width: 100%;
+    display: flex;
     margin-bottom: 0;
     height: fit-content;
   }
+
   .meses {
-    margin-bottom: 0;
+    justify-content: flex-start;    /* 🔴 muda no mobile */
+    padding: 15px;
+  }
+
+  .meses li {
+    flex: 0 0 auto;                 /* 🔴 impede encolher */
   }
 }

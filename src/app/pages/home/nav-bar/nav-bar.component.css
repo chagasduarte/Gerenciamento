@@ -1,15 +1,21 @@
 
-.meses{
+.meses {
   display: flex;
-  justify-content: center;
+  flex-wrap: nowrap;               /* 🔴 essencial */
   gap: 20px;
   font-size: 20px;
   padding: 25px;
   width: 100%;
   background: linear-gradient(180deg, #021c22, #011418);
   height: 4rem;
-  overflow-y: auto;
+
+  overflow-x: auto;                /* 🔴 scroll horizontal */
+  overflow-y: hidden;
+
+  justify-content: center;          /* desktop */
+  -webkit-overflow-scrolling: touch;
 }
+
 
 .barra_navegacao {
   display: flex;
