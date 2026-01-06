@@ -20,4 +20,7 @@ export class SubcategoriaService {
   listar(idcategoria: number): Observable<Subcategoria[]>{
     return this.http.get<Subcategoria[]>(`${this.api}/subcategorias/categoria/${idcategoria}`);
   }
+  listarAll(): Observable<Subcategoria[]>{
+    return this.http.get<Subcategoria[]>(`${this.api}/subcategorias`);
+  }
 }

@@ -7,6 +7,8 @@ import { combineLatest, forkJoin } from 'rxjs';
 import { Router } from '@angular/router';
 import { ModalNovaTransacaoComponent } from "../modal-nova-transacao/modal-nova-transacao.component";
 import { ToastrService } from 'ngx-toastr';
+import { SubcategoriaService } from '../../services/subcategoria.service';
+import { Subcategoria } from '../../models/subcategoria.model';
 
 @Component({
   selector: 'app-extrato',
@@ -24,12 +26,13 @@ export class ExtratoComponent implements OnInit{
   transacoes!: TransacaoModel[];
   @Input() limit: number = 0;
   @Input() pagina: boolean = false;
-
+  subcategorias!: Subcategoria[]
   constructor(
     private readonly transacoesService: TransacoesService,
     private readonly systemService: SystemService, 
     private readonly router: Router,
-    private readonly toast: ToastrService
+    private readonly toast: ToastrService, 
+    private readonly subcategoriaService: SubcategoriaService
   ){}
 
   ngOnInit(): void {
@@ -38,10 +41,12 @@ export class ExtratoComponent implements OnInit{
       this.systemService.mes$
     ]).subscribe(([ano, mes]) => {
       forkJoin([
-        this.transacoesService.Extrato(this.limit, mes.valor + 1, ano.valor)
+        this.transacoesService.Extrato(this.limit, mes.valor + 1, ano.valor),
+        this.subcategoriaService.listarAll()
       ]).subscribe({
         next: (success) => {
           this.transacoes = success[0];
+          this.subcategorias = success[1];
         },
         error: (err: any) => {
           
@@ -54,20 +59,8 @@ export class ExtratoComponent implements OnInit{
     return index;
   }
 
-  private imagens: Record<number, string> = {
-    1: 'assets/img/food-wine-cheese-bread-national-culture-paris.svg',
-    2: 'assets/img/sport-utility-vehicle.svg',
-    3: 'assets/img/health.svg',
-    4: 'assets/img/books.svg',
-    5: 'assets/img/beach.svg',
-    6: 'assets/img/house-with-garden.svg',
-    7: 'assets/img/customer-service.svg',
-    8: 'assets/img/tools-chainsaw.svg',
-    9: 'assets/img/revenue.svg'
-  };
-
   defineImagem(tipoDespesa: number): string {
-    return this.imagens[tipoDespesa] ?? 'assets/img/money-bag.svg';
+    return this.subcategorias.find(x => x.id == tipoDespesa)?.icone!;
   }
   toEstrato() {
     this.router.navigate(['extrato']);

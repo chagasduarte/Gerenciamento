@@ -16,6 +16,7 @@
     "icon tipo action"
     "icon descricao valor";
     grid-template-columns: 15% 60% 25%;
+    grid-template-rows: 30% 70%;
     height: 60px;
   }
   .icon {
@@ -27,7 +28,8 @@
   }
   .type {
     grid-area: tipo;
-    text-align: end;
+    text-align: center;
+    margin-bottom: 10px;
   }
 
   .description {
@@ -41,5 +43,8 @@
   }
   .row-actions {
     grid-area: action;
+    display: flex;
+    justify-content: end;
+    margin-bottom: 10px;
   }
 }
