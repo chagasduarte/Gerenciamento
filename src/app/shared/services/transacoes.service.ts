@@ -61,7 +61,7 @@ export class TransacoesService {
   }
 
   GetAgrupamento(mes: number, ano: number, tipo: string): Observable<AgrupamentoResponse> {
-    return this.http.get<AgrupamentoResponse>(`${this.api}/transacoes/agrupadaPorTipos?mes=${mes}&ano=${ano}&tipo=${tipo}`)
+    return this.http.get<AgrupamentoResponse>(`${this.api}/transacoes/agrupadaPorTipos?mes=${mes}&ano=${ano}&tipo=${tipo}&status='pago'`)
   }
 
   GetProjecao(ano: number): Observable<Projecao[]>{
