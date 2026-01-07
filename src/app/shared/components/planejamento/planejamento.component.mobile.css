@@ -14,14 +14,11 @@
     border-radius: 20px;
     color: black;
     padding: 10px;
+    width: 100%;
   }
 
   .planejadas {
     font-size: 14px;
-  }
-  
-  .entradas_saidas, .cards_planejamento, .tabs {
-    width: 100%;
   }
 
   .tab {

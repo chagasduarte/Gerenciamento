@@ -91,7 +91,6 @@ export class PlanejamentoComponent implements OnInit{
             this.categoriaService.listarAll()
           ]).subscribe({
           next: (success) => {
-            console.log(success);
             this.planejamentos = success[0];
             this.planejados = this.planejamentos.find(x => x.tipo == this.abaAtiva)?.soma!??0;
             this.agrupamentoSaidas = success[1];
@@ -101,6 +100,7 @@ export class PlanejamentoComponent implements OnInit{
             this.categorias = success[3];
             // this.criarGrafico(this.agrupamentoEntradas);
             this.createChart(this.agrupamentoSaidas);
+            console.log(this.agrupamentoSaidas)
           },
           error: (err) => {
             console.error(err);
@@ -166,6 +166,6 @@ export class PlanejamentoComponent implements OnInit{
   }
 
   categoriaNome(id: number): string {
-    return this.categorias.find(x => x.id == id)?.nome!;
+    return this.categorias.find(x => x.id == id)?.nome!.substring(0, 3) || "";
   }
 }
