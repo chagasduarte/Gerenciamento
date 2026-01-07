@@ -88,7 +88,8 @@ export class EvolucaoComponent  implements AfterViewInit, OnInit, OnDestroy {
                   coluna: this.getNameMes(parseInt(p.mes.toString())),
                   entradas: parseFloat(p.soma_entrada.toString()),
                   saidas: parseFloat(p.soma_saida.toString()),
-                  progressao: parseFloat(p.saldo_acumulado.toString())
+                  progressao: parseFloat(p.saldo_acumulado.toString()),
+                  mensal: parseFloat(p.saldo_mensal.toString())
                 }))
 
                 this.criarGrafico();
@@ -222,6 +223,7 @@ export class EvolucaoComponent  implements AfterViewInit, OnInit, OnDestroy {
         })
       })
     );
+
     progressaoLine.bullets.push(() => {
       return am5.Bullet.new(this.root, {
         sprite: am5.Label.new(this.root, {
@@ -252,7 +254,50 @@ export class EvolucaoComponent  implements AfterViewInit, OnInit, OnDestroy {
         })
       });
     });
+    const mensalLine = chart.series.push(
+      am5xy.LineSeries.new(this.root, {
+        name: 'Mensal',
+        minBulletDistance: 10,
+        xAxis: xAxis,
+        yAxis: yAxis,
+        valueYField: "mensal",
+        categoryXField: 'coluna',
+        tooltip: am5.Tooltip.new(this.root, {
+          pointerOrientation: "horizontal",
+          labelText: "{valueY}"
+        })
+      })
+    );
 
+    mensalLine.bullets.push(() => {
+      return am5.Bullet.new(this.root, {
+        sprite: am5.Label.new(this.root, {
+          text: "{valueY.formatNumber('#,###.00')}",
+          populateText: true, // 🔥 ESSENCIAL
+          centerX: am5.p50,
+          centerY: am5.p100,
+          dy: -10,
+          fontSize: 10,
+          fontWeight: "400",
+          fill: am5.color(0x454545),
+        })
+      });
+    });
+
+    mensalLine.strokes.template.setAll({
+      strokeWidth: 3
+    });
+    mensalLine.data.setAll(this.dados);
+    mensalLine.bullets.push( () => {
+      return am5.Bullet.new(this.root, {
+        sprite: am5.Circle.new(this.root, {
+          radius: 6,
+          fill: am5.color(0x454545),
+          stroke: this.root.interfaceColors.get("background"),
+          strokeWidth: 2
+        })
+      });
+    });
     // 7️⃣ Legenda
     const legend = chart.children.push(
       am5.Legend.new(this.root, {
