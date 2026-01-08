@@ -88,4 +88,9 @@ export class ExtratoComponent implements OnInit{
   restituir(item: TransacaoModel) {
     item.status = 'pendente'
   }
+
+  parcelas(descricao: string) {
+    this.router.navigate(["parcelas"], { queryParams: {descricao: descricao}})
+  }
+
 }

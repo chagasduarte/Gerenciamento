@@ -10,7 +10,7 @@
   </div>
   
   <div class="linha"></div>
-  <h3>Abertos: {{ somaAbertos | currency}}</h3>
+  <h3>Abertos: {{ somaAbertos | currency: "BRL"}}</h3>
   <div class="parcelas">
     <div *ngFor="let parcela of parcelas">
       <div class="card card-sm"  [ngStyle]="{'background-color': DefineCorParcela(parcela.data)}">
@@ -21,7 +21,7 @@
         <div class="card-body">
           <div class="d-flex">
             <div>Valor:</div>
-            <div>{{(parcela.valor) | currency}}</div>
+            <div>{{(parcela.valor) | currency: "BRL"}}</div>
           </div>
           
           <div class="row">
@@ -37,7 +37,7 @@
   </div>
   <div class="linha"></div>
 
-  <h3>Pagos: {{somaPagos | currency}}</h3>
+  <h3>Pagos: {{somaPagos | currency: "BRL"}}</h3>
   <div class="parcelas">
     
     <div *ngFor="let parcela of parcelasPagas">
@@ -49,7 +49,7 @@
         <div class="card-body">
           <div class="d-flex">
             <div>Valor:</div>
-            <div>{{+parcela.valor | currency}}</div>
+            <div>{{+parcela.valor | currency: "BRL"}}</div>
           </div>
         </div>
       </div>
@@ -81,12 +81,12 @@
             <tr *ngFor="let item of listaPagamento">
               <td>{{item.id}}</td>
               <td>{{item.data | date}}</td>
-              <td>{{item.valor | currency}}</td>
+              <td>{{item.valor | currency: "BRL"}}</td>
               <td><button class="btn btn-sm btn-success"  >-</button></td>
             </tr>
           </tbody>
         </table>
-        <div><span>Total: </span>{{totalPagar | currency}}</div>
+        <div><span>Total: </span>{{totalPagar | currency: "BRL"}}</div>
       </div>
       <div class="card-footer d-flex">
         <button class="btn btn-sm btn-danger" (click)="abrirSelecionadas()">Fechar</button>

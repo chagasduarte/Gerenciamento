@@ -44,7 +44,7 @@
         </div>
       </div>
 
-      <div class="description">
+      <div class="description" (click)="parcelas(item.descricao)">
         {{ item.descricao.replace(" - Parcela","") || '-' }}
       </div>
 
