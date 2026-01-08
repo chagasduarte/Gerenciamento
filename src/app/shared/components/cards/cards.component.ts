@@ -12,6 +12,7 @@ import { Component, Input } from '@angular/core';
 })
 export class CardsComponent {
   @Input() titulo: string = '';
+  @Input() valorTotal: number = 0;
   @Input() valor: number = 0;
   @Input() tipo: 'entrada' | 'saida' | 'saldo' = 'entrada';
 

@@ -20,8 +20,10 @@
 
 /* Valor embaixo */
 .valor {
+  display: flex;
+  align-items: end;
   margin-top: 8px;
-  font-size: 30px;
+  font-size: 24px;
   font-weight: bold;
   color: #111827;
   margin-right: 20px;
@@ -52,4 +54,8 @@
 
 .width100 {
   width: 100%;
+}
+
+.total {
+  font-size: 14px;
 }

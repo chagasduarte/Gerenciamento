@@ -7,6 +7,8 @@
   </div>
 
   <div class="valor">
-    {{ valor | currency:'BRL' }}
+    {{ valor | currency:'BRL' }} 
+    <div class="total" *ngIf="valorTotal > 0">de {{valorTotal | currency: 'BRL'}}
+    </div>
   </div>
 </div>

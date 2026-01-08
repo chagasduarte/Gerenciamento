@@ -6,6 +6,10 @@
 
     .chart-container {
         width: 100%;
+        min-width: 600px;
+        min-height: 300px;
+    }
+    .grafico {
         overflow: auto;
     }
 }
