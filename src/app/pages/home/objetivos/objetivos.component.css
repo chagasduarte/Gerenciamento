@@ -1,54 +1,46 @@
-.grid-temporal {
-  display: grid;
-  place-items: center;
-  width: 1200px; /* 12 repetições de 100px */
-  background-image: linear-gradient(
-    to right,
-    #ccc 0 1px,
-    transparent 1px 100px
-  );
-  background-size: 100px 100%;
-  background-repeat: repeat-x;
-  overflow-x: auto;
-  width: 100%;
-  background-color: white;
-  border-radius: 15px;
-  color: black;
-  padding: 10px;
+.pagina {
+  padding: 16px;
+  min-height: 100vh;
 }
 
-.grid-doze {
-  display: grid;
-  grid-template-areas: "jan fev mar abr mai jun jul ago set out nov dex";
-  grid-template-columns: repeat(12, 100px);
-  font-size: large;
-}
-
-.despesa {
+.topo {
   display: flex;
-  align-items: center;
-  background-color: rgb(84, 129, 155);
-  height: 25px;
-  padding-left: 10px;
-  margin-top: 5px;
-  text-wrap: nowrap;
-  border-radius: 15px;
+  justify-content: space-between;
+  gap: 12px;
 }
 
-.bola {
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  background-color: aqua;
+.topo h1 {
+  margin: 0;
+  font-size: 24px;
 }
 
-.temp-meses {
-  text-align: center;
-  width: 100%;
+.btn-novo {
+  align-self: flex-start;
+  background: #0b2f2f;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 14px;
 }
 
-.chart-container {
-  width: 100%;
-  height: 500px;
-  background-color: white;
+/* Lista de cards */
+.lista {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+/* Desktop */
+@media (min-width: 768px) {
+  .topo {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .lista {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  }
 }

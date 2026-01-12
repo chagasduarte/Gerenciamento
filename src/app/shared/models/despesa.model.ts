@@ -12,6 +12,7 @@ export interface TransacaoModel {
     ispaycart: boolean;
     cartaoid: number | null;
     adicionada?: boolean;
+    selecionado?: boolean;
 }
 
 export interface Transacoes {

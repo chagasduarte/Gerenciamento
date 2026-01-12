@@ -56,7 +56,7 @@
                         <app-planejamento-comp 
                             [nome]="tipoPlan.tipo.toLocaleUpperCase()" 
                             [planejado]="tipoPlan.soma"
-                            [valorReal]="valor">
+                            [valorReal]="valor">                            
                         </app-planejamento-comp>
                     </button>
                     <div class="collapse" [id]="tipoPlan.tipo">
@@ -70,7 +70,8 @@
                                     <app-planejamento-comp 
                                         [nome]="categoria.categoria" 
                                         [planejado]="categoria.soma"
-                                        [valorReal]="agrupamentoCategoria[categoria.categoriaid]?.soma??0">
+                                        [valorReal]="agrupamentoCategoria[categoria.categoriaid]?.soma??0"
+                                        [cor]="categoriaCor(categoria.categoriaid)">
                                     </app-planejamento-comp>
                                 </button>
                                 <div class="collapse" [id]="categoria.categoria">
@@ -83,7 +84,8 @@
                                             <app-planejamento-comp 
                                                 [nome]="sub.subcategoria!" 
                                                 [planejado]="sub.valor"
-                                                [valorReal]="agrupamentoCategoria[sub.categoriaid]?.subcategorias[sub.subcategoriaid]?.soma??0">
+                                                [valorReal]="agrupamentoCategoria[sub.categoriaid]?.subcategorias[sub.subcategoriaid]?.soma??0"
+                                                [cor]="categoriaCor(categoria.categoriaid)">
                                             </app-planejamento-comp>
                                         </button>
                                     </div>

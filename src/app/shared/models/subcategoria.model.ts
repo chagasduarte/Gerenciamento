@@ -2,5 +2,6 @@ export interface Subcategoria {
     id: number,
     idcategoria: number,
     nome: string,
-    icone: string
+    icone: string,
+    cor: string
 }

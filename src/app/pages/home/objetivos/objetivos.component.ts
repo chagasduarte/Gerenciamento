@@ -1,114 +1,42 @@
-import {  Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { EChartsOption } from 'echarts';
-import { ToastrService } from 'ngx-toastr';
-import { SystemService } from '../../../shared/services/system.service';
+import { Component, OnInit } from '@angular/core';
+import { Objetivo } from '../../../shared/models/objetivo';
+import { ResumoObjetivosComponent } from "../../../shared/components/resumo-objetivos/resumo-objetivos.component";
+import { FiltrosObjetivosComponent } from "../../../shared/components/filtros-objetivos/filtros-objetivos.component";
+import { CardObjetivosComponent } from '../../../shared/components/card-objetivos/card-objetivos.component';
 import { CommonModule } from '@angular/common';
-import { TransacoesService } from '../../../shared/services/transacoes.service';
-import { LinhaTemporal } from '../../../shared/models/linha-temporal.model';
-
-import * as am5 from '@amcharts/amcharts5';
-import * as am5xy from '@amcharts/amcharts5/xy';
-import * as am5Gantt from '@amcharts/amcharts5/gantt'
-import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
-import { converterParaGantt } from '../../../utils/functions/converteperGantt';
-
+import { ObjetivosService } from '../../../shared/services/objetivos.service';
 
 @Component({
   selector: 'app-objetivos',
   imports: [
+    ResumoObjetivosComponent, 
+    FiltrosObjetivosComponent,
+    CardObjetivosComponent,
     CommonModule
-],
+  ],
   templateUrl: './objetivos.component.html',
   styleUrl: './objetivos.component.css'
 })
-export class ObjetivosComponent implements OnInit {
-  @ViewChild('chartDiv', { static: true }) chartDiv!: ElementRef<HTMLDivElement>;
+export class ObjetivosComponent implements OnInit{
+  filtroSelecionado = 'todos';
 
-  chartAnualOption!: EChartsOption;
-  despesas: LinhaTemporal[] = [];
-  ano$ = this.systemService.ano$;
-  private root!: am5.Root;
-
-  constructor(
-    private readonly toastrService: ToastrService,
-    private readonly systemService: SystemService,
-    private readonly transacao: TransacoesService
-  ){}
-   
-  ngOnInit(): void {
-    this.buscaLinhadoTempo();
-    this.ano$.subscribe(ano => {
-      this.buscaLinhadoTempo();
-    })
+  objetivos: Objetivo[] = [];
+  
+  get objetivosFiltrados() {
+    if (this.filtroSelecionado === 'todos') return this.objetivos;
+    return this.objetivos.filter(o => o.status === this.filtroSelecionado);
   }
-  buscaLinhadoTempo(){
-    this.transacao.GetLinhaTemporal(this.systemService.ano.valor).subscribe({
+
+  constructor(private readonly objetivosService: ObjetivosService){}
+  ngOnInit(): void {
+    this.objetivosService.listar().subscribe({
       next: (success) => {
-        this.despesas = success;
-        this.createGrafico()
-      },
-      error: (err:any) => {
-        this.toastrService.error("não foi possível buscar as despesas", "Erro")
+        this.objetivos = success;
+        console.log(this.objetivos);
       }
     })
   }
-  calcularDataFinal(dataInicio: string, parcelas: number): Date {
-    const data = new Date(dataInicio);
-    data.setMonth(data.getMonth() + parcelas - 1);
-    return data;
+  mudarFiltro(filtro: string) {
+    this.filtroSelecionado = filtro;
   }
-  
-  calculaInicioFim(datainicio: Date = new Date(), datafim:Date = new Date()): string {
-    datainicio = new Date(datainicio);
-    datafim = new Date(datafim);
-    
-    let inicio = datainicio.getUTCMonth() + 1;
-    let fim = 0;
-    if(datainicio.getUTCFullYear()  < datafim.getUTCFullYear()) {
-      fim = 13;
-    }
-    else {
-      fim = datafim.getUTCMonth() + 2;
-    }
-    return `${inicio} / ${fim}`;
-  }
-
-  createGrafico() {
-    
-    if (this.root) {
-      this.root.dispose();
-    }
-
-    this.root = am5.Root.new(this.chartDiv.nativeElement);
-    (this.root as any)._logo?.dispose();
-
-    this.root.setThemes([
-      am5themes_Animated.new(this.root)
-    ]);
-
-    const gantt = this.root.container.children.push(
-      am5Gantt.Gantt.new(this.root, {
-        layout: this.root.verticalLayout
-      })
-    );
-
-    // 🔹 Configura eixos existentes
-    gantt.xAxis.setAll({
-      baseInterval: { timeUnit: "month", count: 1 }
-    });
-
-    gantt.yAxis.setAll({
-      categoryField: "id"
-    });
-
-    // 🔹 DADOS
-    const { categoryData, seriesData } = converterParaGantt(this.despesas);
-
-    gantt.yAxis.data.setAll(categoryData);
-
-    gantt.appear(1000, 100);
-  }
-
-
-
 }

@@ -35,7 +35,8 @@ export const routes: Routes = [
         { path: "objetivos", component: ObjetivosComponent, canActivate: [AuthGuard]},
         { path: "pagamentos", component: PagamentosComponent, canActivate: [AuthGuard]},
         { path: "investimentos", component: InvestimentosComponent, canActivate: [AuthGuard]},
-        { path: "extrato", component: ExtratoComponent, canActivate: [AuthGuard]}
+        { path: "extrato", component: ExtratoComponent, canActivate: [AuthGuard]},
+        { path: "objetivos", component: ObjetivosComponent, canActivate: [AuthGuard]}
       ],
       canActivate: [AuthGuard]
     }

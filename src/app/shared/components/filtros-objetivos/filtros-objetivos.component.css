@@ -1,0 +1,25 @@
+.filtros {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  border-bottom: 2px solid #dcdcdc;
+  margin-bottom: 12px;
+  justify-content: space-around;
+}
+
+.filtros span {
+  padding: 10px 0;
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 14px;
+  color: #ffffff;
+}
+
+.filtros span:hover {
+  color: #0b2f2f;
+}
+
+/* Remove scrollbar feio no mobile */
+.filtros::-webkit-scrollbar {
+  display: none;
+}

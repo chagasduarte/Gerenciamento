@@ -17,6 +17,8 @@ export class PlanejamentoCompComponent implements OnChanges {
   @Input() planejado: number = 100;
   @Input() valorReal: number = 10;
   @Input() nome: string = "Entrada";
+  @Input() cor: string = "#3CB371";
+
   percentual = 0;
   percentReal = 0;
   ngOnChanges(): void {

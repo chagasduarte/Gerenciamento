@@ -9,12 +9,16 @@ import { ModalNovaTransacaoComponent } from "../modal-nova-transacao/modal-nova-
 import { ToastrService } from 'ngx-toastr';
 import { SubcategoriaService } from '../../services/subcategoria.service';
 import { Subcategoria } from '../../models/subcategoria.model';
+import { CartaoService } from '../../services/cartao.service';
+import { Cartao } from '../../models/cartao.model';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-extrato',
   imports: [
     CommonModule,
-    ModalNovaTransacaoComponent
+    ModalNovaTransacaoComponent,
+    FormsModule
 ],
   templateUrl: './extrato.component.html',
   styleUrls: [
@@ -23,16 +27,23 @@ import { Subcategoria } from '../../models/subcategoria.model';
   ]
 })
 export class ExtratoComponent implements OnInit{
-  transacoes!: TransacaoModel[];
+  transacoes: TransacaoModel[] = [];
+  transacoesFiltradas: TransacaoModel[] = [];
   @Input() limit: number = 0;
   @Input() pagina: boolean = false;
-  subcategorias!: Subcategoria[]
+  subcategorias!: Subcategoria[];
+  cartoes: Cartao[] = [];
+  cartaoid = 0;
+  selecionaTodos = false;
+  soma = 0;
+
   constructor(
     private readonly transacoesService: TransacoesService,
     private readonly systemService: SystemService, 
     private readonly router: Router,
     private readonly toast: ToastrService, 
-    private readonly subcategoriaService: SubcategoriaService
+    private readonly subcategoriaService: SubcategoriaService,
+    private readonly cartoeService: CartaoService
   ){}
 
   ngOnInit(): void {
@@ -42,11 +53,14 @@ export class ExtratoComponent implements OnInit{
     ]).subscribe(([ano, mes]) => {
       forkJoin([
         this.transacoesService.Extrato(this.limit, mes.valor + 1, ano.valor),
-        this.subcategoriaService.listarAll()
+        this.subcategoriaService.listarAll(),
+        this.cartoeService.listar()
       ]).subscribe({
         next: (success) => {
           this.transacoes = success[0];
+          this.transacoesFiltradas = success[0];
           this.subcategorias = success[1];
+          this.cartoes = success[2];
         },
         error: (err: any) => {
           
@@ -92,5 +106,29 @@ export class ExtratoComponent implements OnInit{
   parcelas(descricao: string) {
     this.router.navigate(["parcelas"], { queryParams: {descricao: descricao}})
   }
+  filtrarCartao(): void {
+    if (!this.cartaoid || this.cartaoid == 0) {
+      this.transacoesFiltradas = [...this.transacoes];
+      return;
+    }
 
+    this.transacoesFiltradas = this.transacoes.filter(
+      transacao => transacao.cartaoid == this.cartaoid
+    );
+  }
+
+  getCartaoName(id: number): string {
+    return this.cartoes.find(x=>x.id == id)?.nome!
+  }
+  toggleSelecionarTodos(): void {
+    this.soma = 0;
+    this.transacoes.forEach(t => {
+      t.selecionado = this.selecionaTodos
+      this.soma += t.valor;
+    });
+  }
+
+  atualizarSelecionarTodos(): void {
+    this.selecionaTodos = this.transacoes.every(t => t.selecionado);
+  }
 }

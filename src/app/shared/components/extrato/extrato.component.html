@@ -7,16 +7,28 @@
     <div class="actions">
       <button class="ver_extrato btn btn-outline" (click)="toEstrato()">Ver extrato</button>
       <button class="add_transacao btn btn-outline" data-bs-toggle="modal" data-bs-target="#addTransacaoModal">Nova Transação</button>
-      <button class="icon btn-outline icon">
-        <i class="bi bi-grid"></i>
-        Gerenciar categorias
-      </button>
     </div>
+    <select 
+        name="cartoes" 
+        id="cartoes" 
+        *ngIf="cartoes.length > 0"
+        class="form-select form-select-sm" 
+        aria-label="Small select example"
+        (change)="filtrarCartao()"
+        [(ngModel)]="cartaoid">
+        <option value=0>Todas</option>
+        <option [value]="cartao.id" *ngFor="let cartao of cartoes">{{cartao.nome}}</option>
+      </select>
   </div>
 
   <!-- Table Header -->
   <div class="table-header">
-    <input type="checkbox">
+    <input
+      type="checkbox"
+      [(ngModel)]="selecionaTodos"
+      (change)="toggleSelecionarTodos()"
+    />
+
     <span>Transação</span>
     <span>Descrição</span>
     <span class="sortable">Tipo</span>
@@ -26,7 +38,7 @@
   </div>
 
   <!-- Transactions -->
-  <ng-container *ngFor="let item of transacoes; trackBy: trackByIndex; let i = index">
+  <ng-container *ngFor="let item of transacoesFiltradas; trackBy: trackByIndex; let i = index">
 
     <!-- Date label -->
     <div *ngIf="i === 0 || transacoes[i - 1].data !== item.data"
@@ -36,7 +48,11 @@
 
     <!-- Row -->
     <div class="row-item">
-      <input type="checkbox">
+      <input
+        type="checkbox"
+        [(ngModel)]="item.selecionado"
+        (change)="atualizarSelecionarTodos()"
+      />
 
       <div class="transaction">
         <div class="icon">
@@ -53,7 +69,7 @@
       </div>
 
       <div class="origin">
-        {{ item.cartaoid }}
+        {{ getCartaoName(item.cartaoid!) }}
       </div>
 
       <div class="value" [ngClass]="item.tipo" >
@@ -70,5 +86,9 @@
   </ng-container>
 
 </div>
+<button class="fab" *ngIf="soma > 0">
+  <div class="value"> {{soma}}</div>
+</button>
 
 <app-modal-nova-transacao></app-modal-nova-transacao>
+

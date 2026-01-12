@@ -1,0 +1,47 @@
+<div class="goal-card">
+  <div class="card-header">
+    <div class="title">
+      <div class="icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2L4 5V11C4 16.5 7.8 21.7 12 22C16.2 21.7 20 16.5 20 11V5L12 2Z"
+                stroke="#2F2F2F"
+                stroke-width="1.5"
+                fill="none"/>
+        </svg>
+      </div>
+      <span>{{ objetivo.nome }}</span>
+    </div>
+
+    <span class="badge">{{ objetivo.tipo }}</span>
+  </div>
+
+  <div class="card-body">
+    <div class="progress-wrapper">
+      <div class="progress-circle">
+        <span>{{ progresso }}%</span>
+      </div>
+    </div>
+
+    <div class="info">
+      <span class="label">Mínimo mensal</span>
+      <strong>{{ objetivo.valor_mensal| currency: "BRL" }}/mês</strong>
+      <small>Data final&nbsp;&nbsp;{{ objetivo.data_final | date: 'dd/MM/yyyy'}}</small>
+    </div>
+  </div>
+
+  <div class="card-footer">
+    <div class="row">
+      <div class="dot teal"></div>
+      <span>Acumulado</span>
+      <strong class="value">{{ objetivo.valor_acumulado | currency: "BRL" }}</strong>
+    </div>
+
+    <div class="row">
+      <div class="dot gray"></div>
+      <span>Objetivo</span>
+      <strong class="total">{{ objetivo.valor_objetivo | currency: "BRL" }}</strong>
+    </div>
+
+    <span class="status">Está em dia</span>
+  </div>
+</div>

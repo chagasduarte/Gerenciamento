@@ -12,6 +12,8 @@ import { CategoriaService } from '../../services/categoria.service';
 import { Categoria } from '../../models/categoria.model';
 import { SubcategoriaService } from '../../services/subcategoria.service';
 import { Subcategoria } from '../../models/subcategoria.model';
+import { Cartao } from '../../models/cartao.model';
+import { CartaoService } from '../../services/cartao.service';
 
 @Component({
   selector: 'app-modal-nova-transacao',
@@ -34,7 +36,8 @@ export class ModalNovaTransacaoComponent implements OnInit{
     tipo: '',
     ispaycart: false,
     valor: 0,
-    cartaoid: null
+    cartaoid: null,
+    selecionado: false
   };
   dataCompra: string = '';
   isCartao: boolean = false;
@@ -53,12 +56,17 @@ export class ModalNovaTransacaoComponent implements OnInit{
   categorias!: Categoria[]; 
   subcategorias!: Subcategoria[];
   categoriaId!: number;
+  cardId: number = 0;
+  cartao!: Cartao[];
+
+
   constructor(
     private readonly despesaService: TransacoesService,
     private readonly toastService: ToastrService,
     public readonly systemService: SystemService,
     private readonly categoriaService: CategoriaService,
-    private readonly subcategoriaService: SubcategoriaService
+    private readonly subcategoriaService: SubcategoriaService,
+    private readonly cartoesService: CartaoService
   ){}
 
   ngOnInit(): void {
@@ -66,7 +74,8 @@ export class ModalNovaTransacaoComponent implements OnInit{
       next: (success) => {
         this.categorias = success;
       }
-    })
+    });
+    this.listaCartoes();
   }
   salvarTransacao() {
     if (this.isParcelado) {
@@ -75,7 +84,8 @@ export class ModalNovaTransacaoComponent implements OnInit{
         data: new Date(this.dataCompra),
         ispaycart: this.isCartao,
         parcelado: this.isParcelado,
-        parcelas: this.isParcelado ? this.requestParcela : null
+        parcelas: this.isParcelado ? this.requestParcela : null,
+        cartaoid: this.cardId
       };
       this.despesaService.PostTrasacoesParceladas(payload).subscribe({
         next: (success: TransacaoModel[]) => {
@@ -93,6 +103,7 @@ export class ModalNovaTransacaoComponent implements OnInit{
     else {
       this.novaDespesa.data = new Date(this.dataCompra);
       this.novaDespesa.ispaycart = this.isCartao;
+      this.novaDespesa.cartaoid = this.cardId;
       this.despesaService.PostTransacao(this.novaDespesa).subscribe(x => {
         this.preencheInformacoes();
         this.toastService.success("Despesa Gravada");
@@ -101,7 +112,13 @@ export class ModalNovaTransacaoComponent implements OnInit{
     }
     this.fecharModal();
   }
-  
+  listaCartoes(){
+    this.cartoesService.listar().subscribe({
+      next: (success) => {
+        this.cartao = success;
+      }
+    })
+  }
   fecharModal() {
     const modal = document.getElementById('addTransacaoModal');
     if (modal) {
