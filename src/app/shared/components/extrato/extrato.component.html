@@ -6,13 +6,17 @@
 
     <div class="actions">
       <button class="ver_extrato btn btn-outline" (click)="toEstrato()">Ver extrato</button>
-      <button class="add_transacao btn btn-outline" data-bs-toggle="modal" data-bs-target="#addTransacaoModal">Nova Transação</button>
+      <button class="add_transacao btn btn-outline" 
+        data-bs-toggle="modal" 
+        data-bs-target="#addTransacaoModal">
+       + Nova Transação
+      </button>
     </div>
     <select 
         name="cartoes" 
         id="cartoes" 
         *ngIf="cartoes.length > 0"
-        class="form-select form-select-sm" 
+        class="form-select form-select-sm select-cartoes" 
         aria-label="Small select example"
         (change)="filtrarCartao()"
         [(ngModel)]="cartaoid">

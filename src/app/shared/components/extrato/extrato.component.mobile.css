@@ -1,12 +1,27 @@
 @media screen  and (max-width: 400px) {
+  
+  .header {
+    display: grid;
+    grid-template-areas: 
+    "h3 actions"
+    "vazio select";
+    gap: 10px;
+  }
+
+  .select-cartoes{
+    grid-area: select;
+    display: grid;
+    place-self: end;
+  }
+
   .transactions-card {
     width: 100%;
     padding: 20px;
   }
-
+  
   .ver_extrato, .table-header, 
   .row-item input, .bi-eye, 
-  .icon {
+  .icon, .origin {
     display: none;
   }
  
@@ -40,6 +55,13 @@
   }
   .add_transacao {
     padding: 3px;
+    align-self: flex-start;
+    background: #0b2f2f;
+    color: #fff;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 14px;
   }
   .row-actions {
     grid-area: action;

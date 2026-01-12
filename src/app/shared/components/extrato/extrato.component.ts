@@ -122,13 +122,13 @@ export class ExtratoComponent implements OnInit{
   }
   toggleSelecionarTodos(): void {
     this.soma = 0;
-    this.transacoes.forEach(t => {
+    this.transacoesFiltradas.forEach(t => {
       t.selecionado = this.selecionaTodos
       this.soma += t.valor;
     });
   }
 
   atualizarSelecionarTodos(): void {
-    this.selecionaTodos = this.transacoes.every(t => t.selecionado);
+    this.selecionaTodos = this.transacoesFiltradas.every(t => t.selecionado);
   }
 }
