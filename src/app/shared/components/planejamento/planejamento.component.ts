@@ -88,7 +88,7 @@ export class PlanejamentoComponent implements OnInit{
         this.systemService.mes$
     ]).subscribe(([ano, mes]) => {
         forkJoin([
-            this.planejamentoService.listar(mes.valor + 1, ano.valor),
+            this.planejamentoService.listarAgrupado(mes.valor + 1, ano.valor),
             this.transacoesService.GetAgrupamento(mes.valor + 1, ano.valor, 'saida'),
             this.transacoesService.GetAgrupamento(mes.valor + 1, ano.valor, 'entrada'),
             this.categoriaService.listar(),

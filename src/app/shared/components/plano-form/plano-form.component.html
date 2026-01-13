@@ -1,0 +1,56 @@
+<div class="form-overlay">
+<div class="form-card">
+
+
+<h3>{{ modelo.id ? 'Editar Plano' : 'Novo Plano' }}</h3>
+
+
+<form (ngSubmit)="salvar()">
+
+
+<label>
+Descrição
+<input type="text" [(ngModel)]="modelo.categoria" name="descricao" required />
+</label>
+
+
+<label>
+Categoria
+<input type="text" [(ngModel)]="modelo.categoria" name="categoria" required />
+</label>
+
+
+<label>
+Valor
+<input type="number" [(ngModel)]="modelo.valor" name="valor" required />
+</label>
+
+
+<label>
+Tipo
+<select [(ngModel)]="modelo.tipo" name="tipo">
+<option value="SAIDA">Saída</option>
+<option value="ENTRADA">Entrada</option>
+</select>
+</label>
+
+
+<label>
+Status
+<select  name="status">
+<option value="PLANEJADO">Planejado</option>
+<option value="PROGRAMADO">Programado</option>
+<option value="PAGO">Pago</option>
+</select>
+</label>
+
+
+<div class="acoes">
+<button type="submit" class="btn-primary">Salvar</button>
+<button type="button" (click)="cancelar()">Cancelar</button>
+</div>
+
+
+</form>
+</div>
+</div>

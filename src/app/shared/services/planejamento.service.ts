@@ -33,10 +33,12 @@ export class PlanejamentoService {
   }
 
   /** Listar todos */
-  listar(mes:number, ano:number): Observable<PlanejamentoAgrupadoTipo[]> {
-    return this.http.get<PlanejamentoAgrupadoTipo[]>(`${this.api}?mes=${mes}&ano=${ano}`);
+  listarAgrupado(mes:number, ano:number): Observable<PlanejamentoAgrupadoTipo[]> {
+    return this.http.get<PlanejamentoAgrupadoTipo[]>(`${this.api}/agrupados?mes=${mes}&ano=${ano}`);
   }
-
+  listar(mes:number, ano:number): Observable<Planejamento[]> {
+    return this.http.get<Planejamento[]>(`${this.api}?mes=${mes}&ano=${ano}`);
+  }
   /** Buscar por ID */
   buscar(id: number): Observable<Planejamento> {
     return this.http.get<Planejamento>(`${this.api}/${id}`);

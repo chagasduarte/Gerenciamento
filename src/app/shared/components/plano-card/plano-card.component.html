@@ -1,0 +1,18 @@
+<div class="card">
+<div class="info">
+<h3>{{ plano.categoria }}</h3>
+<span class="categoria">{{ plano.categoria }}</span>
+</div>
+
+
+<div class="valores">
+<strong>R$ {{ plano.valor | number:'1.2-2' }}</strong>
+<span [class]="plano.tipo">{{ plano.tipo }}</span>
+</div>
+
+
+<div class="acoes">
+<button (click)="editar.emit()">Editar</button>
+<button class="danger" (click)="excluir.emit()">Excluir</button>
+</div>
+</div>

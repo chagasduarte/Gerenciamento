@@ -1,0 +1,27 @@
+<div class="planos-container">
+
+
+<header class="header">
+<h2>Meus Planos</h2>
+<button class="btn-primary" (click)="novoPlano()">+ Novo Plano</button>
+</header>
+
+
+<section class="lista">
+<app-plano-card
+*ngFor="let plano of planos"
+[plano]="plano"
+(editar)="editar(plano)"
+(excluir)="excluir(plano.id!)">
+</app-plano-card>
+</section>
+
+
+<app-plano-form
+*ngIf="mostrarFormulario"
+[plano]="planoSelecionado"
+(fechar)="fecharFormulario()">
+</app-plano-form>
+
+
+</div>
