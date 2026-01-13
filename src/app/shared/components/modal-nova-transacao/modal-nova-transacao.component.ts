@@ -85,7 +85,7 @@ export class ModalNovaTransacaoComponent implements OnInit{
         ispaycart: this.isCartao,
         parcelado: this.isParcelado,
         parcelas: this.isParcelado ? this.requestParcela : null,
-        cartaoid: this.cardId
+        cartaoid: this.cardId > 0? this.cardId : null
       };
       this.despesaService.PostTrasacoesParceladas(payload).subscribe({
         next: (success: TransacaoModel[]) => {
