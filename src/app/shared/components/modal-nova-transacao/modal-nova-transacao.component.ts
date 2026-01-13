@@ -103,7 +103,7 @@ export class ModalNovaTransacaoComponent implements OnInit{
     else {
       this.novaDespesa.data = new Date(this.dataCompra);
       this.novaDespesa.ispaycart = this.isCartao;
-      this.novaDespesa.cartaoid = this.cardId;
+      this.novaDespesa.cartaoid = this.cardId > 0? this.cardId : null;
       this.despesaService.PostTransacao(this.novaDespesa).subscribe(x => {
         this.preencheInformacoes();
         this.toastService.success("Despesa Gravada");
