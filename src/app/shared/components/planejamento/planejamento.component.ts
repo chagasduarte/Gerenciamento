@@ -22,6 +22,7 @@ import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
 import { number } from 'echarts';
 import { ResumoComponent } from "../charts/resumo/resumo.component";
 import { SubcategoriaService } from '../../services/subcategoria.service';
+import { Subcategoria } from '../../models/subcategoria.model';
 
 
 interface AgrupadoPorCategoriaMap {
@@ -66,7 +67,8 @@ export class PlanejamentoComponent implements OnInit{
   agrupamentoCategoria: any;
   private root!: am5.Root;
   private labels: am5.Label[] = [];
-  categorias!: Categoria[]
+  categorias!: Categoria[];
+  subcategorias!: Subcategoria[];
 
   constructor(
     private readonly planejamentoService: PlanejamentoService,
@@ -89,7 +91,8 @@ export class PlanejamentoComponent implements OnInit{
             this.planejamentoService.listar(mes.valor + 1, ano.valor),
             this.transacoesService.GetAgrupamento(mes.valor + 1, ano.valor, 'saida'),
             this.transacoesService.GetAgrupamento(mes.valor + 1, ano.valor, 'entrada'),
-            this.categoriaService.listar()
+            this.categoriaService.listar(),
+            this.subcategoriaService.listarAll()
           ]).subscribe({
           next: (success) => {
             this.planejamentos = success[0];
@@ -99,6 +102,7 @@ export class PlanejamentoComponent implements OnInit{
             this.valor = this.agrupamentoSaidas.soma.soma??0;
             this.agrupamentoCategoria = agruparPorCategoria(this.agrupamentoSaidas);
             this.categorias = success[3];
+            this.subcategorias = success[4];
             this.createChart(this.agrupamentoSaidas);
           },
           error: (err) => {
@@ -122,6 +126,7 @@ export class PlanejamentoComponent implements OnInit{
   }
 
   private createChart(dados: AgrupamentoResponse): void {
+    try {
     if (this.root) {
       this.root.dispose(); // 🔥 remove gráfico antigo
     }
@@ -150,25 +155,33 @@ export class PlanejamentoComponent implements OnInit{
         categoryField: "categoria"
       })
     );
+    let array: { categoria: string; total_tipo: number; }[];
 
-    const array = dados.agrupamento.map(x => ({
-      categoria: this.categoriaNome(x.categoria),
-      total_tipo: Number(x.total_tipo)
-    }));
+    if(dados.agrupamento.length > 0) {
+      array = dados.agrupamento.map(x => ({
+        categoria: this.categoriaNome(x.categoria),
+        total_tipo: Number(x.total_tipo)
+      }));
+    }
     // Data
-    series.data.setAll(array);
+    series.data.setAll(array!);
     series.labels.template.setAll({
       fontSize: '12px'
     });
     // Animation
     series.appear(1000, 100);
+    }
+    catch (err) {
+      console.error(err);
+    }
   }
 
   categoriaNome(id: number): string {
-    return this.categorias.find(x => x.id == id)?.nome!.substring(0, 3) || "";
+    return this.subcategorias.find(x => x.id == id)?.nome!.substring(0, 3) || "";
   }
 
   categoriaCor(id: number): string {
     return this.categorias.find(x => x.id == id)?.cor! || "";
   }
+  
 }
