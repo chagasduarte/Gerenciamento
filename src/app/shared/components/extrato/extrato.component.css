@@ -12,6 +12,7 @@
   align-items: center;
 }
 .select-cartoes{
+  display: none;
   width: fit-content!important;
 }
 .header h3 {

@@ -2,7 +2,7 @@
 
   <!-- Header -->
   <div class="header">
-    <h3>Últimas transações</h3>
+    <h3>Últimas transações<div class="value" *ngIf="soma > 0">: {{ soma | currency: "BRL"}}</div></h3>
 
     <div class="actions">
       <button class="ver_extrato btn btn-outline" (click)="toEstrato()">Ver extrato</button>
@@ -13,16 +13,16 @@
       </button>
     </div>
     <select 
-        name="cartoes" 
-        id="cartoes" 
-        *ngIf="cartoes.length > 0"
-        class="form-select form-select-sm select-cartoes" 
-        aria-label="Small select example"
-        (change)="filtrarCartao()"
-        [(ngModel)]="cartaoid">
+      name="cartoes" 
+      id="cartoes" 
+      *ngIf="cartoes.length > 0"
+      class="form-select form-select-sm select-cartoes" 
+      aria-label="Small select example"
+      (change)="filtrarCartao()"
+      [(ngModel)]="cartaoid">
         <option value=0>Todas</option>
         <option [value]="cartao.id" *ngFor="let cartao of cartoes">{{cartao.nome}}</option>
-      </select>
+    </select>
   </div>
 
   <!-- Table Header -->
@@ -36,7 +36,17 @@
     <span>Transação</span>
     <span>Descrição</span>
     <span class="sortable">Tipo</span>
-    <span>Origem</span>
+    <select 
+      name="cartoes" 
+      id="cartoes" 
+      *ngIf="cartoes.length > 0"
+      class="form-select form-select-sm" 
+      aria-label="Small select example"
+      (change)="filtrarCartao()"
+      [(ngModel)]="cartaoid">
+        <option value=0>Todas</option>
+        <option [value]="cartao.id" *ngFor="let cartao of cartoes">{{cartao.nome}}</option>
+    </select>
     <span class="sortable text-end">Valor</span>
     <span class="text-center">Ações</span>
   </div>
@@ -90,9 +100,6 @@
   </ng-container>
 
 </div>
-<button class="fab" *ngIf="soma > 0">
-  <div class="value"> {{soma}}</div>
-</button>
 
 <app-modal-nova-transacao></app-modal-nova-transacao>
 

@@ -124,11 +124,17 @@ export class ExtratoComponent implements OnInit{
     this.soma = 0;
     this.transacoesFiltradas.forEach(t => {
       t.selecionado = this.selecionaTodos
-      this.soma += t.valor;
+      if(t.selecionado)
+        this.soma += parseFloat(t.valor.toString());
     });
   }
 
   atualizarSelecionarTodos(): void {
+    this.soma = 0;
     this.selecionaTodos = this.transacoesFiltradas.every(t => t.selecionado);
+    this.transacoesFiltradas.forEach(t => {
+      if(t.selecionado)
+        this.soma += parseFloat(t.valor.toString());
+    });
   }
 }
