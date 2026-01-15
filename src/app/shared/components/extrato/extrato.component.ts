@@ -34,6 +34,7 @@ export class ExtratoComponent implements OnInit{
   subcategorias!: Subcategoria[];
   cartoes: Cartao[] = [];
   cartaoid = 0;
+  status = "";
   selecionaTodos = false;
   soma = 0;
 
@@ -136,5 +137,13 @@ export class ExtratoComponent implements OnInit{
       if(t.selecionado)
         this.soma += parseFloat(t.valor.toString());
     });
+  }
+  filtroPagos(status: string){
+    if(status == 'todos'){
+      this.transacoesFiltradas = this.transacoes;
+    }
+    else {
+      this.transacoesFiltradas = this.transacoes.filter(x => x.status == status);
+    }
   }
 }

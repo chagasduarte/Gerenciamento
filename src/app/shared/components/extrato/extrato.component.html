@@ -48,7 +48,16 @@
         <option [value]="cartao.id" *ngFor="let cartao of cartoes">{{cartao.nome}}</option>
     </select>
     <span class="sortable text-end">Valor</span>
-    <span class="text-center">Ações</span>
+    <select 
+      name="cartoes" 
+      id="cartoes" 
+      class="form-select form-select-sm" 
+      (change)="filtroPagos(status)"
+      [(ngModel)]="status">
+        <option value='todos'>Todas</option>
+        <option value='pago'>Pagos</option>
+        <option value="pendente">Pendentes</option>
+    </select>
   </div>
 
   <!-- Transactions -->
