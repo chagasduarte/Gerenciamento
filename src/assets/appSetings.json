@@ -1,5 +1,5 @@
 {
     "appConfig":{
-        "WebApi": "http://localhost:3000"
+        "WebApi": "https://novasapi.vercel.app"
     }
 }
