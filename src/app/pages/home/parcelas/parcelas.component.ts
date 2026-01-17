@@ -92,6 +92,22 @@ export class ParcelasComponent implements OnInit {
       this.toastr.error("Erro ao pagar despesas");
     }
   }
+  async apagarDespesaCompleta() {
+    if (this.parcelas.length === 0) return;
+    try {
+      const promise = this.parcelas.map(item => {
+        lastValueFrom(this.transacoesService.DeleteTransacao(item.id))
+      });
+      await Promise.all(promise);
+      this.toastr.success("Parcelas Deletadas");
+      this.systemService.atualizarResumo();
+      this.buscaParcelas();
+      this.totalPagar = 0;
+    }catch (error) {
+      console.error(error);
+      this.toastr.error("Erro ao pagar despesas");
+    }
+  }
   apagar(id: number) {
     this.transacoesService.DeleteTransacao(id).subscribe(x => {
       this.toastr.success("Parcela deletada!");
