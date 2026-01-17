@@ -34,7 +34,7 @@ export class ExtratoComponent implements OnInit{
   subcategorias!: Subcategoria[];
   cartoes: Cartao[] = [];
   cartaoid = 0;
-  status = "";
+  status = "todos";
   selecionaTodos = false;
   soma = 0;
 

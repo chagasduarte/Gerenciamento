@@ -21,3 +21,16 @@
   </section>
 
 </div>
+
+<div class="grid-temporal" *ngIf="ano$ | async as ano">
+  <div class="grid-doze">
+    <div class="temp-meses" *ngFor="let mes of ano.meses; let i = index">
+      <div class="">{{mes.nomeAbrev}}</div>
+    </div>
+  </div>
+  <div class="grid-doze" *ngFor="let despesa of despesas">
+    <div class="despesa" [ngStyle]="{'grid-column': calculaInicioFim(despesa.data_inicio, despesa.data_fim)}">
+      {{despesa.descricao.replace('- Parcela', '')}} 
+    </div>
+  </div>
+</div>
