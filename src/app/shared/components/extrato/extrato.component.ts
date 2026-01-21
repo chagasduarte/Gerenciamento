@@ -19,14 +19,14 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     ModalNovaTransacaoComponent,
     FormsModule
-],
+  ],
   templateUrl: './extrato.component.html',
   styleUrls: [
     './extrato.component.css',
     './extrato.component.mobile.css',
   ]
 })
-export class ExtratoComponent implements OnInit{
+export class ExtratoComponent implements OnInit {
   transacoes: TransacaoModel[] = [];
   transacoesFiltradas: TransacaoModel[] = [];
   @Input() limit: number = 0;
@@ -38,14 +38,18 @@ export class ExtratoComponent implements OnInit{
   selecionaTodos = false;
   soma = 0;
 
+  filtroTipo: string = 'todos';
+  filtroTexto: string = '';
+  tipos: string[] = [];
+
   constructor(
     private readonly transacoesService: TransacoesService,
-    private readonly systemService: SystemService, 
+    private readonly systemService: SystemService,
     private readonly router: Router,
-    private readonly toast: ToastrService, 
+    private readonly toast: ToastrService,
     private readonly subcategoriaService: SubcategoriaService,
     private readonly cartoeService: CartaoService
-  ){}
+  ) { }
 
   ngOnInit(): void {
     combineLatest([
@@ -62,12 +66,19 @@ export class ExtratoComponent implements OnInit{
           this.transacoesFiltradas = success[0];
           this.subcategorias = success[1];
           this.cartoes = success[2];
+
+          this.extractTipos();
+          this.filtrar(); // Apply any default filters if needed, or just reset
         },
         error: (err: any) => {
-          
+
         }
       });
     });
+  }
+
+  extractTipos() {
+    this.tipos = [...new Set(this.transacoes.map(t => t.tipo))].sort();
   }
 
   trackByIndex(index: number) {
@@ -99,33 +110,23 @@ export class ExtratoComponent implements OnInit{
       }
     });
   }
-  
+
   restituir(item: TransacaoModel) {
     item.status = 'pendente'
   }
 
   parcelas(descricao: string) {
-    this.router.navigate(["parcelas"], { queryParams: {descricao: descricao}})
-  }
-  filtrarCartao(): void {
-    if (!this.cartaoid || this.cartaoid == 0) {
-      this.transacoesFiltradas = [...this.transacoes];
-      return;
-    }
-
-    this.transacoesFiltradas = this.transacoes.filter(
-      transacao => transacao.cartaoid == this.cartaoid
-    );
+    this.router.navigate(["parcelas"], { queryParams: { descricao: descricao } })
   }
 
   getCartaoName(id: number): string {
-    return this.cartoes.find(x=>x.id == id)?.nome!
+    return this.cartoes.find(x => x.id == id)?.nome!
   }
   toggleSelecionarTodos(): void {
     this.soma = 0;
     this.transacoesFiltradas.forEach(t => {
       t.selecionado = this.selecionaTodos
-      if(t.selecionado)
+      if (t.selecionado)
         this.soma += parseFloat(t.valor.toString());
     });
   }
@@ -134,16 +135,32 @@ export class ExtratoComponent implements OnInit{
     this.soma = 0;
     this.selecionaTodos = this.transacoesFiltradas.every(t => t.selecionado);
     this.transacoesFiltradas.forEach(t => {
-      if(t.selecionado)
+      if (t.selecionado)
         this.soma += parseFloat(t.valor.toString());
     });
   }
-  filtroPagos(status: string){
-    if(status == 'todos'){
-      this.transacoesFiltradas = this.transacoes;
-    }
-    else {
-      this.transacoesFiltradas = this.transacoes.filter(x => x.status == status);
-    }
+
+  filtrar(): void {
+    this.transacoesFiltradas = this.transacoes.filter(t => {
+      // 1. Filter by Cartao
+      const byCartao = (this.cartaoid === 0) || (t.cartaoid == this.cartaoid);
+
+      // 2. Filter by Status
+      const byStatus = (this.status === 'todos') || (t.status === this.status);
+
+      // 3. Filter by Tipo
+      const byTipo = (this.filtroTipo === 'todos') || (t.tipo === this.filtroTipo);
+
+      // 4. Filter by Text (Description)
+      const byTexto = !this.filtroTexto || t.descricao.toLowerCase().includes(this.filtroTexto.toLowerCase());
+
+      return byCartao && byStatus && byTipo && byTexto;
+    });
+
+    // Reset selection calculation after filter
+    this.atualizarSelecionarTodos();
+  }
+  ordenarPorValor() {
+    this.transacoesFiltradas.sort((a, b) => a.valor - b.valor);
   }
 }

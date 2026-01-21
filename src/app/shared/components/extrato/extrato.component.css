@@ -11,10 +11,12 @@
   justify-content: space-between;
   align-items: center;
 }
-.select-cartoes{
+
+.select-cartoes {
   display: none;
-  width: fit-content!important;
+  width: fit-content !important;
 }
+
 .header h3 {
   margin: 0;
   color: #0f766e;
@@ -124,7 +126,8 @@
   color: #0f172a;
 }
 
-.description, .origin {
+.description,
+.origin {
   color: #2f3c5b;
 }
 
@@ -134,4 +137,25 @@
 
 .saida {
   color: rgb(0, 0, 0);
+}
+
+.header-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.header-filter input,
+.header-filter select {
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+}
+
+.header-filter input:focus,
+.header-filter select:focus {
+  outline: none;
+  border-color: #0f766e;
+  box-shadow: 0 0 0 2px rgba(15, 118, 110, 0.1);
 }

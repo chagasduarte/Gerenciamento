@@ -2,84 +2,82 @@
 
   <!-- Header -->
   <div class="header">
-    <h3>Últimas transações<div class="value" *ngIf="soma > 0">: {{ soma | currency: "BRL"}}</div></h3>
+    <h3>Últimas transações<div class="value" *ngIf="soma > 0">: {{ soma | currency: "BRL"}}</div>
+    </h3>
 
     <div class="actions">
       <button class="ver_extrato btn btn-outline" (click)="toEstrato()">Ver extrato</button>
-      <button class="add_transacao btn btn-outline" 
-        data-bs-toggle="modal" 
-        data-bs-target="#addTransacaoModal">
-       + Nova Transação
+      <button class="add_transacao btn btn-outline" data-bs-toggle="modal" data-bs-target="#addTransacaoModal">
+        + Nova Transação
       </button>
     </div>
-    <select 
-      name="cartoes" 
-      id="cartoes" 
-      *ngIf="cartoes.length > 0"
-      class="form-select form-select-sm select-cartoes" 
-      aria-label="Small select example"
-      (change)="filtrarCartao()"
-      [(ngModel)]="cartaoid">
-        <option value=0>Todas</option>
-        <option [value]="cartao.id" *ngFor="let cartao of cartoes">{{cartao.nome}}</option>
+    <select name="cartoes" id="cartoes" *ngIf="cartoes.length > 0" class="form-select form-select-sm select-cartoes"
+      aria-label="Small select example" (change)="filtrar()" [(ngModel)]="cartaoid">
+      <option value=0>Todas</option>
+      <option [value]="cartao.id" *ngFor="let cartao of cartoes">{{cartao.nome}}</option>
     </select>
   </div>
 
   <!-- Table Header -->
   <div class="table-header">
-    <input
-      type="checkbox"
-      [(ngModel)]="selecionaTodos"
-      (change)="toggleSelecionarTodos()"
-    />
+    <input type="checkbox" [(ngModel)]="selecionaTodos" (change)="toggleSelecionarTodos()" />
 
     <span>Transação</span>
-    <span>Descrição</span>
-    <span class="sortable">Tipo</span>
-    <select 
-      name="cartoes" 
-      id="cartoes" 
-      *ngIf="cartoes.length > 0"
-      class="form-select form-select-sm" 
-      aria-label="Small select example"
-      (change)="filtrarCartao()"
-      [(ngModel)]="cartaoid">
+
+    <!-- Description Header with Search -->
+    <div class="header-filter">
+      <span>Descrição</span>
+      <input type="text" class="form-control form-control-sm" placeholder="Buscar..." [(ngModel)]="filtroTexto"
+        (input)="filtrar()">
+    </div>
+
+    <!-- Type Header with Filter -->
+    <div class="header-filter">
+      <span>Tipo</span>
+      <select class="form-select form-select-sm" [(ngModel)]="filtroTipo" (change)="filtrar()">
+        <option value="todos">Todos</option>
+        <option [value]="tipo" *ngFor="let tipo of tipos">{{ tipo }}</option>
+      </select>
+    </div>
+
+    <!-- Card Header with Filter -->
+    <div class="header-filter">
+      <span>Cartão</span>
+      <select name="cartoes" id="cartoes" *ngIf="cartoes.length > 0" class="form-select form-select-sm"
+        aria-label="Small select example" (change)="filtrar()" [(ngModel)]="cartaoid">
         <option value=0>Todas</option>
         <option [value]="cartao.id" *ngFor="let cartao of cartoes">{{cartao.nome}}</option>
-    </select>
-    <span class="sortable text-end">Valor</span>
-    <select 
-      name="cartoes" 
-      id="cartoes" 
-      class="form-select form-select-sm" 
-      (change)="filtroPagos(status)"
-      [(ngModel)]="status">
+      </select>
+    </div>
+    <div class="header-filter">
+      <span class="sortable text-center" (click)="ordenarPorValor()">Valor</span>
+    </div>
+
+    <!-- Status Header with Filter -->
+    <div class="header-filter">
+      <span>Status</span>
+      <select name="status" id="status" class="form-select form-select-sm" (change)="filtrar()" [(ngModel)]="status">
         <option value='todos'>Todas</option>
         <option value='pago'>Pagos</option>
         <option value="pendente">Pendentes</option>
-    </select>
+      </select>
+    </div>
   </div>
-
   <!-- Transactions -->
   <ng-container *ngFor="let item of transacoesFiltradas; trackBy: trackByIndex; let i = index">
 
     <!-- Date label -->
-    <div *ngIf="i === 0 || transacoes[i - 1].data !== item.data"
-         class="date-label">
+    <div *ngIf="i === 0 || transacoes[i - 1].data !== item.data" class="date-label">
       {{ item.data }}
     </div>
 
     <!-- Row -->
     <div class="row-item">
-      <input
-        type="checkbox"
-        [(ngModel)]="item.selecionado"
-        (change)="atualizarSelecionarTodos()"
-      />
+      <input type="checkbox" [(ngModel)]="item.selecionado" (change)="atualizarSelecionarTodos()" />
 
       <div class="transaction">
         <div class="icon">
-            <img [src]="defineImagem(item.categoria)" style="width: 50px; height: 50px;" alt="">
+          <img [src]="defineImagem(item.categoria)" style="width: 50px; height: 50px;" alt="">
         </div>
       </div>
 
@@ -95,14 +93,14 @@
         {{ getCartaoName(item.cartaoid!) }}
       </div>
 
-      <div class="value" [ngClass]="item.tipo" >
+      <div class="value" [ngClass]="item.tipo">
         R$ {{ item.valor | number:'1.2-2' }}
       </div>
 
       <div class="row-actions">
         <i class="bi bi-trash" (click)="apagar(item.id)"></i>
-        <i class="bi bi-currency-exchange"  (click)="efetivar(item)" *ngIf="item.status == 'pendente'"></i>
-        <i class="bi bi-check-all text-success"  (click)="restituir(item)" *ngIf="item.status == 'pago'"></i>
+        <i class="bi bi-currency-exchange" (click)="efetivar(item)" *ngIf="item.status == 'pendente'"></i>
+        <i class="bi bi-check-all text-success" (click)="restituir(item)" *ngIf="item.status == 'pago'"></i>
       </div>
     </div>
 
@@ -111,4 +109,3 @@
 </div>
 
 <app-modal-nova-transacao></app-modal-nova-transacao>
-
