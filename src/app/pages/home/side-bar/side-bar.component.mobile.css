@@ -28,16 +28,11 @@
         width: 100%;
         height: auto;
         background-color: rgba(236, 236, 236, 0);
-        bottom: 0;
-        /* Ensure it sticks to bottom */
-        z-index: 1000;
         background: #0f766e;
-        /* Make background solid/visible on bottom */
     }
 
     .item {
         flex: 1;
-        /* Allow items to grow/shrink equally */
     }
 
     .item a {

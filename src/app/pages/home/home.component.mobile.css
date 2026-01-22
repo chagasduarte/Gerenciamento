@@ -1,11 +1,10 @@
-@media screen  and (max-width: 400px) {
+@media screen and (max-width: 400px) {
     .pagina {
         display: grid;
-        grid-template-areas: 
-        'bar'
-        'info'
-        'side';
-        grid-template-rows: 4rem 1fr 4rem;
+        grid-template-areas:
+            'bar'
+            'info';
+        grid-template-rows: 4rem 1fr;
         height: 95vh;
         width: 100%;
     }
@@ -21,25 +20,33 @@
         grid-area: side;
         width: 100%;
         height: auto;
+        bottom: 0;
+        position: fixed;
+        /* Ensure it sticks to bottom */
+        z-index: 1000;
     }
 
     .cards_resumo {
         display: grid;
-        grid-template-areas: 
-        "saldo_atual saldo_atual"
-        "gastos receitas";
+        grid-template-areas:
+            "saldo_atual saldo_atual"
+            "gastos receitas";
         width: 100%;
     }
+
     .saldo {
         grid-area: saldo_atual;
         width: 100%;
     }
+
     .gastos {
         grid-area: gastos;
     }
+
     .receitas {
         grid-area: receitas;
     }
+
     .router-outlet {
         grid-area: info;
         padding: 0;
