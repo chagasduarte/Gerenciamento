@@ -1,7 +1,8 @@
 export interface Cartao {
     id: number;
     nome: string;
-    data_fatura: Date;
+    dia_fatura: number;
     userid: number;
     limite: number;
+    dia_vencimento?: number;
 }

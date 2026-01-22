@@ -1,7 +1,12 @@
-@media screen  and (max-width: 400px) {
-    .top, app-resumo, app-anos, .footer {
+@media screen and (max-width: 400px) {
+
+    .top,
+    app-resumo,
+    app-anos,
+    .footer {
         display: none;
     }
+
     .nav {
         display: flex;
     }
@@ -9,16 +14,33 @@
     .menu {
         display: flex;
         flex-direction: row;
-        justify-content: center;
-        gap: 10px;
+        justify-content: space-between;
+        /* Distribute evenly */
+        width: 100%;
+        padding: 0 10px;
+        /* Add some small side padding to container */
+        gap: 0;
+        /* Remove gap, handle spacing via justify-content */
+        margin: 0;
     }
 
     .sidebar {
         width: 100%;
         height: auto;
         background-color: rgba(236, 236, 236, 0);
+        bottom: 0;
+        position: fixed;
+        /* Ensure it sticks to bottom */
+        z-index: 1000;
+        background: #0f766e;
+        /* Make background solid/visible on bottom */
     }
-    
+
+    .item {
+        flex: 1;
+        /* Allow items to grow/shrink equally */
+    }
+
     .item a {
         display: flex;
         flex-direction: column;
@@ -26,14 +48,22 @@
         align-items: center;
         text-align: center;
         gap: 2px;
-        padding: 10px;
+        padding: 8px 4px;
+        /* Reduced padding */
+        width: 100%;
     }
+
     .item svg {
         width: 20px;
+        height: 20px;
         justify-content: center;
     }
+
     .item a span {
-        font-size: 10px;
+        font-size: 9px;
+        /* Slightly smaller font */
         text-align: center;
+        white-space: nowrap;
+        /* Prevent text wrap */
     }
-} 
+}

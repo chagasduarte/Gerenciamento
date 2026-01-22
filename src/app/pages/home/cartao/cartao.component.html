@@ -1,1 +1,58 @@
-<p>cartao works!</p>
+<div class="row">
+    <div class="col-md-8">
+        <h3 class="title">Meus Cartões</h3>
+        <div class="cards-grid">
+            <div class="card-item sombra" *ngFor="let cartao of cartoes">
+                <div class="card-header-gradient"></div>
+                <div class="card-body-content">
+                    <h4>{{cartao.nome}}</h4>
+                    <p class="limit">Limite: R$ {{cartao.limite | number:'1.2-2'}}</p>
+                    <p class="due-date" [class.text-danger]="isPastDay(cartao.dia_fatura)">Dia Fatura:
+                        {{getDateFromDay(cartao.dia_fatura) | date: 'dd/MM'}}</p>
+
+                </div>
+            </div>
+            <div class="no-cards" *ngIf="cartoes.length === 0">
+                <p>Nenhum cartão cadastrado.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="add-card-form sombra">
+            <h4>Adicionar Cartão</h4>
+            <div class="form-group">
+                <label for="nome">Nome do Cartão</label>
+                <input type="text" id="nome" class="form-control" [(ngModel)]="novoCartao.nome"
+                    placeholder="Ex: Nubank">
+            </div>
+
+            <div class="form-group">
+                <label for="limite">Limite</label>
+                <input type="number" id="limite" class="form-control" [(ngModel)]="novoCartao.limite"
+                    placeholder="0,00">
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="dia_fatura">Dia Fatura</label>
+                        <input type="number" id="dia_fatura" class="form-control" [(ngModel)]="novoCartao.dia_fatura"
+                            placeholder="Dia" min="1" max="31">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="dia_vencimento">Dia Vencimento</label>
+                        <input type="number" id="dia_vencimento" class="form-control"
+                            [(ngModel)]="novoCartao.dia_vencimento" placeholder="Dia" min="1" max="31">
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-primary w-100" (click)="salvar()" [disabled]="loading">
+                {{ loading ? 'Salvando...' : 'Salvar' }}
+            </button>
+        </div>
+    </div>
+</div>

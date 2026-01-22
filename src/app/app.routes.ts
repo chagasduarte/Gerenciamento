@@ -19,27 +19,29 @@ import { ExtratoComponent } from './shared/components/extrato/extrato.component'
 import { PlanosComponent } from './pages/home/planos/planos.component';
 
 export const routes: Routes = [
-    { path: 'login', component: LoginComponent },
-    { path: 'register', component: RegisterComponent },
-    { path: 'config', component: ConfigComponent, canActivate: [AuthGuard]  },
-    { path: "", component: HomeComponent, 
-      children: [
-        { path: "", redirectTo: "home", pathMatch: "full" },
-        { path: "home", component: DadosComponent, canActivate: [AuthGuard] },
-        { path: "despesas", component: DespesasComponent, canActivate: [AuthGuard] },
-        { path: "entradas", component: EntradasComponent, canActivate: [AuthGuard] },
-        { path: "parcelas", component: ParcelasComponent, canActivate: [AuthGuard] },
-        { path: "gastos", component: GastosComponent, canActivate: [AuthGuard] },
-        { path: "entradas-detalhe", component: EntradaDetalhesComponent, canActivate: [AuthGuard] },
-        { path: "dash", component: DashboardComponent, canActivate: [AuthGuard]},
-        { path: "index", component: IndexComponent, canActivate: [AuthGuard]},
-        { path: "objetivos", component: ObjetivosComponent, canActivate: [AuthGuard]},
-        { path: "pagamentos", component: PagamentosComponent, canActivate: [AuthGuard]},
-        { path: "investimentos", component: InvestimentosComponent, canActivate: [AuthGuard]},
-        { path: "extrato", component: ExtratoComponent, canActivate: [AuthGuard]},
-        { path: "objetivos", component: ObjetivosComponent, canActivate: [AuthGuard]},
-        { path: "planos", component: PlanosComponent, canActivate: [AuthGuard]}
-      ],
-      canActivate: [AuthGuard]
-    }
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'config', component: ConfigComponent, canActivate: [AuthGuard] },
+  {
+    path: "", component: HomeComponent,
+    children: [
+      { path: "", redirectTo: "home", pathMatch: "full" },
+      { path: "home", component: DadosComponent, canActivate: [AuthGuard] },
+      { path: "despesas", component: DespesasComponent, canActivate: [AuthGuard] },
+      { path: "entradas", component: EntradasComponent, canActivate: [AuthGuard] },
+      { path: "parcelas", component: ParcelasComponent, canActivate: [AuthGuard] },
+      { path: "gastos", component: GastosComponent, canActivate: [AuthGuard] },
+      { path: "entradas-detalhe", component: EntradaDetalhesComponent, canActivate: [AuthGuard] },
+      { path: "dash", component: DashboardComponent, canActivate: [AuthGuard] },
+      { path: "index", component: IndexComponent, canActivate: [AuthGuard] },
+      { path: "objetivos", component: ObjetivosComponent, canActivate: [AuthGuard] },
+      { path: "pagamentos", component: PagamentosComponent, canActivate: [AuthGuard] },
+      { path: "investimentos", component: InvestimentosComponent, canActivate: [AuthGuard] },
+      { path: "extrato", component: ExtratoComponent, canActivate: [AuthGuard] },
+      { path: "cartoes", loadComponent: () => import('./pages/home/cartao/cartao.component').then(m => m.CartaoComponent), canActivate: [AuthGuard] },
+      { path: "objetivos", component: ObjetivosComponent, canActivate: [AuthGuard] },
+      { path: "planos", component: PlanosComponent, canActivate: [AuthGuard] }
+    ],
+    canActivate: [AuthGuard]
+  }
 ];
