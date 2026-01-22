@@ -1,15 +1,17 @@
 .cards_planejamento {
-    width: 100%;
-    height: 100%;
-    background-color: aliceblue;
-    border-radius: 20px;
-    color: black;
-    padding: 15px;
-    font-size: 1.2rem;
+  width: 100%;
+  height: 100%;
+  background-color: aliceblue;
+  border-radius: 20px;
+  color: black;
+  padding: 15px;
+  font-size: 1.2rem;
 }
+
 .entradas_saidas {
   width: 65%;
 }
+
 .tabs {
   display: flex;
   width: 100%;
@@ -38,7 +40,8 @@
 }
 
 .tab.active {
-  color: #1f7a6f; /* verde do print */
+  color: #1f7a6f;
+  /* verde do print */
   font-weight: 600;
 }
 
@@ -59,7 +62,7 @@
 
 .chart-container {
   width: 100%;
-  height: 250px;
+  height: 300px;
 }
 
 .planejadas {
@@ -82,6 +85,7 @@
 .collapse {
   width: 100%;
 }
+
 .button_tipo {
   width: 100%;
   border: none;

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CategoriaService } from '../../services/categoria.service';
 import { Categoria } from '../../models/categoria.model';
 import { PlanejamentoAgrupadoTipo } from '../../models/planejamentoagrupado';
@@ -36,7 +36,7 @@ interface PieData {
   categoria: string;
   total_tipo: number;
 }
- 
+
 
 @Component({
   selector: 'app-planejamento',
@@ -44,14 +44,14 @@ interface PieData {
     CommonModule,
     PlanejamentoCompComponent,
     ModalNovoPlanejamentoComponent,
-],
+  ],
   templateUrl: './planejamento.component.html',
   styleUrls: [
     './planejamento.component.css',
     './planejamento.component.mobile.css',
   ]
 })
-export class PlanejamentoComponent implements OnInit{
+export class PlanejamentoComponent implements OnInit {
   @ViewChild('chartDiv', { static: true }) chartDiv!: ElementRef<HTMLDivElement>;
 
   tipo: string = "Saídas";
@@ -77,99 +77,106 @@ export class PlanejamentoComponent implements OnInit{
     private readonly toast: ToastrService,
     private readonly categoriaService: CategoriaService,
     private readonly subcategoriaService: SubcategoriaService,
-  ){}
+  ) { }
 
   ngOnInit(): void {
     this.requisicoesApi()
   }
-  requisicoesApi(){
+  requisicoesApi() {
     combineLatest([
-        this.systemService.ano$,
-        this.systemService.mes$
+      this.systemService.ano$,
+      this.systemService.mes$
     ]).subscribe(([ano, mes]) => {
-        forkJoin([
-            this.planejamentoService.listarAgrupado(mes.valor + 1, ano.valor),
-            this.transacoesService.GetAgrupamento(mes.valor + 1, ano.valor, 'saida'),
-            this.transacoesService.GetAgrupamento(mes.valor + 1, ano.valor, 'entrada'),
-            this.categoriaService.listar(),
-            this.subcategoriaService.listarAll()
-          ]).subscribe({
-          next: (success) => {
-            this.planejamentos = success[0];
-            this.planejados = this.planejamentos.find(x => x.tipo == this.abaAtiva)?.soma!??0;
-            this.agrupamentoSaidas = success[1];
-            this.agrupamentoEntradas = success[2];
-            this.valor = this.agrupamentoSaidas.soma.soma??0;
-            this.agrupamentoCategoria = agruparPorCategoria(this.agrupamentoSaidas);
-            this.categorias = success[3];
-            this.subcategorias = success[4];
-            this.createChart(this.agrupamentoSaidas);
-          },
-          error: (err) => {
-            console.error(err);
-            this.toast.error(err.message);
-          } 
-        })
+      forkJoin([
+        this.planejamentoService.listarAgrupado(mes.valor + 1, ano.valor),
+        this.transacoesService.GetAgrupamento(mes.valor + 1, ano.valor, 'saida'),
+        this.transacoesService.GetAgrupamento(mes.valor + 1, ano.valor, 'entrada'),
+        this.categoriaService.listar(),
+        this.subcategoriaService.listarAll()
+      ]).subscribe({
+        next: (success) => {
+          this.planejamentos = success[0];
+          this.planejados = this.planejamentos.find(x => x.tipo == this.abaAtiva)?.soma! ?? 0;
+          this.agrupamentoSaidas = success[1];
+          this.agrupamentoEntradas = success[2];
+          this.valor = this.agrupamentoSaidas.soma.soma ?? 0;
+          this.agrupamentoCategoria = agruparPorCategoria(this.agrupamentoSaidas);
+          this.categorias = success[3];
+          this.subcategorias = success[4];
+          this.createChart(this.agrupamentoSaidas);
+        },
+        error: (err) => {
+          console.error(err);
+          this.toast.error(err.message);
+        }
+      })
     });
   }
 
 
   selecionar(tab: 'entradas' | 'saidas') {
     this.abaAtiva = tab;
-    this.tipo = tab == 'entradas'? 'Entradas' : 'Saídas';
-    this.agrupamentoCategoria = agruparPorCategoria(tab == 'entradas'? this.agrupamentoEntradas : this.agrupamentoSaidas);
+    this.tipo = tab == 'entradas' ? 'Entradas' : 'Saídas';
+    this.agrupamentoCategoria = agruparPorCategoria(tab == 'entradas' ? this.agrupamentoEntradas : this.agrupamentoSaidas);
 
     this.planejados = this.planejamentos.find(x => x.tipo == tab)?.soma!;
-    this.valor = this.abaAtiva == 'entradas'?  this.agrupamentoEntradas?.soma.soma??0 : this.agrupamentoSaidas?.soma.soma??0 
-    this.createChart(this.abaAtiva == 'entradas'?  this.agrupamentoEntradas : this.agrupamentoSaidas );
+    this.valor = this.abaAtiva == 'entradas' ? this.agrupamentoEntradas?.soma.soma ?? 0 : this.agrupamentoSaidas?.soma.soma ?? 0
+    this.createChart(this.abaAtiva == 'entradas' ? this.agrupamentoEntradas : this.agrupamentoSaidas);
 
   }
 
   private createChart(dados: AgrupamentoResponse): void {
     try {
-    if (this.root) {
-      this.root.dispose(); // 🔥 remove gráfico antigo
-    }
+      if (this.root) {
+        this.root.dispose(); // 🔥 remove gráfico antigo
+      }
 
-    // Root
-    this.root = am5.Root.new(this.chartDiv.nativeElement);
-    /* REMOVE O LOGO DO AMCHARTS */
-    (this.root as any)._logo?.dispose();
-    // Theme
-    this.root.setThemes([
-      am5themes_Animated.new(this.root)
-    ]);
+      // Root
+      this.root = am5.Root.new(this.chartDiv.nativeElement);
+      /* REMOVE O LOGO DO AMCHARTS */
+      (this.root as any)._logo?.dispose();
+      // Theme
+      this.root.setThemes([
+        am5themes_Animated.new(this.root)
+      ]);
+      var tamanho = 50;
+      if (dados.agrupamento.length < 10) {
+        tamanho = 80;
+      }
+      if (dados.agrupamento.length <= 20) {
+        tamanho = 50;
+      }
+      // Chart
+      const chart = this.root.container.children.push(
+        am5percent.PieChart.new(this.root, {
+          layout: this.root.verticalLayout,
+          innerRadius: am5.percent(60),
+          radius: am5.percent(tamanho),
+        })
+      );
 
-    // Chart
-    const chart = this.root.container.children.push(
-      am5percent.PieChart.new(this.root, {
-        layout: this.root.verticalLayout,
-        innerRadius: am5.percent(50)
-      })
-    );
+      // Series
+      const series = chart.series.push(
+        am5percent.PieSeries.new(this.root, {
+          valueField: "total_tipo",
+          categoryField: "categoria"
+        })
+      );
+      let array: { categoria: string; total_tipo: number; }[];
 
-    // Series
-    const series = chart.series.push(
-      am5percent.PieSeries.new(this.root, {
-        valueField: "total_tipo",
-        categoryField: "categoria"
-      })
-    );
-    let array: { categoria: string; total_tipo: number; }[];
-
-    if(dados.agrupamento.length > 0) {
-      array = dados.agrupamento.map(x => ({
-        categoria: this.categoriaNome(x.categoria),
-        total_tipo: Number(x.total_tipo)
-      }));
-    }
-    // Data
-    series.data.setAll(array!);
-    series.labels.template.setAll({
-      fontSize: '12px'
-    });
-    // Animation
-    series.appear(1000, 100);
+      if (dados.agrupamento.length > 0) {
+        array = dados.agrupamento.map(x => ({
+          categoria: this.categoriaNome(x.categoria),
+          total_tipo: Number(x.total_tipo)
+        }));
+      }
+      // Data
+      series.data.setAll(array!);
+      series.labels.template.setAll({
+        fontSize: '12px'
+      });
+      // Animation
+      series.appear(1000, 100);
     }
     catch (err) {
       console.error(err);
@@ -183,5 +190,5 @@ export class PlanejamentoComponent implements OnInit{
   categoriaCor(id: number): string {
     return this.categorias.find(x => x.id == id)?.cor! || "";
   }
-  
+
 }

@@ -1,16 +1,17 @@
-@media screen  and (max-width: 400px) {
+@media screen and (max-width: 400px) {
   .cards_planejamento {
     display: flex;
     flex-direction: column;
     background-color: rgba(0, 0, 0, 0);
-    gap:5px;
+    gap: 5px;
     padding: 0px;
     height: fit-content;
     margin-bottom: 10px;
   }
 
-  .planejadas, .entradas_saidas {
-    background-color:white;
+  .planejadas,
+  .entradas_saidas {
+    background-color: white;
     border-radius: 20px;
     color: black;
     padding: 10px;
@@ -37,7 +38,7 @@
     border: none;
     text-align: start;
   }
-  
+
   .categoria {
     margin-bottom: 5px;
     width: 100%;
@@ -50,6 +51,7 @@
     padding: 10px;
     justify-content: end;
   }
+
   .separation {
     padding-left: 10px;
     width: 100%;
@@ -60,9 +62,9 @@
   }
 
   .chart-container {
-    height: 200px;
+    height: 300px;
     width: 100%;
   }
 
-  
+
 }
