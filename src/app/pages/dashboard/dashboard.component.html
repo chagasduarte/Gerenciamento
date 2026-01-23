@@ -1,37 +1,11 @@
 <div class="dashboard-container" *ngIf="resumoMensal$ | async as resumo">
 
-    <!-- Summary Cards Section -->
-    <div class="summary-cards">
-        <app-cards class="card-item" titulo="Gastos" [valor]="resumo.gastos_mensal_pendente"
-            [valorTotal]="resumo.gastos_mensal" tipo="saida">
-        </app-cards>
-
-        <app-cards class="card-item" titulo="Receitas" [valor]="resumo.receita_mensal_pendente"
-            [valorTotal]="resumo.receita_mensal" tipo="entrada">
-        </app-cards>
-
-        <app-cards class="card-item" titulo="Saldo Atual" [valor]="resumo.saldo_atual" tipo="saldo">
-        </app-cards>
-    </div>
 
     <!-- Main Content Grid -->
     <div class="content-grid">
         <!-- Monthly Evolution Chart -->
         <div class="chart-section shadow-sm">
             <app-evolucao [intervalo]="12"></app-evolucao>
-        </div>
-
-        <!-- Categories Pie Chart -->
-        <div class="categories-section">
-            <app-categorias-chart></app-categorias-chart>
-        </div>
-
-        <!-- Recent Transactions -->
-        <div class="transactions-section shadow-sm">
-            <div class="section-header">
-                <h5>Transações Recentes</h5>
-            </div>
-            <app-extrato [limit]="5"></app-extrato>
         </div>
     </div>
 </div>

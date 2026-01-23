@@ -3,7 +3,6 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
-  background-color: #f8f9fa;
   min-height: 100vh;
 }
 
@@ -14,16 +13,6 @@
   gap: 20px;
 }
 
-/* Content Grid */
-.content-grid {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  grid-template-rows: auto auto;
-  gap: 24px;
-  grid-template-areas:
-    "evolution categories"
-    "evolution transactions";
-}
 
 .chart-section {
   grid-area: evolution;
@@ -49,15 +38,4 @@
   margin-bottom: 15px;
   color: #444;
   font-weight: 600;
-}
-
-/* Responsive adjustments */
-@media (max-width: 992px) {
-  .content-grid {
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "evolution"
-      "categories"
-      "transactions";
-  }
 }

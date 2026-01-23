@@ -7,6 +7,10 @@ import { SystemService } from '../../../services/system.service';
 import { TransacoesService } from '../../../services/transacoes.service';
 import { combineLatest } from 'rxjs';
 import { TipoDespesa } from '../../../models/tipoDespesa';
+import { CategoriaService } from '../../../services/categoria.service';
+import { Categoria } from '../../../models/categoria.model';
+import { Subcategoria } from '../../../models/subcategoria.model';
+import { SubcategoriaService } from '../../../services/subcategoria.service';
 
 @Component({
     selector: 'app-categorias-chart',
@@ -18,10 +22,11 @@ import { TipoDespesa } from '../../../models/tipoDespesa';
 export class CategoriasComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild('chartDiv', { static: true }) chartDiv!: ElementRef<HTMLDivElement>;
     private root!: am5.Root;
-
+    subcategorias!: Subcategoria[]
     constructor(
         private systemService: SystemService,
         private transacoesService: TransacoesService,
+        private categoriaService: SubcategoriaService,
         @Inject(PLATFORM_ID) private platformId: Object
     ) { }
 
@@ -30,8 +35,12 @@ export class CategoriasComponent implements OnInit, AfterViewInit, OnDestroy {
             combineLatest([
                 this.systemService.ano$
             ]).subscribe(([ano]) => {
-                this.transacoesService.GetGraficosPizza(ano.valor).subscribe(dados => {
-                    this.createChart(dados);
+                this.categoriaService.listarAll().subscribe(x => {
+                    this.subcategorias = x;
+
+                    this.transacoesService.GetGraficosPizza(ano.valor).subscribe(dados => {
+                        this.createChart(dados);
+                    });
                 });
             });
         }
@@ -78,7 +87,7 @@ export class CategoriasComponent implements OnInit, AfterViewInit, OnDestroy {
         // Map TipoDespesa enum to string name
         const dataWithNames = dados.map(item => ({
             ...item,
-            nomeCategoria: TipoDespesa[item.categoria]
+            nomeCategoria: this.subcategorias.find(x => x.id == parseInt(item.categoria?.toString()))?.nome
         }));
 
         series.data.setAll(dataWithNames);
