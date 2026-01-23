@@ -166,7 +166,7 @@ export class PlanejamentoComponent implements OnInit {
 
       if (dados.agrupamento.length > 0) {
         array = dados.agrupamento.map(x => ({
-          categoria: this.categoriaNome(x.categoria),
+          categoria: this.categoriaNome(x.idcategoria),
           total_tipo: Number(x.total_tipo)
         }));
       }
@@ -184,7 +184,7 @@ export class PlanejamentoComponent implements OnInit {
   }
 
   categoriaNome(id: number): string {
-    return this.subcategorias.find(x => x.id == id)?.nome!.substring(0, 3) || "";
+    return this.categorias.find(x => x.id == id)?.nome!.substring(0, 3) || "";
   }
 
   categoriaCor(id: number): string {
