@@ -28,24 +28,25 @@ import { TransacoesService } from '../../../services/transacoes.service';
     './evolucao.component.mobile.css'
   ]
 })
-export class EvolucaoComponent  implements AfterViewInit, OnInit, OnDestroy {
+export class EvolucaoComponent implements AfterViewInit, OnInit, OnDestroy {
   @ViewChild('chartDiv', { static: true }) chartDiv!: ElementRef<HTMLDivElement>;
   @Input() intervalo: number = 12;
+  @Input() tipo: string = 'todos';
   dados: {
     coluna: string;
     entradas: number;
     saidas: number;
     progressao: number;
   }[] = [];
-  
+
 
   private root!: am5.Root;
 
-  constructor(        
+  constructor(
     public readonly systemService: SystemService,
     private readonly transacoesService: TransacoesService,
     @Inject(PLATFORM_ID) private platformId: object
-  ){
+  ) {
   }
 
   ngOnDestroy(): void {
@@ -62,39 +63,39 @@ export class EvolucaoComponent  implements AfterViewInit, OnInit, OnDestroy {
 
   ngOnInit(): void {
     combineLatest([
-        this.systemService.ano$,
-        this.systemService.mes$
+      this.systemService.ano$,
+      this.systemService.mes$
     ]).subscribe(([ano, mes]) => {
-        forkJoin([
-            this.transacoesService.GetProjecao(ano.valor)
-        ]).subscribe({
-            next: (success) => {
-                
-                const mesAtual = mes.valor + 1;
-                const metade = Math.floor(this.intervalo / 2);
-                const mesInicial = mesAtual - metade;
-                const mesFinal = mesAtual + metade;
-                let meses = []
-                if(this.intervalo > 6) {
-                  meses = success[0];
-                }
-                else {
-                  meses = success[0]
-                  .filter(x => x.mes >= mesInicial && x.mes <= mesFinal)
-                  .sort((a, b) => a.mes - b.mes);
-                }
-                this.dados = meses.map(p => (
-                {
-                  coluna: this.getNameMes(parseInt(p.mes.toString())),
-                  entradas: parseFloat(p.soma_entrada.toString()),
-                  saidas: parseFloat(p.soma_saida.toString()),
-                  progressao: parseFloat(p.saldo_acumulado.toString()),
-                  mensal: parseFloat(p.saldo_mensal.toString())
-                }))
+      forkJoin([
+        this.transacoesService.GetProjecao(ano.valor)
+      ]).subscribe({
+        next: (success) => {
 
-                this.criarGrafico();
-            }
-        });
+          const mesAtual = mes.valor + 1;
+          const metade = Math.floor(this.intervalo / 2);
+          const mesInicial = mesAtual - metade;
+          const mesFinal = mesAtual + metade;
+          let meses = []
+          if (this.intervalo > 6) {
+            meses = success[0];
+          }
+          else {
+            meses = success[0]
+              .filter(x => x.mes >= mesInicial && x.mes <= mesFinal)
+              .sort((a, b) => a.mes - b.mes);
+          }
+          this.dados = meses.map(p => (
+            {
+              coluna: this.getNameMes(parseInt(p.mes.toString())),
+              entradas: parseFloat(p.soma_entrada.toString()),
+              saidas: parseFloat(p.soma_saida.toString()),
+              progressao: parseFloat(p.saldo_acumulado.toString()),
+              mensal: parseFloat(p.saldo_mensal.toString())
+            }))
+
+          this.criarGrafico();
+        }
+      });
     });
   }
 
@@ -116,7 +117,7 @@ export class EvolucaoComponent  implements AfterViewInit, OnInit, OnDestroy {
         panY: false
       })
     );
-    
+
     // 3️⃣ Eixo X (MÊS)
     const xAxis = chart.xAxes.push(
       am5xy.CategoryAxis.new(this.root, {
@@ -131,173 +132,176 @@ export class EvolucaoComponent  implements AfterViewInit, OnInit, OnDestroy {
     // 4️⃣ Eixo Y (VALORES)
     const yAxis = chart.yAxes.push(
       am5xy.ValueAxis.new(this.root, {
-        renderer: am5xy.AxisRendererY.new(this.root, {strokeOpacity: 0.1})
+        renderer: am5xy.AxisRendererY.new(this.root, { strokeOpacity: 0.1 })
       })
     );
 
-    // 5️⃣ Série ENTRADAS
-    const entradasSeries = chart.series.push(
-      am5xy.ColumnSeries.new(this.root, {
-        name: 'Entradas',
-        xAxis,
-        yAxis,
-        valueYField: 'entradas',
-        sequencedInterpolation: true,
-        categoryXField: 'coluna',
-        tooltip: am5.Tooltip.new(this.root, {
-          labelText: "{valueY}"
+    if (this.tipo == 'entradas_saidas' || this.tipo == 'todos') {
+      // 5️⃣ Série ENTRADAS
+      const entradasSeries = chart.series.push(
+        am5xy.ColumnSeries.new(this.root, {
+          name: 'Entradas',
+          xAxis,
+          yAxis,
+          valueYField: 'entradas',
+          sequencedInterpolation: true,
+          categoryXField: 'coluna',
+          tooltip: am5.Tooltip.new(this.root, {
+            labelText: "{valueY}"
+          })
         })
+      );
+      entradasSeries.bullets.push(() => {
+        return am5.Bullet.new(this.root, {
+          locationY: 1,
+          sprite: am5.Label.new(this.root, {
+            text: "{valueY.formatNumber('#,###.00')}",
+            populateText: true, // 🔥 ESSENCIAL
+            centerY: am5.p100,
+            centerX: am5.p50,
+            dy: -5,
+            fontSize: 10,
+            fill: am5.color(0x000000)
+          })
+        });
+      });
+
+      entradasSeries.columns.template.setAll({
+        cornerRadiusTL: 6,
+        cornerRadiusTR: 6,
+        strokeOpacity: 0,
+        width: am5.percent(50)
       })
-    );
-    entradasSeries.bullets.push(() => {
-      return am5.Bullet.new(this.root, {
-        locationY: 1,
-        sprite: am5.Label.new(this.root, {
-          text: "{valueY.formatNumber('#,###.00')}",
-          populateText: true, // 🔥 ESSENCIAL
-          centerY: am5.p100,
-          centerX: am5.p50,
-          dy: -5,
-          fontSize: 10,
-          fill: am5.color(0x000000)
+
+      entradasSeries.data.setAll(this.dados);
+      // 6️⃣ Série SAÍDAS
+      const saidasSeries = chart.series.push(
+        am5xy.ColumnSeries.new(this.root, {
+          name: 'Saídas',
+          xAxis,
+          yAxis,
+          valueYField: 'saidas',
+          categoryXField: 'coluna',
+          tooltip: am5.Tooltip.new(this.root, {
+            labelText: "{valueY}"
+          })
         })
+      );
+      saidasSeries.bullets.push(() => {
+        return am5.Bullet.new(this.root, {
+          locationY: 1,
+          sprite: am5.Label.new(this.root, {
+            text: "{valueY.formatNumber('#,###.00')}",
+            populateText: true, // 🔥 ESSENCIAL
+            centerY: am5.p100,
+            centerX: am5.p50,
+            dy: -5,
+            fontSize: 10,
+            fill: am5.color(0x000000)
+          })
+        });
       });
-    });
 
-    entradasSeries.columns.template.setAll({
-      cornerRadiusTL: 6, 
-      cornerRadiusTR: 6, 
-      strokeOpacity: 0,
-      width: am5.percent(50)
-    })
-  
-    entradasSeries.data.setAll(this.dados);
-    // 6️⃣ Série SAÍDAS
-    const saidasSeries = chart.series.push(
-      am5xy.ColumnSeries.new(this.root, {
-        name: 'Saídas',
-        xAxis,
-        yAxis,
-        valueYField: 'saidas',
-        categoryXField: 'coluna',
-        tooltip: am5.Tooltip.new(this.root, {
-          labelText: "{valueY}"
-        })
-      })
-    );
-    saidasSeries.bullets.push(() => {
-      return am5.Bullet.new(this.root, {
-        locationY: 1,
-        sprite: am5.Label.new(this.root, {
-          text: "{valueY.formatNumber('#,###.00')}",
-          populateText: true, // 🔥 ESSENCIAL
-          centerY: am5.p100,
-          centerX: am5.p50,
-          dy: -5,
-          fontSize: 10,
-          fill: am5.color(0x000000)
-        })
+      saidasSeries.columns.template.setAll({
+        cornerRadiusTL: 6,
+        cornerRadiusTR: 6,
+        strokeOpacity: 0,
+        width: am5.percent(50)
       });
-    });
 
-    saidasSeries.columns.template.setAll({
-      cornerRadiusTL: 6, 
-      cornerRadiusTR: 6, 
-      strokeOpacity: 0,
-      width: am5.percent(50)
-    });
-    
-    saidasSeries.data.setAll(this.dados);
-
-    const progressaoLine = chart.series.push(
-      am5xy.LineSeries.new(this.root, {
-        name: 'Progressao',
-        minBulletDistance: 10,
-        xAxis: xAxis,
-        yAxis: yAxis,
-        valueYField: "progressao",
-        categoryXField: 'coluna',
-        tooltip: am5.Tooltip.new(this.root, {
-          pointerOrientation: "horizontal",
-          labelText: "{valueY}"
+      saidasSeries.data.setAll(this.dados);
+    }
+    if (this.tipo == 'progressao' || this.tipo == 'todos') {
+      const progressaoLine = chart.series.push(
+        am5xy.LineSeries.new(this.root, {
+          name: 'Progressao',
+          minBulletDistance: 10,
+          xAxis: xAxis,
+          yAxis: yAxis,
+          valueYField: "progressao",
+          categoryXField: 'coluna',
+          tooltip: am5.Tooltip.new(this.root, {
+            pointerOrientation: "horizontal",
+            labelText: "{valueY}"
+          })
         })
-      })
-    );
+      );
 
-    progressaoLine.bullets.push(() => {
-      return am5.Bullet.new(this.root, {
-        sprite: am5.Label.new(this.root, {
-          text: "{valueY.formatNumber('#,###.00')}",
-          populateText: true, // 🔥 ESSENCIAL
-          centerX: am5.p50,
-          centerY: am5.p100,
-          dy: -10,
-          fontSize: 10,
-          fontWeight: "400",
-          fill: am5.color(0x000000),
-          
-        })
+      progressaoLine.bullets.push(() => {
+        return am5.Bullet.new(this.root, {
+          sprite: am5.Label.new(this.root, {
+            text: "{valueY.formatNumber('#,###.00')}",
+            populateText: true, // 🔥 ESSENCIAL
+            centerX: am5.p50,
+            centerY: am5.p100,
+            dy: -10,
+            fontSize: 10,
+            fontWeight: "400",
+            fill: am5.color(0x000000),
+
+          })
+        });
       });
-    });
 
-    progressaoLine.strokes.template.setAll({
-      strokeWidth: 3
-    });
-    progressaoLine.data.setAll(this.dados);
-    progressaoLine.bullets.push( () => {
-      return am5.Bullet.new(this.root, {
-        sprite: am5.Circle.new(this.root, {
-          radius: 6,
-          fill: progressaoLine.get("fill"),
-          stroke: this.root.interfaceColors.get("background"),
-          strokeWidth: 2
-        })
+      progressaoLine.strokes.template.setAll({
+        strokeWidth: 3
       });
-    });
-    const mensalLine = chart.series.push(
-      am5xy.LineSeries.new(this.root, {
-        name: 'Mensal',
-        minBulletDistance: 10,
-        xAxis: xAxis,
-        yAxis: yAxis,
-        valueYField: "mensal",
-        categoryXField: 'coluna',
-        tooltip: am5.Tooltip.new(this.root, {
-          pointerOrientation: "horizontal",
-          labelText: "{valueY}"
+      progressaoLine.data.setAll(this.dados);
+      progressaoLine.bullets.push(() => {
+        return am5.Bullet.new(this.root, {
+          sprite: am5.Circle.new(this.root, {
+            radius: 6,
+            fill: progressaoLine.get("fill"),
+            stroke: this.root.interfaceColors.get("background"),
+            strokeWidth: 2
+          })
+        });
+      });
+      const mensalLine = chart.series.push(
+        am5xy.LineSeries.new(this.root, {
+          name: 'Mensal',
+          minBulletDistance: 10,
+          xAxis: xAxis,
+          yAxis: yAxis,
+          valueYField: "mensal",
+          categoryXField: 'coluna',
+          tooltip: am5.Tooltip.new(this.root, {
+            pointerOrientation: "horizontal",
+            labelText: "{valueY}"
+          })
         })
-      })
-    );
+      );
 
-    mensalLine.bullets.push(() => {
-      return am5.Bullet.new(this.root, {
-        sprite: am5.Label.new(this.root, {
-          text: "{valueY.formatNumber('#,###.00')}",
-          populateText: true, // 🔥 ESSENCIAL
-          centerX: am5.p50,
-          centerY: am5.p100,
-          dy: -10,
-          fontSize: 10,
-          fontWeight: "400",
-          fill: am5.color(0x454545),
-        })
+      mensalLine.bullets.push(() => {
+        return am5.Bullet.new(this.root, {
+          sprite: am5.Label.new(this.root, {
+            text: "{valueY.formatNumber('#,###.00')}",
+            populateText: true, // 🔥 ESSENCIAL
+            centerX: am5.p50,
+            centerY: am5.p100,
+            dy: -10,
+            fontSize: 10,
+            fontWeight: "400",
+            fill: am5.color(0x454545),
+          })
+        });
       });
-    });
 
-    mensalLine.strokes.template.setAll({
-      strokeWidth: 3
-    });
-    mensalLine.data.setAll(this.dados);
-    mensalLine.bullets.push( () => {
-      return am5.Bullet.new(this.root, {
-        sprite: am5.Circle.new(this.root, {
-          radius: 6,
-          fill: am5.color(0x454545),
-          stroke: this.root.interfaceColors.get("background"),
-          strokeWidth: 2
-        })
+      mensalLine.strokes.template.setAll({
+        strokeWidth: 3
       });
-    });
+      mensalLine.data.setAll(this.dados);
+      mensalLine.bullets.push(() => {
+        return am5.Bullet.new(this.root, {
+          sprite: am5.Circle.new(this.root, {
+            radius: 6,
+            fill: am5.color(0x454545),
+            stroke: this.root.interfaceColors.get("background"),
+            strokeWidth: 2
+          })
+        });
+      });
+    }
     // 7️⃣ Legenda
     const legend = chart.children.push(
       am5.Legend.new(this.root, {
@@ -312,7 +316,7 @@ export class EvolucaoComponent  implements AfterViewInit, OnInit, OnDestroy {
     chart.appear(1000, 100);
   }
 
-  getNameMes(mes: number): string{
+  getNameMes(mes: number): string {
     switch (mes) {
       case 1:
         return "Jan";
@@ -334,7 +338,7 @@ export class EvolucaoComponent  implements AfterViewInit, OnInit, OnDestroy {
         return "Set";
       case 10:
         return "Out";
-      case 11: 
+      case 11:
         return "Nov";
       case 12:
         return "Dez";

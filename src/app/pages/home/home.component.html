@@ -6,44 +6,32 @@
   <div class="router-outlet">
     <div class="data">
       <div class="d-flex" style="font-weight: 900 !important; font-size: 42px;">
-        {{systemService.mes.nome}} | {{systemService.ano.valor}} 
+        {{systemService.mes.nome}} | {{systemService.ano.valor}}
       </div>
-      <a (click)="logout()">Sair</a>
     </div>
 
     <div class="cards_resumo">
-      <app-cards class="gastos"
-        titulo="Gastos" 
-        [valor]="resumo.gastos_mensal_pendente"
-        [valorTotal]="resumo.gastos_mensal"
-        tipo="saida">
+      <app-cards class="gastos" titulo="Gastos" [valor]="resumo.gastos_mensal_pendente"
+        [valorTotal]="resumo.gastos_mensal" tipo="saida">
       </app-cards>
 
-      <app-cards class="receitas"
-        titulo="Receitas" 
-        [valor]="resumo.receita_mensal_pendente"
-        [valorTotal]="resumo.receita_mensal"
-        tipo="entrada">
+      <app-cards class="receitas" titulo="Receitas" [valor]="resumo.receita_mensal_pendente"
+        [valorTotal]="resumo.receita_mensal" tipo="entrada">
       </app-cards>
 
-      <app-cards class="saldo"
-        titulo="Saldo Atual" 
-        [valor]="resumo.saldo_atual"
-        tipo="saldo">
+      <app-cards class="saldo" titulo="Saldo Atual" [valor]="resumo.saldo_atual" tipo="saldo">
       </app-cards>
     </div>
     <router-outlet></router-outlet>
   </div>
 
-  <nav class="anos-rodape"> 
+  <nav class="anos-rodape">
     <div class="meses-rodape">
       <div class="d-grid gap-2 d-md-flex" *ngFor="let ano of anosDeDivida">
-          <button
-            style="margin: 5px;
+        <button style="margin: 5px;
                    border-radius: 10px;
-                   border: none;"
-            (click)="mudaAno(ano)">{{ano}}
-          </button>
+                   border: none;" (click)="mudaAno(ano)">{{ano}}
+        </button>
       </div>
     </div>
   </nav>

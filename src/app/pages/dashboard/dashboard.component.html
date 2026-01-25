@@ -1,11 +1,10 @@
 <div class="dashboard-container" *ngIf="resumoMensal$ | async as resumo">
-
-
     <!-- Main Content Grid -->
     <div class="content-grid">
         <!-- Monthly Evolution Chart -->
-        <div class="chart-section shadow-sm">
-            <app-evolucao [intervalo]="12"></app-evolucao>
+        <div class="chart-container">
+            <app-evolucao [intervalo]="12" tipo="progressao"></app-evolucao>
+            <app-evolucao [intervalo]="12" tipo="entradas_saidas"></app-evolucao>
         </div>
     </div>
 </div>

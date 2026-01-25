@@ -1,5 +1,4 @@
 .dashboard-container {
-  padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -38,4 +37,16 @@
   margin-bottom: 15px;
   color: #444;
   font-weight: 600;
+}
+
+.chart-container {
+  display: flex;
+  width: 100%;
+  gap: 5px;
+}
+
+app-evolucao {
+  display: flex;
+  width: 50%;
+  gap: 5px;
 }

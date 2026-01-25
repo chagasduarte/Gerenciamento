@@ -10,7 +10,6 @@ import { CategoriasComponent } from "../../shared/components/charts/categorias/c
     imports: [
         CommonModule,
         EvolucaoComponent,
-        CategoriasComponent,
     ],
     templateUrl: './dashboard.component.html',
     styleUrl: './dashboard.component.css'
