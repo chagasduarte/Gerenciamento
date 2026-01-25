@@ -5,7 +5,7 @@ export function agruparPorCategoria(apiResponse: AgrupamentoResponse) {
 
   apiResponse.agrupamento.forEach(item => {
     const idCategoria = item.idcategoria;
-    const idSubcategoria = item.categoria;
+    const idSubcategoria = item.subcategoria;
     const valor = Number(item.total_tipo);
 
     // Cria categoria se não existir

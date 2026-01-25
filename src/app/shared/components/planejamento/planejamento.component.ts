@@ -101,6 +101,7 @@ export class PlanejamentoComponent implements OnInit {
           this.agrupamentoEntradas = success[2];
           this.valor = this.agrupamentoSaidas.soma.soma ?? 0;
           this.agrupamentoCategoria = agruparPorCategoria(this.agrupamentoSaidas);
+          console.log(this.agrupamentoCategoria);
           this.categorias = success[3];
           this.subcategorias = success[4];
           this.createChart(this.agrupamentoSaidas);
@@ -196,10 +197,22 @@ export class PlanejamentoComponent implements OnInit {
       let array: { categoria: string; total_tipo: number; }[];
 
       if (dados.agrupamento.length > 0) {
-        array = dados.agrupamento.map(x => ({
-          categoria: this.categoriaNome(x.idcategoria),
-          total_tipo: Number(x.total_tipo)
-        }));
+        array = Object.values(
+          dados.agrupamento.reduce((acc, item) => {
+            const id = item.idcategoria;
+
+            if (!acc[id]) {
+              acc[id] = {
+                categoria: this.categoriaNome(id),
+                total_tipo: 0
+              };
+            }
+
+            acc[id].total_tipo += Number(item.total_tipo);
+
+            return acc;
+          }, {} as Record<number, { categoria: string; total_tipo: number }>)
+        );
       }
       // Data
       series.data.setAll(array!);
