@@ -1,0 +1,28 @@
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+}
+
+.card-input {
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 10px;
+    background-color: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.card-input label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.scroll-custom {
+    max-height: 60vh;
+    overflow-y: auto;
+}
