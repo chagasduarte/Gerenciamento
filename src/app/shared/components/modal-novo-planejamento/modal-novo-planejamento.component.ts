@@ -8,7 +8,7 @@ import { Categoria } from '../../models/categoria.model';
 import { ToastrService } from 'ngx-toastr';
 import { Subcategoria } from '../../models/subcategoria.model';
 import { SubcategoriaService } from '../../services/subcategoria.service';
-import { forkJoin } from 'rxjs';
+import { combineLatest, forkJoin } from 'rxjs';
 import { SystemService } from '../../services/system.service';
 
 interface ItemRapido {
@@ -46,8 +46,8 @@ export class ModalNovoPlanejamentoComponent implements OnInit {
   itensRapidos: ItemRapido[] = [];
   nomesSugestivosSaida = ['Aluguel', 'Água', 'Luz', 'Internet', 'Condomínio', 'Mercado'];
   nomesSugestivosEntrada = ['Salário', 'Renda Extra', 'Investimentos'];
-  mes = this.systemService.mes$;
-  ano = this.systemService.ano$;
+  mes = 0;
+  ano = 0;
 
   constructor(
     private readonly planejamentoService: PlanejamentoService,
@@ -67,6 +67,14 @@ export class ModalNovoPlanejamentoComponent implements OnInit {
         // We can keep subcategorias loaded for the simple mode matching
         this.prepararItensRapidos(subcategorias);
       }
+    });
+
+    combineLatest([
+      this.systemService.ano$,
+      this.systemService.mes$
+    ]).subscribe(([ano, mes]) => {
+      this.ano = ano.valor;
+      this.mes = mes.valor;
     });
   }
 
@@ -121,7 +129,7 @@ export class ModalNovoPlanejamentoComponent implements OnInit {
         subcategoria: item.nome,
         categoriaid: item.categoriaId,
         subcategoriaid: item.subcategoriaId,
-        data: new Date(`${this.ano}-${this.mes}-01`)
+        data: new Date(`${this.ano}-${this.mes + 1}-01`)
       };
 
       this.planejamentoService.criar(novoPlan).subscribe({
