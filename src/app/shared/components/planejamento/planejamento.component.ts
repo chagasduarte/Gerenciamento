@@ -104,6 +104,7 @@ export class PlanejamentoComponent implements OnInit {
           this.categorias = success[3];
           this.subcategorias = success[4];
           this.createChart(this.agrupamentoSaidas);
+          this.calcularNaoPlanejado();
         },
         error: (err) => {
           console.error(err);
@@ -114,6 +115,8 @@ export class PlanejamentoComponent implements OnInit {
   }
 
 
+  naoPlanejado: number = 0;
+
   selecionar(tab: 'entradas' | 'saidas') {
     this.abaAtiva = tab;
     this.tipo = tab == 'entradas' ? 'Entradas' : 'Saídas';
@@ -123,6 +126,34 @@ export class PlanejamentoComponent implements OnInit {
     this.valor = this.abaAtiva == 'entradas' ? this.agrupamentoEntradas?.soma.soma ?? 0 : this.agrupamentoSaidas?.soma.soma ?? 0
     this.createChart(this.abaAtiva == 'entradas' ? this.agrupamentoEntradas : this.agrupamentoSaidas);
 
+    this.calcularNaoPlanejado();
+  }
+
+  calcularNaoPlanejado() {
+    // Find the grouped planning for the active tab
+    const planejamentoAtivo = this.planejamentos.find(x => x.tipo == this.abaAtiva);
+
+    if (!planejamentoAtivo || !this.agrupamentoCategoria) {
+      this.naoPlanejado = 0;
+      return;
+    }
+
+    // Sum of realized values for categories that ARE in the plan
+    let realizadoEmPlanejados = 0;
+
+    planejamentoAtivo.agrupamentoTipo.forEach(cat => {
+      const valorRealCategoria = this.agrupamentoCategoria[cat.categoriaid]?.soma ?? 0;
+      realizadoEmPlanejados += valorRealCategoria;
+    });
+
+    // Unplanned is the Total Real minus the Realized portion of Planned Categories
+    // If result is negative (shouldn't happen logically if datas are consistent), clamp to 0
+    this.naoPlanejado = Math.max(0, this.valor - realizadoEmPlanejados);
+
+    // Edge case: if there are no planned items at all, everything is unplanned
+    if (this.planejados === 0) {
+      this.naoPlanejado = this.valor;
+    }
   }
 
   private createChart(dados: AgrupamentoResponse): void {

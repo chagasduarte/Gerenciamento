@@ -40,8 +40,8 @@
         </div>
     </div>
     <div class="planejadas">
-        <div class="d-flex justify-content-end">
-            <button class="btn btn-sm btn-success" data-bs-toggle="modal"
+        <div class="d-flex justify-content-end gap-2 flex-column">
+            <button class="btn btn-sm btn-success align-self-end" data-bs-toggle="modal"
                 data-bs-target="#addPlanejamentoModal">+</button>
         </div>
 
@@ -82,6 +82,12 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <!-- Barra Outros / Não Planejados -->
+            <div class="mt-2" *ngIf="naoPlanejado > 0">
+                <app-planejamento-comp [nome]="'Outros / Não Planejado'" [planejado]="valor" [valorReal]="naoPlanejado"
+                    [cor]="'#ffc107'">
+                </app-planejamento-comp>
             </div>
         </div>
     </div>

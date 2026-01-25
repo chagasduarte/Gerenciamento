@@ -9,6 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Subcategoria } from '../../models/subcategoria.model';
 import { SubcategoriaService } from '../../services/subcategoria.service';
 import { forkJoin } from 'rxjs';
+import { SystemService } from '../../services/system.service';
 
 interface ItemRapido {
   nome: string;
@@ -45,12 +46,15 @@ export class ModalNovoPlanejamentoComponent implements OnInit {
   itensRapidos: ItemRapido[] = [];
   nomesSugestivosSaida = ['Aluguel', 'Água', 'Luz', 'Internet', 'Condomínio', 'Mercado'];
   nomesSugestivosEntrada = ['Salário', 'Renda Extra', 'Investimentos'];
+  mes = this.systemService.mes$;
+  ano = this.systemService.ano$;
 
   constructor(
     private readonly planejamentoService: PlanejamentoService,
     private readonly categoriaService: CategoriaService,
     private readonly toast: ToastrService,
-    private readonly subcategoriaService: SubcategoriaService
+    private readonly subcategoriaService: SubcategoriaService,
+    private readonly systemService: SystemService
   ) { }
 
   ngOnInit(): void {
@@ -117,7 +121,7 @@ export class ModalNovoPlanejamentoComponent implements OnInit {
         subcategoria: item.nome,
         categoriaid: item.categoriaId,
         subcategoriaid: item.subcategoriaId,
-        data: new Date()
+        data: new Date(`${this.ano}-${this.mes}-01`)
       };
 
       this.planejamentoService.criar(novoPlan).subscribe({
@@ -143,5 +147,9 @@ export class ModalNovoPlanejamentoComponent implements OnInit {
 
   trocarModo(modo: 'simples' | 'detalhado') {
     this.modo = modo;
+  }
+
+  removerItem(item: ItemRapido) {
+    this.itensRapidos = this.itensRapidos.filter(i => i !== item);
   }
 }

@@ -68,7 +68,10 @@
                 <h6 class="text-danger border-bottom pb-1">Saídas Sugeridas</h6>
                 <div class="cards-grid mb-4">
                     <div class="card-input" *ngFor="let item of itensRapidos" [hidden]="item.tipo !== 'saidas'">
-                        <label>{{ item.nome }}</label>
+                        <div class="d-flex justify-content-between">
+                            <label>{{ item.nome }}</label>
+                            <button class="btn btn-sm btn-outline-primary" (click)="removerItem(item)">Remover</button>
+                        </div>
                         <input type="number" class="form-control form-control-sm" [(ngModel)]="item.valor"
                             placeholder="R$ 0,00">
                     </div>
@@ -77,7 +80,10 @@
                 <h6 class="text-success border-bottom pb-1">Entradas Sugeridas</h6>
                 <div class="cards-grid">
                     <div class="card-input" *ngFor="let item of itensRapidos" [hidden]="item.tipo !== 'entradas'">
-                        <label>{{ item.nome }}</label>
+                        <div class="d-flex justify-content-between">
+                            <label>{{ item.nome }}</label>
+                            <button class="btn btn-sm btn-outline-primary" (click)="removerItem(item)">Remover</button>
+                        </div>
                         <input type="number" class="form-control form-control-sm" [(ngModel)]="item.valor"
                             placeholder="R$ 0,00">
                     </div>
