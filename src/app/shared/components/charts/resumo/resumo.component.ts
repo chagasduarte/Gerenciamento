@@ -71,7 +71,7 @@ export class ResumoComponent implements AfterViewInit, OnInit, OnDestroy {
 
     const chart = this.root.container.children.push(
       am5percent.PieChart.new(this.root, {
-        radius: am5.percent(100),
+        radius: am5.percent(98),
         innerRadius: 0
       })
     );
