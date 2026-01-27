@@ -1,6 +1,6 @@
 .grafico {
-  width: 260px;
-  height: 260px;
+  width: 200px;
+  height: 200px;
   background: linear-gradient(180deg, #021c2200, #02171b00);
   border-radius: 12px;
 }
