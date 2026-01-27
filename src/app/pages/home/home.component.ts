@@ -12,6 +12,7 @@ import { Usuario } from '../../shared/models/user.model';
 import { UsuarioService } from '../../shared/services/usuario.service';
 import { SideBarComponent } from "./side-bar/side-bar.component";
 import { CardsComponent } from "../../shared/components/cards/cards.component";
+import { ResumoComponent } from "../../shared/components/charts/resumo/resumo.component";
 
 @Component({
   selector: 'app-home',
@@ -22,8 +23,9 @@ import { CardsComponent } from "../../shared/components/cards/cards.component";
     RouterOutlet,
     NavBarComponent,
     SideBarComponent,
-    CardsComponent
-],
+    CardsComponent,
+    ResumoComponent
+  ],
   templateUrl: './home.component.html',
   styleUrls: [
     './home.component.css',
@@ -47,13 +49,13 @@ export class HomeComponent implements OnInit {
     public readonly systemService: SystemService,
     private readonly authService: AuthService,
     private readonly userService: UsuarioService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.ano = this.systemService.ano;
     this.authService.usuario$.subscribe(user => this.usuario = user);
     this.userService.getAvatar(this.usuario!.id).subscribe({
-      next: (success) => {this.avatarUrl = success.avatarUrl;}
+      next: (success) => { this.avatarUrl = success.avatarUrl; }
     })
   }
 
@@ -64,14 +66,14 @@ export class HomeComponent implements OnInit {
   mudaAno(ano: number) {
     if (ano < 2024) return;
 
-    const mesAtual = 
+    const mesAtual =
       ano === new Date().getUTCFullYear() ? new Date().getUTCMonth() : 0;
 
     this.systemService.setAno(new Ano(ano));
     this.systemService.setMes(new Mes(mesAtual, ano));
     this.ano = new Ano(ano);
   }
-  logout(){
+  logout() {
     this.authService.logout();
     this.router.navigate(["login"])
   }

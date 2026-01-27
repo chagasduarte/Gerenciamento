@@ -32,20 +32,20 @@ export class ResumoComponent implements AfterViewInit, OnInit, OnDestroy {
   resumoMensal$ = this.systemService.resumo$; // <-- é reativo
 
   salario!: number;
-  valorComprometido!: number;  
+  valorComprometido!: number;
   saldoAcumulado!: number;
 
   private root!: am5.Root;
   private labels: am5.Label[] = [];
-  
+
   constructor(
     private readonly systemService: SystemService
-  ){}
+  ) { }
 
   ngOnInit(): void {
-    
+
   }
-  
+
   ngAfterViewInit(): void {
     this.resumoMensal$.subscribe({
       next: (success) => {
@@ -66,13 +66,13 @@ export class ResumoComponent implements AfterViewInit, OnInit, OnDestroy {
     this.root = am5.Root.new(this.chartDiv.nativeElement);
     /* REMOVE O LOGO DO AMCHARTS */
     (this.root as any)._logo?.dispose();
-    
+
     this.root.setThemes([am5themes_Animated.new(this.root)]);
 
     const chart = this.root.container.children.push(
       am5percent.PieChart.new(this.root, {
-        layout: this.root.verticalLayout,
-        radius: am5.percent(100), // 🔥 ocupa tudo
+        radius: am5.percent(100),
+        innerRadius: 0
       })
     );
 
@@ -149,10 +149,9 @@ export class ResumoComponent implements AfterViewInit, OnInit, OnDestroy {
       forceHidden: true
     });
 
-    
-    const criarLabel = (x: number, y: number, color: number, size: number, 
-      weight: "200" | "normal" | "bold" | "bolder" | "lighter" | "100" | "300" | "400" | "500" | "600" | "700" | "800" | "900" | undefined) => 
-    {
+
+    const criarLabel = (x: number, y: number, color: number, size: number,
+      weight: "200" | "normal" | "bold" | "bolder" | "lighter" | "100" | "300" | "400" | "500" | "600" | "700" | "800" | "900" | undefined) => {
       const label = chart.children.push(
         am5.Label.new(this.root, {
           x: am5.percent(x),
@@ -169,10 +168,10 @@ export class ResumoComponent implements AfterViewInit, OnInit, OnDestroy {
     };
 
     this.labels = [];
-    
-    criarLabel(37, 25, 0xffffff, 15, "300"); // valor livre
-    criarLabel(65, 25, 0xffffff, 15, "500"); // %
-    criarLabel(50, 40, 0xffffff, 15, "300");       // saldo acumulado
+
+    criarLabel(25, 45, 0xffffff, 10, "300"); // valor livre
+    criarLabel(75, 45, 0xffffff, 10, "500"); // %
+    criarLabel(50, 70, 0xffffff, 10, "300");       // saldo acumulado
 
     this.atualizarLabels();
   }
@@ -183,12 +182,12 @@ export class ResumoComponent implements AfterViewInit, OnInit, OnDestroy {
     const salario = this.salario ?? 0;
     const valorComprometido = this.valorComprometido ?? 0;
     const saldoAcumulado = this.saldoAcumulado ?? 0;
-    
+
     const livre = salario - valorComprometido;
     const percentual = salario > 0
       ? ((valorComprometido / salario) * 100)
       : 0;
-    
+
     this.labels[0].set(
       'text',
       `R$ ${livre.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`
@@ -197,9 +196,9 @@ export class ResumoComponent implements AfterViewInit, OnInit, OnDestroy {
     this.labels[1].set(
       'text',
       `${percentual.toLocaleString('pt-BR', {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2
-        })}%`
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      })}%`
     );
 
     this.labels[2].set(
@@ -207,7 +206,7 @@ export class ResumoComponent implements AfterViewInit, OnInit, OnDestroy {
       `R$ ${saldoAcumulado.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`
     );
   }
-  
+
 
   ngOnDestroy(): void {
     if (this.root) {

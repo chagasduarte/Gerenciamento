@@ -29,7 +29,7 @@
     .cards_resumo {
         display: grid;
         grid-template-areas:
-            "saldo_atual saldo_atual"
+            "saldo_atual resumo"
             "gastos receitas";
         width: 100%;
     }
@@ -52,5 +52,10 @@
         padding: 0;
         overflow-y: auto;
         width: 100%;
+    }
+
+    .resumo {
+        display: flex;
+        justify-content: center;
     }
 }

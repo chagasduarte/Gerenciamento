@@ -101,7 +101,6 @@ export class PlanejamentoComponent implements OnInit {
           this.agrupamentoEntradas = success[2];
           this.valor = this.agrupamentoSaidas.soma.soma ?? 0;
           this.agrupamentoCategoria = agruparPorCategoria(this.agrupamentoSaidas);
-          console.log(this.agrupamentoCategoria);
           this.categorias = success[3];
           this.subcategorias = success[4];
           this.createChart(this.agrupamentoSaidas);
@@ -196,7 +195,7 @@ export class PlanejamentoComponent implements OnInit {
       );
       let array: { categoria: string; total_tipo: number; }[];
 
-      if (dados.agrupamento.length > 0) {
+      if (dados.agrupamento?.length ?? 0 > 0) {
         array = Object.values(
           dados.agrupamento.reduce((acc, item) => {
             const id = item.idcategoria;

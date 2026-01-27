@@ -1,6 +1,13 @@
 .grafico {
   width: 260px;
   height: 260px;
-  background: linear-gradient(180deg, #021c22, #02171b);
+  background: linear-gradient(180deg, #021c2200, #02171b00);
   border-radius: 12px;
+}
+
+@media screen and (max-width: 768px) {
+  .grafico {
+    width: 50%;
+    height: 110px;
+  }
 }
