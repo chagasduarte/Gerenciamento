@@ -1,0 +1,116 @@
+.grade-container {
+    background: #011418;
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 20px;
+    color: #fff;
+    border: 1px solid #0b2e36;
+}
+
+.header h4 {
+    margin-bottom: 20px;
+    font-weight: 700;
+    color: #7ac27a;
+}
+
+.table-responsive {
+    overflow-x: auto;
+    max-height: 500px;
+    overflow-y: auto;
+    border-radius: 8px;
+    background: #021c22;
+}
+
+.table-grade {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.table-grade th,
+.table-grade td {
+    padding: 10px;
+    border-bottom: 1px solid #0b2e36;
+    border-right: 1px solid #0b2e36;
+    text-align: center;
+    min-width: 40px;
+}
+
+.table-grade thead th {
+    background: #0b2e36;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.sticky-col {
+    position: sticky;
+    left: 0;
+    background: #021c22;
+    z-index: 5;
+    min-width: 150px !important;
+    text-align: left !important;
+}
+
+.category-name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+}
+
+.day-cell {
+    height: 50px;
+    padding: 5px !important;
+}
+
+.transacoes-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    justify-content: center;
+}
+
+.transacao-marker {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #355f70;
+}
+
+.transacao-marker.pago {
+    background: #7ac27a;
+}
+
+.transacao-marker.pendente {
+    background: #ef4444;
+}
+
+.chart-container {
+    margin-top: 30px;
+    height: 350px;
+}
+
+.chart {
+    height: 100%;
+    width: 100%;
+}
+
+/* Scrollbar styling */
+.table-responsive::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.table-responsive::-webkit-scrollbar-track {
+    background: #011418;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+    background: #0b2e36;
+    border-radius: 4px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb:hover {
+    background: #1f434b;
+}

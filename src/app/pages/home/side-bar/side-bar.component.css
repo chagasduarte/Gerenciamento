@@ -44,15 +44,17 @@
 .item {
   display: flex;
   align-items: center;
-  gap: 5px;
   border-radius: 12px;
   cursor: pointer;
   color: #d1e8ec;
   text-decoration: none;
+  width: 100%;
 }
+
 .item svg {
   color: #d1e8ec;
 }
+
 .item:hover {
   background: #0b2e36;
 }
@@ -60,14 +62,20 @@
 .item.active {
   background: #1f434b;
 }
+
 .item a {
-  text-align: end;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 10px 15px;
+  text-decoration: none;
 }
+
 .text {
-  height: 100%;
-  font-size: 20px;
-  text-align: end;
+  font-size: 18px;
+  line-height: 1;
 }
+
 .icon {
   font-size: 20px;
   width: 20px;
@@ -112,44 +120,46 @@
 }
 
 .data-grafico {
-    grid-area: dataGrafico;
-    display: grid;
-    grid-template-areas: 
+  grid-area: dataGrafico;
+  display: grid;
+  grid-template-areas:
     "data graficos";
-    grid-template-columns: 11rem 100px;
-    gap: 10px;
-    place-items: center;
-    width: 100%;
+  grid-template-columns: 11rem 100px;
+  gap: 10px;
+  place-items: center;
+  width: 100%;
 }
 
 .data {
-    display: grid;
-    grid-template-areas: 
+  display: grid;
+  grid-template-areas:
     "mes mes"
     "linha linha"
     "ano ano";
-    width: 170px;
-    height: 100px;
+  width: 170px;
+  height: 100px;
 }
 
 .mes {
-    grid-area: mes;
-    font-size: 30px;
+  grid-area: mes;
+  font-size: 30px;
 }
+
 .ano {
-    grid-area: ano;
-    text-align: end;
-    font-size: 30px;
+  grid-area: ano;
+  text-align: end;
+  font-size: 30px;
 }
+
 .linha {
-    grid-area: linha;
-    background-color: aliceblue;
-    width: 100%;
-    height: 1px;
-    border-radius: 15px;
+  grid-area: linha;
+  background-color: aliceblue;
+  width: 100%;
+  height: 1px;
+  border-radius: 15px;
 }
 
 
 .circle img {
-    border-radius: 50%;
+  border-radius: 50%;
 }

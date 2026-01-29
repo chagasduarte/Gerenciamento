@@ -14,28 +14,31 @@ import { TransacaoModel } from '../../../shared/models/despesa.model';
 import { ExtratoComponent } from "../../../shared/components/extrato/extrato.component";
 import { PlanejamentoComponent } from "../../../shared/components/planejamento/planejamento.component";
 import { EvolucaoComponent } from "../../../shared/components/charts/evolucao/evolucao.component";
+import { GradePagamentosComponent } from '../grade-pagamentos/grade-pagamentos.component';
 
 @Component({
   selector: 'app-dados',
+  standalone: true,
   imports: [
     CommonModule,
     FormsModule,
     ExtratoComponent,
     PlanejamentoComponent,
-    EvolucaoComponent
-],
+    EvolucaoComponent,
+    GradePagamentosComponent
+  ],
   templateUrl: './dados.component.html',
   styleUrls: ['./dados.component.css', './dados.component.mobile.css']
 })
 export class DadosComponent implements OnInit {
   ano!: Ano;
-  novasParcelas: DespesasParceladasResponse = 
-  {
-    parcelas: [],
+  novasParcelas: DespesasParceladasResponse =
+    {
+      parcelas: [],
       mensal: {
         pendente: 0
       }
-  } as DespesasParceladasResponse;
+    } as DespesasParceladasResponse;
 
   resumoMensal$ = this.systemService.resumo$; // <-- é reativo
   novoAgrupamento!: AgrupamentoResponse;
@@ -65,17 +68,17 @@ export class DadosComponent implements OnInit {
     private readonly toastService: ToastrService,
     private readonly router: Router,
     public readonly systemService: SystemService,
-  ){
+  ) {
     this.ano = new Ano(this.systemService.ano.valor);
   }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
     this.preencheInformacoes();
   }
-  
-  preencheInformacoes(){
-    
-   combineLatest([
+
+  preencheInformacoes() {
+
+    combineLatest([
       this.systemService.ano$,
       this.systemService.mes$
     ]).subscribe(([ano, mes]) => {
@@ -90,7 +93,7 @@ export class DadosComponent implements OnInit {
           this.novoAgrupamento = success[1];
         },
         error: (err: any) => {
-          
+
         }
       });
     });
@@ -127,7 +130,7 @@ export class DadosComponent implements OnInit {
     }
     this.fecharModal();
   }
-  
+
   fecharModal() {
     const modal = document.getElementById('addTransacaoModal');
     if (modal) {
@@ -145,7 +148,7 @@ export class DadosComponent implements OnInit {
   }
 
   parcelas(descricao: string) {
-    this.router.navigate(["parcelas"], { queryParams: {descricao: descricao}})
+    this.router.navigate(["parcelas"], { queryParams: { descricao: descricao } })
   }
 
   gastos() {
@@ -168,15 +171,15 @@ export class DadosComponent implements OnInit {
   }
 
   defineImagem(tipoDespesa: number): string {
-   
-    switch(tipoDespesa) {
+
+    switch (tipoDespesa) {
       case 1:
         return "/assets/img/food-wine-cheese-bread-national-culture-paris.svg";
       case 2:
         return "/assets/img/sport-utility-vehicle.svg";
-      case 3: 
+      case 3:
         return "/assets/img/health.svg";
-      case 4: 
+      case 4:
         return "/assets/img/books.svg";
       case 5:
         return "/assets/img/beach.svg";
@@ -184,22 +187,22 @@ export class DadosComponent implements OnInit {
         return "/assets/img/house-with-garden.svg";
       case 7:
         return "/assets/img/customer-service.svg";
-      case 8: 
+      case 8:
         return "/assets/img/tools-chainsaw.svg";
-      case 9: 
+      case 9:
         return "/assets/img/revenue.svg";
     }
     return "";
   }
-    
+
   defineCorFeed(status: number): string {
     switch (status) {
-      case 0: 
+      case 0:
         return "rgb(78, 151, 151)";
-      case 1: 
+      case 1:
         return "#49865b";
-      case 3: 
-         return "#af6e6e";
+      case 3:
+        return "#af6e6e";
     }
     return "";
   }
@@ -207,9 +210,9 @@ export class DadosComponent implements OnInit {
   DefinirCor(valor: number): any {
     return DefineCor(valor)
   }
-  dashboard(){
+  dashboard() {
     this.router.navigate(['dash'])
   }
-  
+
 }
 

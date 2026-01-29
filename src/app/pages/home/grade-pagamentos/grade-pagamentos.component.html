@@ -1,0 +1,34 @@
+<div class="grade-container d-none d-lg-block sombra">
+    <div class="header">
+        <h4>Fluxo Mensal de Pagamentos</h4>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table-grade">
+            <thead>
+                <tr>
+                    <th class="sticky-col">Categorias</th>
+                    <th *ngFor="let dia of diasExibidos">{{ dia }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let cat of categoriasExibidas">
+                    <td class="sticky-col category-name">
+                        {{ cat.nome }}
+                    </td>
+                    <td *ngFor="let dia of diasExibidos" class="day-cell">
+                        <div class="transacoes-container">
+                            <div *ngFor="let t of getTransacoes(cat.id, dia)" class="transacao-marker"
+                                [ngClass]="t.status" [title]="t.descricao + ': ' + (t.valor | currency)">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="chart-container">
+        <div echarts [options]="chartOption" class="chart"></div>
+    </div>
+</div>

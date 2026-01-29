@@ -38,8 +38,8 @@
 <aside class="sidebar sombra" [class.collapsed]="collapsed" *ngIf="resumoMensal$ | async as resumo">
     <div class="top">
         <div class="logo d-flex gap-2">
-            <span *ngIf="!collapsed">FIDELIS</span>
             <img src="assets/img/fidelis.png" alt="" width="15" height="55">
+            <span *ngIf="!collapsed">FIDELIS</span>
         </div>
         <button class="toggle" (click)="toggle()">
             <span *ngIf="!collapsed">◄</span>
@@ -52,7 +52,7 @@
         <app-resumo *ngIf="!collapsed" [fontSize]=16></app-resumo>
 
         <li class="item">
-            <a href="home" class="nav-link text-whit">
+            <a href="home" class="nav-link text-white">
                 <svg class="bi pe-none me-2" width="20" height="20">
                     <use xlink:href="#home" />
                 </svg>
