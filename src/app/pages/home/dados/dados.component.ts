@@ -53,7 +53,8 @@ export class DadosComponent implements OnInit {
     tipo: 'saida',
     ispaycart: false,
     valor: 0,
-    cartaoid: null
+    cartaoid: null,
+    pagamento: new Date()
   };
   dataCompra: string = '';
   isCartao: boolean = false;

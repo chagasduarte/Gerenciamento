@@ -34,6 +34,7 @@
     border-right: 1px solid #0b2e36;
     text-align: center;
     min-width: 40px;
+    min-height: 40px;
 }
 
 .table-grade thead th {
@@ -64,6 +65,14 @@
     padding: 5px !important;
 }
 
+.sum-cell {
+    font-size: 11px;
+    font-weight: bold;
+    color: #7ac27a;
+    padding: 4px !important;
+    background: rgba(122, 194, 122, 0.05);
+}
+
 .transacoes-container {
     display: flex;
     flex-wrap: wrap;
@@ -86,13 +95,21 @@
     background: #ef4444;
 }
 
+.transacoes-stack {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
 .chart-container {
     margin-top: 30px;
     height: 350px;
 }
 
 .chart {
-    height: 100%;
+    height: 350px;
     width: 100%;
 }
 

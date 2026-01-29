@@ -1,27 +1,27 @@
 <div class="grade-container d-none d-lg-block sombra">
     <div class="header">
-        <h4>Fluxo Mensal de Pagamentos</h4>
+        <h4>Fluxo Mensal de Pagamentos | {{ totalDespesas | currency: 'BRL' }}</h4>
     </div>
 
     <div class="table-responsive">
         <table class="table-grade">
             <thead>
                 <tr>
-                    <th class="sticky-col">Categorias</th>
-                    <th *ngFor="let dia of diasExibidos">{{ dia }}</th>
+                    <th *ngFor="let dia of diasExibidos" class="day-header">{{ dia }}</th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let cat of categoriasExibidas">
-                    <td class="sticky-col category-name">
-                        {{ cat.nome }}
-                    </td>
+                <tr>
                     <td *ngFor="let dia of diasExibidos" class="day-cell">
-                        <div class="transacoes-container">
-                            <div *ngFor="let t of getTransacoes(cat.id, dia)" class="transacao-marker"
-                                [ngClass]="t.status" [title]="t.descricao + ': ' + (t.valor | currency)">
+                        <div class="transacoes-stack">
+                            <div *ngFor="let t of getTransacoesDoDia(dia)" class="transacao-marker" [ngClass]="t.status"
+                                [title]="t.descricao.replace(' - Parcela', '') + ': ' + (t.valor | currency: 'BRL': 'symbol': '1.2-2')">
                             </div>
                         </div>
+                    </td>
+                <tr>
+                    <td *ngFor="let dia of diasExibidos" class="sum-cell">
+                        {{ getSomaDoDia(dia) | currency: 'BRL' }}
                     </td>
                 </tr>
             </tbody>
@@ -29,6 +29,6 @@
     </div>
 
     <div class="chart-container">
-        <div echarts [options]="chartOption" class="chart"></div>
+        <div #chartDiv class="chart"></div>
     </div>
 </div>

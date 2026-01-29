@@ -1,5 +1,3 @@
-import { StringDecoder } from "string_decoder"
-
 export interface TransacaoModel {
     id: number
     descricao: string
@@ -11,6 +9,7 @@ export interface TransacaoModel {
     criado_em: Date
     ispaycart: boolean;
     cartaoid: number | null;
+    pagamento?: Date;
     adicionada?: boolean;
     selecionado?: boolean;
 }

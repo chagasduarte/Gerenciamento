@@ -24,7 +24,7 @@ import { CartaoService } from '../../services/cartao.service';
   templateUrl: './modal-nova-transacao.component.html',
   styleUrl: './modal-nova-transacao.component.css'
 })
-export class ModalNovaTransacaoComponent implements OnInit{
+export class ModalNovaTransacaoComponent implements OnInit {
   isParcelado: boolean = false;
   novaDespesa: TransacaoModel = {
     categoria: 0,
@@ -37,7 +37,8 @@ export class ModalNovaTransacaoComponent implements OnInit{
     ispaycart: false,
     valor: 0,
     cartaoid: null,
-    selecionado: false
+    selecionado: false,
+    pagamento: new Date()
   };
   dataCompra: string = '';
   isCartao: boolean = false;
@@ -45,15 +46,15 @@ export class ModalNovaTransacaoComponent implements OnInit{
     QtdParcelas: null,
     Valor: null
   };
-  novasParcelas: DespesasParceladasResponse = 
-  {
-    parcelas: [],
+  novasParcelas: DespesasParceladasResponse =
+    {
+      parcelas: [],
       mensal: {
         pendente: 0
       }
-  } as DespesasParceladasResponse;
+    } as DespesasParceladasResponse;
   novoAgrupamento!: AgrupamentoResponse;
-  categorias!: Categoria[]; 
+  categorias!: Categoria[];
   subcategorias!: Subcategoria[];
   categoriaId!: number;
   cardId: number = 0;
@@ -67,7 +68,7 @@ export class ModalNovaTransacaoComponent implements OnInit{
     private readonly categoriaService: CategoriaService,
     private readonly subcategoriaService: SubcategoriaService,
     private readonly cartoesService: CartaoService
-  ){}
+  ) { }
 
   ngOnInit(): void {
     this.categoriaService.listar().subscribe({
@@ -85,7 +86,7 @@ export class ModalNovaTransacaoComponent implements OnInit{
         ispaycart: this.isCartao,
         parcelado: this.isParcelado,
         parcelas: this.isParcelado ? this.requestParcela : null,
-        cartaoid: this.cardId > 0? this.cardId : null
+        cartaoid: this.cardId > 0 ? this.cardId : null
       };
       this.despesaService.PostTrasacoesParceladas(payload).subscribe({
         next: (success: TransacaoModel[]) => {
@@ -103,7 +104,7 @@ export class ModalNovaTransacaoComponent implements OnInit{
     else {
       this.novaDespesa.data = new Date(this.dataCompra);
       this.novaDespesa.ispaycart = this.isCartao;
-      this.novaDespesa.cartaoid = this.cardId > 0? this.cardId : null;
+      this.novaDespesa.cartaoid = this.cardId > 0 ? this.cardId : null;
       this.despesaService.PostTransacao(this.novaDespesa).subscribe(x => {
         this.preencheInformacoes();
         this.toastService.success("Despesa Gravada");
@@ -112,7 +113,7 @@ export class ModalNovaTransacaoComponent implements OnInit{
     }
     this.fecharModal();
   }
-  listaCartoes(){
+  listaCartoes() {
     this.cartoesService.listar().subscribe({
       next: (success) => {
         this.cartao = success;
@@ -131,9 +132,9 @@ export class ModalNovaTransacaoComponent implements OnInit{
       document.body.classList.remove('modal-open');
     }
   }
-  
-  preencheInformacoes(){
-      
+
+  preencheInformacoes() {
+
     combineLatest([
       this.systemService.ano$,
       this.systemService.mes$
@@ -148,7 +149,7 @@ export class ModalNovaTransacaoComponent implements OnInit{
           this.novoAgrupamento = success[1];
         },
         error: (err: any) => {
-            
+
         }
       });
     });
