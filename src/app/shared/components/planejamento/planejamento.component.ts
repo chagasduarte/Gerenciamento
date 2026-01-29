@@ -216,7 +216,12 @@ export class PlanejamentoComponent implements OnInit {
       // Data
       series.data.setAll(array!);
       series.labels.template.setAll({
-        fontSize: '12px'
+        fontSize: '12px',
+        fill: am5.color(0xffffff)
+      });
+
+      series.ticks.template.setAll({
+        stroke: am5.color(0xffffff)
       });
       // Animation
       series.appear(1000, 100);

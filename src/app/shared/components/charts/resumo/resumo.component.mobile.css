@@ -1,0 +1,7 @@
+@media screen and (max-width: 768px) {
+    .grafico {
+        width: 100% !important;
+        /* Adjusted for full width on mobile */
+        height: 140px;
+    }
+}

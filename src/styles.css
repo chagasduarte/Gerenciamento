@@ -1,15 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 body {
-    background-color: #2e3341;
-    font-family: Public Sans, sans-serif;
-    color: aliceblue;
-    height: 100vh;
+  background-color: #011418;
+  font-family: 'Inter', 'Public Sans', sans-serif;
+  color: #d1e8ec;
+  height: 100vh;
+  margin: 0;
 }
 
-.linha{
-  background-color: aliceblue;
-  width: 1fr;
-  height: 2px;
+.linha {
+  background-color: #0b2e36;
+  width: 100%;
+  height: 1px;
   margin-top: 5px;
   margin-bottom: 10px;
 }
@@ -25,134 +26,85 @@ img {
 }
 
 .bg-verde-pastel {
-  background-color: #49865b;
+  background-color: #7ac27a;
 }
 
 .bg-azul-pastel {
-  background-color: rgb(78, 156, 156);
+  background-color: #4cc9f0;
 }
 
 .bg-laranja-pastel {
   background-color: #e0a16e;
 }
 
-.bg-vermelho-pastel{
-  background-color: #af6e6e;
+.bg-vermelho-pastel {
+  background-color: #ef4444;
 }
 
 .bg-login {
-  background-color: #4D5C82;
+  background-color: #011418;
 }
+
 .circle {
   border-radius: 50px;
   width: 50px;
   height: 50px;
-  background-color: #2aecc950;
+  background-color: rgba(42, 236, 201, 0.1);
   margin: 8px;
   grid-area: circle;
 }
 
-.botoes{
-  display: grid;
-  grid-template-columns: 50% 50%;
-}
-.parcela {
-  display: grid;
-  grid-template-areas: 
-  "header"
-  "body";
-  grid-template-rows: 30px 70px;
-  border-radius: 5%;
-  gap: 5px;
-  padding: 5px;
-  width: 175px;
-  height: 100px;
-}
-.card-parcelas {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
-  place-items: center;
-  gap: 10px;
-}
-
-.agrupamento {
-  display: grid;
-  overflow-x: auto; /* Permite rolar horizontalmente */
-  height: 100px;
-  width: 100%;
-  & .pagas {
-    display: grid;
-    grid-template-columns: repeat(8, 70px);
-    overflow-x: auto; /* Permite rolar horizontalmente */
-    height: 100px;
-
-    & .paga {
-      display: grid;
-      place-items: center;
-      background-color: #2d8b7a;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      margin: 10px; /* Margem opcional para espaçamento */
-    }
-  }
-  
-}
-
 .sombra {
-  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5); /* x-offset, y-offset, blur-radius, color */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
-
-html::-webkit-scrollbar {
-  width: 10px;
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
 }
 
-html::-webkit-scrollbar-thumb {
-border-radius: 50px;
-background: #6e6ece;
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background: #0b2e36;
 }
 
-html::-webkit-scrollbar-track {
-background: #ededed;
-} 
-
-
-html::-webkit-scrollbar {
-  width: 10px;
+::-webkit-scrollbar-thumb:hover {
+  background: #1f434b;
 }
 
-html::-webkit-scrollbar-thumb {
-border-radius: 50px;
-background: #6e6ece;
+::-webkit-scrollbar-track {
+  background: #011418;
 }
-
-html::-webkit-scrollbar-track {
-background: #ededed;
-} 
 
 .usuario {
-  background-color: #4d7e75;
+  background-color: #0b2e36;
 }
 
 .fab {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  width: 60px;
-  height: 60px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
-  background-color: #6200ea;
-  color: white;
+  background-color: #7ac27a;
+  color: #011418;
   font-size: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
   border: none;
   cursor: pointer;
   z-index: 1000;
+  transition: transform 0.2s;
 }
+
+.fab:hover {
+  transform: scale(1.1);
+}
+
 .painel-selecionadas {
   position: fixed;
   bottom: 90px;
@@ -162,5 +114,8 @@ background: #ededed;
   padding: 16px;
   overflow-y: auto;
   z-index: 1001;
-  border-radius: 8px;
+  border-radius: 12px;
+  background: #021c22;
+  border: 1px solid #0b2e36;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
 }

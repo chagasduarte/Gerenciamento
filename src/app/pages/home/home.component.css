@@ -4,108 +4,63 @@
         'side bar'
         'side info';
     grid-template-columns: auto 1fr;
-    grid-template-rows: 70px 1fr;
+    grid-template-rows: auto 1fr;
     height: 100vh;
+    background-color: #011418;
+    color: #d1e8ec;
 }
 
 .side-bar {
     grid-area: side;
-    border-radius: 15px;
-    height: 99vh;
+    z-index: 10;
 }
 
 .infos {
-    display: grid;
-    gap: 5px;
-    width: 1fr;
-    margin: 5px;
-    border-radius: 15px;
-    padding: 15px;
-}
-
-
-.data-grafico {
-    grid-area: dataGrafico;
-    display: grid;
-    grid-template-areas:
-        "data graficos";
-    grid-template-columns: 11rem 100px;
-    gap: 10px;
-    place-items: center;
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    overflow-y: auto;
 }
 
 .data {
-    display: grid;
-    grid-template-areas:
-        "mes mes"
-        "linha linha"
-        "ano ano";
-    height: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 20px;
 }
 
-.anos-rodape {
-    display: none;
-}
-
-.mes {
-    grid-area: mes;
-    font-size: 40px;
-}
-
-.ano {
-    grid-area: ano;
-    text-align: end;
-    font-size: 30px;
+.data .d-flex {
+    color: #7ac27a;
+    font-weight: 800 !important;
 }
 
 .linha {
-    grid-area: linha;
-    background-color: aliceblue;
-    width: 100%;
     height: 1px;
-    border-radius: 15px;
+    background: #0b2e36;
+    width: 100%;
+    margin: 10px 0;
 }
 
 main {
     width: 100%;
     height: 100%;
-    background-color: #333f5f;
-    font-size: 24px;
-    border-radius: 15px;
-}
-
-svg {
-    width: 25px;
-    height: 25px;
-}
-
-
-.up-hover {
-    transition: transform 0.3s;
-}
-
-.up-hover:hover {
-    transform: scale(1.05);
-    cursor: pointer;
-}
-
-#accordionExample {
-    display: none;
+    background-color: transparent;
+    color: #d1e8ec;
 }
 
 .router-outlet {
     display: flex;
     flex-direction: column;
-    padding: 2rem;
+    padding: 1.5rem;
     overflow-y: auto;
 }
 
 .cards_resumo {
-    display: flex;
-    gap: 5px;
-    margin-bottom: 5px;
-    margin-top: 3px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
 }
 
 .resumo {

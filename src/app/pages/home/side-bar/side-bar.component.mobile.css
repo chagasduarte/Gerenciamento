@@ -1,63 +1,65 @@
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 768px) {
+    .sidebar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: auto !important;
+        flex-direction: row !important;
+        background: #011418 !important;
+        border-top: 1px solid #0b2e36;
+        z-index: 1000;
+        padding-bottom: env(safe-area-inset-bottom);
+        transition: none !important;
+    }
 
     .top,
     app-resumo,
     app-anos,
-    .footer {
-        display: none;
-    }
-
-    .nav {
-        display: flex;
+    .footer,
+    .toggle {
+        display: none !important;
     }
 
     .menu {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        /* Distribute evenly */
-        width: 100%;
-        padding: 0 10px;
-        /* Add some small side padding to container */
-        gap: 0;
-        /* Remove gap, handle spacing via justify-content */
-        margin: 0;
-    }
-
-    .sidebar {
-        width: 100%;
-        height: auto;
-        background-color: rgba(236, 236, 236, 0);
-        background: #0f766e;
+        flex-direction: row !important;
+        justify-content: space-around !important;
+        width: 100% !important;
+        padding: 5px 0 !important;
+        margin: 0 !important;
+        display: flex !important;
     }
 
     .item {
         flex: 1;
+        justify-content: center;
+        background: transparent !important;
+        display: flex;
+        align-items: center;
     }
 
     .item a {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+        display: flex !important;
+        flex-direction: column !important;
+        padding: 8px 0 !important;
+        gap: 4px !important;
         align-items: center;
-        text-align: center;
-        gap: 2px;
-        padding: 8px 4px;
-        /* Reduced padding */
+        justify-content: center;
         width: 100%;
+        text-align: center;
     }
 
     .item svg {
-        width: 20px;
-        height: 20px;
-        justify-content: center;
+        width: 20px !important;
+        height: 20px !important;
+        margin: 0 !important;
     }
 
-    .item a span {
-        font-size: 9px;
-        /* Slightly smaller font */
-        text-align: center;
+    .text {
+        font-size: 10px !important;
+        display: block !important;
+        /* Force display on mobile */
         white-space: nowrap;
-        /* Prevent text wrap */
+        color: #d1e8ec;
     }
 }

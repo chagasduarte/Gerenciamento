@@ -1,9 +1,14 @@
 .card {
-  background: #ffffff;
+  background: #021c22;
   border-radius: 14px;
   padding: 16px 20px;
   width: 100%;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  border: 1px solid #0b2e36;
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
 }
 
 /* Ícone + título lado a lado */
@@ -15,7 +20,8 @@
 
 .titulo {
   font-size: 18px;
-  color: #6b7280;
+  color: #d1e8ec;
+  font-weight: 500;
 }
 
 /* Valor embaixo */
@@ -25,7 +31,7 @@
   margin-top: 8px;
   font-size: 24px;
   font-weight: bold;
-  color: #111827;
+  color: #fff;
   margin-right: 20px;
 }
 
@@ -42,14 +48,20 @@
 
 /* Entrada */
 .icone.entrada {
-  background-color: #e6f4ea;
-  color: #2e7d32;
+  background-color: rgba(122, 194, 122, 0.15);
+  color: #7ac27a;
 }
 
 /* Saída */
 .icone.saida {
-  background-color: #fdecea;
-  color: #c62828;
+  background-color: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+}
+
+/* Saldo */
+.icone.saldo {
+  background-color: rgba(76, 201, 240, 0.15);
+  color: #4cc9f0;
 }
 
 .width100 {
@@ -57,5 +69,8 @@
 }
 
 .total {
-  font-size: 14px;
+  font-size: 12px;
+  color: #64748b;
+  margin-left: 8px;
+  font-weight: normal;
 }

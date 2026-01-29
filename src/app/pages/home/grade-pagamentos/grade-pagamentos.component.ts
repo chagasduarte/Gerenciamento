@@ -16,7 +16,10 @@ import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './grade-pagamentos.component.html',
-  styleUrl: './grade-pagamentos.component.css'
+  styleUrls: [
+    './grade-pagamentos.component.css',
+    './grade-pagamentos.component.mobile.css'
+  ]
 })
 export class GradePagamentosComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('chartDiv') chartDiv!: ElementRef<HTMLDivElement>;
@@ -128,12 +131,15 @@ export class GradePagamentosComponent implements OnInit, OnDestroy, AfterViewIni
 
       acumuladoDiario += (somaEntradas - somaSaidas);
 
-      chartData.push({
-        dia: dia.toString(),
-        saldo: parseFloat(acumuladoDiario.toFixed(2)),
-        pagamentos: parseFloat(somaSaidas.toFixed(2)),
-        receitas: parseFloat(somaEntradas.toFixed(2))
-      });
+      // Apenas adiciona ao gráfico se houver alguma movimentação no dia
+      if (somaSaidas > 0 || somaEntradas > 0) {
+        chartData.push({
+          dia: dia.toString(),
+          saldo: parseFloat(acumuladoDiario.toFixed(2)),
+          pagamentos: parseFloat(somaSaidas.toFixed(2)),
+          receitas: parseFloat(somaEntradas.toFixed(2))
+        });
+      }
     });
 
     // Usar setTimeout para garantir que o Angular terminou de renderizar o container
@@ -160,7 +166,7 @@ export class GradePagamentosComponent implements OnInit, OnDestroy, AfterViewIni
       );
 
       // Cores para o tema escuro
-      const textColor = am5.color(0xd1e8ec);
+      const textColor = am5.color(0xffffff);
       const gridColor = am5.color(0x0b2e36);
       const incomeColor = am5.color(0x4cc9f0);
       const expenseColor = am5.color(0xef4444);

@@ -24,15 +24,4 @@
     </div>
     <router-outlet></router-outlet>
   </div>
-
-  <nav class="anos-rodape">
-    <div class="meses-rodape">
-      <div class="d-grid gap-2 d-md-flex" *ngFor="let ano of anosDeDivida">
-        <button style="margin: 5px;
-                   border-radius: 10px;
-                   border: none;" (click)="mudaAno(ano)">{{ano}}
-        </button>
-      </div>
-    </div>
-  </nav>
 </div>

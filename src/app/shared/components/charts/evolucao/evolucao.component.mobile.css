@@ -1,15 +1,39 @@
-@media screen  and (max-width: 400px) {
+@media screen and (max-width: 800px) {
     .chart-card {
-        padding: unset;
+        padding: 15px;
+    }
+
+    .header {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .chart-card {
+        padding: 12px;
         width: 100%;
+        border-radius: 12px;
     }
 
     .chart-container {
-        width: 100%;
-        min-width: 600px;
-        min-height: 300px;
+        width: 100% !important;
+        min-width: unset !important;
+        height: 280px !important;
     }
-    .grafico {
-        overflow: auto;
+
+    .chart {
+        height: 280px !important;
+    }
+
+    .header h3 {
+        font-size: 16px;
+    }
+
+    .controls {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
     }
 }

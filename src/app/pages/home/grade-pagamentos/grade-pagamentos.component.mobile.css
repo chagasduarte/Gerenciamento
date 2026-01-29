@@ -1,0 +1,49 @@
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+    .grade-container {
+        padding: 12px;
+        margin-top: 15px;
+        border-radius: 12px;
+    }
+
+    .header h4 {
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+
+    .table-grade {
+        font-size: 12px;
+    }
+
+    .table-grade th,
+    .table-grade td {
+        padding: 6px;
+        min-width: 35px;
+    }
+
+    .sum-cell {
+        font-size: 9px;
+    }
+
+    .chart-container {
+        margin-top: 20px;
+        height: 300px;
+    }
+
+    .chart {
+        height: 300px;
+    }
+}
+
+/* Specific adjustment for very small screens */
+@media (max-width: 480px) {
+
+    .table-grade th,
+    .table-grade td {
+        min-width: 30px;
+    }
+
+    .header h4 {
+        font-size: 14px;
+    }
+}

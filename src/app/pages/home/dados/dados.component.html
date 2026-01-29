@@ -3,34 +3,9 @@
   <div id="info-1" name="info-1" class="info-1">
 
     <div class="grafico-card">
-
-      <div class="d-flex gap-1 coluna-mobile">
-        <app-planejamento class="planejamento"></app-planejamento>
-        <app-evolucao [intervalo]="5" class="evolucao"></app-evolucao>
-      </div>
-      <app-extrato [limit]="5" class="extrato"></app-extrato>
+      <app-planejamento></app-planejamento>
       <app-grade-pagamentos></app-grade-pagamentos>
-      <div class="grafico sombra up-hover" hidden>
-        <div class="grafico-header">
-          <h5>Despesas Parcelas: {{novasParcelas.mensal.pendente | currency}}</h5>
-          <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addTransacaoModal">add</button>
-        </div>
-        <div class="grafico-body" (click)="previstos()">
-          <div class="porcentagem-despesa" *ngFor="let despesa of novasParcelas.parcelas">
-            <div class="barra-progressao up-hover" (click)="parcelas(despesa.descricao)">
-              <div class="progressao-barra" [ngStyle]="{
-                       'width': ( despesa.total_pago * 100)/ despesa.total_parcelado + 'px',
-                       'background-color': despesa.status == 'pago' ? '#7ac27a' : '#355f70;'
-                      }">
-                {{despesa.descricao.replace(' - Parcela','')}}
-              </div>
-            </div>
-            <div class="dados-parcelas">
-              <b>{{despesa.qtd_parcelas_pagas}} de {{despesa.qtd_parcelas}}</b>
-            </div>
-          </div>
-        </div>
-      </div>
+
     </div>
   </div>
 </div>

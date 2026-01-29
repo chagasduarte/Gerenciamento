@@ -12,6 +12,10 @@
   width: 80px;
 }
 
+.sidebar.collapsed .text {
+  display: none;
+}
+
 /* Top */
 .top {
   display: flex;

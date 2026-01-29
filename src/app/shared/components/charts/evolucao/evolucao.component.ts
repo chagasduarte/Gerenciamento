@@ -123,18 +123,35 @@ export class EvolucaoComponent implements AfterViewInit, OnInit, OnDestroy {
       am5xy.CategoryAxis.new(this.root, {
         categoryField: 'coluna',
         renderer: am5xy.AxisRendererX.new(this.root, {
-          minGridDistance: 30
+          minGridDistance: 30,
+          strokeOpacity: 0.1,
+          stroke: am5.color(0x0b2e36)
         })
       })
     );
+    xAxis.get("renderer").labels.template.setAll({
+      fill: am5.color(0xffffff),
+      fontSize: 10
+    });
     xAxis.data.setAll(this.dados);
 
     // 4️⃣ Eixo Y (VALORES)
     const yAxis = chart.yAxes.push(
       am5xy.ValueAxis.new(this.root, {
-        renderer: am5xy.AxisRendererY.new(this.root, { strokeOpacity: 0.1 })
+        renderer: am5xy.AxisRendererY.new(this.root, {
+          strokeOpacity: 0.1,
+          stroke: am5.color(0x0b2e36)
+        })
       })
     );
+    yAxis.get("renderer").labels.template.setAll({
+      fill: am5.color(0xffffff),
+      fontSize: 10
+    });
+    yAxis.get("renderer").grid.template.setAll({
+      stroke: am5.color(0x0b2e36),
+      strokeOpacity: 1
+    });
 
     if (this.tipo == 'entradas_saidas' || this.tipo == 'todos') {
       // 5️⃣ Série ENTRADAS
@@ -161,7 +178,7 @@ export class EvolucaoComponent implements AfterViewInit, OnInit, OnDestroy {
             centerX: am5.p50,
             dy: -5,
             fontSize: 10,
-            fill: am5.color(0x000000)
+            fill: am5.color(0xffffff)
           })
         });
       });
@@ -197,7 +214,7 @@ export class EvolucaoComponent implements AfterViewInit, OnInit, OnDestroy {
             centerX: am5.p50,
             dy: -5,
             fontSize: 10,
-            fill: am5.color(0x000000)
+            fill: am5.color(0xffffff)
           })
         });
       });
@@ -237,7 +254,7 @@ export class EvolucaoComponent implements AfterViewInit, OnInit, OnDestroy {
             dy: -10,
             fontSize: 10,
             fontWeight: "400",
-            fill: am5.color(0x000000),
+            fill: am5.color(0xffffff),
 
           })
         });
@@ -282,7 +299,7 @@ export class EvolucaoComponent implements AfterViewInit, OnInit, OnDestroy {
             dy: -10,
             fontSize: 10,
             fontWeight: "400",
-            fill: am5.color(0x454545),
+            fill: am5.color(0x4cc9f0),
           })
         });
       });
@@ -295,7 +312,7 @@ export class EvolucaoComponent implements AfterViewInit, OnInit, OnDestroy {
         return am5.Bullet.new(this.root, {
           sprite: am5.Circle.new(this.root, {
             radius: 6,
-            fill: am5.color(0x454545),
+            fill: am5.color(0x4cc9f0),
             stroke: this.root.interfaceColors.get("background"),
             strokeWidth: 2
           })
@@ -309,6 +326,11 @@ export class EvolucaoComponent implements AfterViewInit, OnInit, OnDestroy {
         x: am5.p50
       })
     );
+
+    legend.labels.template.setAll({
+      fill: am5.color(0xffffff),
+      fontSize: 12
+    });
 
     legend.data.setAll(chart.series.values);
 

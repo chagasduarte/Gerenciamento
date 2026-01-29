@@ -1,8 +1,9 @@
 .transactions-card {
-  background: #fff;
+  background: #021c22;
   border-radius: 18px;
   width: 100%;
   padding: 25px;
+  border: 1px solid #0b2e36;
 }
 
 /* Header */
@@ -10,6 +11,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
 }
 
 .select-cartoes {
@@ -19,34 +22,44 @@
 
 .header h3 {
   margin: 0;
-  color: #0f766e;
+  color: #7ac27a;
+  font-size: 1.25rem;
 }
 
 .actions {
   display: flex;
-  gap: 12px;
+  gap: 8px;
 }
 
 .btn-outline {
-  border: 1px solid #0f172a;
-  background: transparent;
+  border: 1px solid #0b2e36;
+  background: #011418;
+  color: #d1e8ec;
   border-radius: 12px;
-  padding: 10px 16px;
+  padding: 8px 12px;
   font-weight: 500;
   display: flex;
   align-items: center;
   gap: 6px;
+  transition: all 0.2s;
+  font-size: 13px;
+}
+
+.btn-outline:hover {
+  background: #0b2e36;
+  color: #fff;
 }
 
 /* Table Header */
 .table-header {
   display: grid;
-  grid-template-columns: 40px 2fr 2fr 1fr 1.5fr 1fr 1fr;
+  grid-template-columns: 30px 1fr 2fr 1fr 1fr 80px 80px;
   padding: 14px 0;
   margin-top: 20px;
-  color: #94a3b8;
-  font-size: 14px;
-  border-bottom: 1px solid #e5e7eb;
+  color: #64748b;
+  font-size: 13px;
+  border-bottom: 1px solid #0b2e36;
+  align-items: center;
 }
 
 .sortable::after {
@@ -57,35 +70,48 @@
 
 /* Date label */
 .date-label {
-  margin: 24px 0 12px;
+  margin: 20px 0 10px;
   font-weight: 600;
-  color: #131f1e;
+  color: #7ac27a;
+  font-size: 13px;
 }
 
 /* Row */
 .row-item {
   display: grid;
-  grid-template-columns: 40px 2fr 2fr 1fr 1.5fr 1fr 1fr;
+  grid-template-columns: 30px 1fr 2fr 1fr 1fr 80px 80px;
   align-items: center;
-  padding: 14px 0;
-  border-bottom: 1px solid #f1f5f9;
+  padding: 12px 0;
+  border-bottom: 1px solid #0b2e36;
+  transition: background 0.2s;
+  font-size: 13px;
+}
+
+.row-item:hover {
+  background: rgba(11, 46, 54, 0.3);
 }
 
 .transaction {
   display: flex;
-  gap: 12px;
+  gap: 10px;
   align-items: center;
 }
 
 .transaction .icon {
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
-  background: #0f766e;
+  background: #0b2e36;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: #7ac27a;
+  border: 1px solid rgba(122, 194, 122, 0.2);
+}
+
+.transaction .icon img {
+  width: 20px !important;
+  height: 20px !important;
 }
 
 .transaction small {
@@ -95,48 +121,51 @@
 
 /* Type */
 .type span {
-  color: #0284c7;
+  color: #4cc9f0;
   font-weight: 500;
 }
 
 .type span.pix {
-  color: #0f766e;
+  color: #7ac27a;
 }
 
 /* Value */
 .value {
   text-align: right;
   font-weight: 600;
-  color: #0f766e;
+  color: #d1e8ec;
 }
 
 /* Actions */
 .row-actions {
   display: flex;
   justify-content: center;
-  gap: 14px;
+  gap: 12px;
   color: #64748b;
+  font-size: 16px;
 }
 
 .row-actions i {
   cursor: pointer;
+  transition: color 0.2s;
 }
 
 .row-actions i:hover {
-  color: #0f172a;
+  color: #ef4444;
 }
 
 .description,
 .origin {
-  color: #2f3c5b;
+  color: #d1e8ec;
+  word-break: break-word;
 }
 
 .entrada {
-  color: #0f766e;
+  color: #7ac27a;
 }
 
 .saida {
-  color: rgb(0, 0, 0);
+  color: #ef4444;
 }
 
 .header-filter {
@@ -147,15 +176,11 @@
 
 .header-filter input,
 .header-filter select {
-  font-size: 12px;
-  padding: 4px 8px;
+  font-size: 11px;
+  padding: 3px 6px;
   border-radius: 6px;
-  border: 1px solid #e2e8f0;
-}
-
-.header-filter input:focus,
-.header-filter select:focus {
-  outline: none;
-  border-color: #0f766e;
-  box-shadow: 0 0 0 2px rgba(15, 118, 110, 0.1);
+  border: 1px solid #0b2e36;
+  background: #011418;
+  color: #d1e8ec;
+  width: 100%;
 }

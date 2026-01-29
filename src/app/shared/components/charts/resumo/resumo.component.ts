@@ -25,7 +25,10 @@ interface PieData {
   selector: 'app-resumo',
   imports: [],
   templateUrl: './resumo.component.html',
-  styleUrl: './resumo.component.css'
+  styleUrls: [
+    './resumo.component.css',
+    './resumo.component.mobile.css'
+  ]
 })
 export class ResumoComponent implements AfterViewInit, OnInit, OnDestroy {
   @ViewChild('chartDiv', { static: true }) chartDiv!: ElementRef<HTMLDivElement>;
@@ -97,14 +100,14 @@ export class ResumoComponent implements AfterViewInit, OnInit, OnDestroy {
           valor: gastos,
           tipo: 'Comprometido',
           sliceSettings: {
-            fill: am5.color(0x31727a),
+            fill: am5.color(0x4cc9f0),
           }
         },
         {
           valor: salario - gastos,
           tipo: 'Livre',
           sliceSettings: {
-            fill: am5.color(0x3e8f52),
+            fill: am5.color(0x7ac27a), // Success color
           }
         }
       ]);
@@ -114,14 +117,14 @@ export class ResumoComponent implements AfterViewInit, OnInit, OnDestroy {
           valor: salario - (gastos - salario),
           tipo: 'Comprometido',
           sliceSettings: {
-            fill: am5.color(0x31727a),
+            fill: am5.color(0x4cc9f0),
           }
         },
         {
           valor: gastos - salario,
           tipo: 'Excedente',
           sliceSettings: {
-            fill: am5.color(0x9c3a1c),
+            fill: am5.color(0xef4444), // Danger color
           }
         }
       ]);

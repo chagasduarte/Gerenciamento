@@ -1,38 +1,42 @@
 .cards_planejamento {
   width: 100%;
-  height: 100%;
-  background-color: aliceblue;
+  height: auto;
+  min-height: 400px;
+  background-color: #021c22;
   border-radius: 20px;
-  color: black;
+  color: #d1e8ec;
   padding: 15px;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
+  border: 1px solid #0b2e36;
 }
 
 .entradas_saidas {
-  width: 65%;
+  width: 100%;
+  flex: 1;
 }
 
 .tabs {
   display: flex;
   width: 100%;
-  gap: 32px;
-  border-bottom: 2px solid #e5e5e5;
-  height: 100%;
+  gap: 20px;
+  border-bottom: 2px solid #0b2e36;
+  margin-bottom: 15px;
 }
 
 .tab {
   background: none;
   border: none;
-  padding: 10px 0;
-  font-size: 15px;
+  padding: 12px 0;
+  font-size: 14px;
   font-weight: 500;
-  color: #8a8a8a;
+  color: #64748b;
   cursor: pointer;
   position: relative;
   display: flex;
   align-items: center;
   gap: 8px;
-  width: 100%;
+  width: auto;
+  transition: all 0.2s;
 }
 
 .tab .icon {
@@ -40,8 +44,7 @@
 }
 
 .tab.active {
-  color: #1f7a6f;
-  /* verde do print */
+  color: #7ac27a;
   font-weight: 600;
 }
 
@@ -52,7 +55,7 @@
   bottom: -2px;
   width: 100%;
   height: 3px;
-  background-color: #1f7a6f;
+  background-color: #7ac27a;
   border-radius: 2px;
 }
 
@@ -63,36 +66,42 @@
 .chart-container {
   width: 100%;
   height: 300px;
+  margin-top: 10px;
 }
 
 .planejadas {
-  font-size: 15px;
+  width: 100%;
+  flex: 1;
+  font-size: 14px;
 }
 
 .button_tipo {
   width: 100%;
-  background-color: rgba(255, 255, 255, 0);
-  border-radius: 10px;
-  padding: 10px;
-  justify-content: end;
-}
-
-.separation {
-  padding-left: 10px;
-  width: 100%;
-}
-
-.collapse {
-  width: 100%;
-}
-
-.button_tipo {
-  width: 100%;
+  background-color: transparent;
   border: none;
+  padding: 10px;
   text-align: start;
+  color: #d1e8ec;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+.button_tipo:hover {
+  background: rgba(11, 46, 54, 0.5);
 }
 
 .tipos {
   height: auto;
-  overflow: auto;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+/* Scrollbar for tipos */
+.tipos::-webkit-scrollbar {
+  width: 6px;
+}
+
+.tipos::-webkit-scrollbar-thumb {
+  background: #0b2e36;
+  border-radius: 3px;
 }
