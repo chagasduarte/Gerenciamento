@@ -69,6 +69,7 @@ export class PlanejamentoComponent implements OnInit {
   private labels: am5.Label[] = [];
   categorias!: Categoria[];
   subcategorias!: Subcategoria[];
+  mostrarentradasSaidas: boolean = true;
 
   constructor(
     private readonly planejamentoService: PlanejamentoService,
@@ -125,7 +126,7 @@ export class PlanejamentoComponent implements OnInit {
     this.planejados = this.planejamentos.find(x => x.tipo == tab)?.soma!;
     this.valor = this.abaAtiva == 'entradas' ? this.agrupamentoEntradas?.soma.soma ?? 0 : this.agrupamentoSaidas?.soma.soma ?? 0
     this.createChart(this.abaAtiva == 'entradas' ? this.agrupamentoEntradas : this.agrupamentoSaidas);
-
+    this.mostrarentradasSaidas = this.abaAtiva == 'entradas' ? this.agrupamentoEntradas?.soma?.soma > 0 : this.agrupamentoSaidas?.soma?.soma > 0;
     this.calcularNaoPlanejado();
   }
 
@@ -170,13 +171,8 @@ export class PlanejamentoComponent implements OnInit {
       this.root.setThemes([
         am5themes_Animated.new(this.root)
       ]);
-      var tamanho = 50;
-      if (dados.agrupamento.length < 10) {
-        tamanho = 80;
-      }
-      if (dados.agrupamento.length <= 20) {
-        tamanho = 50;
-      }
+      var tamanho = 75;
+
       // Chart
       const chart = this.root.container.children.push(
         am5percent.PieChart.new(this.root, {
