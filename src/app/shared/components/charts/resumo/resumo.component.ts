@@ -30,6 +30,8 @@ interface PieData {
 export class ResumoComponent implements AfterViewInit, OnInit, OnDestroy {
   @ViewChild('chartDiv', { static: true }) chartDiv!: ElementRef<HTMLDivElement>;
   resumoMensal$ = this.systemService.resumo$; // <-- é reativo
+  @Input() fontSize: number = 0;
+  @Input() from: string = "sidebar";
 
   salario!: number;
   valorComprometido!: number;
@@ -71,7 +73,7 @@ export class ResumoComponent implements AfterViewInit, OnInit, OnDestroy {
 
     const chart = this.root.container.children.push(
       am5percent.PieChart.new(this.root, {
-        radius: am5.percent(98),
+        radius: am5.percent(95),
         innerRadius: 0
       })
     );
@@ -168,10 +170,15 @@ export class ResumoComponent implements AfterViewInit, OnInit, OnDestroy {
     };
 
     this.labels = [];
-
-    criarLabel(25, 45, 0xffffff, 10, "300"); // valor livre
-    criarLabel(75, 45, 0xffffff, 10, "500"); // %
-    criarLabel(50, 70, 0xffffff, 10, "300");       // saldo acumulado
+    if (this.from === "sidebar") {
+      criarLabel(35, 40, 0xffffff, this.fontSize, "300"); // valor livre
+      criarLabel(65, 40, 0xffffff, this.fontSize, "500"); // %
+      criarLabel(50, 60, 0xffffff, this.fontSize, "300");       // saldo acumulado
+    } else {
+      criarLabel(25, 45, 0xffffff, this.fontSize, "300"); // valor livre
+      criarLabel(75, 45, 0xffffff, this.fontSize, "500"); // %
+      criarLabel(50, 70, 0xffffff, this.fontSize, "300");       // saldo acumulado
+    }
 
     this.atualizarLabels();
   }

@@ -14,7 +14,7 @@
       <app-cards class="gastos" titulo="Gastos" [valor]="resumo.gastos_mensal_pendente"
         [valorTotal]="resumo.gastos_mensal" tipo="saida">
       </app-cards>
-      <app-resumo class="resumo"></app-resumo>
+      <app-resumo class="resumo" from="home" [fontSize]=10></app-resumo>
       <app-cards class="receitas" titulo="Receitas" [valor]="resumo.receita_mensal_pendente"
         [valorTotal]="resumo.receita_mensal" tipo="entrada">
       </app-cards>

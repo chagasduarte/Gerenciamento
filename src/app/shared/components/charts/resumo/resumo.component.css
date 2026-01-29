@@ -1,6 +1,6 @@
 .grafico {
   width: 100%;
-  height: 180px;
+  height: 160px;
   display: flex;
   justify-content: center;
   background: linear-gradient(180deg, #021c2200, #02171b00);
