@@ -66,11 +66,19 @@
 }
 
 .sum-cell {
-    font-size: 11px;
+    font-size: 10px;
     font-weight: bold;
-    color: #7ac27a;
-    padding: 4px !important;
-    background: rgba(122, 194, 122, 0.05);
+    padding: 2px !important;
+}
+
+.sum-cell.income {
+    color: #4cc9f0;
+    background: rgba(76, 201, 240, 0.05);
+}
+
+.sum-cell.expense {
+    color: #ef4444;
+    background: rgba(239, 68, 68, 0.05);
 }
 
 .transacoes-container {
@@ -95,12 +103,18 @@
     background: #ef4444;
 }
 
+.transacao-marker.entrada {
+    background: #4cc9f0;
+    /* Azul claro para entradas */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
 .transacoes-stack {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 5px;
+    gap: 3px;
 }
 
 .chart-container {

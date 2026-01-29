@@ -1,4 +1,4 @@
-<div class="grade-container d-none d-lg-block sombra">
+<div class="grade-container sombra">
     <div class="header">
         <h4>Fluxo Mensal de Pagamentos | {{ totalDespesas | currency: 'BRL' }}</h4>
     </div>
@@ -14,14 +14,25 @@
                 <tr>
                     <td *ngFor="let dia of diasExibidos" class="day-cell">
                         <div class="transacoes-stack">
-                            <div *ngFor="let t of getTransacoesDoDia(dia)" class="transacao-marker" [ngClass]="t.status"
-                                [title]="t.descricao.replace(' - Parcela', '') + ': ' + (t.valor | currency: 'BRL': 'symbol': '1.2-2')">
+                            <div *ngFor="let t of getTransacoesDoDia(dia)" class="transacao-marker"
+                                [ngClass]="[t.status, t.tipo.toLowerCase()]"
+                                [title]="(t.tipo === 'entrada' ? 'Entrada: ' : '') + t.descricao.replace(' - Parcela', '') + ': ' + (t.valor | currency: 'BRL': 'symbol': '1.2-2')">
                             </div>
                         </div>
                     </td>
+                </tr>
                 <tr>
-                    <td *ngFor="let dia of diasExibidos" class="sum-cell">
-                        {{ getSomaDoDia(dia) | currency: 'BRL' }}
+                    <td *ngFor="let dia of diasExibidos" class="sum-cell income">
+                        <span *ngIf="getSomaEntradasDoDia(dia) > 0">
+                            {{ getSomaEntradasDoDia(dia) | currency: 'BRL' }}
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td *ngFor="let dia of diasExibidos" class="sum-cell expense">
+                        <span *ngIf="getSomaSaidasDoDia(dia) > 0">
+                            {{ getSomaSaidasDoDia(dia) | currency: 'BRL' }}
+                        </span>
                     </td>
                 </tr>
             </tbody>

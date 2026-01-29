@@ -83,26 +83,28 @@ export class GradePagamentosComponent implements OnInit, OnDestroy, AfterViewIni
 
   private processarGrade(): void {
     const novaGrade: { [key: number]: TransacaoModel[] } = {};
-    const diasComSaida = new Set<number>();
+    const diasComMovimentacao = new Set<number>();
     this.totalDespesas = 0;
 
     this.transacoes.forEach((t) => {
+      const dia = this.getDiaDaTransacao(t.pagamento);
       const tipo = t.tipo?.toLowerCase();
-      if (tipo == 'saida') {
-        const dia = this.getDiaDaTransacao(t.pagamento);
+
+      if (tipo === 'saida') {
         this.totalDespesas += parseFloat(t.valor.toString());
-        if (dia > 0) {
-          diasComSaida.add(dia);
-          if (!novaGrade[dia]) {
-            novaGrade[dia] = [];
-          }
-          novaGrade[dia].push(t);
+      }
+
+      if (dia > 0) {
+        diasComMovimentacao.add(dia);
+        if (!novaGrade[dia]) {
+          novaGrade[dia] = [];
         }
+        novaGrade[dia].push(t);
       }
     });
 
     this.transacoesPorDia = novaGrade;
-    this.diasExibidos = this.diasDoMes.filter(dia => diasComSaida.has(dia));
+    this.diasExibidos = this.diasDoMes.filter(dia => diasComMovimentacao.has(dia));
   }
 
   private processarGrafico(): void {
@@ -129,7 +131,8 @@ export class GradePagamentosComponent implements OnInit, OnDestroy, AfterViewIni
       chartData.push({
         dia: dia.toString(),
         saldo: parseFloat(acumuladoDiario.toFixed(2)),
-        pagamentos: parseFloat(somaSaidas.toFixed(2))
+        pagamentos: parseFloat(somaSaidas.toFixed(2)),
+        receitas: parseFloat(somaEntradas.toFixed(2))
       });
     });
 
@@ -159,6 +162,8 @@ export class GradePagamentosComponent implements OnInit, OnDestroy, AfterViewIni
       // Cores para o tema escuro
       const textColor = am5.color(0xd1e8ec);
       const gridColor = am5.color(0x0b2e36);
+      const incomeColor = am5.color(0x4cc9f0);
+      const expenseColor = am5.color(0xef4444);
 
       const xAxis = chart.xAxes.push(
         am5xy.CategoryAxis.new(this.root, {
@@ -198,6 +203,29 @@ export class GradePagamentosComponent implements OnInit, OnDestroy, AfterViewIni
         strokeOpacity: 1
       });
 
+      // Série de Barras (Receitas Diárias)
+      const seriesEntradas = chart.series.push(
+        am5xy.ColumnSeries.new(this.root, {
+          name: "Receitas Diárias",
+          xAxis: xAxis,
+          yAxis: yAxis,
+          valueYField: "receitas",
+          categoryXField: "dia",
+          tooltip: am5.Tooltip.new(this.root, {
+            labelText: "[bold]Receitas:[/] {valueY.formatNumber('#,###.00')}"
+          })
+        })
+      );
+      seriesEntradas.columns.template.setAll({
+        width: am5.percent(70),
+        tooltipY: 0,
+        fill: incomeColor,
+        stroke: incomeColor,
+        cornerRadiusTL: 4,
+        cornerRadiusTR: 4
+      });
+      seriesEntradas.data.setAll(chartData);
+
       // Série de Barras (Pagamentos Diários)
       const seriesPagamentos = chart.series.push(
         am5xy.ColumnSeries.new(this.root, {
@@ -214,8 +242,8 @@ export class GradePagamentosComponent implements OnInit, OnDestroy, AfterViewIni
       seriesPagamentos.columns.template.setAll({
         width: am5.percent(70),
         tooltipY: 0,
-        fill: am5.color(0xef4444),
-        stroke: am5.color(0xef4444),
+        fill: expenseColor,
+        stroke: expenseColor,
         cornerRadiusTL: 4,
         cornerRadiusTR: 4
       });
@@ -292,7 +320,15 @@ export class GradePagamentosComponent implements OnInit, OnDestroy, AfterViewIni
     return this.transacoesPorDia[dia] || [];
   }
 
-  getSomaDoDia(dia: number): number {
-    return this.getTransacoesDoDia(dia).reduce((acc, t) => acc + parseFloat(t.valor.toString()), 0);
+  getSomaSaidasDoDia(dia: number): number {
+    return this.getTransacoesDoDia(dia)
+      .filter(t => t.tipo?.toLowerCase() === 'saida')
+      .reduce((acc, t) => acc + parseFloat(t.valor.toString()), 0);
+  }
+
+  getSomaEntradasDoDia(dia: number): number {
+    return this.getTransacoesDoDia(dia)
+      .filter(t => t.tipo?.toLowerCase() === 'entrada')
+      .reduce((acc, t) => acc + parseFloat(t.valor.toString()), 0);
   }
 }
