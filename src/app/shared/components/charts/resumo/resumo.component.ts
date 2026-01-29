@@ -100,7 +100,7 @@ export class ResumoComponent implements AfterViewInit, OnInit, OnDestroy {
           valor: gastos,
           tipo: 'Comprometido',
           sliceSettings: {
-            fill: am5.color(0x4cc9f0),
+            fill: am5.color(0x368C9E),
           }
         },
         {
@@ -117,7 +117,7 @@ export class ResumoComponent implements AfterViewInit, OnInit, OnDestroy {
           valor: salario - (gastos - salario),
           tipo: 'Comprometido',
           sliceSettings: {
-            fill: am5.color(0x4cc9f0),
+            fill: am5.color(0x368C9E),
           }
         },
         {

@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { SystemService } from "../../shared/services/system.service";
 import { EvolucaoComponent } from "../../shared/components/charts/evolucao/evolucao.component";
-import { CategoriasComponent } from "../../shared/components/charts/categorias/categorias.component";
+import { PlanejamentoComponent } from "../../shared/components/planejamento/planejamento.component";
 
 @Component({
     selector: 'app-dashboard',
@@ -10,6 +10,7 @@ import { CategoriasComponent } from "../../shared/components/charts/categorias/c
     imports: [
         CommonModule,
         EvolucaoComponent,
+        PlanejamentoComponent
     ],
     templateUrl: './dashboard.component.html',
     styleUrl: './dashboard.component.css'
