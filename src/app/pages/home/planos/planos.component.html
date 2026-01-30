@@ -8,7 +8,8 @@
 
 
     <section class="lista-agrupada">
-        <div class="categoria-card" *ngFor="let grupo of planosAgrupados">
+        <div class="categoria-card" *ngFor="let grupo of planosAgrupados"
+            [class.entrada-card]="grupo.itens[0].tipo == 'entradas'">
             <div class="categoria-header">
                 <h3>{{ grupo.categoria }}</h3>
             </div>
@@ -44,8 +45,8 @@
 
             <div class="categoria-total">
                 <span>Total da Categoria:</span>
-                <strong [class.saida]="grupo.itens[0]?.tipo === 'Saída'">
-                    R$ {{ (grupo.itens | sumPlanos) | number:'1.2-2' }}
+                <strong [class.saida]="grupo.itens[0].tipo == 'saidas'">
+                    {{ (grupo.itens | sumPlanos) | currency:'BRL':'symbol' }}
                 </strong>
             </div>
         </div>

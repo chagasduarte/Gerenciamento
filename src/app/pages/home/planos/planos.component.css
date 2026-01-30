@@ -50,6 +50,11 @@
     gap: 16px;
 }
 
+.categoria-card.entrada-card {
+    background: #0f5664;
+    border-color: #1f434b;
+}
+
 .categoria-header h3 {
     margin: 0;
     font-size: 1.2rem;
@@ -131,11 +136,6 @@
 .input-valor::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
-}
-
-/* Firefox */
-.input-valor[type=number] {
-    -moz-appearance: textfield;
 }
 
 .btn-icon {

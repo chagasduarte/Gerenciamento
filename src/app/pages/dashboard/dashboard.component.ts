@@ -9,8 +9,7 @@ import { PlanejamentoComponent } from "../../shared/components/planejamento/plan
     standalone: true,
     imports: [
         CommonModule,
-        EvolucaoComponent,
-        PlanejamentoComponent
+        EvolucaoComponent
     ],
     templateUrl: './dashboard.component.html',
     styleUrl: './dashboard.component.css'

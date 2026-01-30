@@ -11,9 +11,7 @@ import { DespesasParceladasResponse } from '../../../shared/models/despesasParce
 import { AgrupamentoResponse } from '../../../shared/models/agrupamento';
 import { TransacoesService } from '../../../shared/services/transacoes.service';
 import { TransacaoModel } from '../../../shared/models/despesa.model';
-import { ExtratoComponent } from "../../../shared/components/extrato/extrato.component";
 import { PlanejamentoComponent } from "../../../shared/components/planejamento/planejamento.component";
-import { EvolucaoComponent } from "../../../shared/components/charts/evolucao/evolucao.component";
 import { GradePagamentosComponent } from '../grade-pagamentos/grade-pagamentos.component';
 
 @Component({
@@ -22,9 +20,7 @@ import { GradePagamentosComponent } from '../grade-pagamentos/grade-pagamentos.c
   imports: [
     CommonModule,
     FormsModule,
-    ExtratoComponent,
     PlanejamentoComponent,
-    EvolucaoComponent,
     GradePagamentosComponent
   ],
   templateUrl: './dados.component.html',

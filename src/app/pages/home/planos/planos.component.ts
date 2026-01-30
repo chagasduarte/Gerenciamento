@@ -67,6 +67,7 @@ export class PlanosComponent implements OnInit {
       categoria,
       itens: grupos[categoria]
     }));
+    console.log(this.planosAgrupados);
   }
 
 
