@@ -171,7 +171,7 @@ export class PlanejamentoComponent implements OnInit {
       this.root.setThemes([
         am5themes_Animated.new(this.root)
       ]);
-      var tamanho = 75;
+      var tamanho = 60;
 
       // Chart
       const chart = this.root.container.children.push(

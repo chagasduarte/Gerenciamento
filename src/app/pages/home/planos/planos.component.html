@@ -1,27 +1,59 @@
 <div class="planos-container">
 
 
-<header class="header">
-<h2>Meus Planos</h2>
-<button class="btn-primary" (click)="novoPlano()">+ Novo Plano</button>
-</header>
+    <header class="header">
+        <h2>Planejamento Mensal</h2>
+        <button class="btn-primary" (click)="novoPlano()">+ Adicionar Item</button>
+    </header>
 
 
-<section class="lista">
-<app-plano-card
-*ngFor="let plano of planos"
-[plano]="plano"
-(editar)="editar(plano)"
-(excluir)="excluir(plano.id!)">
-</app-plano-card>
-</section>
+    <section class="lista-agrupada">
+        <div class="categoria-card" *ngFor="let grupo of planosAgrupados">
+            <div class="categoria-header">
+                <h3>{{ grupo.categoria }}</h3>
+            </div>
+
+            <div class="subcategorias-lista">
+                <div class="subcategoria-item" *ngFor="let item of grupo.itens">
+                    <div class="sub-info">
+                        <span class="sub-nome">{{ item.subcategoria || 'Geral' }}</span>
+                        <span class="sub-tipo" [class]="item.tipo">{{ item.tipo }}</span>
+                    </div>
+
+                    <div class="sub-acoes">
+                        <div class="input-valor-wrapper">
+                            <span>R$</span>
+                            <input type="number" [(ngModel)]="item.valor" (change)="atualizarValor(item)"
+                                class="input-valor">
+                        </div>
+
+                        <button class="btn-icon danger" (click)="excluirSubcategoria(item.id!)" title="Excluir">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="3 6 5 6 21 6"></polyline>
+                                <path
+                                    d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                                </path>
+                                <line x1="10" y1="11" x2="10" y2="17"></line>
+                                <line x1="14" y1="11" x2="14" y2="17"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="categoria-total">
+                <span>Total da Categoria:</span>
+                <strong [class.saida]="grupo.itens[0]?.tipo === 'Saída'">
+                    R$ {{ (grupo.itens | sumPlanos) | number:'1.2-2' }}
+                </strong>
+            </div>
+        </div>
+    </section>
 
 
-<app-plano-form
-*ngIf="mostrarFormulario"
-[plano]="planoSelecionado"
-(fechar)="fecharFormulario()">
-</app-plano-form>
+    <app-plano-form *ngIf="mostrarFormulario" [plano]="planoSelecionado" (fechar)="fecharFormulario()">
+    </app-plano-form>
 
 
 </div>

@@ -5,13 +5,13 @@ import { SystemService } from '../../../shared/services/system.service';
 import { combineLatest, forkJoin } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { PlanoFormComponent } from "../../../shared/components/plano-form/plano-form.component";
-import { PlanoCardComponent } from "../../../shared/components/plano-card/plano-card.component";
+import { SumPlanosPipe } from '../../../shared/pipes/sum-planos.pipe';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-planos',
-  imports: [PlanoFormComponent, PlanoCardComponent, CommonModule, FormsModule],
+  imports: [PlanoFormComponent, CommonModule, FormsModule, SumPlanosPipe],
   templateUrl: './planos.component.html',
   styleUrl: './planos.component.css'
 })
@@ -19,6 +19,7 @@ export class PlanosComponent implements OnInit {
 
 
   planos: Planejamento[] = [];
+  planosAgrupados: { categoria: string, itens: Planejamento[] }[] = [];
   mostrarFormulario = false;
   planoSelecionado?: Planejamento;
 
@@ -27,7 +28,7 @@ export class PlanosComponent implements OnInit {
     private planosService: PlanejamentoService,
     private systemService: SystemService,
     private readonly toast: ToastrService
-  ) {}
+  ) { }
 
 
   ngOnInit(): void {
@@ -40,18 +41,62 @@ export class PlanosComponent implements OnInit {
       this.systemService.ano$,
       this.systemService.mes$
     ]).subscribe(([ano, mes]) => {
-      forkJoin([
-          this.planosService.listar(mes.valor + 1, ano.valor)
-        ]).subscribe({
+      this.planosService.listar(mes.valor + 1, ano.valor).subscribe({
         next: (success) => {
-          this.planos = success[0];
+          this.planos = success;
+          this.agruparPlanos();
         },
         error: (err) => {
           console.error(err);
           this.toast.error(err.message);
-        } 
-      })
+        }
+      });
     });
+  }
+
+
+  agruparPlanos() {
+    const grupos: { [key: string]: Planejamento[] } = {};
+    this.planos.forEach((p: Planejamento) => {
+      if (!grupos[p.categoria]) {
+        grupos[p.categoria] = [];
+      }
+      grupos[p.categoria].push(p);
+    });
+    this.planosAgrupados = Object.keys(grupos).map(categoria => ({
+      categoria,
+      itens: grupos[categoria]
+    }));
+  }
+
+
+  atualizarValor(plano: Planejamento) {
+    if (plano.id) {
+      this.planosService.atualizar(plano.id, plano).subscribe({
+        next: () => {
+          this.toast.success('Valor atualizado com sucesso');
+          this.carregarPlanos();
+        },
+        error: (err) => {
+          this.toast.error('Erro ao atualizar valor');
+        }
+      });
+    }
+  }
+
+
+  excluirSubcategoria(id: number) {
+    if (confirm('Deseja excluir esta subcategoria?')) {
+      this.planosService.deletar(id).subscribe({
+        next: () => {
+          this.toast.success('Subcategoria excluída');
+          this.carregarPlanos();
+        },
+        error: (err) => {
+          this.toast.error('Erro ao excluir subcategoria');
+        }
+      });
+    }
   }
 
 
