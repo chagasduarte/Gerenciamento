@@ -1,14 +1,14 @@
-export interface TransacaoModel {
-    id: number
-    descricao: string
-    tipo: string
-    valor: number
-    categoria: number
-    data: Date
-    status: string
-    criado_em: Date
-    ispaycart: boolean;
-    cartaoid: number | null;
+export class TransacaoModel {
+    id!: number
+    descricao!: string
+    tipo!: string
+    valor!: number
+    categoria!: number
+    data!: Date
+    status!: string
+    criado_em!: Date
+    ispaycart!: boolean;
+    cartaoid!: number | null;
     pagamento?: Date;
     adicionada?: boolean;
     selecionado?: boolean;
