@@ -122,10 +122,23 @@
   cursor: default;
 }
 
+/* ... previous CSS content ... */
 .despesa:hover {
   background-color: rgba(76, 201, 240, 0.4);
   z-index: 10;
   position: relative;
+}
+
+/* New Helper Class for Objective Bars */
+.despesa.objetivo-timeline {
+  background-color: rgba(122, 194, 122, 0.2);
+  /* Transparent Green */
+  border: 1px solid #7ac27a;
+  color: #d1e8ec;
+}
+
+.despesa.objetivo-timeline:hover {
+  background-color: rgba(122, 194, 122, 0.4);
 }
 
 /* Desktop */

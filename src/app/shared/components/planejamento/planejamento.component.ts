@@ -23,6 +23,7 @@ import { number } from 'echarts';
 import { ResumoComponent } from "../charts/resumo/resumo.component";
 import { SubcategoriaService } from '../../services/subcategoria.service';
 import { Subcategoria } from '../../models/subcategoria.model';
+import { ExtratoComponent } from "../extrato/extrato.component";
 
 
 interface AgrupadoPorCategoriaMap {

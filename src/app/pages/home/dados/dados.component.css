@@ -7,9 +7,11 @@
 .info-1 .data-grafico {
     display: none;
 }
+
 .porcentagem-despesa {
     margin-bottom: 5px;
 }
+
 .barra-progressao {
     background-color: aliceblue;
     width: 150px;
@@ -31,11 +33,11 @@
     padding-left: 5px;
 }
 
-.grafico-card{
+.grafico-card {
     grid-area: graficoCards;
     display: flex;
     flex-direction: column;
-    justify-content: center;   
+    justify-content: center;
     width: 100%;
     gap: 20px;
     padding: 15px;
@@ -44,15 +46,16 @@
 .grafico {
     width: 95%;
     display: grid;
-    grid-template-areas: 
-    "graficoheader"
-    "graficobody";
+    grid-template-areas:
+        "graficoheader"
+        "graficobody";
     grid-template-rows: 2rem 1fr;
     background-color: rgb(78, 156, 156);
     border-radius: 15px;
     height: 100%;
 }
-.grafico-header{
+
+.grafico-header {
     display: grid;
     grid-template-columns: 85% 10%;
     grid-area: graficoheader;
@@ -82,9 +85,9 @@
 
 .card-button {
     display: grid;
-    grid-template-areas: 
-    "circle valores"
-    "circle bg-icon";
+    grid-template-areas:
+        "circle valores"
+        "circle bg-icon";
     grid-template-rows: auto auto;
     grid-template-columns: 40% 70%;
     width: 175px;
@@ -99,8 +102,8 @@
 }
 
 .valor {
-  font-size: 25px;
-  height: 2.5rem;
+    font-size: 25px;
+    height: 2.5rem;
 }
 
 .text {
@@ -123,17 +126,19 @@
 .card-feed {
     display: flex;
 }
+
 .despesa {
     background-color: rgba(127, 255, 212, 0.123);
     display: grid;
-    grid-template-areas: 
-    "circle titulo"
-    "circle detalhe";
+    grid-template-areas:
+        "circle titulo"
+        "circle detalhe";
     grid-template-columns: 75px 1fr;
     border-radius: 15px;
     padding: 10px;
     width: 100%;
 }
+
 .dia {
     display: grid;
     position: relative;
@@ -142,7 +147,7 @@
     height: 50px;
     font-size: 32px;
     border-radius: 50%;
-    background-color:  rgba(127, 255, 212, 0.123);
+    background-color: rgba(127, 255, 212, 0.123);
 }
 
 
@@ -175,7 +180,7 @@ svg {
 }
 
 .valor-conta-mobile {
-    display:none;
+    display: none;
 }
 
 .accordion {
@@ -185,6 +190,7 @@ svg {
 .planejamento {
     width: 60%;
 }
+
 .evolucao {
     width: 40%
 }
