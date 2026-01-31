@@ -1,27 +1,43 @@
 .pagina {
   padding: 16px;
   min-height: 100vh;
+  /* background-color: #021c22;  already controlled by parent probably, but good to be safe if it's a page */
 }
 
+/* Header */
 .topo {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  border-bottom: 1px solid #0b2e36;
+  padding-bottom: 15px;
   gap: 12px;
 }
 
 .topo h1 {
   margin: 0;
-  font-size: 24px;
+  color: #7ac27a;
+  font-size: 1.5rem;
+  font-weight: 700;
 }
 
 .btn-novo {
-  align-self: flex-start;
-  background: #0b2f2f;
-  color: #fff;
-  border: none;
-  padding: 10px 16px;
-  border-radius: 10px;
+  background: #011418;
+  color: #d1e8ec;
+  border: 1px solid #0b2e36;
+  padding: 8px 16px;
+  border-radius: 8px;
   font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.btn-novo:hover {
+  background: #0b2e36;
+  color: #fff;
+  border-color: #7ac27a;
 }
 
 /* Lista de cards */
@@ -29,72 +45,92 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 16px;
-  margin-top: 16px;
+  margin-top: 25px;
 }
 
-/* Desktop */
-@media (min-width: 768px) {
-  .topo {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .lista {
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  }
-}
+/* Timeline / Grid Temporal */
 .grid-temporal {
   display: grid;
   place-items: center;
-  width: 1200px; /* 12 repetições de 100px */
-  background-image: linear-gradient(
-    to right,
-    #ccc 0 1px,
-    transparent 1px 100px
-  );
+  width: 100%;
+  background-image: linear-gradient(to right,
+      #0b2e36 0 1px,
+      transparent 1px 100px);
   background-size: 100px 100%;
   background-repeat: repeat-x;
   overflow-x: auto;
-  width: 100%;
-  background-color: white;
+  background-color: #021c22;
   border-radius: 15px;
-  color: black;
-  padding: 10px;
+  color: #d1e8ec;
+  padding: 20px 10px;
+  margin-top: 30px;
+  border: 1px solid #0b2e36;
+
+  /* Scrollbar styling */
+  scrollbar-width: thin;
+  scrollbar-color: #0b2e36 #021c22;
+}
+
+.grid-temporal::-webkit-scrollbar {
+  height: 8px;
+}
+
+.grid-temporal::-webkit-scrollbar-track {
+  background: #021c22;
+}
+
+.grid-temporal::-webkit-scrollbar-thumb {
+  background: #0b2e36;
+  border-radius: 4px;
 }
 
 .grid-doze {
   display: grid;
   grid-template-areas: "jan fev mar abr mai jun jul ago set out nov dex";
   grid-template-columns: repeat(12, 100px);
-  font-size: large;
-}
-
-.despesa {
-  display: flex;
-  align-items: center;
-  background-color: rgb(84, 129, 155);
-  height: 25px;
-  padding-left: 10px;
-  margin-top: 5px;
-  text-wrap: nowrap;
-  border-radius: 15px;
-}
-
-.bola {
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  background-color: aqua;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 10px;
 }
 
 .temp-meses {
   text-align: center;
   width: 100%;
+  color: #64748b;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
 }
 
-.chart-container {
-  width: 100%;
-  height: 500px;
-  background-color: white;
+.despesa {
+  display: flex;
+  align-items: center;
+  background-color: rgba(76, 201, 240, 0.2);
+  /* Transparent blue */
+  color: #d1e8ec;
+  border: 1px solid #4cc9f0;
+  height: 32px;
+  padding: 0 12px;
+  margin-top: 8px;
+  text-wrap: nowrap;
+  border-radius: 6px;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: all 0.2s;
+  cursor: default;
+}
+
+.despesa:hover {
+  background-color: rgba(76, 201, 240, 0.4);
+  z-index: 10;
+  position: relative;
+}
+
+/* Desktop */
+@media (min-width: 768px) {
+  .lista {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  }
 }
