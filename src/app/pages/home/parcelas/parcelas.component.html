@@ -1,99 +1,145 @@
-<div class="container">
-  <h1>Parcelas {{nomeDespesa.replace(' - Parcela', '')}}</h1>
-  <div class="botoes row">
-    <div class="voltar col">
-      <button class="btn btn-sm btn-warning" (click)="Voltar()">Voltar</button>
-    </div>
-    <div class="adicionar col">
-      <button class="btn btn-sm btn-primary" (click)="apagarDespesaCompleta()">Deletar</button>
-    </div>
-  </div>
-  
-  <div class="linha"></div>
-  <h3>Abertos: {{ somaAbertos | currency: "BRL"}}</h3>
-  <div class="parcelas">
-    <div *ngFor="let parcela of parcelas">
-      <div class="card card-sm"  [ngStyle]="{'background-color': DefineCorParcela(parcela.data)}">
-        <div class="card-header text-break d-flex row">
-          <input type="date" [(ngModel)]="parcela.data" class="form-control form-control-sm col-1">
-          <button class="btn btn-success btn-sm" >Up</button>
-        </div>
-        <div class="card-body">
-          <div class="d-flex">
-            <div>Valor:</div>
-            <div>{{(parcela.valor) | currency: "BRL"}}</div>
-          </div>
-          
-          <div class="row">
-            <button class="btn btn-sm btn-primary"
-                    *ngIf="!parcela.adicionada"
-                    (click)="adicionarListaPagamento(parcela)">
-              Adicionar
-            </button>
-          </div>
-        </div>
-      </div>
+<div class="container-parcelas">
+  <!-- Header -->
+  <div class="header-main">
+    <h1>Parcelas {{nomeDespesa.replace(' - Parcela', '')}}</h1>
+    <div class="actions-top">
+      <button class="btn btn-outline" (click)="Voltar()">
+        <i class="bi bi-arrow-left"></i> Voltar
+      </button>
+      <button class="btn btn-outline btn-outline-danger" (click)="apagarDespesaCompleta()">
+        <i class="bi bi-trash"></i> Deletar Tudo
+      </button>
     </div>
   </div>
-  <div class="linha"></div>
 
-  <h3>Pagos: {{somaPagos | currency: "BRL"}}</h3>
-  <div class="parcelas">
-    
-    <div *ngFor="let parcela of parcelasPagas">
-      <div class="card card-sm me-2" >
-        <div class="card-header text-break">
-          <b>{{ parcela.data | date}}</b> 
-          <button class="btn btn-sm btn-danger" (click)="apagar(parcela.id)">-</button>
+  <!-- Abertos Loop -->
+  <div class="section-header">
+    <span>Aberto</span>
+    <span class="total">{{ somaAbertos | currency: "BRL"}}</span>
+  </div>
+
+  <div class="list-container">
+    <div class="list-header" *ngIf="parcelas.length > 0">
+      <span>Data</span>
+      <span>Valor</span>
+      <span class="text-end">Ações</span>
+    </div>
+
+    <div class="list-item" *ngFor="let parcela of parcelas">
+        <!-- Date Column -->
+        <div class="col-date">
+            <input type="date" [(ngModel)]="parcela.data">
         </div>
-        <div class="card-body">
-          <div class="d-flex">
-            <div>Valor:</div>
-            <div>{{+parcela.valor | currency: "BRL"}}</div>
-          </div>
+
+        <!-- Value Column -->
+        <div class="col-value">
+            {{(parcela.valor) | currency: "BRL"}}
         </div>
-      </div>
+
+        <!-- Actions Column -->
+        <div class="col-actions">
+            <!-- "Up" placeholder button (preserved from original but styled) -->
+           <!-- <button class="btn-icon up" title="Atualizar Data">
+                <i class="bi bi-arrow-down-up"></i>
+            </button> -->
+
+            <button class="btn-icon add" 
+                    *ngIf="!parcela.adicionada" 
+                    (click)="adicionarListaPagamento(parcela)"
+                    title="Adicionar ao Pagamento">
+                <i class="bi bi-plus-lg"></i>
+            </button>
+             <button class="btn-icon delete" 
+                    *ngIf="parcela.adicionada" 
+                    (click)="removedaListaPagamento(parcela)"
+                    title="Remover do Pagamento">
+                <i class="bi bi-dash-lg"></i>
+            </button>
+        </div>
+    </div>
+    <div *ngIf="parcelas.length === 0" class="p-3 text-center text-muted">
+        Nenhuma parcela aberta.
     </div>
   </div>
+
+  <!-- Pagos Loop -->
+  <div class="section-header" style="margin-top: 40px;">
+    <span>Pagos</span>
+    <span class="total">{{ somaPagos | currency: "BRL"}}</span>
+  </div>
+
+  <div class="list-container">
+    <div class="list-header" *ngIf="parcelasPagas.length > 0">
+      <span>Data</span>
+      <span>Valor</span>
+      <span class="text-end">Ações</span>
+    </div>
+
+    <div class="list-item" *ngFor="let parcela of parcelasPagas">
+        <!-- Date Column -->
+        <div class="col-date">
+            {{ parcela.data | date: 'dd/MM/yyyy' }}
+        </div>
+
+        <!-- Value Column -->
+        <div class="col-value" style="color: #7ac27a;">
+            {{ parcela.valor | currency: "BRL"}}
+        </div>
+
+        <!-- Actions Column -->
+        <div class="col-actions">
+            <button class="btn-icon delete" (click)="apagar(parcela.id)" title="Deletar">
+                <i class="bi bi-trash"></i>
+            </button>
+        </div>
+    </div>
+     <div *ngIf="parcelasPagas.length === 0" class="p-3 text-center text-muted">
+        Nenhuma parcela paga.
+    </div>
+  </div>
+
 </div>
 
-<button class="fab" (click)="abrirSelecionadas()">
-  <img src="/assets/img/shopping-cart.svg"/>
+<!-- Floating Action Button -->
+<button class="fab" (click)="abrirSelecionadas()" *ngIf="listaPagamento.length > 0 || mostrarSelecionadas">
+  <img src="/assets/img/shopping-cart.svg" alt="Carrinho"/>
 </button>
 
+<!-- Selected Payments Panel -->
 <div class="painel-selecionadas" *ngIf="mostrarSelecionadas">
-  <h3 style="color: black; font-weight: 900;">Área de pagamentos</h3>
-  
-  <div class="div">
-    <div class="card" style="width: 18rem;">
-      <div class="card-body">
-        <table class="table table-rover">
-          <thead>
-            <tr>
-              <td>id</td>
-              <td>Data</td>
-              <td>valor</td>
-              <td>Juros</td>
-              <td>remover</td>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let item of listaPagamento">
-              <td>{{item.id}}</td>
-              <td>{{item.data | date}}</td>
-              <td>{{item.valor | currency: "BRL"}}</td>
-              <td><button class="btn btn-sm btn-success"  >-</button></td>
-            </tr>
-          </tbody>
-        </table>
-        <div><span>Total: </span>{{totalPagar | currency: "BRL"}}</div>
-      </div>
-      <div class="card-footer d-flex">
-        <button class="btn btn-sm btn-danger" (click)="abrirSelecionadas()">Fechar</button>
-
-        <button class="btn btn-sm btn-success" (click)="pagar()">Pagar</button>
-      </div>
+    <div class="card-pagamento">
+        <div class="p-header">
+            Área de pagamentos
+        </div>
+        <div class="p-body">
+            <table>
+                <thead>
+                    <tr>
+                        <td>Data</td>
+                        <td>Valor</td>
+                        <td class="text-end">Remover</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of listaPagamento">
+                        <td>{{item.data | date: 'dd/MM'}}</td>
+                        <td>{{item.valor | currency: "BRL"}}</td>
+                        <td class="text-end">
+                            <i class="bi bi-x-circle text-danger" style="cursor: pointer;" (click)="removedaListaPagamento(item)"></i>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="p-footer">
+            <div>
+                <small>Total a Pagar</small><br>
+                <strong style="font-size: 1.1em;">{{totalPagar | currency: "BRL"}}</strong>
+            </div>
+            <div>
+                 <button class="btn btn-sm btn-outline-danger me-2" (click)="abrirSelecionadas()">Fechar</button>
+                 <button class="btn btn-sm btn-success" (click)="pagar()">Pagar</button>
+            </div>
+        </div>
     </div>
-  </div>
-
 </div>
