@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Cartao } from '../../../shared/models/cartao.model';
 import { CartaoService } from '../../../shared/services/cartao.service';
+import { AuthService } from '../../../shared/services/auth.service';
+import { Usuario } from '../../../shared/models/user.model';
 
 @Component({
   selector: 'app-cartao',
@@ -16,6 +18,7 @@ import { CartaoService } from '../../../shared/services/cartao.service';
   ]
 })
 export class CartaoComponent implements OnInit {
+  usuario: Usuario | null = null;
   cartoes: Cartao[] = [];
   novoCartao: Partial<Cartao> = {
     id: 0,
@@ -28,10 +31,12 @@ export class CartaoComponent implements OnInit {
 
   constructor(
     private readonly cartaoService: CartaoService,
-    private readonly toast: ToastrService
+    private readonly toast: ToastrService,
+    private readonly authService: AuthService
   ) { }
 
   ngOnInit(): void {
+    this.authService.usuario$.subscribe(user => this.usuario = user);
     this.carregarCartoes();
   }
 
@@ -51,6 +56,13 @@ export class CartaoComponent implements OnInit {
       this.toast.warning('Preencha os campos obrigatórios (Nome, Limite, Dia da Fatura)');
       return;
     }
+
+    if (!this.usuario) {
+      this.toast.error('Usuário não identificado. Faça login novamente.');
+      return;
+    }
+
+    this.novoCartao.userid = this.usuario.id;
 
     this.loading = true;
     if (this.novoCartao.id) {

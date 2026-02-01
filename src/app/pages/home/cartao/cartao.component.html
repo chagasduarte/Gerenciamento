@@ -8,7 +8,7 @@
                     <div class="d-flex justify-content-between align-items-start">
                         <h4>{{cartao.nome}}</h4>
                         <button class="btn-icon" (click)="editar(cartao)">
-                            <i class="fas fa-edit"></i>
+                            <i class="bi bi-pencil-square"></i>
                         </button>
                     </div>
                     <p class="limit">Limite: R$ {{cartao.limite | number:'1.2-2'}}</p>
@@ -33,7 +33,7 @@
             </div>
 
             <div class="form-group">
-                <label for="limite">Limite</label>
+                <label for="limite">Limite (R$)</label>
                 <input type="number" id="limite" class="form-control" [(ngModel)]="novoCartao.limite"
                     placeholder="0,00">
             </div>
