@@ -1,27 +1,28 @@
-<div class="pagina" *ngIf="resumoMensal$ | async as resumo">
-
+<div class="pagina">
   <app-side-bar class="side-bar"></app-side-bar>
   <app-nav-bar></app-nav-bar>
 
   <div class="router-outlet">
-    <div class="data">
-      <div class="d-flex" style="font-weight: 900 !important; font-size: 42px;">
-        {{systemService.mes.nome}} | {{systemService.ano.valor}}
+    <ng-container *ngIf="resumoMensal$ | async as resumo">
+      <div class="data">
+        <div class="d-flex" style="font-weight: 900 !important; font-size: 42px;">
+          {{systemService.mes.nome}} | {{systemService.ano.valor}}
+        </div>
       </div>
-    </div>
 
-    <div class="cards_resumo">
-      <app-cards class="gastos" titulo="Gastos" [valor]="resumo.gastos_mensal_pendente"
-        [valorTotal]="resumo.gastos_mensal" tipo="saida">
-      </app-cards>
-      <app-resumo class="resumo" from="home" [fontSize]=15></app-resumo>
-      <app-cards class="receitas" titulo="Receitas" [valor]="resumo.receita_mensal_pendente"
-        [valorTotal]="resumo.receita_mensal" tipo="entrada">
-      </app-cards>
+      <div class="cards_resumo">
+        <app-cards class="gastos" titulo="Gastos" [valor]="resumo.gastos_mensal_pendente"
+          [valorTotal]="resumo.gastos_mensal" tipo="saida">
+        </app-cards>
+        <app-resumo class="resumo" from="home" [fontSize]=15></app-resumo>
+        <app-cards class="receitas" titulo="Receitas" [valor]="resumo.receita_mensal_pendente"
+          [valorTotal]="resumo.receita_mensal" tipo="entrada">
+        </app-cards>
 
-      <app-cards class="saldo" titulo="Saldo Atual" [valor]="resumo.saldo_atual" tipo="saldo">
-      </app-cards>
-    </div>
+        <app-cards class="saldo" titulo="Saldo Atual" [valor]="resumo.saldo_atual" tipo="saldo">
+        </app-cards>
+      </div>
+    </ng-container>
     <router-outlet></router-outlet>
   </div>
 </div>

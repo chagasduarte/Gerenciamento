@@ -43,5 +43,6 @@ export const routes: Routes = [
       { path: "planos", component: PlanosComponent, canActivate: [AuthGuard] }
     ],
     canActivate: [AuthGuard]
-  }
+  },
+  { path: '**', redirectTo: '' }
 ];
