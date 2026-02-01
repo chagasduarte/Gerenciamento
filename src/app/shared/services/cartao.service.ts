@@ -11,14 +11,18 @@ export class CartaoService {
   private api: string;
   constructor(
     private readonly http: HttpClient,
-    private readonly appSettingService: AppSettingsService 
+    private readonly appSettingService: AppSettingsService
   ) {
     this.api = appSettingService.get().WebApi;
   }
-  listar(): Observable<Cartao[]>{
+  listar(): Observable<Cartao[]> {
     return this.http.get<Cartao[]>(`${this.api}/cartao`);
   }
   criar(cartao: any): Observable<any> {
     return this.http.post(`${this.api}/cartao`, cartao);
+  }
+
+  atualizar(cartao: Cartao): Observable<any> {
+    return this.http.put(`${this.api}/cartao`, cartao);
   }
 }

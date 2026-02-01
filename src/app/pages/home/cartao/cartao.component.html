@@ -5,7 +5,12 @@
             <div class="card-item sombra" *ngFor="let cartao of cartoes">
                 <div class="card-header-gradient"></div>
                 <div class="card-body-content">
-                    <h4>{{cartao.nome}}</h4>
+                    <div class="d-flex justify-content-between align-items-start">
+                        <h4>{{cartao.nome}}</h4>
+                        <button class="btn-icon" (click)="editar(cartao)">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                    </div>
                     <p class="limit">Limite: R$ {{cartao.limite | number:'1.2-2'}}</p>
                     <p class="due-date" [class.text-danger]="isPastDay(cartao.dia_fatura)">Dia Fatura:
                         {{getDateFromDay(cartao.dia_fatura) | date: 'dd/MM'}}</p>
@@ -20,7 +25,7 @@
 
     <div class="col-md-4">
         <div class="add-card-form sombra">
-            <h4>Adicionar Cartão</h4>
+            <h4>{{ novoCartao.id ? 'Editar Cartão' : 'Adicionar Cartão' }}</h4>
             <div class="form-group">
                 <label for="nome">Nome do Cartão</label>
                 <input type="text" id="nome" class="form-control" [(ngModel)]="novoCartao.nome"
@@ -50,9 +55,15 @@
                 </div>
             </div>
 
-            <button class="btn btn-primary w-100" (click)="salvar()" [disabled]="loading">
-                {{ loading ? 'Salvando...' : 'Salvar' }}
-            </button>
+            <div class="d-flex gap-2">
+                <button class="btn btn-outline-secondary w-50" *ngIf="novoCartao.id" (click)="cancelarEdicao()">
+                    Cancelar
+                </button>
+                <button class="btn btn-primary" [class.w-100]="!novoCartao.id" [class.w-50]="novoCartao.id"
+                    (click)="salvar()" [disabled]="loading">
+                    {{ loading ? 'Salvando...' : (novoCartao.id ? 'Atualizar' : 'Salvar') }}
+                </button>
+            </div>
         </div>
     </div>
 </div>

@@ -3,11 +3,21 @@
 
     <header class="header">
         <h2>Planejamento Mensal</h2>
-        <button class="btn-primary" (click)="novoPlano()">+ Adicionar Item</button>
+        <div class="header-actions">
+            <div class="tabs-container">
+                <button class="btn-tab" [class.active]="tabAtiva === 'lista'" (click)="selecionarTab('lista')">
+                    <i class="fas fa-list"></i> Lista
+                </button>
+                <button class="btn-tab" [class.active]="tabAtiva === 'grafico'" (click)="selecionarTab('grafico')">
+                    <i class="fas fa-chart-bar"></i> Gráfico
+                </button>
+            </div>
+            <button class="btn-primary" (click)="novoPlano()">+ Adicionar Item</button>
+        </div>
     </header>
 
 
-    <section class="lista-agrupada">
+    <section class="lista-agrupada" *ngIf="tabAtiva === 'lista'">
         <div class="categoria-card" *ngFor="let grupo of planosAgrupados"
             [class.entrada-card]="grupo.itens[0].tipo == 'entradas'">
             <div class="categoria-header">
@@ -50,6 +60,10 @@
                 </strong>
             </div>
         </div>
+    </section>
+
+    <section class="grafico-container" *ngIf="tabAtiva === 'grafico'">
+        <div #chartDiv class="chart-div"></div>
     </section>
 
 

@@ -1,5 +1,5 @@
 .title {
-    color: #0f766e;
+    color: #d1e8ec;
     margin-bottom: 24px;
 }
 
@@ -10,11 +10,12 @@
 }
 
 .card-item {
-    background: #fff;
+    background: #021c22;
     border-radius: 16px;
     overflow: hidden;
     position: relative;
     transition: transform 0.2s;
+    border: 1px solid #0b2e36;
 }
 
 .card-item:hover {
@@ -31,34 +32,35 @@
 }
 
 .card-body-content h4 {
-    color: #1e293b;
+    color: #d1e8ec;
     font-size: 1.25rem;
     margin-bottom: 12px;
     font-weight: 600;
 }
 
 .limit {
-    color: #0f766e;
+    color: #2dd4bf;
     font-weight: 600;
     font-size: 1.1rem;
     margin-bottom: 4px;
 }
 
 .due-date {
-    color: #64748b;
+    color: #94a3b8;
     font-size: 0.9rem;
 }
 
 .add-card-form {
-    background: #fff;
+    background: #021c22;
     border-radius: 16px;
     padding: 24px;
     position: sticky;
     top: 20px;
+    border: 1px solid #0b2e36;
 }
 
 .add-card-form h4 {
-    color: #0f766e;
+    color: #d1e8ec;
     margin-bottom: 20px;
     font-weight: 600;
 }
@@ -70,7 +72,7 @@
 .form-group label {
     display: block;
     margin-bottom: 8px;
-    color: #475569;
+    color: #d1e8ec;
     font-size: 0.9rem;
     font-weight: 500;
 }
@@ -78,9 +80,11 @@
 .form-control {
     width: 100%;
     padding: 10px 12px;
-    border: 1px solid #cbd5e1;
+    border: 1px solid #0b2e36;
     border-radius: 8px;
     transition: border-color 0.2s;
+    background-color: #011418;
+    color: #d1e8ec;
 }
 
 .form-control:focus {
@@ -110,15 +114,46 @@
     cursor: not-allowed;
 }
 
+.btn-outline-secondary {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #64748b;
+    color: #d1e8ec;
+    background: transparent;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 8px;
+}
+
+.btn-outline-secondary:hover {
+    background: #0b2e36;
+    border-color: #0d5f58;
+}
+
+.btn-icon {
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    transition: color 0.2s;
+    padding: 4px;
+}
+
+.btn-icon:hover {
+    color: #2dd4bf;
+}
+
 .sombra {
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
 }
 
 .no-cards {
     grid-column: 1 / -1;
     text-align: center;
     padding: 40px;
-    color: #64748b;
-    background: #f8fafc;
+    color: #94a3b8;
+    background: #021c22;
     border-radius: 16px;
+    border: 1px solid #0b2e36;
 }

@@ -18,6 +18,7 @@ import { CartaoService } from '../../../shared/services/cartao.service';
 export class CartaoComponent implements OnInit {
   cartoes: Cartao[] = [];
   novoCartao: Partial<Cartao> = {
+    id: 0,
     nome: '',
     limite: 0,
     dia_fatura: undefined,
@@ -52,18 +53,43 @@ export class CartaoComponent implements OnInit {
     }
 
     this.loading = true;
-    this.cartaoService.criar(this.novoCartao).subscribe({
-      next: () => {
-        this.toast.success('Cartão adicionado com sucesso');
-        this.novoCartao = { nome: '', limite: 0, dia_fatura: undefined, dia_vencimento: undefined };
-        this.carregarCartoes();
-        this.loading = false;
-      },
-      error: (err) => {
-        this.toast.error('Erro ao salvar cartão');
-        this.loading = false;
-      }
-    });
+    if (this.novoCartao.id) {
+      this.cartaoService.atualizar(this.novoCartao as Cartao).subscribe({
+        next: () => {
+          this.toast.success('Cartão atualizado com sucesso');
+          this.cancelarEdicao();
+          this.carregarCartoes();
+          this.loading = false;
+        },
+        error: (err) => {
+          this.toast.error('Erro ao atualizar cartão');
+          this.loading = false;
+        }
+      });
+    }
+    else {
+      this.cartaoService.criar(this.novoCartao).subscribe({
+        next: () => {
+          this.toast.success('Cartão adicionado com sucesso');
+          this.cancelarEdicao();
+          this.carregarCartoes();
+          this.loading = false;
+        },
+        error: (err) => {
+          this.toast.error('Erro ao salvar cartão');
+          this.loading = false;
+        }
+      });
+    }
+
+  }
+
+  editar(cartao: Cartao): void {
+    this.novoCartao = { ...cartao };
+  }
+
+  cancelarEdicao(): void {
+    this.novoCartao = { id: 0, nome: '', limite: 0, dia_fatura: undefined, dia_vencimento: undefined };
   }
 
   getDateFromDay(day: number): Date {
