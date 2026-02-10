@@ -82,7 +82,11 @@ export class PlanejamentoComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.requisicoesApi()
+    this.requisicoesApi();
+
+    this.transacoesService.transacoesAlteradas$.subscribe(() => {
+      this.requisicoesApi();
+    });
   }
   requisicoesApi() {
     combineLatest([

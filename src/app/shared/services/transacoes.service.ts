@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AppSettingsService } from './app-settings.service';
 import { Entrada } from '../models/entradas';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { ResumoMensal } from '../models/resumo.model';
 import { Parcelas, TransacaoModel, Transacoes } from '../models/despesa.model';
 import { DespesasParceladasResponse } from '../models/despesasParceladas.model';
@@ -18,11 +18,19 @@ import { PordiaResponse } from '../models/PorDiaResponse';
 })
 export class TransacoesService {
   api: string;
+
+  private readonly _transacoesAlteradas = new Subject<void>();
+  readonly transacoesAlteradas$ = this._transacoesAlteradas.asObservable();
+
   constructor(
     private readonly http: HttpClient,
-    private readonly appSettingService: AppSettingsService 
+    private readonly appSettingService: AppSettingsService
   ) {
     this.api = appSettingService.get().WebApi;
+  }
+
+  notificarAlteracao(): void {
+    this._transacoesAlteradas.next();
   }
 
   PostTransacao(entrada: TransacaoModel): Observable<TransacaoModel> {
@@ -35,7 +43,7 @@ export class TransacoesService {
 
   GetDespesas(mes: number, ano: number, cardid: number | null): Observable<Transacoes> {
     let query = `${this.api}/transacoes?mes=${mes}&ano=${ano}`;
-    if(cardid != null && cardid > 0){
+    if (cardid != null && cardid > 0) {
       query += `&cardId=${cardid}`;
     }
     return this.http.get<Transacoes>(query);
@@ -44,11 +52,11 @@ export class TransacoesService {
   GetResumoMensal(mes: number, ano: number): Observable<ResumoMensal> {
     return this.http.get<ResumoMensal>(`${this.api}/dashboard/resumo?mes=${mes}&ano=${ano}`)
   }
-  GetEntradas(mes: number, ano: number): Observable<EntradasResponse>{
+  GetEntradas(mes: number, ano: number): Observable<EntradasResponse> {
     return this.http.get<EntradasResponse>(`${this.api}/transacoes/entradas?mes=${mes}&ano=${ano}`);
   }
 
-  PutEntrada(id: number) : Observable<Entrada> {
+  PutEntrada(id: number): Observable<Entrada> {
     return this.http.get<Entrada>(`${this.api}/transacoes/topago/${id}`);
   }
 
@@ -56,7 +64,7 @@ export class TransacoesService {
     return this.http.delete(`${this.api}/transacoes/${id}`)
   }
 
-  GetDespesasParceladas(mes: number, ano: number): Observable<DespesasParceladasResponse>{
+  GetDespesasParceladas(mes: number, ano: number): Observable<DespesasParceladasResponse> {
     return this.http.get<DespesasParceladasResponse>(`${this.api}/transacoes/parceladas?mes=${mes}&ano=${ano}`)
   }
 
@@ -64,31 +72,31 @@ export class TransacoesService {
     return this.http.get<AgrupamentoResponse>(`${this.api}/transacoes/agrupadaPorTipos?mes=${mes}&ano=${ano}&tipo=${tipo}&status='pago'`)
   }
 
-  GetProjecao(ano: number): Observable<Projecao[]>{
+  GetProjecao(ano: number): Observable<Projecao[]> {
     return this.http.get<Projecao[]>(`${this.api}/dashboard/projecao?ano=${ano}`)
   }
 
-  GetGraficosPizza(ano: number): Observable<TipoDespesaGrafico[] >{
-    return this.http.get<TipoDespesaGrafico[] >(`${this.api}/dashboard/agrupamento?ano=${ano}`)
+  GetGraficosPizza(ano: number): Observable<TipoDespesaGrafico[]> {
+    return this.http.get<TipoDespesaGrafico[]>(`${this.api}/dashboard/agrupamento?ano=${ano}`)
   }
 
-  GetParcelas(descricao: string): Observable<Parcelas>{
+  GetParcelas(descricao: string): Observable<Parcelas> {
     return this.http.get<Parcelas>(`${this.api}/transacoes/despesa?descricao=${descricao}`)
   }
 
-  GetLinhaTemporal(ano: number): Observable<LinhaTemporal[]>{
+  GetLinhaTemporal(ano: number): Observable<LinhaTemporal[]> {
     return this.http.get<LinhaTemporal[]>(`${this.api}/transacoes/linhatemporal?ano=${ano}`)
   }
 
   GetByDay(dia: number, mes: number, ano: number): Observable<PordiaResponse> {
     return this.http.get<PordiaResponse>(`${this.api}/transacoes/pordia?dia=${dia}&mes=${mes}&ano=${ano}`)
   }
-  
-  save(pay: any): Observable<boolean>{
+
+  save(pay: any): Observable<boolean> {
     return this.http.post<boolean>(`${this.api}/transacoes/save`, pay);
   }
 
-  Extrato(limit: number, mes: number, ano: number): Observable<TransacaoModel[]>{
+  Extrato(limit: number, mes: number, ano: number): Observable<TransacaoModel[]> {
     return this.http.get<TransacaoModel[]>(`${this.api}/transacoes/extrato?limit=${limit}&mes=${mes}&ano=${ano}`);
   }
 }

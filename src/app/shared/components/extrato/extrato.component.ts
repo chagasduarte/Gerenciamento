@@ -12,6 +12,7 @@ import { Subcategoria } from '../../models/subcategoria.model';
 import { CartaoService } from '../../services/cartao.service';
 import { Cartao } from '../../models/cartao.model';
 import { FormsModule } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-extrato',
@@ -37,6 +38,7 @@ export class ExtratoComponent implements OnInit {
   status = "todos";
   selecionaTodos = false;
   soma = 0;
+  private subscription = new Subscription();
 
   filtroTipo: string = 'todos';
   filtroTexto: string = '';
@@ -52,6 +54,20 @@ export class ExtratoComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.carregarDados();
+
+    this.subscription.add(
+      this.transacoesService.transacoesAlteradas$.subscribe(() => {
+        this.carregarDados();
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  carregarDados(): void {
     combineLatest([
       this.systemService.ano$,
       this.systemService.mes$
@@ -68,10 +84,10 @@ export class ExtratoComponent implements OnInit {
           this.cartoes = success[2];
 
           this.extractTipos();
-          this.filtrar(); // Apply any default filters if needed, or just reset
+          this.filtrar();
         },
         error: (err: any) => {
-
+          console.error(err);
         }
       });
     });
@@ -95,7 +111,7 @@ export class ExtratoComponent implements OnInit {
     this.transacoesService.DeleteTransacao(id).subscribe({
       next: () => {
         this.toast.success("Deletado");
-        this.ngOnInit();
+        this.transacoesService.notificarAlteracao();
         this.systemService.atualizarResumo();
       }
     })
@@ -106,6 +122,7 @@ export class ExtratoComponent implements OnInit {
     this.transacoesService.PutEntrada(item.id).subscribe({
       next: (success) => {
         this.toast.success("Tudo Ok");
+        this.transacoesService.notificarAlteracao();
         this.systemService.atualizarResumo();
       }
     });
