@@ -14,14 +14,14 @@ import { forkJoin, lastValueFrom } from 'rxjs';
 import { Ano } from '../../../utils/meses';
 
 @Component({
-    selector: 'app-parcelas',
-    standalone: true,
-    imports: [
-        CommonModule,
-        FormsModule
-    ],
-    templateUrl: './parcelas.component.html',
-    styleUrl: './parcelas.component.css'
+  selector: 'app-parcelas',
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule
+  ],
+  templateUrl: './parcelas.component.html',
+  styleUrl: './parcelas.component.css'
 })
 export class ParcelasComponent implements OnInit {
 
@@ -40,19 +40,19 @@ export class ParcelasComponent implements OnInit {
   somaAbertos: number = 0;
   somaPagos: number = 0;
   constructor(
-      private readonly activeRouter: ActivatedRoute,
-      private readonly route: Router,
-      private readonly toastr: ToastrService,
-      private readonly systemService: SystemService,
-      private readonly transacoesService: TransacoesService
-  ){
-    
+    private readonly activeRouter: ActivatedRoute,
+    private readonly route: Router,
+    private readonly toastr: ToastrService,
+    private readonly systemService: SystemService,
+    private readonly transacoesService: TransacoesService
+  ) {
+
   }
   ngOnInit(): void {
     this.buscaParcelas();
     this.ano = this.systemService.ano;
   }
-  
+
   buscaParcelas() {
     this.activeRouter.queryParams.subscribe({
       next: (success: any) => {
@@ -60,14 +60,14 @@ export class ParcelasComponent implements OnInit {
         this.transacoesService.GetParcelas(this.nomeDespesa).subscribe(x => {
           this.parcelasPagas = x.despesa.filter(x => x.status == 'pago');
           this.parcelas = x.despesa.filter(x => x.status == 'pendente' && new Date(x.data).getUTCFullYear() == this.ano.valor);
-          
+
           this.somaAbertos = this.parcelas.reduce((acc, p) => ({
             soma: acc.soma + parseFloat(p.valor.toString())
-          }), { soma: 0  }).soma;
+          }), { soma: 0 }).soma;
 
           this.somaPagos = this.parcelasPagas.reduce((acc, p) => ({
             soma: acc.soma + parseFloat(p.valor.toString())
-          }), { soma: 0  }).soma;
+          }), { soma: 0 }).soma;
         });
       }
     });
@@ -103,7 +103,7 @@ export class ParcelasComponent implements OnInit {
       this.systemService.atualizarResumo();
       this.buscaParcelas();
       this.totalPagar = 0;
-    }catch (error) {
+    } catch (error) {
       console.error(error);
       this.toastr.error("Erro ao pagar despesas");
     }
@@ -116,29 +116,42 @@ export class ParcelasComponent implements OnInit {
     })
   }
 
-  adicionarListaPagamento(despesa: TransacaoModel){
+  adicionarListaPagamento(despesa: TransacaoModel) {
     this.totalPagar += parseFloat(despesa.valor.toString());
     this.listaPagamento.push(despesa);
     despesa.adicionada = true;
   }
-  
-  removedaListaPagamento(despesa: TransacaoModel){
+
+  removedaListaPagamento(despesa: TransacaoModel) {
     this.totalPagar -= parseFloat(despesa.valor.toString());
-    this.listaPagamento = this.listaPagamento.filter( x => x.id != despesa.id );
+    this.listaPagamento = this.listaPagamento.filter(x => x.id != despesa.id);
     despesa.adicionada = false;
   }
-  
+
   Voltar() {
     this.route.navigate(["home"]);
   }
-  
+
 
   abrirSelecionadas() {
     this.mostrarSelecionadas = !this.mostrarSelecionadas;
   }
 
   DefineCorParcela(parcela: Date): string {
-    return new Date(parcela) < new Date()? "#af6e6e" : "#b1ca78";
+    return new Date(parcela) < new Date() ? "#af6e6e" : "#b1ca78";
   }
 
+  atualizarData(parcela: TransacaoModel) {
+    this.transacoesService.UpdateTransacao(parcela.id, parcela).subscribe({
+      next: () => {
+        this.toastr.success("Data atualizada!");
+        this.systemService.atualizarResumo();
+        this.buscaParcelas();
+      },
+      error: (err) => {
+        this.toastr.error("Erro ao atualizar data");
+        console.error(err);
+      }
+    });
+  }
 }

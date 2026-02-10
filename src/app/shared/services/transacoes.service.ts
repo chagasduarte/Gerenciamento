@@ -41,6 +41,10 @@ export class TransacoesService {
     return this.http.post<TransacaoModel[]>(`${this.api}/transacoes/parceladas`, payload);
   }
 
+  UpdateTransacao(id: number, entrada: TransacaoModel): Observable<TransacaoModel> {
+    return this.http.put<TransacaoModel>(`${this.api}/transacoes/${id}`, entrada);
+  }
+
   GetDespesas(mes: number, ano: number, cardid: number | null): Observable<Transacoes> {
     let query = `${this.api}/transacoes?mes=${mes}&ano=${ano}`;
     if (cardid != null && cardid > 0) {
