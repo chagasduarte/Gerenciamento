@@ -1,31 +1,49 @@
-
-<div class="login-container">
+<div class="login-page">
   <div class="login-card">
-    <div class="login-left">
-      <h1>Fidelis</h1>
-      <p>Gerencie suas despesas, receitas e metas com eficiência.</p>
-      <img src="assets/img/fidelis.png" alt="Finance Icon">
+    <div class="login-visual">
+      <div class="visual-content">
+        <h1>Fidelis</h1>
+        <p>A gestão financeira intuitiva que você merece.</p>
+        <div class="image-wrapper">
+          <img src="assets/img/fidelis.png" alt="Finance Icon">
+        </div>
+      </div>
     </div>
 
-    <div class="login-right">
-      <form (ngSubmit)="onLogin()" #loginForm="ngForm" class="form">
-        <div class="input-group">
-          <label>Nome/Login</label>
-          <input type="text" id="username" placeholder="Usuário" required [(ngModel)]="username" name="username">
-        </div>
+    <div class="login-form">
+      <div class="form-wrapper">
+        <h2>Bem-vindo de volta</h2>
+        <p class="subtitle">Acesse sua conta para continuar</p>
 
-        <div class="input-group">
-          <label>Senha</label>
-          <input type="password" placeholder="Senha" id="password" required [(ngModel)]="password" name="password">
-        </div>
+        <form (ngSubmit)="onLogin()" #loginForm="ngForm" class="form">
+          <div class="input-group">
+            <label for="username">Usuário</label>
+            <div class="input-wrapper">
+              <i class="bi bi-person"></i>
+              <input type="text" id="username" placeholder="Seu nome de usuário" required [(ngModel)]="username"
+                name="username">
+            </div>
+          </div>
 
-        <div class="button">
-            <button type="submit" class="btn-login">Login</button>
-            <button type="button" (click)="registrar()" class="btn-login">Cadastrar</button>
-        </div>
+          <div class="input-group">
+            <label for="password">Senha</label>
+            <div class="input-wrapper">
+              <i class="bi bi-lock"></i>
+              <input type="password" id="password" placeholder="Sua senha secreta" required [(ngModel)]="password"
+                name="password">
+            </div>
+          </div>
 
-        <a class="forgot" href="#">Esqueci minha senha</a>
-      </form>
+          <div class="actions">
+            <button type="submit" class="btn-primary">Entrar</button>
+            <button type="button" (click)="registrar()" class="btn-secondary">Criar conta</button>
+          </div>
+
+          <div class="footer-links">
+            <a class="forgot" href="#">Esqueci minha senha</a>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </div>
