@@ -28,6 +28,7 @@
   opacity: 0.1;
   top: 10%;
   left: 10%;
+  pointer-events: none;
 }
 
 .login-page::after {
@@ -40,6 +41,7 @@
   opacity: 0.1;
   bottom: 10%;
   right: 10%;
+  pointer-events: none;
 }
 
 .login-card {
@@ -55,6 +57,8 @@
   overflow: hidden;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
   margin: 20px;
+  position: relative;
+  z-index: 10;
 }
 
 /* Visual Side */
