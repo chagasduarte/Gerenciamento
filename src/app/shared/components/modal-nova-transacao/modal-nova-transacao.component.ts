@@ -85,9 +85,11 @@ export class ModalNovaTransacaoComponent implements OnInit {
         data: new Date(this.dataCompra),
         ispaycart: this.isCartao,
         parcelado: this.isParcelado,
+        idcategoria: this.categoriaId,
         parcelas: this.isParcelado ? this.requestParcela : null,
         cartaoid: this.cardId > 0 ? this.cardId : null
       };
+      console.log(payload);
       this.despesaService.PostTrasacoesParceladas(payload).subscribe({
         next: (success: TransacaoModel[]) => {
           if (success) {
@@ -104,8 +106,10 @@ export class ModalNovaTransacaoComponent implements OnInit {
     }
     else {
       this.novaDespesa.data = new Date(this.dataCompra);
+      this.novaDespesa.idcategoria = this.categoriaId;
       this.novaDespesa.ispaycart = this.isCartao;
       this.novaDespesa.cartaoid = this.cardId > 0 ? this.cardId : null;
+      console.log(this.novaDespesa);
       this.despesaService.PostTransacao(this.novaDespesa).subscribe(x => {
         this.preencheInformacoes();
         this.toastService.success("Despesa Gravada");

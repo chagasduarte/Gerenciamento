@@ -38,7 +38,7 @@ export class TransacoesService {
   }
 
   PostTrasacoesParceladas(payload: any): Observable<TransacaoModel[]> {
-    return this.http.post<TransacaoModel[]>(`${this.api}/transacoes/parceladas`, payload);
+    return this.http.post<TransacaoModel[]>(``, payload);
   }
 
   UpdateTransacao(id: number, entrada: TransacaoModel): Observable<TransacaoModel> {

@@ -13,6 +13,12 @@ import { TransacoesService } from '../../../shared/services/transacoes.service';
 import { forkJoin, lastValueFrom } from 'rxjs';
 import { Ano } from '../../../utils/meses';
 
+export interface GroupedParcelas {
+  mesAno: string;
+  transacoes: TransacaoModel[];
+  total: number;
+}
+
 @Component({
   selector: 'app-parcelas',
   standalone: true,
@@ -27,8 +33,10 @@ export class ParcelasComponent implements OnInit {
 
   ano!: Ano;
 
-  parcelas!: TransacaoModel[];
-  parcelasPagas!: TransacaoModel[];
+  parcelas: TransacaoModel[] = [];
+  parcelasPagas: TransacaoModel[] = [];
+  groupedParcelas: GroupedParcelas[] = [];
+
   contas!: Conta[];
   idConta: number = 1;
   listaPagamento: TransacaoModel[] = [];
@@ -49,8 +57,8 @@ export class ParcelasComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    this.buscaParcelas();
     this.ano = this.systemService.ano;
+    this.buscaParcelas();
   }
 
   buscaParcelas() {
@@ -59,18 +67,58 @@ export class ParcelasComponent implements OnInit {
         this.nomeDespesa = success.descricao
         this.transacoesService.GetParcelas(this.nomeDespesa).subscribe(x => {
           this.parcelasPagas = x.despesa.filter(x => x.status == 'pago');
-          this.parcelas = x.despesa.filter(x => x.status == 'pendente' && new Date(x.data).getUTCFullYear() == this.ano.valor);
+          this.parcelas = x.despesa.filter(x => x.status == 'pendente');
 
-          this.somaAbertos = this.parcelas.reduce((acc, p) => ({
-            soma: acc.soma + parseFloat(p.valor.toString())
-          }), { soma: 0 }).soma;
+          this.somaAbertos = this.parcelas.reduce((acc, p) => acc + parseFloat(p.valor.toString()), 0);
+          this.somaPagos = this.parcelasPagas.reduce((acc, p) => acc + parseFloat(p.valor.toString()), 0);
 
-          this.somaPagos = this.parcelasPagas.reduce((acc, p) => ({
-            soma: acc.soma + parseFloat(p.valor.toString())
-          }), { soma: 0 }).soma;
+          this.groupAndSortParcelas([...this.parcelas, ...this.parcelasPagas]);
         });
       }
     });
+  }
+
+  groupAndSortParcelas(allParcelas: TransacaoModel[]) {
+    // Sort all by date first
+    allParcelas.sort((a, b) => new Date(a.data).getTime() - new Date(b.data).getTime());
+
+    const groups: { [key: string]: GroupedParcelas } = {};
+    const meses = [
+      "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+      "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+    ];
+
+    allParcelas.forEach(p => {
+      const date = new Date(p.data);
+      const key = `${meses[date.getUTCMonth()]} ${date.getUTCFullYear()}`;
+
+      if (!groups[key]) {
+        groups[key] = {
+          mesAno: key,
+          transacoes: [],
+          total: 0
+        };
+      }
+      groups[key].transacoes.push(p);
+      groups[key].total += parseFloat(p.valor.toString());
+    });
+
+    // Convert back to array and ensure groups are chronological
+    this.groupedParcelas = Object.values(groups).sort((a, b) => {
+      const dateA = this.parseMesAno(a.mesAno);
+      const dateB = this.parseMesAno(b.mesAno);
+      return dateA.getTime() - dateB.getTime();
+    });
+  }
+
+  private parseMesAno(mesAno: string): Date {
+    const [mesNome, ano] = mesAno.split(' ');
+    const meses = [
+      "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+      "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+    ];
+    const mesIndex = meses.indexOf(mesNome);
+    return new Date(parseInt(ano), mesIndex, 1);
   }
 
   async pagar() {
@@ -87,6 +135,7 @@ export class ParcelasComponent implements OnInit {
       this.systemService.atualizarResumo();
       this.buscaParcelas();
       this.totalPagar = 0;
+      this.listaPagamento = [];
     } catch (error) {
       console.error(error);
       this.toastr.error("Erro ao pagar despesas");
@@ -95,9 +144,9 @@ export class ParcelasComponent implements OnInit {
   async apagarDespesaCompleta() {
     if (this.parcelas.length === 0) return;
     try {
-      const promise = this.parcelas.map(item => {
+      const promise = this.parcelas.map(item =>
         lastValueFrom(this.transacoesService.DeleteTransacao(item.id))
-      });
+      );
       await Promise.all(promise);
       this.toastr.success("Parcelas Deletadas");
       this.systemService.atualizarResumo();

@@ -4,6 +4,7 @@ export class TransacaoModel {
     tipo!: string
     valor!: number
     categoria!: number
+    idcategoria?: number;
     data!: Date
     status!: string
     criado_em!: Date
