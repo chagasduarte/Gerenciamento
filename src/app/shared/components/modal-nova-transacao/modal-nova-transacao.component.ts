@@ -14,6 +14,7 @@ import { SubcategoriaService } from '../../services/subcategoria.service';
 import { Subcategoria } from '../../models/subcategoria.model';
 import { Cartao } from '../../models/cartao.model';
 import { CartaoService } from '../../services/cartao.service';
+import { CategoriaMap, converterArquivoCsvParaTransacoes } from '../../../utils/functions/importar-fatura.util';
 
 @Component({
   selector: 'app-modal-nova-transacao',
@@ -59,6 +60,12 @@ export class ModalNovaTransacaoComponent implements OnInit {
   categoriaId!: number;
   cardId: number = 0;
   cartao!: Cartao[];
+  nomeArquivo!: string;
+  transacoes: TransacaoModel[] = [];
+  cartoes = [{ id: 1, nome: 'Inter' }]; // exemplo
+  cartaoSelecionado: number | null = null;
+  importando = false;
+  mensagem = '';
 
 
   constructor(
@@ -87,20 +94,22 @@ export class ModalNovaTransacaoComponent implements OnInit {
         parcelado: this.isParcelado,
         idcategoria: this.categoriaId,
         parcelas: this.isParcelado ? this.requestParcela : null,
-        cartaoid: this.cardId > 0 ? this.cardId : null
+        cartaoid: this.cardId > 0 ? this.cardId : 0
       };
       console.log(payload);
-      this.despesaService.PostTrasacoesParceladas(payload).subscribe({
+      this.despesaService.PostTransacoesParceladas(payload).subscribe({
         next: (success: TransacaoModel[]) => {
           if (success) {
             this.preencheInformacoes();
             this.toastService.success("Parcelas Gravadas");
             this.despesaService.notificarAlteracao();
             this.systemService.atualizarResumo();
+            this.fecharModal();
           }
         },
-        error: (err) => {
-          this.toastService.error(err.message);
+        error: (err: any) => {
+          const message = err.error?.message || err.error || err.message || "Erro desconhecido";
+          this.toastService.error(message);
         },
       })
     }
@@ -108,16 +117,16 @@ export class ModalNovaTransacaoComponent implements OnInit {
       this.novaDespesa.data = new Date(this.dataCompra);
       this.novaDespesa.idcategoria = this.categoriaId;
       this.novaDespesa.ispaycart = this.isCartao;
-      this.novaDespesa.cartaoid = this.cardId > 0 ? this.cardId : null;
+      this.novaDespesa.cartaoid = this.cardId > 0 ? this.cardId : 0;
       console.log(this.novaDespesa);
       this.despesaService.PostTransacao(this.novaDespesa).subscribe(x => {
         this.preencheInformacoes();
         this.toastService.success("Despesa Gravada");
         this.despesaService.notificarAlteracao();
         this.systemService.atualizarResumo();
+        this.fecharModal();
       });
     }
-    this.fecharModal();
   }
   listaCartoes() {
     this.cartoesService.listar().subscribe({
@@ -167,5 +176,32 @@ export class ModalNovaTransacaoComponent implements OnInit {
         this.subcategorias = success;
       }
     });
+  }
+
+  async onFile(ev: Event) {
+
+    const input = ev.target as HTMLInputElement;
+    const file = input.files?.[0];
+    if (!file) return;
+
+    const categoriaMap: CategoriaMap = {
+      'SUPERMERCADO': 3,
+      'RESTAURANTES': 5,
+      'OUTROS': 9,
+    };
+
+    const transacoes = await converterArquivoCsvParaTransacoes(file, {
+      cartaoId: 1,              // <-- seu cartaoid aqui
+      categoriaMap,
+      statusPadrao: 'pendente',
+      tipoPadrao: 'saida',
+      isPayCartPadrao: true
+    });
+
+    var result = await this.despesaService.enviarUmPorUm(transacoes).subscribe({
+      next: (salvas) => console.log('Importadas:', salvas.length),
+      error: (err) => console.error('Erro ao importar:', err)
+    });
+    console.log(result);
   }
 }

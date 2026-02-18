@@ -184,3 +184,9 @@
   color: #d1e8ec;
   width: 100%;
 }
+
+.row-item.evidencia {
+  background: rgba(239, 68, 68, 0.05);
+  border-left: 4px solid #ef4444;
+  padding-left: 8px;
+}

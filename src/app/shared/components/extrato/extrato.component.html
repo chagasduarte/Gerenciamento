@@ -73,11 +73,11 @@
     </div>
 
     <!-- Row -->
-    <div class="row-item">
+    <div class="row-item" [class.evidencia]="item.categoria === 0">
       <input type="checkbox" [(ngModel)]="item.selecionado" (change)="atualizarSelecionarTodos()" />
 
       <div class="transaction">
-        <div class="icon">
+        <div class="icon" (click)="abrirEdicao(item)" style="cursor: pointer;">
           <img [src]="defineImagem(item.categoria)" style="width: 50px; height: 50px;" alt="">
         </div>
       </div>
@@ -110,3 +110,4 @@
 </div>
 
 <app-modal-nova-transacao></app-modal-nova-transacao>
+<app-modal-editar-transacao></app-modal-editar-transacao>

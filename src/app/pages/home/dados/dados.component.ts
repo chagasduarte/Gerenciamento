@@ -107,7 +107,7 @@ export class DadosComponent implements OnInit {
         parcelado: this.isParcelado,
         parcelas: this.isParcelado ? this.requestParcela : null
       };
-      this.despesaService.PostTrasacoesParceladas(payload).subscribe({
+      this.despesaService.PostTransacoesParceladas(payload).subscribe({
         next: (success: TransacaoModel[]) => {
           if (success) {
             this.preencheInformacoes();

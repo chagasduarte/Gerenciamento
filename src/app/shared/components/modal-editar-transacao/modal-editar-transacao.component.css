@@ -1,0 +1,54 @@
+/* Estilos para o modal de edição */
+.modal.show {
+    padding-right: 17px;
+    display: block;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    border-radius: 15px;
+    border: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+    border-bottom: 1px solid #eee;
+    padding: 20px 25px;
+}
+
+.modal-footer {
+    border-top: 1px solid #eee;
+    padding: 15px 25px;
+}
+
+.form-label {
+    font-weight: 500;
+    color: #555;
+    margin-bottom: 8px;
+}
+
+.form-control,
+.form-select {
+    border-radius: 8px;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+}
+
+.form-control:focus,
+.form-select:focus {
+    box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.1);
+    border-color: #198754;
+}
+
+.btn-success {
+    background-color: #198754;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.btn-secondary {
+    padding: 10px 25px;
+    border-radius: 8px;
+}

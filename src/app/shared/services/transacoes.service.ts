@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AppSettingsService } from './app-settings.service';
 import { Entrada } from '../models/entradas';
-import { Observable, Subject } from 'rxjs';
+import { concatMap, from, Observable, Subject, toArray } from 'rxjs';
 import { ResumoMensal } from '../models/resumo.model';
 import { Parcelas, TransacaoModel, Transacoes } from '../models/despesa.model';
 import { DespesasParceladasResponse } from '../models/despesasParceladas.model';
@@ -37,7 +37,7 @@ export class TransacoesService {
     return this.http.post<TransacaoModel>(`${this.api}/transacoes`, entrada);
   }
 
-  PostTrasacoesParceladas(payload: any): Observable<TransacaoModel[]> {
+  PostTransacoesParceladas(payload: any): Observable<TransacaoModel[]> {
     return this.http.post<TransacaoModel[]>(`${this.api}/transacoes/parceladas`, payload);
   }
 
@@ -102,5 +102,12 @@ export class TransacoesService {
 
   Extrato(limit: number, mes: number, ano: number): Observable<TransacaoModel[]> {
     return this.http.get<TransacaoModel[]>(`${this.api}/transacoes/extrato?limit=${limit}&mes=${mes}&ano=${ano}`);
+  }
+
+  enviarUmPorUm(transacoes: TransacaoModel[]): Observable<TransacaoModel[]> {
+    return from(transacoes).pipe(
+      concatMap((t) => this.http.post<TransacaoModel>(`${this.api}/transacoes`, t)),
+      toArray()
+    );
   }
 }

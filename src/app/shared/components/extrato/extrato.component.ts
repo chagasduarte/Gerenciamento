@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { TransacaoModel } from '../../models/despesa.model';
 import { TransacoesService } from '../../services/transacoes.service';
 import { CommonModule } from '@angular/common';
@@ -6,6 +6,7 @@ import { SystemService } from '../../services/system.service';
 import { combineLatest, forkJoin } from 'rxjs';
 import { Router } from '@angular/router';
 import { ModalNovaTransacaoComponent } from "../modal-nova-transacao/modal-nova-transacao.component";
+import { ModalEditarTransacaoComponent } from "../modal-editar-transacao/modal-editar-transacao.component";
 import { ToastrService } from 'ngx-toastr';
 import { SubcategoriaService } from '../../services/subcategoria.service';
 import { Subcategoria } from '../../models/subcategoria.model';
@@ -19,6 +20,7 @@ import { Subscription } from 'rxjs';
   imports: [
     CommonModule,
     ModalNovaTransacaoComponent,
+    ModalEditarTransacaoComponent,
     FormsModule
   ],
   templateUrl: './extrato.component.html',
@@ -39,6 +41,7 @@ export class ExtratoComponent implements OnInit {
   selecionaTodos = false;
   soma = 0;
   private subscription = new Subscription();
+  @ViewChild(ModalEditarTransacaoComponent) modalEditar!: ModalEditarTransacaoComponent;
 
   filtroTipo: string = 'todos';
   filtroTexto: string = '';
@@ -103,6 +106,10 @@ export class ExtratoComponent implements OnInit {
 
   defineImagem(tipoDespesa: number): string {
     return this.subcategorias.find(x => x.id == tipoDespesa)?.icone!;
+  }
+
+  abrirEdicao(item: TransacaoModel) {
+    this.modalEditar.prepararEdicao(item);
   }
   toEstrato() {
     this.router.navigate(['extrato']);

@@ -1,0 +1,90 @@
+<div class="modal fade" id="editTransacaoModal" tabindex="-1" aria-labelledby="editTransacaoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="editTransacaoLabel">Editar Transação</h5>
+                <button type="button" class="btn-close" (click)="fecharModal()" aria-label="Fechar"></button>
+            </div>
+
+            <div class="modal-body">
+                <form (ngSubmit)="salvar()" #form="ngForm">
+
+                    <!-- Descrição -->
+                    <div class="mb-3">
+                        <label for="edit-descricao" class="form-label">Descrição</label>
+                        <input type="text" id="edit-descricao" name="descricao" class="form-control" required
+                            [(ngModel)]="transacao.descricao">
+                    </div>
+
+                    <!-- Tipo -->
+                    <div class="mb-3">
+                        <label for="edit-tipo" class="form-label">Tipo</label>
+                        <select id="edit-tipo" name="tipo" class="form-select" required [(ngModel)]="transacao.tipo">
+                            <option value="entrada">Entrada</option>
+                            <option value="saida">Saída</option>
+                        </select>
+                    </div>
+
+                    <!-- Categoria -->
+                    <div class="mb-3">
+                        <label for="edit-categoria" class="form-label">Categoria</label>
+                        <select id="edit-categoria" name="categoriaPai" class="form-select" [(ngModel)]="categoriaId"
+                            required (change)="carregarSubcategorias(categoriaId)">
+                            <option [value]="categoria.id" *ngFor="let categoria of categorias">{{categoria.nome}}
+                            </option>
+                        </select>
+                    </div>
+
+                    <!-- SubCategoria -->
+                    <div class="mb-3">
+                        <label for="edit-subcategoria" class="form-label">Subcategoria</label>
+                        <select id="edit-subcategoria" name="categoria" class="form-select" required
+                            [(ngModel)]="transacao.categoria">
+                            <option [value]="cat.id" *ngFor="let cat of subcategorias">{{cat.nome}}</option>
+                        </select>
+                    </div>
+
+                    <!-- Valor -->
+                    <div class="mb-3">
+                        <label for="edit-valor" class="form-label">Valor</label>
+                        <input type="number" id="edit-valor" name="valor" class="form-control" required
+                            [(ngModel)]="transacao.valor">
+                    </div>
+
+                    <!-- Data -->
+                    <div class="mb-3">
+                        <label for="edit-dataCompra" class="form-label">Data</label>
+                        <input type="date" id="edit-dataCompra" name="dataCompra" class="form-control" required
+                            [(ngModel)]="dataCompra">
+                    </div>
+
+                    <!-- Cartão -->
+                    <div class="form-check mb-2" *ngIf="transacao.tipo == 'saida'">
+                        <input class="form-check-input" type="checkbox" id="edit-isCartao" name="isCartao"
+                            [(ngModel)]="isCartao">
+                        <label class="form-check-label" for="edit-isCartao">Pago com cartão</label>
+                    </div>
+
+                    <div *ngIf="isCartao && transacao.tipo == 'saida'" class="border rounded p-3 mb-3">
+                        <div class="mb-3">
+                            <label for="edit-cardId" class="form-label">Cartão:</label>
+                            <select class="form-select" [(ngModel)]="transacao.cartaoid" name="cartaoid"
+                                id="edit-cardId">
+                                <option [ngValue]="card.id" *ngFor="let card of cartoes">{{card.nome}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="fecharModal()">Cancelar</button>
+                <button type="button" class="btn btn-success" (click)="salvar()" [disabled]="!form.valid">Salvar
+                    Alterações</button>
+            </div>
+
+        </div>
+    </div>
+</div>

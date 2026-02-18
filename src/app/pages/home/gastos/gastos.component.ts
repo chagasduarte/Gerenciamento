@@ -16,16 +16,16 @@ import { CartaoService } from '../../../shared/services/cartao.service';
 import { Cartao } from '../../../shared/models/cartao.model';
 
 @Component({
-    selector: 'app-gastos',
-    standalone: true,
-    imports: [
+  selector: 'app-gastos',
+  standalone: true,
+  imports: [
     CommonModule,
     FormsModule
-],
-    templateUrl: './gastos.component.html',
-    styleUrl: './gastos.component.css'
+  ],
+  templateUrl: './gastos.component.html',
+  styleUrl: './gastos.component.css'
 })
-export class GastosComponent implements OnInit{
+export class GastosComponent implements OnInit {
 
 
   gastos!: TransacaoModel[];
@@ -38,19 +38,19 @@ export class GastosComponent implements OnInit{
 
   novo: Transacoes = {} as Transacoes;
   showCard = false;
-  novaDespesa: TransacaoModel = 
-  {
-    categoria: 0,
-    descricao: '',
-    criado_em: new Date(),
-    data: new Date(),
-    id: 0,
-    status: 'pendente',
-    ispaycart: false,
-    tipo: 'saida',
-    valor: 0,
-    cartaoid: null
-  };
+  novaDespesa: TransacaoModel =
+    {
+      categoria: 0,
+      descricao: '',
+      criado_em: new Date(),
+      data: new Date(),
+      id: 0,
+      status: 'pendente',
+      ispaycart: false,
+      tipo: 'saida',
+      valor: 0,
+      cartaoid: null
+    };
   dataCompra: string = '';
   isCartao: boolean = false;
   isParcelado: boolean = false;
@@ -61,14 +61,14 @@ export class GastosComponent implements OnInit{
   };
   cartao!: Cartao[];
   cardId: number = 0;
-  
+
   constructor(
-   private readonly router: Router,
-   private readonly systemsService: SystemService,
-   private readonly toastService: ToastrService,
-   private readonly transacoesService: TransacoesService,
-   private readonly cartoesService: CartaoService
-  ){
+    private readonly router: Router,
+    private readonly systemsService: SystemService,
+    private readonly toastService: ToastrService,
+    private readonly transacoesService: TransacoesService,
+    private readonly cartoesService: CartaoService
+  ) {
   }
   ngOnInit(): void {
     this.listaDespesas(this.cardId);
@@ -77,7 +77,7 @@ export class GastosComponent implements OnInit{
   }
 
   salvarTransacao() {
-    
+
     if (this.isParcelado) {
       const payload = {
         ...this.novaDespesa,
@@ -87,31 +87,33 @@ export class GastosComponent implements OnInit{
         parcelas: this.isParcelado ? this.requestParcela : null,
         cartaoid: this.cardId
       };
-      this.transacoesService.PostTrasacoesParceladas(payload).subscribe({
+      this.transacoesService.PostTransacoesParceladas(payload).subscribe({
         next: (success: TransacaoModel[]) => {
           if (success) {
             this.listaDespesas(this.cardId);
             this.toastService.success("Parcelas Gravadas");
+            this.fecharModal();
           }
         },
-        error: (err) => {
-          this.toastService.error(err.erro);
+        error: (err: any) => {
+          const message = err.error?.message || err.error || err.message || "Erro desconhecido";
+          this.toastService.error(message);
         },
       })
     }
     else {
       this.novaDespesa.data = new Date(this.dataCompra);
       this.novaDespesa.ispaycart = this.isCartao;
-      this.novaDespesa.cartaoid = this.cardId;
+      this.novaDespesa.cartaoid = this.cardId > 0 ? this.cardId : 0;
 
       this.transacoesService.PostTransacao(this.novaDespesa).subscribe(x => {
         this.listaDespesas(null);
         this.toastService.success("Despesa Gravada");
+        this.fecharModal();
       });
     }
-    this.fecharModal();
   }
-  listaCartoes(){
+  listaCartoes() {
     this.cartoesService.listar().subscribe({
       next: (success) => {
         this.cartao = success;
@@ -133,7 +135,7 @@ export class GastosComponent implements OnInit{
 
   listaDespesas(cardId: number | string | null) {
     cardId = Number(cardId); // converte para número
-    
+
     combineLatest([
       this.systemsService.ano$,
       this.systemsService.mes$
@@ -146,19 +148,19 @@ export class GastosComponent implements OnInit{
     });
   }
 
-  adicionarListaPagamento(despesa: TransacaoModel){
+  adicionarListaPagamento(despesa: TransacaoModel) {
     this.totalPagar += parseFloat(despesa.valor.toString());
     this.listaPagamento.push(despesa);
     despesa.adicionada = true;
   }
-  
-  removedaListaPagamento(despesa: TransacaoModel){
+
+  removedaListaPagamento(despesa: TransacaoModel) {
     this.totalPagar -= parseFloat(despesa.valor.toString());
-    this.listaPagamento = this.listaPagamento.filter( x => x.id != despesa.id );
+    this.listaPagamento = this.listaPagamento.filter(x => x.id != despesa.id);
     despesa.adicionada = false;
   }
-  
-  apagar(id: number){
+
+  apagar(id: number) {
     this.transacoesService.DeleteTransacao(id).subscribe(x => {
       this.toastService.success("Despesa deletada!!");
       this.systemsService.atualizarResumo();
@@ -166,25 +168,25 @@ export class GastosComponent implements OnInit{
     })
   }
   async pagar() {
-      if (this.listaPagamento.length === 0) return;
-  
-      try {
-        const promises = this.listaPagamento.map(item =>
-          lastValueFrom(this.transacoesService.PutEntrada(item.id))
-        );
-  
-        await Promise.all(promises);
-  
-        this.toastService.success("Despesas pagas");
-        this.systemsService.atualizarResumo();
-        this.listaPagamento = [];
-        this.listaDespesas(this.cardId);
+    if (this.listaPagamento.length === 0) return;
 
-      } catch (error) {
-        console.error(error);
-        this.toastService.error("Erro ao pagar despesas");
-      }
+    try {
+      const promises = this.listaPagamento.map(item =>
+        lastValueFrom(this.transacoesService.PutEntrada(item.id))
+      );
+
+      await Promise.all(promises);
+
+      this.toastService.success("Despesas pagas");
+      this.systemsService.atualizarResumo();
+      this.listaPagamento = [];
+      this.listaDespesas(this.cardId);
+
+    } catch (error) {
+      console.error(error);
+      this.toastService.error("Erro ao pagar despesas");
     }
+  }
   Voltar() {
     this.router.navigate(["home"]);
   }
@@ -194,12 +196,12 @@ export class GastosComponent implements OnInit{
     this.router.navigate(["despesas"]);
   }
 
-  
+
   DefineCorParcela(parcela: Date | string): string {
-    return new Date(parcela) < new Date()? "#af6e6e" : "#b1ca78";
+    return new Date(parcela) < new Date() ? "#af6e6e" : "#b1ca78";
   }
 
-  objetivos(){
+  objetivos() {
     this.router.navigate(['objetivos'])
   }
 
