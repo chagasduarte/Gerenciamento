@@ -17,6 +17,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { ConfigComponent } from './pages/config/config.component';
 import { ExtratoComponent } from './shared/components/extrato/extrato.component';
 import { PlanosComponent } from './pages/home/planos/planos.component';
+import { CategoriasComponent } from './pages/home/categorias/categorias.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -39,6 +40,7 @@ export const routes: Routes = [
       { path: "investimentos", component: InvestimentosComponent, canActivate: [AuthGuard] },
       { path: "extrato", component: ExtratoComponent, canActivate: [AuthGuard] },
       { path: "cartoes", loadComponent: () => import('./pages/home/cartao/cartao.component').then(m => m.CartaoComponent), canActivate: [AuthGuard] },
+      { path: "categorias", component: CategoriasComponent, canActivate: [AuthGuard] },
       { path: "objetivos", component: ObjetivosComponent, canActivate: [AuthGuard] },
       { path: "planos", component: PlanosComponent, canActivate: [AuthGuard] }
     ],

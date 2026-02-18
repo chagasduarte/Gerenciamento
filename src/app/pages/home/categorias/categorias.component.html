@@ -1,0 +1,134 @@
+<div class="row">
+    <!-- Listagem de Categorias -->
+    <div class="col-md-4">
+        <div class="header-section">
+            <h3 class="title">Categorias</h3>
+        </div>
+
+        <div class="cards-grid">
+            <div class="category-item sombra" [class.active]="categoriaSelecionada?.id === categoria.id"
+                *ngFor="let categoria of categorias" (click)="selecionarCategoria(categoria)">
+                <div class="category-accent" [style.background-color]="categoria.cor"></div>
+                <div class="category-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center gap-2">
+                            <img *ngIf="categoria.icone" [src]="categoria.icone" class="cat-icon" alt="">
+                            <h5 class="mb-0">{{categoria.nome}}</h5>
+                        </div>
+                        <div class="actions">
+                            <button class="btn-icon" (click)="editarCategoria(categoria); $event.stopPropagation()">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+                            <button class="btn-icon text-danger"
+                                (click)="deletarCategoria(categoria.id); $event.stopPropagation()">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="no-items sombra" *ngIf="categorias.length === 0 && !loading">
+                <p>Nenhuma categoria encontrada.</p>
+            </div>
+        </div>
+
+        <!-- Formulário de Categoria -->
+        <div class="form-section sombra mt-4">
+            <h5>{{ novaCategoria.id ? 'Editar Categoria' : 'Nova Categoria' }}</h5>
+            <div class="mb-3">
+                <label class="form-label">Nome</label>
+                <input type="text" class="form-control" [(ngModel)]="novaCategoria.nome" placeholder="Ex: Alimentação">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Ícone (URL)</label>
+                <input type="text" class="form-control" [(ngModel)]="novaCategoria.icone" placeholder="URL da imagem">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Cor</label>
+                <input type="color" class="form-control form-control-color w-100" [(ngModel)]="novaCategoria.cor">
+            </div>
+            <div class="d-flex gap-2">
+                <button class="btn btn-outline-secondary w-50" *ngIf="novaCategoria.id"
+                    (click)="cancelarEdicaoCategoria()">Cancelar</button>
+                <button class="btn btn-success" [class.w-100]="!novaCategoria.id" [class.w-50]="novaCategoria.id"
+                    (click)="salvarCategoria()" [disabled]="loading">
+                    {{ novaCategoria.id ? 'Atualizar' : 'Salvar' }}
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Subcategorias da Categoria Selecionada -->
+    <div class="col-md-8">
+        <div *ngIf="categoriaSelecionada; else selectPrompt">
+            <div class="header-section">
+                <h3 class="title">Subcategorias de: <span
+                        [style.color]="categoriaSelecionada.cor">{{categoriaSelecionada.nome}}</span></h3>
+            </div>
+
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="sub-grid">
+                        <div class="sub-item sombra" *ngFor="let sub of subcategorias">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center gap-2">
+                                    <img *ngIf="sub.icone" [src]="sub.icone" class="sub-icon" alt="">
+                                    <span>{{sub.nome}}</span>
+                                </div>
+                                <div class="actions">
+                                    <button class="btn-icon" (click)="editarSubcategoria(sub)">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                    <button class="btn-icon text-danger" (click)="deletarSubcategoria(sub.id)">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="no-items sombra" *ngIf="subcategorias.length === 0 && !loading">
+                            <p>Esta categoria ainda não possui subcategorias.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="form-section sombra">
+                        <h5>{{ novaSubcategoria.id ? 'Editar Subcategoria' : 'Nova Subcategoria' }}</h5>
+                        <div class="mb-3">
+                            <label class="form-label">Nome</label>
+                            <input type="text" class="form-control" [(ngModel)]="novaSubcategoria.nome"
+                                placeholder="Ex: Supermercado">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Ícone (URL)</label>
+                            <input type="text" class="form-control" [(ngModel)]="novaSubcategoria.icone"
+                                placeholder="URL da imagem">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Cor</label>
+                            <input type="color" class="form-control form-control-color w-100"
+                                [(ngModel)]="novaSubcategoria.cor">
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-outline-secondary w-50" *ngIf="novaSubcategoria.id"
+                                (click)="cancelarEdicaoSubcategoria()">Cancelar</button>
+                            <button class="btn btn-success" [class.w-100]="!novaSubcategoria.id"
+                                [class.w-50]="novaSubcategoria.id" (click)="salvarSubcategoria()" [disabled]="loading">
+                                {{ novaSubcategoria.id ? 'Atualizar' : 'Salvar' }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <ng-template #selectPrompt>
+            <div class="select-prompt sombra">
+                <i class="bi bi-arrow-left-circle display-4 mb-3"></i>
+                <h4>Selecione uma categoria</h4>
+                <p>Para gerenciar suas subcategorias, escolha uma categoria na lista ao lado.</p>
+            </div>
+        </ng-template>
+    </div>
+</div>

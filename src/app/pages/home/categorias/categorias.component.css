@@ -1,0 +1,134 @@
+.title {
+    color: #7ac27a;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.cards-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.category-item {
+    background: #021c22;
+    border-radius: 12px;
+    cursor: pointer;
+    overflow: hidden;
+    display: flex;
+    transition: transform 0.2s, background 0.2s;
+    border: 1px solid #0b2e36;
+}
+
+.category-item:hover {
+    background: rgba(11, 46, 54, 0.4);
+    transform: translateX(5px);
+}
+
+.category-item.active {
+    background: rgba(122, 194, 122, 0.1);
+    border-color: #7ac27a;
+}
+
+.category-accent {
+    width: 6px;
+}
+
+.category-body {
+    padding: 15px;
+    flex: 1;
+}
+
+.cat-icon,
+.sub-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+.btn-icon {
+    background: transparent;
+    border: none;
+    color: #64748b;
+    padding: 5px;
+    border-radius: 4px;
+    transition: background 0.2s, color 0.2s;
+}
+
+.btn-icon:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: #7ac27a;
+}
+
+.btn-icon.text-danger:hover {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+}
+
+.form-section {
+    background: #021c22;
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid #0b2e36;
+}
+
+.form-section h5 {
+    color: #7ac27a;
+    margin-bottom: 20px;
+}
+
+.form-label {
+    color: #d1e8ec;
+    font-size: 14px;
+}
+
+.form-control,
+.form-select {
+    background: #011418;
+    border-color: #0b2e36;
+    color: #d1e8ec;
+}
+
+.form-control:focus {
+    background: #011418;
+    color: #d1e8ec;
+    border-color: #7ac27a;
+    box-shadow: 0 0 0 0.25rem rgba(122, 194, 122, 0.1);
+}
+
+.sub-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sub-item {
+    background: #021c22;
+    padding: 12px 15px;
+    border-radius: 10px;
+    border: 1px solid #0b2e36;
+    color: #d1e8ec;
+}
+
+.select-prompt {
+    background: #021c22;
+    border-radius: 18px;
+    padding: 60px;
+    text-align: center;
+    color: #64748b;
+    border: 1px solid #0b2e36;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.no-items {
+    padding: 20px;
+    text-align: center;
+    color: #64748b;
+    background: #021c22;
+    border-radius: 12px;
+    border: 1px dashed #0b2e36;
+}
