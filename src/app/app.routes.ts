@@ -5,7 +5,7 @@ import { EntradasComponent } from './pages/home/entradas/entradas.component';
 import { ParcelasComponent } from './pages/home/parcelas/parcelas.component';
 import { GastosComponent } from './pages/home/gastos/gastos.component';
 import { EntradaDetalhesComponent } from './pages/home/entrada-detalhes/entrada-detalhes.component';
-import { LoginComponent } from './pages/loggin/loggin.component';
+import { LandingComponent } from './pages/landing/landing.component';
 import { AuthGuard } from './shared/guard/auth.guard';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { IndexComponent } from './pages/home/index/index.component';
@@ -20,7 +20,7 @@ import { PlanosComponent } from './pages/home/planos/planos.component';
 import { CategoriasComponent } from './pages/home/categorias/categorias.component';
 
 export const routes: Routes = [
-  { path: 'login', component: LoginComponent },
+  { path: 'login', component: LandingComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'config', component: ConfigComponent, canActivate: [AuthGuard] },
   {

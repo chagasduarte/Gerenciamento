@@ -1,0 +1,109 @@
+<div class="landing-container">
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="brand-info">
+        <h1 class="logo-text">Fidelis</h1>
+        <p class="tagline">A gestão financeira intuitiva que você merece.</p>
+        <div class="hero-actions">
+          <button class="btn-ghost" (click)="scrollToDescription()">Saiba mais</button>
+        </div>
+      </div>
+
+      <div class="login-box">
+        <div class="login-card">
+          <h2>Acesse sua conta</h2>
+          <p class="subtitle">Bem-vindo de volta!</p>
+
+          <form (ngSubmit)="onLogin()" #loginForm="ngForm" class="form">
+            <div class="input-group">
+              <label for="username">Usuário</label>
+              <div class="input-wrapper">
+                <i class="bi bi-person"></i>
+                <input type="text" id="username" placeholder="Nome de usuário" required [(ngModel)]="username" name="username">
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="password">Senha</label>
+              <div class="input-wrapper">
+                <i class="bi bi-lock"></i>
+                <input type="password" id="password" placeholder="Sua senha" required [(ngModel)]="password" name="password">
+              </div>
+            </div>
+
+            <div class="actions">
+              <button type="submit" class="btn-primary">Entrar</button>
+              <button type="button" (click)="registrar()" class="btn-secondary">Criar conta</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Description Section -->
+  <section id="description" class="description">
+    <div class="container">
+      <div class="section-header">
+        <h2>Como o Fidelis funciona</h2>
+        <p>Transformamos a complexidade financeira em simplicidade visual.</p>
+      </div>
+
+      <div class="flow-steps">
+        <div class="step">
+          <div class="step-icon"><i class="bi bi-plus-circle"></i></div>
+          <h3>Registre tudo</h3>
+          <p>De pequenos gastos no café a grandes parcelamentos, anote tudo em segundos.</p>
+        </div>
+        <div class="step">
+          <div class="step-icon"><i class="bi bi-credit-card"></i></div>
+          <h3>Gerencie Cartões</h3>
+          <p>Acompanhe faturas de múltiplos cartões e saiba exatamente o quanto já comprometeu.</p>
+        </div>
+        <div class="step">
+          <div class="step-icon"><i class="bi bi-graph-up-arrow"></i></div>
+          <h3>Analise sua saúde</h3>
+          <p>Dashboards interativos mostram para onde seu dinheiro está indo em tempo real.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features">
+    <div class="container">
+      <div class="section-header">
+        <h2>Recursos Poderosos</h2>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <i class="bi bi-pie-chart"></i>
+          <h3>Dashboards Interativos</h3>
+          <p>Gráficos dinâmicos com AmCharts e ECharts para visualização clara de receitas e despesas.</p>
+        </div>
+        <div class="feature-card">
+          <i class="bi bi-filter-square"></i>
+          <h3>Filtros Avançados</h3>
+          <p>Busque por cartão, tipo de transação ou descrição em tempo real.</p>
+        </div>
+        <div class="feature-card">
+          <i class="bi bi-phone"></i>
+          <h3>Totalmente Responsivo</h3>
+          <p>Acesse de qualquer lugar. Experiência otimizada para Desktop e Mobile.</p>
+        </div>
+        <div class="feature-card">
+          <i class="bi bi-download"></i>
+          <h3>Suporte PWA</h3>
+          <p>Instale no seu celular como um aplicativo nativo para acesso rápido.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2026 Fidelis - Gestão Financeira Pessoal. Projeto desenvolvido com Angular 19.</p>
+  </footer>
+</div>
