@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../shared/services/auth.service';
-import { Router, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import 'cropperjs/dist/cropper.css';
 import { UsuarioService } from '../../shared/services/usuario.service';
@@ -13,7 +13,8 @@ import { UserRequest, Usuario } from '../../shared/models/user.model';
   selector: 'app-register',
   imports: [
     CommonModule,
-    ReactiveFormsModule,],
+    ReactiveFormsModule,
+    RouterLink],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
@@ -25,7 +26,7 @@ export class RegisterComponent implements AfterViewInit {
   @ViewChild('image') imageElement!: ElementRef<HTMLImageElement>;
   cropper: Cropper | null = null;
   imagePreview: string | null = null;
-  croppedImage: string | null = null;carregandoImg: any;
+  croppedImage: string | null = null; carregandoImg: any;
   isSaveEnabled: any;
 
 
@@ -41,7 +42,7 @@ export class RegisterComponent implements AfterViewInit {
       senha: ['', [Validators.required, Validators.minLength(6)]],
       confirmarSenha: ['', Validators.required],
       image: [null]
-    },{ validators: this.passwordMatchValidator });
+    }, { validators: this.passwordMatchValidator });
   }
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -66,7 +67,7 @@ export class RegisterComponent implements AfterViewInit {
       senha: this.form.value.senha,
       confirmarSenha: this.form.value.confirmarSenha,
     }
-  
+
     this.authService.register(request).subscribe({
       next: () => {
         this.authService.login(request.nome, request.senha).subscribe({
@@ -107,7 +108,7 @@ export class RegisterComponent implements AfterViewInit {
     }
     this.saveCroppedImage();
   }
-  
+
   saveCroppedImage() {
     if (!this.cropper) return;
 
@@ -115,7 +116,7 @@ export class RegisterComponent implements AfterViewInit {
       if (!blob) return;
 
       const file = new File([blob], 'avatar.png', { type: 'image/png' });
-      
+
       this.form.patchValue({
         image: file
       });
@@ -154,7 +155,7 @@ export class RegisterComponent implements AfterViewInit {
   }
 
 
-  
+
   async carregarImagem(): Promise<void> {
     try {
       this.userSerice.getAvatar(null).subscribe({
