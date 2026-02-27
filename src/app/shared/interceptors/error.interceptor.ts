@@ -13,14 +13,20 @@ import { Router } from '@angular/router';
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
-  constructor(private router: Router, private toastService: ToastrService) {}
+  constructor(private router: Router, private toastService: ToastrService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
         console.log(error.error.error)
         let mensagem = 'Ocorreu um erro inesperado.';
-       //// Implementar chain of reponsability
+
+        // Se for erro na IA, não redirecionar para login
+        if (req.url.includes('api.groq.com')) {
+          return throwError(() => error);
+        }
+
+        //// Implementar chain of reponsability
         if (error.status === 0) {
           mensagem = 'Falha na comunicação com o servidor.';
         } else if (error.status === 401 || error.status == 403) {
@@ -30,8 +36,8 @@ export class ErrorInterceptor implements HttpInterceptor {
           mensagem = 'Recurso não encontrado.';
         } else if (error.status === 500) {
           mensagem = 'Erro interno do servidor.';
-        } 
-        
+        }
+
         return throwError(() => new Error(mensagem));
       })
     );

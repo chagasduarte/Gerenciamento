@@ -1,12 +1,8 @@
-   
 <div class="paginas">
-    <router-outlet hidden></router-outlet>
+  <router-outlet hidden></router-outlet>
 </div>
-<ngx-spinner 
-  bdColor = "rgba(0, 0, 0, 0.8)" 
-  size = "medium" 
-  color = "#fff" 
-  type = "ball-zig-zag" 
-  [fullScreen] = "true">
-  <p style="color: white" > Loading... </p>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-zig-zag" [fullScreen]="true">
+  <p style="color: white"> Loading... </p>
 </ngx-spinner>
+
+<app-ai-chat></app-ai-chat>

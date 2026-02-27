@@ -1,5 +1,9 @@
 {
-    "appConfig":{
-        "WebApi": "https://novasapi.vercel.app"
+    "appConfig": {
+        "WebApi": "https://novasapi.vercel.app",
+        "AiApiKey": "SUA_CHAVE_AQUI",
+        "AiApiUrl": "https://api.groq.com/openai/v1/chat/completions",
+        "AiModelText": "llama-3.3-70b-versatile",
+        "AiModelVision": "llama-3.2-11b-vision-preview"
     }
 }

@@ -13,17 +13,17 @@ import { CommonModule } from '@angular/common';
 })
 export class AnosComponent {
   ano!: Ano;
-  anosDeDivida = [ 2025, 2026, 2027 ]
+  anosDeDivida = [2025, 2026, 2027]
   constructor(
     private readonly systemService: SystemService
-  ){
+  ) {
 
   }
 
   mudaAno(ano: number) {
     if (ano < 2024) return;
 
-    const mesAtual = 
+    const mesAtual =
       ano === new Date().getUTCFullYear() ? new Date().getUTCMonth() : 0;
 
     this.systemService.setAno(new Ano(ano));

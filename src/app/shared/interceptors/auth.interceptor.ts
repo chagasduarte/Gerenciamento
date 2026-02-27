@@ -6,10 +6,15 @@ import { AuthService } from '../services/auth.service';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = this.authService.token;
+
+    // Não adicionar token de autenticação local para chamadas externas (como Groq/AI)
+    if (req.url.includes('api.groq.com')) {
+      return next.handle(req);
+    }
 
     if (token) {
       const authReq = req.clone({
