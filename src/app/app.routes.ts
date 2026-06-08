@@ -10,6 +10,7 @@ import { AuthGuard } from './shared/guard/auth.guard';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { IndexComponent } from './pages/home/index/index.component';
 import { ObjetivosComponent } from './pages/home/objetivos/objetivos.component';
+import { BuscaTransacoesComponent } from './pages/home/busca-transacoes/busca-transacoes.component';
 import { PagamentosComponent } from './pages/home/pagamentos/pagamentos.component';
 import { DadosComponent } from './pages/home/dados/dados.component';
 import { InvestimentosComponent } from './pages/home/investimentos/investimentos.component';
@@ -35,13 +36,13 @@ export const routes: Routes = [
       { path: "entradas-detalhe", component: EntradaDetalhesComponent, canActivate: [AuthGuard] },
       { path: "dash", component: DashboardComponent, canActivate: [AuthGuard] },
       { path: "index", component: IndexComponent, canActivate: [AuthGuard] },
-      { path: "objetivos", component: ObjetivosComponent, canActivate: [AuthGuard] },
+      { path: "objetivos", component: BuscaTransacoesComponent, canActivate: [AuthGuard] },
       { path: "pagamentos", component: PagamentosComponent, canActivate: [AuthGuard] },
       { path: "investimentos", component: InvestimentosComponent, canActivate: [AuthGuard] },
       { path: "extrato", component: ExtratoComponent, canActivate: [AuthGuard] },
       { path: "cartoes", loadComponent: () => import('./pages/home/cartao/cartao.component').then(m => m.CartaoComponent), canActivate: [AuthGuard] },
       { path: "categorias", component: CategoriasComponent, canActivate: [AuthGuard] },
-      { path: "objetivos", component: ObjetivosComponent, canActivate: [AuthGuard] },
+      { path: "objetivos", component: BuscaTransacoesComponent, canActivate: [AuthGuard] },
       { path: "planos", component: PlanosComponent, canActivate: [AuthGuard] }
     ],
     canActivate: [AuthGuard]

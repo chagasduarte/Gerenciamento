@@ -1,0 +1,45 @@
+<div class="container">
+  <h3>Buscar Transações</h3>
+  
+  <div class="search-box">
+    <input type="text" class="form-control" placeholder="Digite o nome da transação..." [(ngModel)]="termoBusca" (keyup.enter)="buscar()">
+    <button class="btn btn-primary" (click)="buscar()">Buscar</button>
+  </div>
+
+  <div *ngIf="carregando" class="text-center my-4">
+    <span>Carregando...</span>
+  </div>
+
+  <div *ngIf="!carregando && buscaRealizada && transacoes.length === 0" class="alert alert-info">
+    Nenhuma transação encontrada para "{{ termoBusca }}".
+  </div>
+
+  <div class="parcelas" *ngIf="transacoes.length > 0">
+    <div *ngFor="let transacao of transacoes">
+      <div class="card card-sm">
+        <div class="card-header text-break d-flex justify-content-between align-items-center">
+          <b>{{ transacao.descricao }}</b>
+          <img *ngIf="transacao.ispaycart" src="/assets/img/card.png" alt="Cartão" style="width: 20px;">
+        </div>
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <span>Valor:</span>
+            <span>{{ transacao.valor | currency }}</span>
+          </div>
+          <div class="d-flex justify-content-between">
+            <span>Data:</span>
+            <span>{{ transacao.data | date:'dd/MM/yyyy' }}</span>
+          </div>
+          <div class="d-flex justify-content-between">
+            <span>Status:</span>
+            <span>{{ transacao.status }}</span>
+          </div>
+          <div class="d-flex justify-content-between">
+            <span>Tipo:</span>
+            <span>{{ transacao.tipo }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
