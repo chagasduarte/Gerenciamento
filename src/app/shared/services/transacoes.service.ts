@@ -112,6 +112,6 @@ export class TransacoesService {
   }
 
   SearchTransacoes(descricao: string): Observable<TransacaoModel[]> {
-    return this.http.get<TransacaoModel[]>(`${this.api}/transacoes/busca?descricao=${descricao}`);
+    return this.http.get<TransacaoModel[]>(`${this.api}/transacoes/despesa?descricao=${descricao}`);
   }
 }
