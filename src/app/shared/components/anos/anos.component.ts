@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
 })
 export class AnosComponent {
   ano!: Ano;
-  anosDeDivida = [2025, 2026, 2027]
+  anosDeDivida = [2026, 2027, 2028]
   constructor(
     private readonly systemService: SystemService
   ) {
