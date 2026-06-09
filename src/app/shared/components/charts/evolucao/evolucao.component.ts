@@ -201,7 +201,8 @@ export class EvolucaoComponent implements AfterViewInit, OnInit, OnDestroy {
           categoryXField: 'coluna',
           tooltip: am5.Tooltip.new(this.root, {
             labelText: "{valueY}"
-          })
+          }),
+          fill: am5.color("#CD4F39")
         })
       );
       saidasSeries.bullets.push(() => {
@@ -254,8 +255,7 @@ export class EvolucaoComponent implements AfterViewInit, OnInit, OnDestroy {
             dy: -10,
             fontSize: 10,
             fontWeight: "400",
-            fill: am5.color(0xffffff),
-
+            fill: am5.color("#ffffff"),
           })
         });
       });
@@ -299,7 +299,7 @@ export class EvolucaoComponent implements AfterViewInit, OnInit, OnDestroy {
             dy: -10,
             fontSize: 10,
             fontWeight: "400",
-            fill: am5.color(0x4cc9f0),
+            fill: am5.color("#CD4F39"),
           })
         });
       });
@@ -312,7 +312,7 @@ export class EvolucaoComponent implements AfterViewInit, OnInit, OnDestroy {
         return am5.Bullet.new(this.root, {
           sprite: am5.Circle.new(this.root, {
             radius: 6,
-            fill: am5.color(0x4cc9f0),
+            fill: am5.color("#3e7c8f"),
             stroke: this.root.interfaceColors.get("background"),
             strokeWidth: 2
           })
