@@ -6,6 +6,7 @@ import { SystemService } from '../../shared/services/system.service';
 import { Ano, Mes } from '../../utils/meses';
 import { ResumoMensal } from '../../shared/models/resumo.model';
 import { ToastrService } from 'ngx-toastr';
+import { map } from 'rxjs/operators';
 import { NavBarComponent } from "./nav-bar/nav-bar.component";
 import { AuthService } from '../../shared/services/auth.service';
 import { Usuario } from '../../shared/models/user.model';
@@ -39,6 +40,9 @@ export class HomeComponent implements OnInit {
   colorMensal = '#fff';
   colorAnual = '#768da1';
   resumoMensal$ = this.systemService.resumo$; // <-- agora é reativo
+  alertaSalario$ = this.systemService.resumo$.pipe(
+    map(resumo => resumo ? (resumo.receita_mensal > 0) && (resumo.gastos_mensal / resumo.receita_mensal >= 0.8) : false)
+  );
   anosDeDivida: number[] = [2024, 2025, 2026, 2027, 2028];
   usuario!: Usuario | null;
   avatarUrl: string = "";

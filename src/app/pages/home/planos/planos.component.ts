@@ -11,6 +11,10 @@ import { FormsModule } from '@angular/forms';
 import { TransacoesService } from '../../../shared/services/transacoes.service';
 import { agruparPorCategoria } from '../../../utils/functions/agruparPorCategoria';
 import { AgrupamentoResponse } from '../../../shared/models/agrupamento';
+import { CategoriaService } from '../../../shared/services/categoria.service';
+import { SubcategoriaService } from '../../../shared/services/subcategoria.service';
+import { Categoria } from '../../../shared/models/categoria.model';
+import { Subcategoria } from '../../../shared/models/subcategoria.model';
 
 import * as am5 from '@amcharts/amcharts5';
 import * as am5xy from '@amcharts/amcharts5/xy';

@@ -3,13 +3,14 @@ import { CommonModule } from "@angular/common";
 import { SystemService } from "../../shared/services/system.service";
 import { EvolucaoComponent } from "../../shared/components/charts/evolucao/evolucao.component";
 import { PlanejamentoComponent } from "../../shared/components/planejamento/planejamento.component";
-
+import { LinhaTemporalComponent } from "../../shared/components/charts/linha-temporal/linha-temporal.component";
 @Component({
     selector: 'app-dashboard',
     standalone: true,
     imports: [
         CommonModule,
-        EvolucaoComponent
+        EvolucaoComponent,
+        LinhaTemporalComponent
     ],
     templateUrl: './dashboard.component.html',
     styleUrl: './dashboard.component.css'

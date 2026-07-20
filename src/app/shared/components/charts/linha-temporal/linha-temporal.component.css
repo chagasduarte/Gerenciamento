@@ -1,0 +1,193 @@
+.timeline-container {
+    background: #0b2e36;
+    border-radius: 12px;
+    padding: 24px;
+    color: #ffffff;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    overflow: hidden;
+}
+
+.section-header h3 {
+    margin: 0 0 5px 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.section-header p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #a0b2b8;
+}
+
+.timeline-content {
+    overflow-x: auto;
+    padding-bottom: 10px;
+}
+
+.timeline-grid {
+    display: grid;
+    grid-template-columns: 200px repeat(12, minmax(40px, 1fr));
+    gap: 12px 0;
+    position: relative;
+    min-width: 800px; /* Garante que os meses não fiquem espremidos no mobile */
+}
+
+/* Headers */
+.grid-header {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #8da4aa;
+    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.desc-header {
+    grid-column: 1;
+    grid-row: 1;
+    padding-left: 10px;
+}
+
+.month-header {
+    grid-row: 1;
+    justify-content: center;
+}
+
+.grid-separator {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    margin-bottom: 10px;
+}
+
+/* Itens de Descrição */
+.timeline-desc {
+    grid-column: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 15px 0 10px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    z-index: 2;
+}
+
+.desc-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.parcelas-badge {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    color: #a0b2b8;
+    margin-left: 10px;
+}
+
+/* Barras de Timeline */
+.timeline-bar-wrapper {
+    display: flex;
+    align-items: center;
+    padding: 2px 5px;
+    z-index: 2;
+}
+
+.timeline-bar {
+    width: 100%;
+    height: 24px;
+    background: linear-gradient(90deg, #CD4F39 0%, #e8644c 100%);
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(205, 79, 57, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+}
+
+.timeline-bar:hover {
+    transform: scaleY(1.1);
+    box-shadow: 0 4px 12px rgba(205, 79, 57, 0.5);
+}
+
+.bar-shine {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transform: skewX(-20deg);
+    transition: left 0.5s;
+}
+
+.timeline-bar:hover .bar-shine {
+    left: 150%;
+}
+
+/* Linhas Guias de Fundo */
+.grid-line {
+    /* grid-row é agora controlado dinamicamente no HTML */
+    border-left: 1px dashed rgba(255, 255, 255, 0.05);
+    z-index: 1;
+    pointer-events: none;
+}
+.grid-line:nth-child(even) {
+    background: rgba(255,255,255,0.02);
+}
+
+/* Estados */
+.empty-state {
+    text-align: center;
+    padding: 40px;
+    color: #8da4aa;
+    font-style: italic;
+}
+
+.loading-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    color: #8da4aa;
+}
+
+.spinner {
+    width: 30px;
+    height: 30px;
+    border: 3px solid rgba(255,255,255,0.1);
+    border-top-color: #CD4F39;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 15px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Custom Scrollbar para a área de conteúdo */
+.timeline-content::-webkit-scrollbar {
+    height: 8px;
+}
+.timeline-content::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.2);
+    border-radius: 4px;
+}
+.timeline-content::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.2);
+    border-radius: 4px;
+}
+.timeline-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(255,255,255,0.3);
+}

@@ -13,7 +13,6 @@ import { TransacoesService } from '../../../shared/services/transacoes.service';
 import { TransacaoModel } from '../../../shared/models/despesa.model';
 import { PlanejamentoComponent } from "../../../shared/components/planejamento/planejamento.component";
 import { GradePagamentosComponent } from '../grade-pagamentos/grade-pagamentos.component';
-import { ExtratoComponent } from "../../../shared/components/extrato/extrato.component";
 
 @Component({
   selector: 'app-dados',
@@ -23,7 +22,6 @@ import { ExtratoComponent } from "../../../shared/components/extrato/extrato.com
     FormsModule,
     PlanejamentoComponent,
     GradePagamentosComponent,
-    ExtratoComponent
   ],
   templateUrl: './dados.component.html',
   styleUrls: ['./dados.component.css', './dados.component.mobile.css']

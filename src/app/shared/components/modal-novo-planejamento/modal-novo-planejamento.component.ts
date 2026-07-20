@@ -10,6 +10,8 @@ import { Subcategoria } from '../../models/subcategoria.model';
 import { SubcategoriaService } from '../../services/subcategoria.service';
 import { combineLatest, forkJoin } from 'rxjs';
 import { SystemService } from '../../services/system.service';
+import { TransacoesService } from '../../services/transacoes.service';
+import { TransacaoModel, Transacoes } from '../../models/despesa.model';
 
 interface ItemRapido {
   nome: string;
@@ -42,8 +44,10 @@ export class ModalNovoPlanejamentoComponent implements OnInit {
   subcategorias: Subcategoria[] = [];
 
   // Quick Mode Properties
-  modo: 'simples' | 'detalhado' = 'simples';
+  modo: 'simples' | 'detalhado' | 'historico' = 'simples';
   itensRapidos: ItemRapido[] = [];
+  extrato: TransacaoModel[] = [];
+  transacoesPlanejadasIds: Set<number> = new Set<number>();
   nomesSugestivosSaida = ['Aluguel', 'Água', 'Luz', 'Internet', 'Condomínio', 'Mercado'];
   nomesSugestivosEntrada = ['Salário', 'Renda Extra', 'Investimentos'];
   mes = 0;
@@ -54,7 +58,8 @@ export class ModalNovoPlanejamentoComponent implements OnInit {
     private readonly categoriaService: CategoriaService,
     private readonly toast: ToastrService,
     private readonly subcategoriaService: SubcategoriaService,
-    private readonly systemService: SystemService
+    private readonly systemService: SystemService,
+    private readonly transacaoService: TransacoesService
   ) { }
 
   ngOnInit(): void {
@@ -75,6 +80,42 @@ export class ModalNovoPlanejamentoComponent implements OnInit {
     ]).subscribe(([ano, mes]) => {
       this.ano = ano.valor;
       this.mes = mes.valor;
+      this.carregarExtrato();
+    });
+  }
+
+  carregarExtrato() {
+    // Get all transactions for the month
+    this.transacaoService.GetDespesas(this.mes + 1, this.ano, null).subscribe(suc => {
+      // Flat array of all despesas
+      this.extrato = [...suc.adicionais, ...suc.pagos, ...suc.parceladas];
+    });
+  }
+
+  planejarPelaDespesa(transacao: TransacaoModel) {
+    console.log(transacao);
+    if (!transacao.idcategoria || !transacao.categoria) {
+      this.toast.error("Esta despesa não possui categorias vinculadas para ser planejada.");
+      return;
+    }
+    const novoPlan: Planejamento = {
+      categoria: this.categorias.find(c => c.id === transacao.idcategoria)?.nome || '',
+      tipo: transacao.tipo === 'saida' ? 'saidas' : (transacao.tipo === 'entrada' ? 'entradas' : 'saidas'),
+      valor: Number(transacao.valor),
+      subcategoria: this.subcategorias.find(s => s.id === transacao.categoria)?.nome || '',
+      categoriaid: transacao.idcategoria,
+      subcategoriaid: transacao.categoria,
+      data: new Date(`${this.ano}-${this.mes + 1}-01`)
+    };
+
+    this.planejamentoService.criar(novoPlan).subscribe({
+      next: () => {
+        this.toast.success('Planejado com sucesso!');
+        this.transacoesPlanejadasIds.add(transacao.id);
+      },
+      error: (err) => {
+        this.toast.error('Erro ao planejar item.');
+      }
     });
   }
 
@@ -153,7 +194,7 @@ export class ModalNovoPlanejamentoComponent implements OnInit {
     })
   }
 
-  trocarModo(modo: 'simples' | 'detalhado') {
+  trocarModo(modo: 'simples' | 'detalhado' | 'historico') {
     this.modo = modo;
   }
 

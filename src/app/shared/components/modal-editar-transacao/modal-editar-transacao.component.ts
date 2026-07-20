@@ -67,12 +67,18 @@ export class ModalEditarTransacaoComponent implements OnInit {
     prepararEdicao(transacao: TransacaoModel) {
         this.transacao = { ...transacao };
         this.categoriaId = transacao.idcategoria || 0;
-        this.isCartao = !!transacao.cartaoid;
+        this.isCartao = transacao.ispaycart || false;
 
-        // Format date for <input type="date">
+        // Format date safely for <input type="date">
         if (this.transacao.data) {
-            const date = new Date(this.transacao.data);
-            this.dataCompra = date.toISOString().split('T')[0];
+            const dataStr = this.transacao.data.toString();
+            if (dataStr.includes('T')) {
+                this.dataCompra = dataStr.split('T')[0];
+            } else {
+                const date = new Date(this.transacao.data);
+                const offset = date.getTimezoneOffset() * 60000;
+                this.dataCompra = new Date(date.getTime() - offset).toISOString().split('T')[0];
+            }
         }
 
         if (this.categoriaId) {
@@ -89,8 +95,10 @@ export class ModalEditarTransacaoComponent implements OnInit {
     }
 
     salvar() {
-        this.transacao.data = new Date(this.dataCompra);
+        // Fix date object so it gets correct local time
+        this.transacao.data = new Date(this.dataCompra + 'T12:00:00');
         this.transacao.idcategoria = this.categoriaId;
+        this.transacao.ispaycart = this.isCartao;
         this.transacao.cartaoid = this.isCartao ? this.transacao.cartaoid : null;
 
         this.transacaoService.UpdateTransacao(this.transacao.id, this.transacao).subscribe({

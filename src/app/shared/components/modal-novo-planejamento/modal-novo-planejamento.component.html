@@ -11,6 +11,9 @@
                     <button class="btn btn-sm" [class.btn-primary]="modo === 'detalhado'"
                         [class.btn-outline-primary]="modo !== 'detalhado'"
                         (click)="trocarModo('detalhado')">Detalhado</button>
+                    <button class="btn btn-sm" [class.btn-primary]="modo === 'historico'"
+                        [class.btn-outline-primary]="modo !== 'historico'"
+                        (click)="trocarModo('historico')">Das Despesas</button>
                 </div>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
             </div>
@@ -90,12 +93,43 @@
                 </div>
             </div>
 
-            <div class="modal-footer">
+            <div class="modal-body scroll-custom" *ngIf="modo === 'historico'">
+                <div class="alert alert-info py-2 small">
+                    Clique em "Planejar" para criar uma meta de gastos a partir da despesa já registrada.
+                </div>
+
+                <div *ngIf="extrato.length === 0" class="text-center py-4 text-muted">
+                    Nenhuma despesa encontrada neste mês.
+                </div>
+
+                <div class="list-group mb-3" *ngIf="extrato.length > 0">
+                    <div class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let transacao of extrato">
+                        <div>
+                            <h6 class="my-0">{{ transacao.descricao }}</h6>
+                            <small class="text-muted">{{ transacao.data | date:'dd/MM/yyyy' }} - R$ {{ transacao.valor | number:'1.2-2' }}</small>
+                        </div>
+                        <button class="btn btn-sm"
+                                [class.btn-success]="transacoesPlanejadasIds.has(transacao.id)"
+                                [class.btn-outline-primary]="!transacoesPlanejadasIds.has(transacao.id)"
+                                [disabled]="transacoesPlanejadasIds.has(transacao.id)"
+                                (click)="planejarPelaDespesa(transacao)">
+                            <i class="bi" [class.bi-check2]="transacoesPlanejadasIds.has(transacao.id)" [class.bi-plus]="!transacoesPlanejadasIds.has(transacao.id)"></i>
+                            {{ transacoesPlanejadasIds.has(transacao.id) ? 'Planejado' : 'Planejar' }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer" *ngIf="modo !== 'historico'">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 <button type="button" class="btn btn-success"
                     (click)="modo === 'detalhado' ? salvarPlanejamento() : salvarLote()">
                     {{ modo === 'detalhado' ? 'Salvar' : 'Salvar Tudo' }}
                 </button>
+            </div>
+            
+            <div class="modal-footer" *ngIf="modo === 'historico'">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
             </div>
         </div>
     </div>

@@ -138,12 +138,21 @@ export class EvolucaoComponent implements AfterViewInit, OnInit, OnDestroy {
     // 4️⃣ Eixo Y (VALORES)
     const yAxis = chart.yAxes.push(
       am5xy.ValueAxis.new(this.root, {
+        extraMax: 0.15,
         renderer: am5xy.AxisRendererY.new(this.root, {
           strokeOpacity: 0.1,
           stroke: am5.color(0x0b2e36)
         })
       })
     );
+    
+    // Adiciona o cursor (XYCursor) para leitura limpa e interativa
+    const cursor = chart.set("cursor", am5xy.XYCursor.new(this.root, {
+      behavior: "none",
+      xAxis: xAxis,
+      yAxis: yAxis
+    }));
+    cursor.lineY.set("visible", false);
     yAxis.get("renderer").labels.template.setAll({
       fill: am5.color(0xffffff),
       fontSize: 10
@@ -164,24 +173,10 @@ export class EvolucaoComponent implements AfterViewInit, OnInit, OnDestroy {
           sequencedInterpolation: true,
           categoryXField: 'coluna',
           tooltip: am5.Tooltip.new(this.root, {
-            labelText: "{valueY}"
+            labelText: "[bold]{name}[/]\n{valueY.formatNumber('#,###.00')}"
           })
         })
       );
-      entradasSeries.bullets.push(() => {
-        return am5.Bullet.new(this.root, {
-          locationY: 1,
-          sprite: am5.Label.new(this.root, {
-            text: "{valueY.formatNumber('#,###.00')}",
-            populateText: true, // 🔥 ESSENCIAL
-            centerY: am5.p100,
-            centerX: am5.p50,
-            dy: -5,
-            fontSize: 10,
-            fill: am5.color(0xffffff)
-          })
-        });
-      });
 
       entradasSeries.columns.template.setAll({
         cornerRadiusTL: 6,
@@ -189,6 +184,22 @@ export class EvolucaoComponent implements AfterViewInit, OnInit, OnDestroy {
         strokeOpacity: 0,
         width: am5.percent(50)
       })
+
+      entradasSeries.bullets.push(() => {
+        return am5.Bullet.new(this.root, {
+          locationY: 1,
+          sprite: am5.Label.new(this.root, {
+            text: "{valueY.formatNumber('#,###.00')}",
+            populateText: true,
+            centerY: am5.p50,
+            centerX: am5.p0,
+            rotation: -90,
+            dy: -5,
+            fontSize: 10,
+            fill: am5.color(0xffffff)
+          })
+        });
+      });
 
       entradasSeries.data.setAll(this.dados);
       // 6️⃣ Série SAÍDAS
@@ -200,31 +211,33 @@ export class EvolucaoComponent implements AfterViewInit, OnInit, OnDestroy {
           valueYField: 'saidas',
           categoryXField: 'coluna',
           tooltip: am5.Tooltip.new(this.root, {
-            labelText: "{valueY}"
+            labelText: "[bold]{name}[/]\n{valueY.formatNumber('#,###.00')}"
           }),
           fill: am5.color("#CD4F39")
         })
       );
-      saidasSeries.bullets.push(() => {
-        return am5.Bullet.new(this.root, {
-          locationY: 1,
-          sprite: am5.Label.new(this.root, {
-            text: "{valueY.formatNumber('#,###.00')}",
-            populateText: true, // 🔥 ESSENCIAL
-            centerY: am5.p100,
-            centerX: am5.p50,
-            dy: -5,
-            fontSize: 10,
-            fill: am5.color(0xffffff)
-          })
-        });
-      });
 
       saidasSeries.columns.template.setAll({
         cornerRadiusTL: 6,
         cornerRadiusTR: 6,
         strokeOpacity: 0,
         width: am5.percent(50)
+      });
+
+      saidasSeries.bullets.push(() => {
+        return am5.Bullet.new(this.root, {
+          locationY: 1,
+          sprite: am5.Label.new(this.root, {
+            text: "{valueY.formatNumber('#,###.00')}",
+            populateText: true,
+            centerY: am5.p50,
+            centerX: am5.p0,
+            rotation: -90,
+            dy: -5,
+            fontSize: 10,
+            fill: am5.color(0xffffff)
+          })
+        });
       });
 
       saidasSeries.data.setAll(this.dados);
@@ -240,16 +253,21 @@ export class EvolucaoComponent implements AfterViewInit, OnInit, OnDestroy {
           categoryXField: 'coluna',
           tooltip: am5.Tooltip.new(this.root, {
             pointerOrientation: "horizontal",
-            labelText: "{valueY}"
+            labelText: "[bold]{name}[/]\n{valueY.formatNumber('#,###.00')}"
           })
         })
       );
 
+      progressaoLine.strokes.template.setAll({
+        strokeWidth: 3
+      });
+      progressaoLine.data.setAll(this.dados);
+      
       progressaoLine.bullets.push(() => {
         return am5.Bullet.new(this.root, {
           sprite: am5.Label.new(this.root, {
             text: "{valueY.formatNumber('#,###.00')}",
-            populateText: true, // 🔥 ESSENCIAL
+            populateText: true,
             centerX: am5.p50,
             centerY: am5.p100,
             dy: -10,
@@ -259,11 +277,6 @@ export class EvolucaoComponent implements AfterViewInit, OnInit, OnDestroy {
           })
         });
       });
-
-      progressaoLine.strokes.template.setAll({
-        strokeWidth: 3
-      });
-      progressaoLine.data.setAll(this.dados);
       progressaoLine.bullets.push(() => {
         return am5.Bullet.new(this.root, {
           sprite: am5.Circle.new(this.root, {
@@ -284,30 +297,30 @@ export class EvolucaoComponent implements AfterViewInit, OnInit, OnDestroy {
           categoryXField: 'coluna',
           tooltip: am5.Tooltip.new(this.root, {
             pointerOrientation: "horizontal",
-            labelText: "{valueY}"
+            labelText: "[bold]{name}[/]\n{valueY.formatNumber('#,###.00')}"
           })
         })
       );
+
+      mensalLine.strokes.template.setAll({
+        strokeWidth: 3
+      });
+      mensalLine.data.setAll(this.dados);
 
       mensalLine.bullets.push(() => {
         return am5.Bullet.new(this.root, {
           sprite: am5.Label.new(this.root, {
             text: "{valueY.formatNumber('#,###.00')}",
-            populateText: true, // 🔥 ESSENCIAL
+            populateText: true,
             centerX: am5.p50,
-            centerY: am5.p100,
-            dy: -10,
+            centerY: am5.p0,
+            dy: 10,
             fontSize: 10,
             fontWeight: "400",
             fill: am5.color("#CD4F39"),
           })
         });
       });
-
-      mensalLine.strokes.template.setAll({
-        strokeWidth: 3
-      });
-      mensalLine.data.setAll(this.dados);
       mensalLine.bullets.push(() => {
         return am5.Bullet.new(this.root, {
           sprite: am5.Circle.new(this.root, {

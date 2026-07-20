@@ -11,6 +11,7 @@ import { ResumoMensal } from '../../models/resumo.model';
 import { TransacoesService } from '../../services/transacoes.service';
 import { AgrupamentoResponse } from '../../models/agrupamento';
 import { combineLatest, forkJoin } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { Planejamento } from '../../models/planejamento';
 import { agruparPorCategoria } from '../../../utils/functions/agruparPorCategoria';
@@ -101,6 +102,7 @@ export class PlanejamentoComponent implements OnInit {
         this.subcategoriaService.listarAll()
       ]).subscribe({
         next: (success) => {
+          console.log(success);
           this.planejamentos = success[0];
           this.planejados = this.planejamentos.find(x => x.tipo == this.abaAtiva)?.soma! ?? 0;
           this.agrupamentoSaidas = success[1];
@@ -160,6 +162,81 @@ export class PlanejamentoComponent implements OnInit {
     if (this.planejados === 0) {
       this.naoPlanejado = this.valor;
     }
+  }
+
+  getValorRealCategoria(categoriaId: number): number {
+    if (!this.agrupamentoCategoria || !this.agrupamentoCategoria[categoriaId]) return 0;
+    return this.agrupamentoCategoria[categoriaId].soma || 0;
+  }
+
+  getValorRealSubcategoria(categoriaId: number, subcategoriaId: number): number {
+    if (!this.agrupamentoCategoria || !this.agrupamentoCategoria[categoriaId]) return 0;
+    if (!this.agrupamentoCategoria[categoriaId].subcategorias) return 0;
+    if (!this.agrupamentoCategoria[categoriaId].subcategorias[subcategoriaId]) return 0;
+    return this.agrupamentoCategoria[categoriaId].subcategorias[subcategoriaId].soma || 0;
+  }
+
+  importarProgramados() {
+    combineLatest([
+      this.systemService.ano$,
+      this.systemService.mes$
+    ]).pipe(take(1)).subscribe(([ano, mes]) => {
+      this.transacoesService.GetDespesas(mes.valor + 1, ano.valor, null).subscribe(despesas => {
+        const programados = [...despesas.parceladas, ...despesas.adicionais];
+
+        // Agrupa por idcategoria + categoria
+        const agrupado: { [key: string]: { cat: number, sub: number, valor: number, tipo: string } } = {};
+
+        programados.forEach(p => {
+          const catId = p.idcategoria;
+          const subId = p.categoria;
+          if (!catId || !subId) return;
+
+          const key = `${catId}-${subId}`;
+          if (!agrupado[key]) {
+            agrupado[key] = { cat: catId, sub: subId, valor: 0, tipo: p.tipo === 'saida' ? 'saidas' : (p.tipo === 'entrada' ? 'entradas' : 'saidas') };
+          }
+          agrupado[key].valor += p.valor;
+        });
+
+        this.planejamentoService.listar(mes.valor + 1, ano.valor).subscribe(planos => {
+          const obs: any[] = [];
+
+          Object.values(agrupado).forEach(item => {
+            const existente = planos.find(p => p.categoriaid == item.cat && p.subcategoriaid == item.sub);
+
+            if (existente && existente.id) {
+              if (existente.valor < item.valor) {
+                existente.valor = item.valor;
+                obs.push(this.planejamentoService.atualizar(existente.id, existente));
+              }
+            } else {
+              const p: Planejamento = {
+                categoriaid: item.cat,
+                subcategoriaid: item.sub,
+                categoria: '',
+                tipo: item.tipo,
+                valor: item.valor,
+                data: new Date(ano.valor, mes.valor, 1)
+              };
+              obs.push(this.planejamentoService.criar(p));
+            }
+          });
+
+          if (obs.length > 0) {
+            forkJoin(obs).subscribe({
+              next: () => {
+                this.toast.success('Planejamentos importados com sucesso!');
+                this.requisicoesApi();
+              },
+              error: (err) => this.toast.error('Erro ao importar.')
+            });
+          } else {
+            this.toast.info('Nenhum planejamento novo para importar.');
+          }
+        });
+      });
+    });
   }
 
   private createChart(dados: AgrupamentoResponse): void {

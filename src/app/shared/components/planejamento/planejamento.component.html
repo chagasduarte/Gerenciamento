@@ -40,7 +40,11 @@
         </div>
     </div>
     <div class="planejadas">
-        <div class="d-flex justify-content-end gap-2 flex-column">
+        <div class="d-flex justify-content-end gap-2 flex-row mb-2">
+            <button class="btn btn-sm btn-outline-primary" (click)="importarProgramados()"
+                title="Importar os gastos programados (parcelas e adicionais abertos) para o planejamento deste mês">
+                <i class="bi bi-box-arrow-in-down"></i> Importar Programados
+            </button>
             <button class="btn btn-sm btn-success align-self-end" data-bs-toggle="modal"
                 data-bs-target="#addPlanejamentoModal">+</button>
         </div>
@@ -59,23 +63,21 @@
                         <div class="separation">
                             <div class="categoria" *ngFor="let categoria of tipoPlan.agrupamentoTipo">
                                 <button class="button_tipo" data-bs-toggle="collapse"
-                                    [attr.data-bs-target]="'#' + categoria.categoria" aria-expanded="false"
-                                    [attr.aria-controls]="categoria.categoria">
+                                    [attr.data-bs-target]="'#cat-' + categoria.categoriaid" aria-expanded="false"
+                                    [attr.aria-controls]="'cat-' + categoria.categoriaid">
                                     <app-planejamento-comp [nome]="categoria.categoria" [planejado]="categoria.soma"
-                                        [valorReal]="agrupamentoCategoria[categoria.categoriaid]?.soma??0"
+                                        [valorReal]="getValorRealCategoria(categoria.categoriaid)"
                                         [cor]="categoriaCor(categoria.categoriaid)">
                                     </app-planejamento-comp>
                                 </button>
-                                <div class="collapse" [id]="categoria.categoria">
+                                <div class="collapse" [id]="'cat-' + categoria.categoriaid">
                                     <div class="subcategoria separation" *ngFor="let sub of categoria.planejamento">
-                                        <button class="button_tipo" data-bs-toggle="collapse"
-                                            [attr.data-bs-target]="'#' + categoria.categoria" aria-expanded="false"
-                                            [attr.aria-controls]="categoria.categoria">
+                                        <div class="button_tipo" style="cursor: default;">
                                             <app-planejamento-comp [nome]="sub.subcategoria!" [planejado]="sub.valor"
-                                                [valorReal]="agrupamentoCategoria[sub.categoriaid]?.subcategorias[sub.subcategoriaid]?.soma??0"
+                                                [valorReal]="getValorRealSubcategoria(categoria.categoriaid, sub.subcategoriaid)"
                                                 [cor]="categoriaCor(categoria.categoriaid)">
                                             </app-planejamento-comp>
-                                        </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -93,6 +95,33 @@
     </div>
 
 
+</div>
+
+<div class="analise-planejamento mt-4 mb-3 mx-2">
+    <div *ngIf="valor > planejados" class="alert alert-danger d-flex align-items-center" role="alert">
+        <i class="bi bi-x-octagon-fill flex-shrink-0 me-2" style="font-size: 20px;"></i>
+        <div>
+            <strong>Aviso Crítico!</strong> Os {{ abaAtiva }} (R$ {{ valor | number:'1.2-2' }}) já superaram o valor
+            planejado (R$ {{ planejados | number:'1.2-2' }}). Reveja suas contas!
+        </div>
+    </div>
+
+    <div *ngIf="valor <= planejados && naoPlanejado > 0" class="alert alert-warning d-flex align-items-center"
+        role="alert">
+        <i class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" style="font-size: 20px;"></i>
+        <div>
+            <strong>Atenção:</strong> Você teve R$ {{ naoPlanejado | number:'1.2-2' }} em gastos não planejados.
+            Considere incluí-los no próximo mês.
+        </div>
+    </div>
+
+    <div *ngIf="valor <= planejados && naoPlanejado === 0 && valor > 0"
+        class="alert alert-success d-flex align-items-center" role="alert">
+        <i class="bi bi-check-circle-fill flex-shrink-0 me-2" style="font-size: 20px;"></i>
+        <div>
+            <strong>Parabéns!</strong> Seus {{ abaAtiva }} estão dentro do planejado e sem gastos extras.
+        </div>
+    </div>
 </div>
 
 <app-modal-novo-planejamento></app-modal-novo-planejamento>

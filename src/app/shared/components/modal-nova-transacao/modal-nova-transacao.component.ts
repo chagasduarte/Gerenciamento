@@ -89,7 +89,7 @@ export class ModalNovaTransacaoComponent implements OnInit {
     if (this.isParcelado) {
       const payload = {
         ...this.novaDespesa,
-        data: new Date(this.dataCompra),
+        data: new Date(this.dataCompra + 'T12:00:00'),
         ispaycart: this.isCartao,
         parcelado: this.isParcelado,
         idcategoria: this.categoriaId,
@@ -114,7 +114,7 @@ export class ModalNovaTransacaoComponent implements OnInit {
       })
     }
     else {
-      this.novaDespesa.data = new Date(this.dataCompra);
+      this.novaDespesa.data = new Date(this.dataCompra + 'T12:00:00');
       this.novaDespesa.idcategoria = this.categoriaId;
       this.novaDespesa.ispaycart = this.isCartao;
       this.novaDespesa.cartaoid = this.cardId > 0 ? this.cardId : 0;

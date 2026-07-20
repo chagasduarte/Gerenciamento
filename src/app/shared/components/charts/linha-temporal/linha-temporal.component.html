@@ -1,0 +1,51 @@
+<div class="timeline-container">
+    <div class="section-header">
+        <h3>Calendário de Parcelamentos</h3>
+        <p>Acompanhe a duração e o término de suas dívidas parceladas.</p>
+    </div>
+
+    <div class="timeline-content" *ngIf="!loading">
+        <div class="timeline-grid">
+            <!-- Headers -->
+            <div class="grid-header desc-header">Descrição</div>
+            <div class="grid-header month-header" *ngFor="let m of meses; let i = index" [style.grid-column]="i + 2">{{m}}</div>
+            
+            <div class="grid-separator"></div>
+
+            <!-- Items -->
+            <ng-container *ngFor="let item of items; let i = index">
+                <!-- Descrição da dívida (Coluna 1) -->
+                <div class="timeline-desc" [style.grid-row]="i + 3">
+                    <span class="desc-text">{{item.descricao}}</span>
+                    <span class="parcelas-badge">{{item.total_parcelas}}x</span>
+                </div>
+
+                <!-- Barra de duração (Colunas dinâmicas) -->
+                <div class="timeline-bar-wrapper" 
+                     [style.grid-row]="i + 3"
+                     [style.grid-column-start]="item.startCol" 
+                     [style.grid-column-end]="'span ' + item.span">
+                    <div class="timeline-bar" [title]="item.descricao + ' - ' + item.total_parcelas + ' parcelas'">
+                        <!-- Decorativo interno para dar efeito premium -->
+                        <div class="bar-shine"></div>
+                    </div>
+                </div>
+            </ng-container>
+
+            <!-- Linhas de grade verticais para guiar a leitura -->
+            <div class="grid-line" *ngFor="let m of meses; let i = index" 
+                 [style.grid-column]="i + 2" 
+                 [style.grid-row]="'1 / span ' + (items.length + 2)">
+            </div>
+        </div>
+        
+        <div class="empty-state" *ngIf="items.length === 0">
+            Nenhuma dívida parcelada ativa para este ano.
+        </div>
+    </div>
+    
+    <div class="loading-state" *ngIf="loading">
+        <div class="spinner"></div>
+        <span>Carregando cronograma...</span>
+    </div>
+</div>

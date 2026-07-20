@@ -10,6 +10,13 @@
         </div>
       </div>
 
+      <div *ngIf="alertaSalario$ | async" class="alert alert-warning d-flex align-items-center mb-3 mx-4" role="alert">
+        <i class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" style="font-size: 24px;"></i>
+        <div>
+          <strong>Atenção!</strong> Seus gastos já comprometeram mais de 80% da sua receita deste mês.
+        </div>
+      </div>
+
       <div class="cards_resumo">
         <app-cards class="gastos" titulo="Gastos" [valor]="resumo.gastos_mensal_pendente"
           [valorTotal]="resumo.gastos_mensal" tipo="saida">
