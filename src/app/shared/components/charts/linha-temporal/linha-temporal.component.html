@@ -15,6 +15,9 @@
 
             <!-- Items -->
             <ng-container *ngFor="let item of items; let i = index">
+                <!-- Linha horizontal separadora -->
+                <div class="grid-row-line" [style.grid-row]="i + 3"></div>
+
                 <!-- Descrição da dívida (Coluna 1) -->
                 <div class="timeline-desc" [style.grid-row]="i + 3">
                     <span class="desc-text">{{item.descricao}}</span>
