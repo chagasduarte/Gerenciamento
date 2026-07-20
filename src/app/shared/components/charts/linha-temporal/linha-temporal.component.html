@@ -8,8 +8,9 @@
         <div class="timeline-grid">
             <!-- Headers -->
             <div class="grid-header desc-header">Descrição</div>
-            <div class="grid-header month-header" *ngFor="let m of meses; let i = index" [style.grid-column]="i + 2">{{m}}</div>
-            
+            <div class="grid-header month-header" *ngFor="let m of meses; let i = index" [style.grid-column]="i + 2">
+                {{m}}</div>
+
             <div class="grid-separator"></div>
 
             <!-- Items -->
@@ -20,30 +21,37 @@
                     <span class="parcelas-badge">{{item.total_parcelas}}x</span>
                 </div>
 
-                <!-- Barra de duração (Colunas dinâmicas) -->
-                <div class="timeline-bar-wrapper" 
-                     [style.grid-row]="i + 3"
-                     [style.grid-column-start]="item.startCol" 
-                     [style.grid-column-end]="'span ' + item.span">
-                    <div class="timeline-bar" [title]="item.descricao + ' - ' + item.total_parcelas + ' parcelas'">
-                        <!-- Decorativo interno para dar efeito premium -->
-                        <div class="bar-shine"></div>
+                <!-- Barras de duração (Meses exatos) -->
+                <ng-container *ngFor="let mes of meses; let idx = index">
+                    <div class="timeline-bar-wrapper" [style.grid-row]="i + 3" [style.grid-column]="idx + 2">
+                        <ng-container *ngFor="let parcela of getParcelasDoMes(item, idx + 1)">
+                            <div *ngIf="isMesAtivo(item, idx + 1)" class="timeline-bar" [class.paid]="parcela.pago"
+                                [title]="item.descricao + ' - Parcela: ' + (parcela.pago ? 'PAGO' : 'PENDENTE')">
+
+                                <!-- Iteramos sobre a lista de objetos (parcelas) deste mês -->
+                                <div class="bar-shine">
+
+                                    {{ parcela.valor | currency: 'BRL' }}
+
+                                </div>
+
+                            </div>
+                        </ng-container>
                     </div>
-                </div>
+                </ng-container>
             </ng-container>
 
             <!-- Linhas de grade verticais para guiar a leitura -->
-            <div class="grid-line" *ngFor="let m of meses; let i = index" 
-                 [style.grid-column]="i + 2" 
-                 [style.grid-row]="'1 / span ' + (items.length + 2)">
+            <div class="grid-line" *ngFor="let m of meses; let i = index" [style.grid-column]="i + 2"
+                [style.grid-row]="'1 / span ' + (items.length + 2)">
             </div>
         </div>
-        
+
         <div class="empty-state" *ngIf="items.length === 0">
             Nenhuma dívida parcelada ativa para este ano.
         </div>
     </div>
-    
+
     <div class="loading-state" *ngIf="loading">
         <div class="spinner"></div>
         <span>Carregando cronograma...</span>

@@ -32,7 +32,8 @@
     grid-template-columns: 200px repeat(12, minmax(40px, 1fr));
     gap: 12px 0;
     position: relative;
-    min-width: 800px; /* Garante que os meses não fiquem espremidos no mobile */
+    min-width: 800px;
+    /* Garante que os meses não fiquem espremidos no mobile */
 }
 
 /* Headers */
@@ -100,6 +101,8 @@
     align-items: center;
     padding: 2px 5px;
     z-index: 2;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .timeline-bar {
@@ -119,15 +122,23 @@
     box-shadow: 0 4px 12px rgba(205, 79, 57, 0.5);
 }
 
+.timeline-bar.paid {
+    background: linear-gradient(90deg, #388E3C 0%, #4CAF50 100%);
+    box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+}
+
+.timeline-bar.paid:hover {
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.5);
+}
+
 .bar-shine {
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 50%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
     transform: skewX(-20deg);
     transition: left 0.5s;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 600;
 }
 
 .timeline-bar:hover .bar-shine {
@@ -141,8 +152,9 @@
     z-index: 1;
     pointer-events: none;
 }
+
 .grid-line:nth-child(even) {
-    background: rgba(255,255,255,0.02);
+    background: rgba(255, 255, 255, 0.02);
 }
 
 /* Estados */
@@ -165,7 +177,7 @@
 .spinner {
     width: 30px;
     height: 30px;
-    border: 3px solid rgba(255,255,255,0.1);
+    border: 3px solid rgba(255, 255, 255, 0.1);
     border-top-color: #CD4F39;
     border-radius: 50%;
     animation: spin 1s linear infinite;
@@ -173,21 +185,26 @@
 }
 
 @keyframes spin {
-    to { transform: rotate(360deg); }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 /* Custom Scrollbar para a área de conteúdo */
 .timeline-content::-webkit-scrollbar {
     height: 8px;
 }
+
 .timeline-content::-webkit-scrollbar-track {
-    background: rgba(0,0,0,0.2);
+    background: rgba(0, 0, 0, 0.2);
     border-radius: 4px;
 }
+
 .timeline-content::-webkit-scrollbar-thumb {
-    background: rgba(255,255,255,0.2);
+    background: rgba(255, 255, 255, 0.2);
     border-radius: 4px;
 }
+
 .timeline-content::-webkit-scrollbar-thumb:hover {
-    background: rgba(255,255,255,0.3);
+    background: rgba(255, 255, 255, 0.3);
 }

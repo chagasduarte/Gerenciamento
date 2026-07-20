@@ -51,6 +51,12 @@ app-evolucao {
   gap: 5px;
 }
 
+.content-grid {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+}
+
 @media screen and (max-width: 500px) {
   .chart-container {
     display: flex;
