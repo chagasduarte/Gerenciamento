@@ -5,14 +5,12 @@ import { AuthService } from '../../../shared/services/auth.service';
 import { Router, RouterModule } from '@angular/router';
 import { UsuarioService } from '../../../shared/services/usuario.service';
 import { Usuario } from '../../../shared/models/user.model';
-import { AnosComponent } from "../../../shared/components/anos/anos.component";
 import { ResumoComponent } from "../../../shared/components/charts/resumo/resumo.component";
 
 @Component({
   selector: 'app-side-bar',
   imports: [
     CommonModule,
-    AnosComponent,
     ResumoComponent,
     RouterModule
   ],

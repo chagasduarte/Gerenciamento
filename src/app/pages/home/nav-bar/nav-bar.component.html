@@ -1,7 +1,15 @@
-<nav class="barra_navegacao"> 
-  <ul class="meses sombra">
+<nav class="barra_navegacao">
+
+  <!-- LISTA DE MESES (Aparece fora do Dashboard) -->
+  <ul class="meses sombra" *ngIf="!isDashboard">
     <li class="d-flex" *ngFor="let mes of ano.meses; let i = index">
-      <div class="abrev-mes"(click)="mudaMes(mes)">{{mes.nomeAbrev}}</div>
+      <div class="abrev-mes" (click)="mudaMes(mes)">{{mes.nomeAbrev}}</div>
     </li>
   </ul>
+
+  <!-- LISTA DE ANOS (Aparece apenas no Dashboard) -->
+  <ul class="meses sombra" *ngIf="isDashboard">
+    <app-anos></app-anos>
+  </ul>
+
 </nav>

@@ -41,9 +41,9 @@
 
 <aside class="sidebar sombra" [class.collapsed]="collapsed" *ngIf="resumoMensal$ | async as resumo">
     <div class="top">
-        <div class="logo d-flex gap-2">
+        <div class="logo d-flex gap-2" *ngIf="!collapsed">
             <img src="assets/img/fidelis.png" alt="" width="15" height="55">
-            <span *ngIf="!collapsed">FIDELIS</span>
+            <span>FIDELIS</span>
         </div>
         <button class="toggle" (click)="toggle()">
             <span *ngIf="!collapsed">◄</span>
@@ -113,12 +113,11 @@
         </li>
     </ul>
 
-    <app-anos *ngIf="!collapsed"></app-anos>
 
     <!-- Footer -->
     <div class="footer">
         <button class="logout" (click)="logout()">
-            <span *ngIf="!collapsed">Sair</span>
+            <span>Sair</span>
         </button>
     </div>
 

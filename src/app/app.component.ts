@@ -24,10 +24,4 @@ export class AppComponent {
 
   constructor(public authService: AuthService) { }
 
-  mudaAno(ano: number) {
-    this.paginas.element.nativeElement.innerHTML = '';
-    this.paginas.clear();
-    this.paginas.createComponent(HomeComponent);
-  }
-
 }

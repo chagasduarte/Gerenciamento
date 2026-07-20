@@ -29,6 +29,7 @@
                     <div class="timeline-bar-wrapper" [style.grid-row]="i + 3" [style.grid-column]="idx + 2">
                         <ng-container *ngFor="let parcela of getParcelasDoMes(item, idx + 1)">
                             <div *ngIf="isMesAtivo(item, idx + 1)" class="timeline-bar" [class.paid]="parcela.pago"
+                                [routerLink]="['/parcelas']" [queryParams]="{descricao: item.descricao}"
                                 [title]="item.descricao + ' - Parcela: ' + (parcela.pago ? 'PAGO' : 'PENDENTE')">
 
                                 <!-- Iteramos sobre a lista de objetos (parcelas) deste mês -->

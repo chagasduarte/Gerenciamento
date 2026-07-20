@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { SystemService } from '../../../services/system.service';
 import { TransacoesService } from '../../../services/transacoes.service';
 import { forkJoin, of } from 'rxjs';
@@ -18,7 +19,7 @@ export interface TimelineItem {
 @Component({
   selector: 'app-linha-temporal',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './linha-temporal.component.html',
   styleUrls: ['./linha-temporal.component.css']
 })
