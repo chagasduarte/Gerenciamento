@@ -36,13 +36,12 @@ export const routes: Routes = [
       { path: "entradas-detalhe", component: EntradaDetalhesComponent, canActivate: [AuthGuard] },
       { path: "dash", component: DashboardComponent, canActivate: [AuthGuard] },
       { path: "index", component: IndexComponent, canActivate: [AuthGuard] },
-      { path: "objetivos", component: BuscaTransacoesComponent, canActivate: [AuthGuard] },
       { path: "pagamentos", component: PagamentosComponent, canActivate: [AuthGuard] },
       { path: "investimentos", component: InvestimentosComponent, canActivate: [AuthGuard] },
       { path: "extrato", component: ExtratoComponent, canActivate: [AuthGuard] },
       { path: "cartoes", loadComponent: () => import('./pages/home/cartao/cartao.component').then(m => m.CartaoComponent), canActivate: [AuthGuard] },
       { path: "categorias", component: CategoriasComponent, canActivate: [AuthGuard] },
-      { path: "objetivos", component: BuscaTransacoesComponent, canActivate: [AuthGuard] },
+      { path: "objetivos", component: ObjetivosComponent, canActivate: [AuthGuard] },
       { path: "planos", component: PlanosComponent, canActivate: [AuthGuard] }
     ],
     canActivate: [AuthGuard]
